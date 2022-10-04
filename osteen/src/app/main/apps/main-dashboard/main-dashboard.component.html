@@ -1,0 +1,61 @@
+<div id="main-dashboard" class="fuse-navy dashboard-main" fxLayout="column" fxLayoutAlign="start center" fxFlex
+    fusePerfectScrollbar>
+    <div class="header pt-md-8" fxLayout="row" fxLayoutAlign="center center" fxFlex="0 0 auto"
+        [@animate]="{value:'*',params:{delay:'100ms'}}">
+        <h2>Business Modules</h2>
+    </div>
+    <div class="eventhome-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+        [@animateStagger]="{value:'50'}">
+        <div>
+            <a class="prima-navigation-btn" [routerLink]="'/apps/prima-navigation'">Prima Plus Navigation</a>
+        </div>
+        <!-- <div *ngIf="currentUser.role_id == 1 || currentUser.role_id == 2" class="eventhome-list-item" [routerLink]="'/apps/user-list'" fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+         <mat-icon class="s-56">view_module</mat-icon>
+         <div class="eventhome-name">Administration</div>
+      </div> -->
+        <div class="eventhome-list-item" [routerLink]="'/apps/welcome-screen'" fxLayout="column"
+            fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-icon class="s-56">dashboard</mat-icon>
+            <!-- Prima Plus Welcome -->
+            <div class="eventhome-name">My DashBoard</div>
+        </div>
+        <div *ngFor="let module of userModulePermission | orderBy: 'hierarchy'">
+            <ng-template [ngIf]="module.parent == 0 && module.sidebar_status== 1 && module.id != 240">
+                <div class="eventhome-list-item" [routerLink]="'/apps/'+module.display_url" fxLayout="column"
+                    fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+                    <mat-icon class="s-56">{{module.icon_class}}</mat-icon>
+                    <div class="eventhome-name">{{module.display_name}}</div>
+                </div>
+            </ng-template>
+        </div>
+        <!-- <div class="eventhome-list-item" [routerLink]="'/apps/finance-operations'" fxLayout="column"
+         fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+         <mat-icon class="s-56">money</mat-icon>
+         <div class="eventhome-name">Finance Operations</div>
+      </div> -->
+        <!-- <div class="eventhome-list-item" [routerLink]="'/apps/finance-operations'" fxLayout="column"
+            fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}"> -->
+            <div class="eventhome-list-item" matTooltip="Upcoming module" fxLayout="column"
+            fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-icon class="s-56">camera_front</mat-icon>
+            <div class="eventhome-name">People Competency</div>
+        </div>
+        <!--  <div class="eventhome-list-item" [routerLink]="'/apps/finance-operations'" fxLayout="column"
+         fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+         <mat-icon class="s-56">assessment</mat-icon>
+         <div class="eventhome-name">Lean Assessment</div>
+      </div> -->
+        <!-- <div class="eventhome-list-item" [routerLink]="'/apps/finance-operations'" fxLayout="column"
+         fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+         <mat-icon class="s-56">brightness_5</mat-icon>
+         <div class="eventhome-name">Industry 4.0</div>
+      </div> -->
+        <!-- <div class="eventhome-list-item" [routerLink]="'/apps/finance-operations'" fxLayout="column"
+            fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}"> -->
+            <div class="eventhome-list-item"  fxLayout="column" matTooltip="Upcoming module"
+            fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-icon class="s-56" >event_note</mat-icon>
+            <div class="eventhome-name">MoM Tracker</div>
+        </div>
+    </div>
+</div>

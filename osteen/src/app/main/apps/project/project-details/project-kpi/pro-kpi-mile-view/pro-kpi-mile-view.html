@@ -1,0 +1,193 @@
+<div id="pro-kpi-mile-view">
+  <div class="content all-pages-content">
+    <div class="main-widget pr-8">
+      <div class="widget-group p-0 dept-header-color" fxLayout="row">
+        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+          <div fxLayoutAlign="start">
+            <div class="pr-16">
+              <div fxLayoutAlign="center">
+                <button class="mat-icon-button" (click)="arrowclick()">
+                  <span class="mat-button-wrapper">
+                    <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                  </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </fuse-widget>
+        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40">
+          <div fxLayoutAlign="start center">
+            <div class="issue_remark_text">
+              Project Name: {{project_name}}
+            </div>
+          </div>
+        </fuse-widget>
+        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40">
+          <div fxLayoutAlign="start center" class="issue_remark_text">MileStone Deliverables</div>
+        </fuse-widget>
+      </div>
+      <div class="widget-group search-filter-select mt-4" fxLayout="row wrap" fxFlex="100"
+        [@animateStagger]="{value:'50'}" fxLayoutAlign="start">
+        <button mat-raised-button class="mr-8 mb-8" style="height: 37px;
+        margin-top: 4px;" (click)="openKpiDialog()">Enter Project Deliverables</button>
+        <mat-form-field class="mr-8" appearance="outline">
+          <mat-label>Milestone</mat-label>
+          <mat-select [formControl]="milestone_nameFilter" (selectionChange)="filterRenderedData($event.value)">
+            <mat-option value="">All</mat-option>
+            <mat-option value="{{mile.id}}" *ngFor="let mile of allMileStoneData">
+              {{mile.milestone_name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="mr-8" appearance="outline">
+          <mat-label>Department</mat-label>
+          <mat-select [formControl]="dept_nameFilter">
+            <mat-option value="">All</mat-option>
+            <mat-option value="{{department.dept_name}}" *ngFor="let department of dataDepartment">
+              {{department.dept_name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+        <mat-form-field class="mr-8" appearance="outline">
+          <mat-label>Status</mat-label>
+          <mat-select [formControl]="kpi_statusFilter">
+            <mat-option value="">All</mat-option>
+            <mat-option value="Green">
+                <img class="status-green-icon" src="assets/icons/status-green-icon.png">&nbsp;Green
+            </mat-option>
+            <mat-option value="Yellow">
+              <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">&nbsp;Yellow
+            </mat-option>
+            <mat-option value="Red">
+              <img class="status-red-icon" src="assets/icons/status-red-icon.png">&nbsp;Red
+            </mat-option>
+          </mat-select>
+        </mat-form-field>
+        <button mat-raised-button style="height: 37px;
+      margin-top: 4px;" (click)="resetOptions()">Reset</button>
+      </div>
+    </div>
+    <div class="function-wrap mat-elevation-z8">
+      <!-- <div class="left mr-lg-16 dept-header-color">
+        <div class="main-widget">
+          <div class="widget-group" fxLayout="row" fxFlex="100" [@animateStagger]="{value:'50'}">
+            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+              <div fxLayout="column" fxLayoutAlign="start">
+                <div class="kpifunction" style="font-size: 13px; font-family: Muli, Helvetica Neue, Arial, sans-serif;">
+                  Deliverables: Test
+                </div>
+              </div>
+            </fuse-widget>
+          </div>
+        </div>
+      </div> -->
+      <div class="main-widget">
+        <div class="example-container-kpidata">
+          <table mat-table id="contentToConvert" [dataSource]="dataSourceKpi">
+            <!--  <ng-container matColumnDef="sr_no">
+              <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                {{element.sr_no}}
+              </td>
+            </ng-container> -->
+            <ng-container matColumnDef="milestoneName">
+              <th mat-header-cell *matHeaderCellDef>Project Milestone</th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-milestone">{{element.milestoneName}}</td>
+            </ng-container>
+            <ng-container matColumnDef="dept_name">
+              <th mat-header-cell *matHeaderCellDef>Department</th>
+              <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="project_kpi_name">
+              <th mat-header-cell *matHeaderCellDef>Deliverable</th>
+              <td mat-cell *matCellDef="let element">{{element.project_kpi_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="uom_name">
+              <th mat-header-cell *matHeaderCellDef>UOM</th>
+              <td mat-cell *matCellDef="let element">{{element.uom_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="project_kpi_def">
+              <th mat-header-cell *matHeaderCellDef>Definition</th>
+              <td mat-cell *matCellDef="let element">{{element.project_kpi_def}}</td>
+            </ng-container>
+            <ng-container matColumnDef="project_kpi_trend">
+              <th mat-header-cell *matHeaderCellDef>Ideal Trend</th>
+              <td mat-cell *matCellDef="let element">
+                <img *ngIf="element.project_kpi_trend == 'positive'" class="kpi-trend-upward-icon"
+                  src="assets/icons/arrow-up-kpi.png">
+                <img *ngIf="element.project_kpi_trend == 'negative'" class="kpi-trend-downward-icon"
+                  src="assets/icons/arrow-kpi-down.png">
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="project_kpi_yr_targt">
+              <th mat-header-cell *matHeaderCellDef>Year end target</th>
+              <td mat-cell *matCellDef="let element">
+                <span *ngIf="element.project_kpi_yr_targt == 'sum_up_all'">Sum Up-All</span>
+                <span *ngIf="element.project_kpi_yr_targt == 'average'">Average</span>
+                <span *ngIf="element.project_kpi_yr_targt == 'terminal_value'">Terminal (YE) Value</span>
+              </td>
+            </ng-container>
+            <ng-container matColumnDef="project_kpi_freqency">
+              <th mat-header-cell *matHeaderCellDef>Review Frequency</th>
+              <td mat-cell *matCellDef="let element">{{element.project_kpi_freqency}}</td>
+            </ng-container>
+            <ng-container matColumnDef="project_kpi_value">
+              <th mat-header-cell *matHeaderCellDef>Project Target</th>
+              <td mat-cell *matCellDef="let element">{{element.project_kpi_value}}</td>
+            </ng-container>
+            <ng-container matColumnDef="projct_kpi_dstrbt_vl">
+              <th mat-header-cell *matHeaderCellDef>Target</th>
+              <td mat-cell *matCellDef="let element">
+                {{element.projct_kpi_dstrbt_vl}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef='project_kpi_actual'>
+              <th mat-header-cell *matHeaderCellDef>Actual</th>
+              <td mat-cell *matCellDef="let element">{{element.project_kpi_actual}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef='project_kpi_status'>
+              <th mat-header-cell *matHeaderCellDef>Status</th>
+              <td mat-cell *matCellDef="let element">
+                <img *ngIf="element.project_kpi_status == 'Yellow'" class="status-yellow-icon"
+                  src="assets/icons/status-yellow-icon.png">
+                <img *ngIf="element.project_kpi_status == 'Red'" class="status-red-icon"
+                  src="assets/icons/status-red-icon.png">
+                <img *ngIf="element.project_kpi_status == 'Green'" class="status-green-icon"
+                  src="assets/icons/status-green-icon.png">
+              </td>
+            </ng-container>
+            <!--  <ng-container matColumnDef='reason'>
+              <th mat-header-cell *matHeaderCellDef>Remark</th>
+              <td mat-cell *matCellDef="let element">{{element.reason}}
+              </td>
+            </ng-container>
+            <ng-container matColumnDef='solution'>
+              <th mat-header-cell *matHeaderCellDef>Solution</th>
+              <td mat-cell *matCellDef="let element">
+                {{element.solution}}
+              </td>
+            </ng-container> -->
+            <ng-container matColumnDef="action" stickyEnd>
+              <th mat-header-cell *matHeaderCellDef>Action</th>
+              <td mat-cell *matCellDef="let element">
+                <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                  <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                </a>
+                <mat-menu #menu="matMenu">
+                  <button mat-menu-item (click)="openDialog(element)">
+                    <!-- <mat-icon>edit</mat-icon> -->
+                    <span>Update Status</span>
+                  </button>
+                  <!--  <button mat-menu-item (click)="deleteKPI(kpi)">
+                    <mat-icon>delete</mat-icon>
+                    <span>Remove</span>
+                  </button> -->
+                </mat-menu>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumnsKpiMile; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumnsKpiMile;"></tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

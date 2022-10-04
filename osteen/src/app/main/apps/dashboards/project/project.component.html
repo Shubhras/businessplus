@@ -1,0 +1,226 @@
+<div id="project-data" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Project
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div style="width: 100%;">
+            <div class="left mb-16 header-menu">
+                <div class="main-widget">
+                    <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                        <div class="menu">
+                            <!-- <button mat-button routerLink="/apps/main-dashboard">Home</button> -->
+                            <button mat-button routerLink="/apps/dashboards/dashboard-project">Dashboard</button>
+                            <!--  <button mat-button routerLink="/apps/project/project-add" *ngIf="projectPermission.acc_create == 1">New
+                Project</button> -->
+                            <button mat-button>Tutorial</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="left">
+                <div class="main-widget main-widget-filter">
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-button-row search-filter-input">
+                                    <!--  <button mat-raised-button class="button-filter" (click)="ProjectShowFilter()">Filter</button> -->
+                                    <!-- <button mat-raised-button class="button-filter" (click)="AddPopupOpen()"
+                    *ngIf="projectPermission.acc_create == 1">Add Project</button> -->
+                                    <!--  <button mat-raised-button class="button-filter" *ngIf="projectPermission.acc_create == 1"
+                    routerLink="/apps/project/project-add">New Project</button> -->
+                                    <mat-form-field appearance="outline" class="srch-anyy srchinput dating">
+                                        <mat-label>Search</mat-label>
+                                        <input matInput [formControl]="inputSearchFilter"
+                                            (keyup)="applyFilter($event.target.value)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                            <div fxLayout="column">
+                                <div class="example-button-row button-excel-pdf" fxLayoutAlign="end">
+                                    <button mat-raised-button class="button-excel"
+                                        (click)="ProjectExcel()">Excel</button>
+                                    <button mat-raised-button class="button-pdf" (click)="ProjectPDF()">Print</button>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                    <div class="search-filter-select list-field">
+                        <mat-form-field class="pr-8 status-date dating field-wdth" appearance="outline">
+                            <mat-label>Department</mat-label>
+                            <mat-select [formControl]="dept_nameFilter" class="departmentproject">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{department.dept_name}}" *ngFor="let department of dataDepartment">
+                                    {{department.dept_name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8 srch-anyy status-date dating field-wdth" appearance="outline">
+                            <mat-label>Start</mat-label>
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="start_date"
+                                [formControl]="start_dateFilter">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8 srch-anyy status-date dating field-wdth" appearance="outline">
+                            <mat-label>Finish</mat-label>
+                            <input matInput [matDatepicker]="pickerto" [(ngModel)]="end_date"
+                                [formControl]="end_dateFilter">
+                            <mat-datepicker-toggle matSuffix [for]="pickerto"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerto></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8 status-date dating field-wdth" appearance="outline">
+                            <mat-label>Project leader</mat-label>
+                            <mat-select [formControl]="leader_nameFilter" class="departmentproject">
+                                <!--  <input matInput placeholder="Search" (keyup)="companyUserSearch($event.target.value)"
+                  style="height: 32px; padding-left: 12px;"> -->
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{user.name}}" *ngFor="let user of selectedSearchUser">
+                                    {{user.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8 status-date dating field-wdth" appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select [formControl]="status_nameFilter" class="departmentproject">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{statuss.status_name}}" *ngFor="let statuss of dataStatus">
+                                    {{statuss.status_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-raised-button (click)="resetOptions()">Reset</button>
+                    </div>
+                    <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                            <ng-container matColumnDef="project_id" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="project_name">
+                                <th mat-header-cell *matHeaderCellDef>Project</th>
+                                <td mat-cell *matCellDef="let element"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id,element.project_step_id]"
+                                    matTooltip="View details" aria-label="View details">
+                                    {{element.project_name}}
+                                </td>
+                                <!-- element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id,element.project_step_id]" -->
+                            </ng-container>
+                            <ng-container matColumnDef="dept_name">
+                                <th mat-header-cell *matHeaderCellDef>Department</th>
+                                <td mat-cell *matCellDef="let element"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id,element.project_step_id]"
+                                    matTooltip="View details" matTooltip="View details" aria-label="View details">
+                                    {{element.dept_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="leader_name">
+                                <th mat-header-cell *matHeaderCellDef>Project leader</th>
+                                <td mat-cell *matCellDef="let element" href="javascript:void(0)"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id,element.project_step_id]"
+                                    matTooltip="View details" matTooltip="View details" aria-label="View details">
+                                    {{element.leader_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="start_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                                <td mat-cell *matCellDef="let element" href="javascript:void(0)"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id,element.project_step_id]"
+                                    matTooltip="View details" matTooltip="View details" aria-label="View details"><span
+                                        *ngIf="element.start_date!='0000-00-00'">{{element.start_date | date:'dd-MM-yyyy'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="end_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                                <td mat-cell *matCellDef="let element" href="javascript:void(0)"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id, element.project_step_id]"
+                                    matTooltip="View details" aria-label="View details">
+                                    <span
+                                        *ngIf="element.end_date!='0000-00-00'">{{element.end_date | date:'dd-MM-yyyy'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="project_duration">
+                                <th mat-header-cell *matHeaderCellDef>Total duration</th>
+                                <td mat-cell *matCellDef="let element" href="javascript:void(0)"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id, element.project_step_id]"
+                                    matTooltip="View details" aria-label="View details">
+                                    {{element.project_duration}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status_name">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element"
+                                    [ngStyle]="{'color':StatusGetColor(element.status_name)}" href="javascript:void(0)"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id, element.project_step_id]"
+                                    matTooltip="View details" aria-label="View details">
+                                    {{element.status_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="project_cost">
+                                <th mat-header-cell *matHeaderCellDef>Total project cost</th>
+                                <td mat-cell *matCellDef="let element" href="javascript:void(0)"
+                                    [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id, element.project_step_id]"
+                                    matTooltip="View details" matTooltip="View details" aria-label="View details">
+                                    {{element.project_cost |currency:element.currency: 'symbol':'2.2-2'}}
+                                </td>
+                                <!-- [routerLink]="element.project_step_id == 5 ?['/apps/project/project-details', element.project_id]:['/apps/project/project-edit', element.project_id, element.project_step_id]" -->
+                            </ng-container>
+                            <ng-container matColumnDef="action" stickyEnd>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <!-- <button mat-menu-item (click)="EditPopupOpen(element)" *ngIf="projectPermission.acc_edit == 1">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button> -->
+                                        <!-- ['/apps/project/project-edit', element.project_id,element.project_step_id] -->
+
+                                        <button mat-menu-item
+                                            [routerLink]=" element.project_step_id == 5 ?['/apps/project/project-edit', element.project_id,0]:['/apps/project/project-edit', element.project_id,element.project_step_id]"
+                                            *ngIf="projectPermission.acc_edit == 1">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            (click)="deleteProject(element.project_id,element.user_id)"
+                                            *ngIf="projectPermission.acc_delete == 1">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Remove</span>
+                                        </button>
+                                        <button mat-menu-item (click)="StatusPopupOpen(element)">
+                                            <mat-icon>star_rate</mat-icon>
+                                            <span>Change Status</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/projectremark', element.project_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View details</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/projectfiles', element.project_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View Files</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[15, 25, 30]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

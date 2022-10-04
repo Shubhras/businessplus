@@ -1,0 +1,18 @@
+@mixin business-faq-theme($theme) {
+
+    business-faq {
+
+        .header {
+
+            .search {
+                background: white;
+                color: rgba(0, 0, 0, 0.54);
+
+                input {
+                    background: white;
+                    color: rgba(0, 0, 0, 0.87);
+                }
+            }
+        }
+    }
+}

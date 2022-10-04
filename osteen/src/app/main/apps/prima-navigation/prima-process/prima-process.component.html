@@ -1,0 +1,21 @@
+<div id="prima-process" class="fuse-navy home-event" fxLayout="column" fxLayoutAlign="start center" fxFlex fusePerfectScrollbar>
+    <div class="header pt-md-8" fxLayout="row" fxLayoutAlign="center center" fxFlex="0 0 auto"
+         [@animate]="{value:'*',params:{delay:'100ms'}}">
+        <span class="h2">Prima Process</span>
+    </div>
+    <div class="primaprocess-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+    [@animateStagger]="{value:'50'}">
+        <embed src="assets/images/primaplus_compressed.pdf" type="application/pdf" width="1320px" height="600px" />
+       <!--  <object width="1380px" height="600px" data="assets/images/primaplus_compressed.pdf"></object> -->
+     </div>
+    <!-- <div class="primaprocess-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+         [@animateStagger]="{value:'50'}">
+        <div class="primaprocess-list-item" *ngFor="let units of allUnitsGet;" (click)="selectUnit(units.id,units.unit_name)"  fxLayout="column" fxLayoutAlign="center center"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+           <mat-icon class="s-56">event</mat-icon>
+           <div class="primaprocess-name">{{units.unit_name}}</div>
+       </div>
+    </div> -->
+</div>
+
+

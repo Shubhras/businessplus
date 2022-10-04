@@ -1,0 +1,168 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="AddtaskForm" [formGroup]="AddtaskForm"
+            (ngSubmit)="AddTask()" novalidate>
+            <!-- <div class="h3 mb-12">Add Task</div> -->
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add Task</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4 remove-right dialog-field">
+                    <mat-label>Task Name</mat-label>
+                    <textarea matInput formControlName="task_name" required></textarea>
+                    <mat-error>Task Name is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right hght-dial-fields">
+                    <mat-label>Priority</mat-label>
+                    <mat-select matNativeControl formControlName="priority_id" class="department-stratgeix">
+                        <mat-option [value]="priority.id" *ngFor="let priority of taskDataPriorities">
+                            {{priority.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Priority is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="45" class="pl-4 remove-left hght-dial-fields">
+                    <mat-label>Events</mat-label>
+                    <mat-select matNativeControl formControlName="event_id" class="department-stratgeix">
+                        <mat-option [value]="event.id" *ngFor="let event of viewEventsData">
+                            {{event.event_name}}</mat-option>
+                        <mat-option value="personal">Personal</mat-option>
+                        <mat-option value="no_event">No event</mat-option>
+                        <mat-option value="others">Others</mat-option>
+                    </mat-select>
+                    <mat-error>Event is required!</mat-error>
+                </mat-form-field>
+                <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="5" fxLayoutAlign="center center">
+                    <mat-icon matTooltip="Add New KPI" aria-label="Add New KPI" (click)="addEventShow()"
+                        *ngIf="addeventPlus">add_circle
+                    </mat-icon>
+                    <mat-icon (click)="addEventHide()" *ngIf="addeventMinus">remove_circle</mat-icon>
+                </a>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right hght-dial-fields">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="department_id" class="department-stratgeix">
+                        <mat-option [value]="department.id" *ngFor="let department of dataDepartment">
+                            {{department.dept_name}}</mat-option>
+                        <mat-option value="applicable">Not applicable</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left dialog-field add-dials-ad">
+                    <mat-label>Start</mat-label>
+                    <input style="height: 36px;" matInput [min]="minDate" [matDatepicker]="startPicker"
+                        formControlName="start_date" [(ngModel)]="start_date" required readonly>
+                    <mat-error>Start Date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="startPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #startPicker></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right dialog-field add-dials-ad">
+                    <mat-label>Finish</mat-label>
+                    <input style="height: 36px;" matInput
+                        [min]="datepipe.transform(AddtaskForm.get('start_date').value, 'yyyy-MM-dd')"
+                        [matDatepicker]="endPicker" formControlName="end_date" [(ngModel)]="end_date" required readonly>
+                    <mat-error>Finish Date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                    <mat-datepicker #endPicker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left hght-dial-fields">
+                    <mat-label>Task Owner</mat-label>
+                    <mat-select matNativeControl formControlName="task_owner_id" class="department-stratgeix">
+                        <mat-option [value]="user.user_id" *ngFor="let user of userListAllData">{{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Task Owner is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right hght-dial-fields">
+                    <mat-label>Task Co-owner</mat-label>
+                    <mat-select formControlName="assign_to" multiple class="department-stratgeix">
+                        <mat-option *ngFor="let user of userListAllData" [value]="user.user_id">{{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- <mat-error>Task Co-owner is required!</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left hght-dial-fields">
+                    <mat-label>Reminder Frequency</mat-label>
+                    <mat-select matNativeControl formControlName="reminder_frequency" class="department-stratgeix">
+                        <mat-option value="Daily">Daily</mat-option>
+                        <mat-option value="Weekly">Weekly</mat-option>
+                        <mat-option value="Monthly">Monthly</mat-option>
+                    </mat-select>
+                    <mat-error>Reminder Frequency is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxFlex="1 0 auto" class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="PopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+    <!-- add event  -->
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" style="margin-top: 14px;">
+
+        <div *ngIf="EventFromShow" fxFlex="100" style="margin-top: 14px;padding: 15px; background-color: rgb(243 243 243 / 58%);">
+            <div>
+                <div style="flex-direction: column !important;">
+                    <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="AddTaskForm"
+                        ng-hide="AddTaskForm.$submitted" [formGroup]="AddTaskForm" (ngSubmit)="AddTaskSubmit()"
+                        novalidate>
+                        <div class="popup-header">
+                            <mat-toolbar matDialogTitle class="m-0" style="background: #ffffff;
+                            border-radius: 10px;
+                            box-shadow: 0 0 2px #e5e9ec;
+                            border-bottom: 1px solid #eeeeee;">
+                                <mat-toolbar-row>
+                                    <span class="title dialog-title">Add Events Task</span>
+                                </mat-toolbar-row>
+                            </mat-toolbar>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+                                <mat-label>Event Name</mat-label>
+                                <input matInput formControlName="event_name" style="height: 30px !important;">
+                                <!-- <mat-error>Event Name is required!</mat-error> -->
+                            </mat-form-field>
+
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+                                <mat-label>Event Area</mat-label>
+                                <input matInput formControlName="event_area" style="height: 30px !important;">
+                                <!-- <mat-error>Event Area is required!</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="100" class="pr-4 edit-dials-ad">
+                                <mat-label>Event Objective</mat-label>
+                                <input matInput formControlName="event_objective">
+                                <!-- <mat-error>Event Objective is required!</mat-error> -->
+                            </mat-form-field>
+                        </div>
+                        <div class="pb-8" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                            fxFlex="1 0 auto">
+                            <div  style="max-width: fit-content;margin-right: auto;margin-left: auto;">
+                                <angular-editor id="editor2" formControlName="event_description"
+                                    [config]="editorConfig">
+                                </angular-editor>
+                            </div>
+                        </div>
+                        <div class="example-button-row" fxLayoutAlign="end" style="margin-top: 12px;">
+                            <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                            <a mat-raised-button color="accent" (click)="addEventHide()">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+
+    </div>
+</div>

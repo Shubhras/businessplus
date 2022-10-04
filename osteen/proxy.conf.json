@@ -1,0 +1,7 @@
+{  
+    "/api/*": {  
+       "target": "http://139.59.83.155/stagebusinessplus/public",  
+       "secure": false,  
+       "logLevel": "debug"  
+    }  
+ } 

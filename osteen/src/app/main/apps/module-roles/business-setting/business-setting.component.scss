@@ -1,0 +1,150 @@
+@import "src/@fuse/scss/fuse";
+@import "node_modules/angular-calendar/scss/angular-calendar";
+#business-setting {
+  .content {
+    overflow: hidden;
+    .sidebar {
+      &:not(.locked-open) {
+        background: white;
+      }
+    }
+    .sidebar-content {
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      @include media-breakpoint(gt-sm) {
+        padding: 16px 4px 24px 24px;
+      }
+      .card {
+        display: flex;
+        flex-direction: column;
+        flex: 0 1 auto;
+        padding: 0;
+        border-radius: 4px;
+        background: #ffffff;
+        @include media-breakpoint(gt-sm) {
+          @include mat-elevation(1);
+        }
+        > .header {
+          flex: 0 1 auto;
+          border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+        }
+        > .content {
+          flex: 0 1 auto;
+        }
+        .title {
+          padding-left: 3px;
+        }
+        .nav-item {
+          .nav-link {
+            padding: 0 4px 0 8px;
+          }
+        }
+        .settings-icon {
+          font-size: 20px;
+          width: 20px;
+          height: 20px;
+          min-width: 20px;
+          min-height: 20px;
+          line-height: 20px;
+          margin-right: 8px;
+          color: #1c5e97;
+        }
+        .sidebar-arrow-back{
+          margin-left: 75px;
+        }
+      }
+    }
+    .hading {
+      padding: 0px 8px;
+      height: 35px !important;
+      min-height: 35px !important;
+      max-height: 35px !important;
+      // background: mat-color($mat-blue, 500);
+      .category {
+        text-transform: capitalize;
+        text-align: left;
+        font-weight: 600;
+        color: white;
+      }
+    }
+    .company-image {
+      color: #049be5;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      .company__company-pic {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        position: relative;
+        cursor: pointer;
+        //margin-left: 85px;
+        //width: 100%;
+        margin-bottom: 14px
+      }
+      .company__company-pic > input[type="file"] {
+        visibility: hidden;
+        width: 1px;
+        height: 1px;
+      }
+      .company__company-pic > .upload-button {
+        position: absolute;
+        bottom: 5px;
+        left: 48%;
+        transform: translateX(-50%);
+        z-index: 11;
+      }
+      .profile-image {
+        width: 90px;
+        min-width: 90px;
+        height: 90px;
+        line-height: 90px;
+        margin: 0px;
+        @include media-breakpoint("sm") {
+          margin: 0 0 16px 0;
+        }
+      }
+    }
+    .company-image:hover {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+/*     .logo-company {
+      width: 100px;
+      height: 100px;
+      background: #f1f0f0;
+      border-radius: 4px;
+      margin: 4px 0px 14px 0px;
+    }
+    .logo-icon {
+      width: 80px;
+      height: 80px;
+      margin: 10px;
+    } */
+    .color-input {
+      padding: 6px 8px;
+      border-radius: 4px;
+    }
+    .company-performances-table {
+      max-height: 250px;
+      overflow-y: auto;
+      table {
+        border-left: 1px solid #e0e0e0;
+      }
+      td.mat-cell:first-of-type,
+      td.mat-footer-cell:first-of-type,
+      th.mat-header-cell:first-of-type {
+        padding-left: 0px;
+      }
+      tr.mat-header-row {
+        height: 25px;
+        background-color: #6497b1;
+        color: #fff !important;
+      }
+    }
+  }
+}
+
+/* Responsive start */
+.submitt {
+  left: 8px;
+}
+/* Responsive end */

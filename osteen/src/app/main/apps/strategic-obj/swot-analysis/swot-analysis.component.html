@@ -1,0 +1,379 @@
+<div id="swot-analysis" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    SWOT Analysis
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div fxLayout="row wrap" class="left">
+            <mat-nav-list class="articles-list">
+                <div class="main-widget main-widget-filter">
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-button-row search-filter-input">
+                                    <button mat-raised-button class="button-filter" (click)="addStrengthsOpen()"
+                                        *ngIf="swotPermission.acc_create == 1" [disabled]="buttonDisabled">Add
+                                        Strength</button>
+                                    <mat-form-field appearance="outline" class="srch-anyy srchinput dating">
+                                        <mat-label>Search</mat-label>
+                                        <input matInput (keyup)="applyFilterStrength($event.target.value)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-container mat-elevation-z8 strength-table" id="content" #content
+                                    #TABLE>
+                                    <table mat-table [dataSource]="dataSourceStrength" id="contentToConvert">
+                                        <ng-container matColumnDef="sr_no" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                {{element.sr_no}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="strength">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-name">Strength</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.strength}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="keywords">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">Keywords
+                                            </th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.keywords}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                                <button class="btn__review startegic-dots more-action"
+                                                    [matMenuTriggerFor]="strngth">
+                                                    <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg"
+                                                        style="transform: rotate(
+                                                90deg
+                                                );">
+                                                </button>
+                                                <!-- <a href="javascript:void(0)" (click)="editStrengthsOpen(element)"
+                                                    *ngIf="swotPermission.acc_edit == 1 && buttonDisabled == false">
+                                                    <mat-icon class="mat-icon-edit">edit</mat-icon>
+                                                </a>
+                                                <a href="javascript:void(0)"
+                                                    (click)="deleteStrengths(element.strength_id)"
+                                                    *ngIf="swotPermission.acc_delete == 1 && buttonDisabled == false">
+                                                    <mat-icon class="mat-icon-clear">clear</mat-icon>
+                                                </a> -->
+                                                <mat-menu #strngth="matMenu" xPosition="before">
+                                                    <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)"
+                                                            (click)="editStrengthsOpen(element)"
+                                                            *ngIf="swotPermission.acc_edit == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                            margin-right: 12px;margin-top  : 4px;">edit
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Edit</span>
+                                                        </a>
+                                                    </button>
+                                                    <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)"
+                                                            (click)="deleteStrengths(element.strength_id)"
+                                                            *ngIf="swotPermission.acc_delete == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                            margin-right: 12px;margin-top  : 4px;">clear
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Clear</span>
+                                                        </a>
+                                                    </button>
+                                                </mat-menu>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsStrength; sticky: true">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsStrength;"></tr>
+                                    </table>
+                                    <!-- <mat-paginator  [pageSizeOptions]="[15, 20, 25]" showFirstLastButtons></mat-paginator> -->
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                </div>
+            </mat-nav-list>
+            <mat-nav-list class="articles-list">
+                <div class="main-widget main-widget-filter">
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-button-row search-filter-input">
+                                    <button mat-raised-button class="button-filter" (click)="addWeaknessOpen()"
+                                        *ngIf="swotPermission.acc_create == 1" [disabled]="buttonDisabled">Add
+                                        Weaknesses</button>
+                                    <mat-form-field appearance="outline" class="srch-anyy srchinput dating">
+                                        <mat-label>Search</mat-label>
+                                        <input matInput (keyup)="applyFilter($event.target.value)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-container mat-elevation-z8 weaknesses-table" id="content" #content
+                                    #TABLE>
+                                    <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                                        <ng-container matColumnDef="sr_no" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                {{element.sr_no}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="weaknesses">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-name">Weaknesses
+                                            </th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.weaknesses}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="keywords">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">Keywords
+                                            </th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.keywords}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                                <button class="btn__review startegic-dots more-action"
+                                                    [matMenuTriggerFor]="weakness">
+                                                    <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg"
+                                                        style="transform: rotate(
+                                                90deg
+                                                );">
+                                                </button>
+                                                <!-- <a href="javascript:void(0)" (click)="editWeaknessOpen(element)"
+                                                    *ngIf="swotPermission.acc_edit == 1 && buttonDisabled == false">
+                                                    <mat-icon class="mat-icon-edit">edit</mat-icon>
+                                                </a>
+                                                <a href="javascript:void(0)"
+                                                    (click)="deleteWeakness(element.weaknesses_id)"
+                                                    *ngIf="swotPermission.acc_delete == 1 && buttonDisabled == false">
+                                                    <mat-icon class="mat-icon-clear">clear</mat-icon>
+                                                </a> -->
+                                                <mat-menu #weakness="matMenu" xPosition="before">
+                                                    <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)" (click)="editWeaknessOpen(element)"
+                                                            *ngIf="swotPermission.acc_edit == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                            margin-right: 12px;margin-top  : 4px;">edit
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Edit</span>
+                                                        </a>
+                                                    </button>
+                                                    <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)"
+                                                            (click)="deleteWeakness(element.weaknesses_id)"
+                                                            *ngIf="swotPermission.acc_delete == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                            margin-right: 12px;margin-top  : 4px;">clear
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Clear</span>
+                                                        </a>
+                                                    </button>
+                                                </mat-menu>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                    </table>
+                                    <!-- <mat-paginator  [pageSizeOptions]="[15, 20, 25]" showFirstLastButtons></mat-paginator> -->
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                </div>
+            </mat-nav-list>
+            <mat-nav-list class="articles-list">
+                <div class="main-widget main-widget-filter">
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-button-row search-filter-input">
+                                    <button mat-raised-button class="button-filter" (click)="addOpportunity()"
+                                        *ngIf="swotPermission.acc_create == 1" [disabled]="buttonDisabled">Add
+                                        Opportunities</button>
+                                    <mat-form-field appearance="outline" class="srch-anyy srchinput dating">
+                                        <mat-label>Search</mat-label>
+                                        <input matInput (keyup)="applyFilterOpportunity($event.target.value)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-container mat-elevation-z8 opportunities-table" id="content"
+                                    #content #TABLE>
+                                    <table mat-table [dataSource]="dataSourceOpportunity" id="contentToConvert">
+                                        <ng-container matColumnDef="sr_no" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                {{element.sr_no}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="opportunities">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-name">Opportunities
+                                            </th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.opportunities}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="keywords">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">Keywords
+                                            </th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.keywords}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                                <button class="btn__review startegic-dots more-action"
+                                                    [matMenuTriggerFor]="Opportunity">
+                                                    <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg"
+                                                        style="transform: rotate(
+                                                90deg
+                                                );">
+                                                </button>
+                                                <!-- <a href="javascript:void(0)" (click)="editOpportunity(element)"
+                                                    *ngIf="swotPermission.acc_edit == 1 && buttonDisabled == false">
+                                                    <mat-icon class="mat-icon-edit">edit</mat-icon>
+                                                </a>
+                                                <a href="javascript:void(0)"
+                                                    (click)="deleteOpportunity(element.opportunities_id)"
+                                                    *ngIf="swotPermission.acc_delete == 1 && buttonDisabled == false">
+                                                    <mat-icon class="mat-icon-clear">clear</mat-icon>
+                                                </a> -->
+                                                <mat-menu #Opportunity="matMenu" xPosition="before">
+                                                    <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)" (click)="editOpportunity(element)"
+                                                            *ngIf="swotPermission.acc_edit == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                    margin-right: 12px;margin-top  : 4px;">edit
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Edit</span>
+                                                        </a>
+                                                    </button>
+                                                    <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)"
+                                                            (click)="deleteOpportunity(element.opportunities_id)"
+                                                            *ngIf="swotPermission.acc_delete == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                            margin-right: 12px;margin-top  : 4px;">clear
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Clear</span>
+                                                        </a>
+                                                    </button>
+                                                </mat-menu>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsOpportunity; sticky: true">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsOpportunity;"></tr>
+                                    </table>
+                                    <!-- <mat-paginator  [pageSizeOptions]="[15, 20, 25]" showFirstLastButtons></mat-paginator> -->
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                </div>
+            </mat-nav-list>
+            <mat-nav-list class="articles-list">
+                <div class="main-widget main-widget-filter">
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-button-row search-filter-input">
+                                    <button mat-raised-button class="button-filter" (click)="addThreatsOpen()"
+                                        *ngIf="swotPermission.acc_create == 1" [disabled]="buttonDisabled">Add
+                                        Threats</button>
+                                    <mat-form-field appearance="outline" class="srch-anyy srchinput dating">
+                                        <mat-label>Search</mat-label>
+                                        <input matInput (keyup)="applyFilterThreats($event.target.value)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-container mat-elevation-z8 threats-table" id="content" #content
+                                    #TABLE>
+                                    <table mat-table [dataSource]="dataSourceThreats" id="contentToConvert">
+                                        <ng-container matColumnDef="sr_no" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                {{element.sr_no}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="threats">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-name">Threats</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.threats}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="keywords">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">Keywords
+                                            </th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                                {{element.keywords}}</td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="action" sticky>
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                                <button class="btn__review startegic-dots more-action"
+                                                    [matMenuTriggerFor]="threats">
+                                                    <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg"
+                                                        style="transform: rotate(
+                                                90deg
+                                                );">
+                                                </button>
+                                                <mat-menu #threats="matMenu" xPosition="before">
+                                                    <button  mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)" (click)="editThreatsOpen(element)"
+                                                            *ngIf="swotPermission.acc_edit == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                    margin-right: 12px;margin-top  : 4px;">edit
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Edit</span>
+                                                        </a>
+                                                    </button>
+                                                    <button  mat-menu-item style="line-height: 21px;height: 25px;">
+                                                        <a href="javascript:void(0)"
+                                                            (click)="deleteThreats(element.threats_id)"
+                                                            *ngIf="swotPermission.acc_delete == 1 && buttonDisabled == false">
+                                                            <mat-icon class="mat-icon-edit" style="height: 25px; width: 15px;font-size: 19px;
+                                                            margin-right: 12px;margin-top  : 4px;">clear
+                                                            </mat-icon>
+                                                            <span style="color: darkslategray;">Clear</span>
+                                                        </a>
+                                                    </button>
+                                                </mat-menu>
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-header-row *matHeaderRowDef="displayedColumnsThreats; sticky: true">
+                                        </tr>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsThreats;"></tr>
+                                    </table>
+                                    <!-- <mat-paginator  [pageSizeOptions]="[15, 20, 25]" showFirstLastButtons></mat-paginator> -->
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                </div>
+            </mat-nav-list>
+        </div>
+    </div>
+</div>

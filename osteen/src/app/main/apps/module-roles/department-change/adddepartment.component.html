@@ -1,0 +1,83 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="AddDeptForm" [formGroup]="AddDeptForm"
+            (ngSubmit)="AddDeptSubmit()" novalidate>
+            <!--  <div class="h3 mb-12">Add Department</div> -->
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end center" fxFlex="1 0 auto"
+                style="margin-bottom: 1px;">
+                <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                    <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+                </button>
+            </div>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add Department</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="41" class="pr-4 pl-4 remove-left hght-dial-fields">
+                    <mat-label>Unit</mat-label>
+                    <mat-select matNativeControl formControlName="unit_id" class="department-stratgeix">
+                        <mat-option [value]="unit.id" *ngFor="let unit of unitsData">{{unit.unit_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Unit is required</mat-error>
+                </mat-form-field>
+                <!-- <mat-form-field appearance="outline" fxFlex="41" class="pr-4 hght-dial-fields">
+                    <mat-label>Department Admin</mat-label>
+                    <mat-select matNativeControl formControlName="user_id" class="department-stratgeix">
+                        <mat-option value="{{user.user_id}}" *ngFor="let user of userListAllData">{{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Department Admin is required</mat-error>
+                </mat-form-field> -->
+
+                <ng-multiselect-dropdown formControlName="user_id" [placeholder]="'Select Department Admin'" [data]="userListAllData"
+                [settings]="dropdownSettings" (onSelect)="onItemSelect($event)" (onSelectAll)="onSelectAll($event)"
+                (onDeSelect)="onItemDeSelect($event)" fxFlex="41" class="pr-4" class="addsearchheight">
+               </ng-multiselect-dropdown>
+
+                <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="18" fxLayoutAlign="center center" style="text-decoration: none;">
+                    <button mat-raised-button color="accent" matTooltip="Add New User" style="border-radius: 20px;background-color: #1c5e97;color: #ffffff;"
+                        aria-label="Add New User" (click)="addDepartment()" *ngIf="true">Add other Users
+                    </button>
+                    <!-- <mat-icon (click)="" *ngIf="false">remove_circle</mat-icon> -->
+                </a>
+            </div>
+
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Contact Person</mat-label>
+                    <input matInput formControlName="contact_person" required>
+                    <mat-error>Contact Person is required!</mat-error>
+                </mat-form-field>
+               <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Mobile</mat-label>
+                    <input matInput formControlName="phone_no" (keypress)= "mobileValidation($event)" required>
+                    <mat-error *ngIf="AddDeptForm.get('phone_no').hasError('required')">Mobile is required!
+                    </mat-error>
+                    <mat-error *ngIf="AddDeptForm.get('phone_no').hasError('pattern')">
+                        It is not a valid mobile number.
+                    </mat-error>
+                </mat-form-field> -->
+                <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>User role</mat-label>
+                    <mat-select matNativeControl formControlName="role_id">
+                        <mat-option value="{{role.id}}" [disabled]="role.id !='4'" *ngFor="let role of userrole.user_role">{{role.display_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>User role is required</mat-error>
+                </mat-form-field> -->
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4 pl-4 dialog-field remove-left">
+                    <mat-label>Department</mat-label>
+                    <textarea matInput formControlName="dept_name" required autocomplete="off"></textarea>
+                    <mat-error>Department is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="AddDeptClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

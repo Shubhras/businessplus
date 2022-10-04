@@ -1,0 +1,130 @@
+<div id="section-change" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Sections
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div class="left">
+            <div class="main-widget main-widget-filter">
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <div fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-button-row search-filter-input search-filter-select">
+                                <button mat-raised-button class="button-filter" (click)="AddSectionOpen()">Add
+                                    Sections</button>
+                                <mat-form-field class="mr-8 srch-anyy srchinput mtlst-slct" appearance="outline"
+                                    style="margin-right: 10px;">
+                                    <mat-label>Search</mat-label>
+                                    <input matInput [formControl]="inputSearchFilter"
+                                        (keyup)="applyFilter($event.target.value)">
+                                </mat-form-field>
+                                <mat-form-field class="mr-8 sections-list list-btn sectn-matslct" appearance="outline">
+                                    <mat-label>Unit</mat-label>
+                                    <mat-select [formControl]="unit_nameFilter"
+                                        (selectionChange)="departmentGet($event.value)">
+                                        <mat-option value="">All</mat-option>
+                                        <mat-option [value]="unit" *ngFor="let unit of unitsData">
+                                            {{unit.unit_name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <mat-form-field class="pr-8 sections-list list-btn sectn-matslct" appearance="outline">
+                                    <mat-label>Department</mat-label>
+                                    <mat-select [formControl]="dept_nameFilter">
+                                        <mat-option value="">All</mat-option>
+                                        <mat-option value="{{department.dept_name}}"
+                                            *ngFor="let department of dataDepartment">
+                                            {{department.dept_name}}</mat-option>
+                                    </mat-select>
+                                </mat-form-field>
+                                <button class="mb-4" mat-raised-button (click)="resetOptions()">Reset</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                                <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                                    <ng-container matColumnDef="sr_no" sticky>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="section_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Section</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            {{element.section_name}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="dept_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Department</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            {{element.dept_name}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="unit_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Unit</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            {{element.unit_name}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Contact Person
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.name}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="email">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Email</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.email}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action" sticky>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                            <button class="btn__review startegic-dots more-action"
+                                                [matMenuTriggerFor]="section">
+                                                <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg"
+                                                    style="transform: rotate(90deg);">
+                                            </button>
+                                            <mat-menu #section="matMenu" xPosition="before">
+                                                <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                    <a href="javascript:void(0)" (click)="EditSectionOpen(element)">
+                                                        <mat-icon class="mat-icon-edit"
+                                                            style="height: 25px; width: 15px;font-size: 19px;margin-right: 12px;margin-top: 4px;">
+                                                            edit
+                                                        </mat-icon>
+                                                        <span style="color: darkslategray;">Edit</span>
+                                                    </a>
+                                                </button>
+                                                <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                    <a href="javascript:void(0)"
+                                                        (click)="sectionDelete(element.section_id)">
+                                                        <mat-icon class="mat-icon-edit"
+                                                            style="height: 25px; width: 15px;font-size: 19px;margin-right: 12px;margin-top: 4px;">
+                                                            clear
+                                                        </mat-icon>
+                                                        <span style="color: darkslategray;">Clear</span>
+                                                    </a>
+                                                </button>
+                                            </mat-menu>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                                <mat-paginator [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons></mat-paginator>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

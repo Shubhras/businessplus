@@ -1,0 +1,28 @@
+<div class="content popup-small">
+    <div fxLayoutAlign="end center" style="margin-bottom: 1px;margin-top: -8px;">
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+        </button>
+    </div>
+    <div fxLayout="column">
+        <div fxLayout="row">
+            <mat-toolbar matDialogTitle class="m-0" style="background:white;text-align: center;">
+                <!-- <mat-toolbar-row>
+                    <span class="title dialog-title" style="font-size: 35px;
+                    font-weight: 700;">{{titleDataGet}}</span>
+                </mat-toolbar-row> -->
+                <div>
+                    <span class="title dialog-title" style="font-size: 35px;
+                    font-weight: 700;">{{titleDataGet}}</span>
+                </div>
+            </mat-toolbar>
+        </div>
+        <div fxLayout="row" class="popup-main-content" style="font-size: 20px;padding-right: 80px;padding-left: 80px;text-align: center;padding-top: 10px;">
+           <!--  {{message_of_ceo}} -->
+            <span [innerHtml]="message_of_ceo"></span>
+        </div>
+        <!-- <div fxLayout="row" fxLayoutAlign="end">
+            <a mat-raised-button color="accent" (click)="definitionClose()">Cancel</a>
+        </div> -->
+    </div>
+</div>

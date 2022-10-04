@@ -1,0 +1,16 @@
+<div class="content">
+    <div class="nodeTitle">{{nodeTitle}}</div>
+    <hr>
+    <div class="nodeDetails">
+        <div *ngIf="installId != null" class="subheader">install id</div>
+        <div *ngIf="installId != null" class="header">{{installId}}</div>
+        <div *ngIf="installId != null" class="break"></div>
+        <div *ngIf="description != null" class="subheader">description</div>
+        <div *ngIf="description != null" class="header">{{description}}</div>
+        <div *ngIf="description != null" class="break"></div>
+        <div class="subheader">creation date</div>
+        <div class="header">{{dateCreated}}</div>
+    </div>
+  
+  </div>
+  

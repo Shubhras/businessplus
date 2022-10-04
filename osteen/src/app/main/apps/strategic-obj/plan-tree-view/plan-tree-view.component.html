@@ -1,0 +1,520 @@
+<div id="initiative-data" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row"
+        style="position: relative;">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Master Action Plans
+                </span>
+            </div>
+
+        </div>
+        <div style="position: absolute; right:16px" fxLayout="row" fxHide.xs>
+            <!-- <a [routerLink]="['/apps/business-plan-list-view']" mat-icon-button>
+                <mat-icon>account_tree</mat-icon>
+            </a> -->
+            <button style="background: none;border:none;cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all master action plans" [routerLink]="['/apps/business-plan-list-view']"> <img
+                    src="assets/images/master.png" width="30px"></button>
+            <button style="background: none;border:none;cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all strategic objective" [routerLink]="['/apps/strategic-obj/strategic']"> <img
+                    src="assets/images/so1.png" width="30px"></button>
+            <button style="background: none;border:none; cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all initiative" [routerLink]="['/apps/strategic-obj/initiative-data']"> <img
+                    src="assets/images/si.png" width="30px"></button>
+            <button style="background: none; border:none; cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all action plan" [routerLink]="['/apps/strategic-obj/action-plan']"> <img
+                    src="assets/images/action.png" width="30px"></button>
+            <button style="background: none; border:none; cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all kpi" [routerLink]="['/apps/kpitrackers/keyperformance']"> <img
+                    src="assets/images/kpi.png" width="30px"></button>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="main-widget ml-8 mr-8 mt-8 mb-4 dep-date">
+        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+            <div fxFlex="100" fxFlex.gt-xs="70" fxFlex.gt-md="55" class="search-filter-select dep-date">
+                <mat-form-field class="pr-8 dep-date wdth-status-target" appearance="outline">
+                    <mat-label>Department</mat-label>
+                    <mat-select (selectionChange)="filterRenderedData('department_id', $event.value)"
+                        [formControl]="dept_nameFilter" class="departmentone">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">
+                            {{department.dept_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+
+                <mat-form-field class="pr-8 dep-date srch-anyy datee wdth-status-target" appearance="outline">
+                    <mat-label>Target Date</mat-label>
+                    <input matInput [matDatepicker]="pickertarget" [(ngModel)]="end_taerget_date"
+                        (dateInput)="filterRenderedData('end_date', $event.value)" [formControl]="end_dateFilter"
+                        readonly>
+                    <mat-datepicker-toggle matSuffix [for]="pickertarget"></mat-datepicker-toggle>
+                    <mat-datepicker #pickertarget></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="pr-8 wdth-status-target" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select (selectionChange)="filterRenderedData('status_name', $event.value)"
+                        [formControl]="status_nameFilter" class="departmentone">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="{{status.status_name}}" *ngFor="let status of straObjStatus"
+                            [disabled]="status.status_name =='Open(Un Hold)'">
+                            <span *ngIf="status.status_name == 'Red'">
+                                <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Yellow'">
+                                <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Green'">
+                                <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Gray (Started)'">
+                                <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Blue (Hold)'">
+                                <img class="status-blue-icon" src="assets/icons/status-blue-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Open(Un Hold)'"><img class="status-open-unhold"
+                                    src="assets/icons/status-open-unhold.png"> {{status.status_name}}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button (click)="resetOptions()">Reset</button>
+
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="30" fxFlex.gt-md="45" fxLayoutAlign="flex-end start" class="rest-paing">
+                <div fxLayout="row wrap">
+                    <div class="dep-date">
+                        <button mat-raised-button class="button-filter" (click)="AddStrategicPopupOpen()" style="margin-right: 10px;
+                    background-color: #1D5E97;
+                    color: white;" *ngIf="strObjPermission.acc_create == 1">Add - New Strategic Objective</button>
+                    </div>
+                    <div class="dep-date">
+                        <button mat-raised-button class="open-all-button mr-8" (click)="allExpandState = true">Open
+                            All</button>
+                    </div>
+                    <div>
+                        <button mat-raised-button class="close-all-button mr-8" (click)="allExpandState = false">Close
+                            All</button>
+                    </div>
+                    <div><button mat-raised-button (click)="initiativeDataPDF()">Print</button></div>
+                    <div><button mat-raised-button [routerLink]="['/apps/action-plan-help']" style="margin-left: 5px;
+                    background: #1c5e97;
+                    color: #fff;">
+                            <!-- <mat-icon>visibility</mat-icon> -->
+                            <span>Help?</span>
+                        </button></div>
+                    <!-- <button [routerLink]="['/apps/invite-user']" >test</button> -->
+                </div>
+            </div>
+
+
+        </div>
+
+    </div>
+    <!-- <div fxLayout="row">
+        <div fxFlex="20" fxLayout="row" style="background-color:rgb(229, 232, 233);height: 100vh;">
+            <div fxFlex="20" class="grap-view">
+                <h3 style="color: white;font-weight: 700;">Flow chart</h3>
+            </div>
+            <div fxFlex="80" style="position: relative;">
+          <h4 style="position: absolute;
+    top: 32%;
+    left: 9%;
+    font-size: 19px;
+    font-weight: 600;
+">Aggressive Growth</h4>
+            <img style=" padding: 0 12px;
+                    position: absolute;width: 200px;
+                    top: 42%;" src="assets/images/graphh.png">
+
+            </div>
+        </div> -->
+    <!-- <ngx-loader [show]="show" [fullScreen] = "fullScreen" [template]="template"> Loading... </ngx-loader> -->
+
+    <div fxLayout="row">
+        <div fxFlex="5" fxLayout="row" style="background-color:rgb(229, 232, 233);">
+            <div fxFlex="100" class="grap-view" style="height: 700px;">
+                <h3 style="color: white;font-weight: 700;">Flow chart</h3>
+            </div>
+
+        </div>
+        <div fxFlex="95">
+            <!-- <div *ngIf="empty == true"  >
+                <div  [routerLink]="['/apps/strategic-obj/started/1']" style="text-align: center; margin-top: 20%;">
+            <button class="mat-raised-button2 mat-raised-button" >Get Started</button>
+        </div>
+            </div> -->
+            <div *ngFor="let department of renderStrategicData">
+                <!-- Strategic Objectives -->
+                <div *ngFor="let renderData of department.strategic_objectives; let i = index">
+                    <div class="content all-pages-content">
+                        <div class="left">
+                            <mat-expansion-panel [expanded]="allExpandState" style="position: relative;">
+                                <mat-expansion-panel-header style="height: auto;">
+                                    <div class="main-widget" fxLayout="row wrap" fxFlex="100">
+                                        <div class="widget-group stra-dept" fxLayout="row wrap" fxFlex="100"
+                                            [@animateStagger]="{value:'50'}">
+
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="40"
+                                                fxFlex.gt-sm="40" fxFlex.gt-md="79">
+                                                <div fxLayout="column" fxLayoutAlign="center">
+                                                    <div class="kpifunction"><span>{{renderData.so_sno}}.</span>
+                                                        {{renderData.description}}</div>
+                                                </div>
+                                            </fuse-widget>
+
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                                fxFlex.gt-sm="8" fxFlex.gt-md="4">
+                                                <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                    <div class="kpifunction"
+                                                        [routerLink]="['/apps/business-plan-view', renderData.strategic_objectives_id]">
+                                                        <button class="strateg-tree"><img
+                                                                src="assets/icons/flow-chart.png" width="20px"></button>
+                                                    </div>
+                                                </div>
+                                            </fuse-widget>
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="38"
+                                                fxFlex.gt-sm="40" fxFlex.gt-md="10" style="cursor: alias;">
+                                                <div fxLayout="column" fxLayoutAlign="center">
+                                                    <div class="staticfunction">Strategic objective</div>
+                                                </div>
+                                            </fuse-widget>
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                                fxFlex.gt-sm="6" fxFlex.gt-md="4" style="text-align: center;">
+                                                <div fxLayout="column" fxLayoutAlign="center center">
+                                                    <div class="status-field">
+                                                        <img class="status-red-icon"
+                                                            *ngIf="renderData.status_name == 'Red'"
+                                                            src="assets/icons/status-red-icon.png">
+                                                        <img class="status-yellow-icon"
+                                                            *ngIf="renderData.status_name == 'Yellow'"
+                                                            src="assets/icons/status-yellow-icon.png">
+                                                        <img class="status-green-icon"
+                                                            *ngIf="renderData.status_name == 'Green'"
+                                                            src="assets/icons/status-green-icon.png">
+                                                        <img class="status-gray-icon"
+                                                            *ngIf="renderData.status_name == 'Gray (Started)'"
+                                                            src="assets/icons/status-gray-icon.png">
+                                                        <img class="status-blue-icon"
+                                                            *ngIf="renderData.status_name == 'Blue (Hold)'"
+                                                            src="assets/icons/status-blue-icon-blueee.png">
+                                                    </div>
+                                                </div>
+                                            </fuse-widget>
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="6"
+                                                fxFlex.gt-sm="6" fxFlex.gt-md="3">
+                                                <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                    <div class="kpifunction"> <button class="btn__review startegic-dots"
+                                                            [matMenuTriggerFor]="menu"
+                                                            style="position: absolute;border: none;right: 0%;top: 6%; background: transparent;">
+                                                            <img class="more-horiz-icon"
+                                                                src="assets/icons/more_horiz-24px.svg" style="transform: rotate(
+                                                            90deg
+                                                            );">
+                                                        </button>
+                                                        <!-- <mat-menu #menu="matMenu"(click)="permissionMenu()"> -->
+                                                        <mat-menu #menu="matMenu" (click)="permissionMenu()">
+                                                            <button mat-menu-item
+                                                                (click)="addInitiativeOpen(renderData)"
+                                                                *ngIf="initiativesPermission.acc_create == 1">
+                                                                <mat-icon>add</mat-icon>
+                                                                <span>Add Initiative</span>
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="EditStrategicPopupOpen(renderData)"
+                                                                *ngIf="strObjPermission.acc_edit == 1">
+                                                                <mat-icon>edit</mat-icon>
+                                                                <span>Edit Strategic Objective</span>
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="DeleteStrategicData(renderData.strategic_objectives_id,renderData.user_id)"
+                                                                *ngIf="strObjPermission.acc_delete == 1">
+                                                                <mat-icon>delete</mat-icon>
+                                                                <span>Remove Strategic Objective</span>
+                                                            </button>
+                                                        </mat-menu>
+                                                    </div>
+                                                </div>
+                                            </fuse-widget>
+                                        </div>
+                                    </div>
+                                </mat-expansion-panel-header>
+                                <!-- initiatives start-->
+                                <div *ngFor="let initiative of renderData.initiatives;">
+                                    <div class="main-widget initiative">
+                                        <div class="widget-group" fxLayout="row" fxLayout.xs="column" fxFlex="100"
+                                            [@animateStagger]="{value:'50'}">
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="48"
+                                                fxFlex.gt-sm="83" fxFlex.gt-md="80">
+                                                <div fxLayout="column" fxLayoutAlign="start">
+                                                    <div class="initiative_data"><span
+                                                            style="margin-right: 11px;">{{initiative.sr_no}}.</span>{{initiative.definition}}
+                                                    </div>
+                                                </div>
+                                            </fuse-widget>
+
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="34"
+                                                fxFlex.gt-sm="23" fxFlex.gt-md="12">
+                                                <div fxLayout="column" fxLayoutAlign="center">
+                                                    <div class="staticInifunction text-init">Initiative</div>
+                                                </div>
+                                            </fuse-widget>
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="16"
+                                                fxFlex.gt-sm="20" fxFlex.gt-md="7" style="text-align: center;">
+                                                <div fxLayout="row" fxLayoutAlign="center">
+                                                    <div class="initiative_data dot-co">
+                                                        <img class="status-red-icon"
+                                                            *ngIf="initiative.status_name == 'Red'"
+                                                            src="assets/icons/status-red-icon.png">
+                                                        <img class="status-yellow-icon"
+                                                            *ngIf="initiative.status_name == 'Yellow'"
+                                                            src="assets/icons/status-yellow-icon.png">
+                                                        <img class="status-green-icon"
+                                                            *ngIf="initiative.status_name == 'Green'"
+                                                            src="assets/icons/status-green-icon.png">
+                                                        <img class="status-gray-icon"
+                                                            *ngIf="initiative.status_name == 'Gray (Started)'"
+                                                            src="assets/icons/status-gray-icon.png">
+                                                        <img class="status-blue-icon-white"
+                                                            *ngIf="initiative.status_name == 'Blue (Hold)'"
+                                                            src="assets/icons/status-blue-icon-blueee.png">
+                                                    </div>
+                                                </div>
+                                            </fuse-widget>
+                                            <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                                fxFlex.gt-sm="3" fxFlex.gt-md="3">
+                                                <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                    <div class="initiative_data initt">
+                                                        <button class="btn__review startegic-dots"
+                                                            [matMenuTriggerFor]="menu"
+                                                            style="position: absolute;border: none;right: 0%;top: 6%; background: transparent;">
+                                                            <img class="more-horiz-icon"
+                                                                src="assets/icons/more_horiz-24px.svg" style="transform: rotate(
+                                                            90deg
+                                                            );">
+                                                        </button>
+                                                        <mat-menu #menu="matMenu">
+                                                            <button mat-menu-item (click)="addActionOpen(initiative)"  *ngIf="actionPlanPermission.acc_create == 1">
+                                                                <mat-icon>add</mat-icon>
+                                                                <span>Add Action-Plan</span>
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="editInitiativeOpen(initiative)"
+                                                                *ngIf="initiativesPermission.acc_edit == 1">
+                                                                <mat-icon>edit</mat-icon>
+                                                                <span>Edit Initiative</span>
+                                                            </button>
+                                                            <button mat-menu-item
+                                                                (click)="deleteInitiative(initiative.initiatives_id,initiative.user_id)"
+                                                                *ngIf="initiativesPermission.acc_delete == 1">
+                                                                <mat-icon>delete</mat-icon>
+                                                                <span>Remove Initiative</span>
+                                                            </button>
+
+                                                        </mat-menu>
+                                                    </div>
+                                                </div>
+                                            </fuse-widget>
+                                        </div>
+                                    </div>
+                                    <!-- action plan start -->
+                                    <div *ngFor="let actionPlan of initiative.action_plans;">
+
+                                        <div class="main-widget table-actionplan">
+                                            <div class="widget-group" fxLayout="row" fxLayout.xs="column" fxFlex="100"
+                                                [@animateStagger]="{value:'50'}">
+
+                                                <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                    fxFlex.gt-xs="48" fxFlex.gt-sm="83" fxFlex.gt-md="80">
+                                                    <div fxLayout="column" fxLayoutAlign="start">
+                                                        <div><span
+                                                                style="margin-right: 11px;">{{actionPlan.sr_no}}.</span>{{actionPlan.definition}}
+                                                        </div>
+                                                    </div>
+                                                </fuse-widget>
+                                                <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                    fxFlex.gt-xs="34" fxFlex.gt-sm="23" fxFlex.gt-md="12">
+                                                    <div fxLayout="column" fxLayoutAlign="center">
+                                                        <div class="staticActfunction action-text">Action Plan</div>
+                                                    </div>
+                                                </fuse-widget>
+                                                <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                    fxFlex.gt-xs="16" fxFlex.gt-sm="20" fxFlex.gt-md="7"
+                                                    style="text-align: center;">
+                                                    <div fxLayout="row" fxLayoutAlign="center">
+                                                        <div class="kpifunction dot-co ">
+                                                            <img class="status-red-icon"
+                                                                *ngIf="actionPlan.status_name == 'Red'"
+                                                                src="assets/icons/status-red-icon.png">
+                                                            <img class="status-yellow-icon"
+                                                                *ngIf="actionPlan.status_name == 'Yellow'"
+                                                                src="assets/icons/status-yellow-icon.png">
+                                                            <img class="status-green-icon"
+                                                                *ngIf="actionPlan.status_name == 'Green'"
+                                                                src="assets/icons/status-green-icon.png">
+                                                            <img class="status-gray-icon"
+                                                                *ngIf="actionPlan.status_name == 'Gray (Started)'"
+                                                                src="assets/icons/status-gray-icon.png">
+                                                            <img class="status-blue-icon-white"
+                                                                *ngIf="actionPlan.status_name == 'Blue (Hold)'"
+                                                                src="assets/icons/status-blue-icon-blueee.png">
+                                                        </div>
+                                                    </div>
+                                                </fuse-widget>
+
+                                                <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                    fxFlex.gt-xs="5" fxFlex.gt-sm="3" fxFlex.gt-md="3">
+                                                    <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                        <div>
+                                                            <button class="btn__review startegic-dots"
+                                                                [matMenuTriggerFor]="menu"
+                                                                style="position: absolute;border: none;right: 0%;top: 6%; background: transparent;">
+                                                                <img class="more-horiz-icon"
+                                                                    src="assets/icons/more_horiz-24px.svg" style="transform: rotate(
+                                                            90deg
+                                                            );">
+                                                            </button>
+
+                                                            <mat-menu #menu="matMenu">
+                                                                <button mat-menu-item
+                                                                    (click)="addKpiOpen(initiative.dept_id,initiative.section_id,initiative.s_o_id,actionPlan.initiatives_id,actionPlan.action_plans_id)" *ngIf="kpiPermission.acc_create == 1">
+                                                                    <mat-icon>add</mat-icon>
+                                                                    <span>Add K.P.I</span>
+                                                                </button>
+                                                                <!-- <button mat-menu-item
+                                                                    (click)="editActionPlanOpen(actionPlan)">
+                                                                    <mat-icon>edit</mat-icon>
+                                                                    <span>Edit Action Plan</span>
+                                                                </button> -->
+                                                                <button mat-menu-item
+                                                                    (click)="deleteActionPlan(actionPlan.action_plans_id,actionPlan.user_id)" *ngIf="actionPlanPermission.acc_delete == 1">
+                                                                    <mat-icon>delete</mat-icon>
+                                                                    <span>Remove Action-Plan</span>
+                                                                </button>
+                                                                <!-- <button mat-menu-item
+                                                                    (click)="editActionPlanOpen(actionPlan)">
+                                                                    <mat-icon>edit</mat-icon>
+                                                                    <span>Edit</span>
+                                                                </button> -->
+
+
+                                                                <button mat-menu-item
+                                                                    [routerLink]="['/apps/strategic-obj/action-plan-comment',actionPlan.action_plans_id]">
+                                                                    <mat-icon>update</mat-icon>
+                                                                    <span>Update</span>
+                                                                </button>
+                                                                <!-- <button mat-menu-item
+                                                                    (click)="EditStrategicPopupOpen(renderData)">
+                                                                    <mat-icon>edit</mat-icon>
+                                                                    <span>Edit</span>
+                                                                </button> -->
+                                                            </mat-menu>
+                                                        </div>
+                                                    </div>
+                                                </fuse-widget>
+                                            </div>
+                                        </div>
+                                        <div *ngFor="let kpi of actionPlan.kpis;">
+
+                                            <div class="main-widget table-kpi">
+                                                <div class="widget-group" fxLayout="row" fxLayout.xs="column"
+                                                    fxFlex="100" [@animateStagger]="{value:'50'}">
+
+                                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                        fxFlex.gt-xs="48" fxFlex.gt-sm="83" fxFlex.gt-md="80">
+                                                        <div fxLayout="column" fxLayoutAlign="start">
+                                                            <div><span
+                                                                    style="margin-right: 11px;">{{kpi.sr_no}}</span>{{kpi.kpi_name}}
+                                                            </div>
+                                                        </div>
+                                                    </fuse-widget>
+                                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                        fxFlex.gt-xs="34" fxFlex.gt-sm="23" fxFlex.gt-md="12">
+                                                        <div fxLayout="column" fxLayoutAlign="center">
+                                                            <div class="staticKpifunction kpi-text">K.P.I</div>
+                                                        </div>
+                                                    </fuse-widget>
+                                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                        fxFlex.gt-xs="16" fxFlex.gt-sm="20" fxFlex.gt-md="7"
+                                                        style="text-align: center;">
+                                                        <div fxLayout="row" fxLayoutAlign="center">
+                                                            <div class="kpifunction dot-co">
+                                                                <img class="status-red-icon"
+                                                                    *ngIf="kpi.status_name == 'Red'"
+                                                                    src="assets/icons/status-red-icon.png">
+                                                                <img class="status-yellow-icon"
+                                                                    *ngIf="kpi.status_name == 'Yellow'"
+                                                                    src="assets/icons/status-yellow-icon.png">
+                                                                <img class="status-green-icon"
+                                                                    *ngIf="kpi.status_name == 'Green'"
+                                                                    src="assets/icons/status-green-icon.png">
+                                                                <img class="status-gray-icon"
+                                                                    *ngIf="kpi.status_name == 'Grey'"
+                                                                    src="assets/icons/status-gray-icon.png">
+                                                            </div>
+                                                        </div>
+                                                    </fuse-widget>
+                                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100"
+                                                        fxFlex.gt-xs="5" fxFlex.gt-sm="3" fxFlex.gt-md="3">
+                                                        <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                            <div>
+                                                                <button class="btn__review startegic-dots"
+                                                                    [matMenuTriggerFor]="menu"
+                                                                    style="position: absolute;border: none;right: 0%;top: 6%; background: transparent;">
+                                                                    <img class="more-horiz-icon"
+                                                                        src="assets/icons/more_horiz-24px.svg"
+                                                                        style="transform: rotate(90deg);">
+                                                                </button>
+                                                                <mat-menu #menu="matMenu">
+                                                                    <button mat-menu-item (click)="kpieditdial(kpi)" *ngIf="actionPlanPermission.acc_edit == 1">
+                                                                        <mat-icon>edit</mat-icon>
+                                                                        <span>Edit KPI</span>
+                                                                    </button>
+                                                                    <button mat-menu-item
+                                                                        (click)="DeleteKpiData(kpi.id,kpi.user_id)" *ngIf="actionPlanPermission.acc_delete == 1">
+                                                                        <mat-icon>delete</mat-icon>
+                                                                        <span>Remove KPI</span>
+                                                                    </button>
+                                                                    <button mat-menu-item
+                                                                        [routerLink]="['/apps/strategic-obj/action-plan-comment',actionPlan.action_plans_id]">
+                                                                        <mat-icon>update</mat-icon>
+                                                                        <span>Update</span>
+                                                                    </button>
+                                                                    <!-- <button mat-menu-item
+                                                                        [routerLink]="['/apps/kpitrackers/addkpidata',kpi.id]">
+                                                                        <mat-icon>update</mat-icon>
+                                                                        <span>Update</span>
+                                                                    </button> -->
+
+                                                                </mat-menu>
+                                                                <!-- [routerLink]="['/apps/strategic-obj/action-plan-comment',actionPlan.action_plans_id]" -->
+                                                            </div>
+                                                        </div>
+                                                    </fuse-widget>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- Kpi end-->
+                                </div>
+                                <!-- action plan end -->
+                            </mat-expansion-panel>
+                        </div>
+                    </div>
+                    <!-- initiatives  end-->
+                </div>
+                <!-- ./ Strategic Objectives -->
+            </div>
+        </div>
+    </div>
+    <!-- ./ Deptartments -->
+</div>

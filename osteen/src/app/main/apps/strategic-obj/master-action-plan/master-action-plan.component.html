@@ -1,0 +1,44 @@
+<mat-table [dataSource]="dataSource" class="mat-elevation-z8">
+
+    <ng-container matColumnDef="fname">
+      <mat-header-cell *matHeaderCellDef> FName </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.fname}} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="lname">
+      <mat-header-cell *matHeaderCellDef> LName </mat-header-cell>
+      <mat-cell *matCellDef="let element"> {{element.lname}} </mat-cell>
+    </ng-container>
+  
+    <ng-container matColumnDef="parcels">
+      <mat-header-cell *matHeaderCellDef> Parcels </mat-header-cell>
+      <mat-cell *matCellDef="let element">
+        <div class="parcels">
+          <ng-container *ngFor="let parcel of element.parcels">
+            <div class="parcel">
+              <ul>
+                <li>ID: {{parcel.parcelId}}</li>
+                <li>Name: {{parcel.parcelName}}</li>
+                <li>ID: {{parcel.description}}</li>
+  
+              </ul>
+              <ul>
+                <li *ngFor="let item of parcel.parcelItems">
+                  <span>{{item.definition}}: {{item.itemName}}</span>
+                </li>
+  
+              </ul>
+  
+            </div>
+          </ng-container>
+        </div>
+      </mat-cell>
+    </ng-container>
+  
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+  </mat-table>
+  
+  <!-- Copyright 2019 Google Inc. All Rights Reserved.
+      Use of this source code is governed by an MIT-style license that
+      can be found in the LICENSE file at http://angular.io/license -->

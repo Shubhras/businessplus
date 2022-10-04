@@ -1,0 +1,118 @@
+@import "src/@fuse/scss/fuse";
+
+#keyperformance {
+    .mat-form-field.mat-form-field-type-mat-select .mat-form-field-infix .mat-select-trigger .mat-select-value {
+        display: flex;
+        max-width: none;
+        margin-right: 8px;
+        font-size: 12px;
+        height: 14px;
+    }
+    .mat-dialog-container {
+        overflow: auto !important;
+    }
+    .arrow-test {
+        color: #039be5;
+        font-size: 18px;
+        min-height: 20px;
+        height: 20px;
+    }
+    table.mat-table {
+        border: 1px solid #dad5d5;
+    }
+    .mat-elevation-z8 {
+        box-shadow: none;
+    }
+
+    .example-container {
+        min-height: auto; //changed from 200
+        margin: 20px 5px 0px 5px;
+    }
+
+    // @media only screen and (min-width: 1200px) {
+    //     .mat-dialog-container {
+    //         min-width: 1050px !important;
+    //     }
+
+    // }
+}
+
+::ng-deep .mat-input-element {
+    font-size: 12px;
+    height: 38px !important;
+}
+
+// Responsive start
+
+
+// @media (min-width: 331px) and (max-width: 369px) {
+//     .addkpi-dial {
+//         .mat-dialog-container {
+//             max-height: 400px !important;
+//         }
+//     }
+// }
+
+// @media (min-width: 601px) and (max-width: 767px) {
+//     .addkpi-dial {
+//         .mat-dialog-container {
+//             max-height: 500px !important;
+//         }
+//     }
+// }
+
+// @media (min-width: 1101px) {
+//     .addkpi-dial {
+//         .mat-dialog-container {
+//             min-width : 790px;
+//             max-height: 640px !important;
+//         }
+//     }
+// }
+
+// @media only screen and (min-width: 1200px) {
+//     .def-dial {
+//         .mat-dialog-container {
+//             min-width: 961px;
+//         }
+//     }
+// }
+
+// @media (min-width: 1280px) and (max-width: 1372px) {
+//     .addkpi-dial {
+//         .mat-dialog-container {
+//             min-width: 1100px !important;
+//         }
+//     }
+// }
+
+@media only screen and (max-width: 599px) {
+    .reset-btn {
+        top: 3px;
+    }
+    .btn-excel {
+        bottom: 2px;
+    }
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+    .field-wdthh {
+        width: 138px;
+    }
+}
+.kpidepartment {
+    margin        : -10px 0px 0px 0px;
+    /* line-height: 24px; */
+    position      : relative;
+    top           : 5px;
+}
+.kpi-date {
+    .mat-form-field-outline {
+        top   : 7px !important;
+        bottom: 4px !important;
+    }
+}
+.btn-excel {
+    bottom: 1px;
+}
+// responsive end

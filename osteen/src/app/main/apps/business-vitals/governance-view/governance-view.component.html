@@ -1,0 +1,97 @@
+<div id="governance-view" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+    <!-- HEADER -->
+    <div class="header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-sm (click)="toggleSidebar('contacts-main-sidebar')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Governance
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
+            <div class="content" fusePerfectScrollbar>
+                <div class="sidebar-content">
+                    <div class="card">
+                        <div class="header p-16" fxLayout="row" fxLayoutAlign="start center">
+                            <span class="h4">Governance</span>
+                            <button mat-icon-button class="sidebar-arrow-back" (click)="toggleSidebarHide('contacts-main-sidebar')" fxHide.gt-md>
+                                <mat-icon class="secondary-text">arrow_back</mat-icon>
+                            </button>
+                        </div>
+                        <div class="py-16" fusePerfectScrollbar>
+                            <div class="nav material2">
+                                <div class="nav-item" aria-label="inbox">
+                                    <a class="nav-link" matRipple (click)="changeTab('organization')" [ngClass]="{'active accent':tabByVlue ==='organization'}">
+                                        <span class="title">Organization Structure</span>
+                                    </a>
+                                </div>
+                                <div class="nav-item" aria-label="inbox" (click)="changeTab('meeting')">
+                                    <a class="nav-link" matRipple [ngClass]="{'active accent':tabByVlue ==='meeting'}">
+                                        <div class="title">Meeting Structure</div>
+                                    </a>
+                                </div>
+                                <div class="nav-item" aria-label="inbox" (click)="changeTab('calendar')">
+                                    <a class="nav-link" matRipple [ngClass]="{'active accent':tabByVlue ==='calendar'}">
+                                        <div class="title">Calendar / Events</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fuse-sidebar>
+        <div class="center p-16 pb-24" fusePerfectScrollbar>
+            <div class="content">
+                <div *ngIf="tabByVlue ==='organization'">
+                    <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                        <div class="category">Organization Structure</div>
+                    </div>
+                    <div class="p-16" fxLayout="row">
+                        <!-- <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <div class="hading-content" fxLayoutAlign="center"> Information flows between levels within
+                                the company</div>
+                            <div>
+                                <img src="assets/images/organisation.jpg" />
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div *ngIf="tabByVlue ==='meeting'">
+                    <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                        <div class="category">Meeting Structure</div>
+                    </div>
+                    <div class="p-16" fxLayout="row">
+                        <!--  <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <div class="hading-content" fxLayoutAlign="center"> Monthly, Quarterly, Half yearly - events, functions, dates andlocation
+                            </div>
+                            <div>
+                                <img src="assets/images/meeting-structure.png" />
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+                <div *ngIf="tabByVlue ==='calendar'">
+                    <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                        <div class="category">Calendar / Events</div>
+                    </div>
+                    <div class="p-16" fxLayout="row">
+                        <!-- <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <div class="hading-content" fxLayoutAlign="center"> Agenda, participation and schedule list
+                            </div>
+                            <div>
+                                <img src="assets/images/calendar.png" />
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

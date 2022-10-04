@@ -1,0 +1,19 @@
+@import "src/@fuse/scss/fuse";
+
+#dashboard-analytics {
+    .content-dashboard {}
+}
+
+/* Responsive start */
+@media only screen and (max-width: 599px) {
+    .btn-print {
+        bottom: 38px;
+    }
+}
+.taskdepartment {
+    .mat-form-field-outline {
+        bottom: 5px !important;
+        top: 12px !important;
+    }
+}
+/* Responsive end */

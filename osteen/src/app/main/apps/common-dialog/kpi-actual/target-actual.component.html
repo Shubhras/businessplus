@@ -1,0 +1,78 @@
+<div class="content popup-content kpi-actual-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form class="kpi-actual-from" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="AddActualForm"
+            [formGroup]="AddActualForm" novalidate>
+            <div fxLayout="row" class="h3 mb-12" fxFlex="100" [@animateStagger]="{value:'50'}">
+                <div fxLayout="column" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start">{{kpiData[0].kpi_name}}
+                </div>
+                <div fxLayout="column" fxFlex.gt-xs="50" fxFlex.gt-md="30" fxLayoutAlign="start">KPI Data1
+                    {{kpiData[0].year}}</div>
+                <div fxLayout="column" fxFlex.gt-xs="50" fxFlex.gt-md="20" fxLayoutAlign="center center">
+                    <img style="height: 20px; width:20px" *ngIf="kpiData[0].ideal_trend == 'negative'"
+                        class="kpi-trend-downward-icon" src="assets/icons/arrow-kpi-down.png">
+                    <img style="height: 20px; width:20px" *ngIf="kpiData[0].ideal_trend == 'positive'"
+                        class="kpi-trend-upward-icon" src="assets/icons/arrow-up-kpi.png">
+                </div>
+            </div>
+            <div formArrayName="targetActualFrom">
+                <table class="actual-target-table" style="border:1px solid #e0e0e0;
+                         border-collapse:collapse; text-align: center;">
+                    <thead>
+                        <th class="target-actual-header">Month</th>
+                        <th class="target-actual-header">Target</th>
+                        <th class="target-actual-header">Actual</th>
+                        <th class="">Comment</th>
+                        <th class="">Recovery Plan</th>
+                        <th class="responsibily-header">Responsibility</th>
+                        <th class="date-header">Target Date</th>
+                        <th class="status-header">Status</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of targetActualFrom.controls; let i = index;" [formGroupName]="i">
+                            <td>
+                                <input matInput formControlName="month" style="text-transform: capitalize;" readonly>
+                            </td>
+                            <td>
+                                <input matInput formControlName="target" readonly>
+                            </td>
+                            <td>
+                                <input matInput formControlName="actual" readonly>
+                            </td>
+                            <td>
+                                <textarea matInput formControlName="comment" placeholder="Comment..."
+                                    readonly></textarea>
+                            </td>
+                            <td>
+                                <textarea matInput formControlName="recovery_plan" placeholder="Recovery plan..."
+                                    readonly></textarea>
+                            </td>
+                            <td>
+                                <input matInput formControlName="responsibility" readonly>
+                                <!-- <mat-select matNativeControl formControlName="responsibility">
+                                    <mat-option value="{{user.user_id}}" *ngFor="let user of userListAllData">
+                                        {{user.name}}
+                                    </mat-option>
+                                </mat-select> -->
+                            </td>
+                            <td class="picker-container">
+                                <input matInput formControlName="target_date" readonly>
+                            </td>
+                            <td>
+                                <img *ngIf="item.get('status').value == 1" class="status-green-icon"
+                                    src="assets/icons/status-green-icon.png">
+                                <img *ngIf="item.get('status').value == 2" class="status-yellow-icon"
+                                    src="assets/icons/status-yellow-icon.png">
+                                <img *ngIf="item.get('status').value == 3" class="status-red-icon"
+                                    src="assets/icons/status-red-icon.png">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="example-button-row mt-4" fxLayoutAlign="end">
+                <!--  <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button> -->
+                <a mat-raised-button color="accent" (click)="AddActualClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

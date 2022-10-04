@@ -1,0 +1,21 @@
+{
+  "private": true,
+  "scripts": {
+    "prod": "gulp --production",
+    "dev": "gulp watch"
+  },
+  "devDependencies": {
+    "@angular-devkit/core": "^12.2.0",
+    "bootstrap-sass": "^3.0.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^5.0.0",
+    "laravel-elixir": "^5.0.0"
+  },
+  "dependencies": {
+    "@angular/animations": "^13.3.5",
+    "angular-google-chart": "^0.1.0",
+    "angular-google-charts": "^0.1.6",
+    "node-sass": "^6.0.1",
+    "sass": "^1.37.5"
+  }
+}

@@ -1,0 +1,145 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="editInitiaForm"
+            [formGroup]="editInitiaForm" (ngSubmit)="editInitiative()" novalidate>
+            <!-- <div class="h3 mb-12">Edit Initiative</div> -->
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end center" fxFlex="1 0 auto"  style="margin-bottom: 1px;">
+                <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                    <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+                </button>
+            </div>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Edit Strategic Initiative</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right rewrk-fileds">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="dept_id" class="department-stratgeix rewrap-text"
+                        (selectionChange)="sectionGet($event.value);strategicObjGet($event.value)" required [disabled]="true">
+                        <mat-option *ngFor="let department of dataDepartment" [value]="department.id">
+                            {{department.dept_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left rewrk-fileds">
+                    <mat-label>Strategic Objective</mat-label>
+                    <mat-select matNativeControl formControlName="s_o_id"
+                        (selectionChange)="mainMaxDtaeStrObj($event.value,1)" required
+                        class="department-stratgeix rewrap-text" [disabled]="true">
+                        <mat-option *ngFor="let strategic of dataStraObj" [value]="strategic.id">
+                            {{strategic.description}}</mat-option>
+                    </mat-select>
+                    <mat-error>Strategic Objective is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Date range start -->
+            <div class="widget-group p-0 mb-16 d-flex" [@animateStagger]="{value:'50'}" [fxLayout]="direction"
+                fxLayout.xs="column">
+                <div class="hadding heading_date" style="margin-right: 12px;">
+                    <span style="font-weight: 900;font-size:14px; ">Start-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.startDate2}}</span>
+                </div>
+                <div class="hadding heading_date"><span style="font-weight: 900;font-size:14px;">End-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.endDate2}}</span>
+                </div>
+            </div>
+            <!-- Date range end -->
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Definition</mat-label>
+                    <textarea cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" matInput
+                        formControlName="definition" required></textarea>
+                    <!--<input matInput formControlName="definition" required> -->
+                    <mat-error>Definition is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                     <mat-label>Section</mat-label>
+                     <mat-select matNativeControl formControlName="section_id" required>
+                         <mat-option *ngFor="let section of dataSections" [value]="section.id"> {{section.section_name}}
+                         </mat-option>
+                     </mat-select>
+                     <mat-error>Section is required</mat-error>
+                 </mat-form-field> -->
+
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-left dialog-field add-dials-ad">
+                    <mat-label>Start</mat-label>
+                    <input matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker"
+                        formControlName="start_date" [(ngModel)]="start_date" readonly [disabled]="datepickerDisable">
+                    <mat-error>Start Date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="remove-right dialog-field add-dials-ad">
+                    <mat-label>Finish</mat-label>
+                    <!--  [min]="minStartDate" -->
+                    <input matInput [min]="datepipe.transform(editInitiaForm.get('start_date').value, 'yyyy-MM-dd')"
+                        [max]="maxStartDate" [matDatepicker]="picker1" formControlName="end_date" [(ngModel)]="end_date"
+                        readonly [disabled]="datepickerDisable">
+                    <mat-error>Finish date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right rewrk-fileds">
+                    <mat-label>Section</mat-label>
+                    <mat-select matNativeControl formControlName="section_id" class="department-stratgeix rewrap-text">
+                        <mat-option *ngFor="let section of dataSections" [value]="section.id"> {{section.section_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Section is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="remove-left rewrk-fileds">
+                    <mat-label>Status</mat-label>
+                    <mat-select formControlName="status" class="department-stratgeix">
+                        <mat-option [value]="status.status_id" *ngFor="let status of straObjStatus"
+                            [disabled]="(status.status_name !='Blue (Hold)') && (status.status_name !='Open(Un Hold)')">
+                            <span *ngIf="status.status_name == 'Red'">
+                                <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Yellow'">
+                                <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Green'">
+                                <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Gray (Started)'">
+                                <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Blue (Hold)'">
+                                <img class="status-blue-icon" src="assets/icons/status-blue-icon.png"><span
+                                    class="hold"> {{status.status_name}}</span>
+                            </span>
+                            <span *ngIf="status.status_name == 'Open(Un Hold)'"><img class="status-open-unhold"
+                                    src="assets/icons/status-open-unhold.png"> {{status.status_name}}</span>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Status is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right dialog-field">
+                    <mat-label>Respons For Change</mat-label>
+                    <input matInput formControlName="comment" required style="height: 30px;">
+                    <mat-error>Respons For Change is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="editInitiativeClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

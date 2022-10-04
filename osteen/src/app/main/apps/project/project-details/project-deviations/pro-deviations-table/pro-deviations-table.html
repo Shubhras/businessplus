@@ -1,0 +1,120 @@
+<div id="pro-deviations-table" class="page-layout blank">
+    <div class="content all-pages-content">
+        <div style="width: 100%;">
+            <div class="left">
+                <div class="main-widget">
+                    <div class="search-filter-select">
+                        <button mat-raised-button class="mr-8" (click)="addDeviations()">Project Deviations</button>
+                        <mat-form-field class="pr-8" appearance="outline">
+                            <mat-label>Deviation From</mat-label>
+                            <input matInput [matDatepicker]="picker" [(ngModel)]="deviation_start_date"
+                                [formControl]="start_dateFilter">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8" appearance="outline">
+                            <mat-label>Deviation To</mat-label>
+                            <input matInput [matDatepicker]="pickerto" [(ngModel)]="deviation_end_date"
+                                [formControl]="end_dateFilter">
+                            <mat-datepicker-toggle matSuffix [for]="pickerto"></mat-datepicker-toggle>
+                            <mat-datepicker #pickerto></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8" appearance="outline">
+                            <mat-label>Department</mat-label>
+                            <mat-select [formControl]="dept_nameFilter">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{department.dept_name}}" *ngFor="let department of dataDepartment">
+                                    {{department.dept_name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8" appearance="outline">
+                            <mat-label>Approved By</mat-label>
+                            <mat-select [formControl]="userListAllDataFilter">
+                                <mat-option value="">All</mat-option>
+                                <mat-option *ngFor="let user of selectedSearchUser" value="{{user.name}}">{{user.name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <button mat-raised-button (click)="resetOptions()">Reset</button>
+                    </div>
+                    <div class="example-container" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                            <ng-container matColumnDef="sr_no" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                    {{element.sr_no}}</td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="deviation_date">
+                                <th mat-header-cell *matHeaderCellDef>Date</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                    {{element.deviation_date}}
+                                </td>
+                            </ng-container> -->
+                            <ng-container matColumnDef="deviation_name">
+                                <th mat-header-cell *matHeaderCellDef>Deviation</th>
+                                <td mat-cell *matCellDef="let element">{{element.deviation_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="deviation_region">
+                                <th mat-header-cell *matHeaderCellDef>Region</th>
+                                <td mat-cell *matCellDef="let element">{{element.deviation_region}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="deviation_start_date">
+                                <th mat-header-cell *matHeaderCellDef>Deviation From</th>
+                                <td mat-cell *matCellDef="let element">{{element.deviation_start_date}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="deviation_end_date">
+                                <th mat-header-cell *matHeaderCellDef>Deviation To</th>
+                                <td mat-cell *matCellDef="let element">{{element.deviation_end_date}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="deviation_risk_name">
+                                <th mat-header-cell *matHeaderCellDef>Risk Level</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.deviation_risk_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="deviation_qty">
+                                <th mat-header-cell *matHeaderCellDef>Qty</th>
+                                <td mat-cell *matCellDef="let element">{{element.deviation_qty}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="dept_name">
+                                <th mat-header-cell *matHeaderCellDef>Department</th>
+                                <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="deviation_aprove_usr_name">
+                                <th mat-header-cell *matHeaderCellDef>Approved by</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.deviation_aprove_usr_name}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="file_name">
+                                <th mat-header-cell *matHeaderCellDef>Attachement</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <a href="{{element.file_name}}" download>{{element.file_name}}</a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="editDeviations(element)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item (click)="deleteDeviations(element)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Delete</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

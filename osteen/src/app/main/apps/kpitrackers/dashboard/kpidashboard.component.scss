@@ -1,0 +1,50 @@
+@import "src/@fuse/scss/fuse";
+
+#kpidashboard {
+  .content-dashboard {
+    /* .decoration {
+      text-decoration: none !important;
+    } */
+  }
+
+  .content-dashboard .courses {
+    max-width: 100% !important;
+  }
+
+
+}
+
+/* Responsive start */
+.kpidepartment {
+  margin        : -10px 0px 0px 0px;
+  /* line-height: 24px; */
+  position      : relative;
+  top           : 5px;
+}
+
+.status-date {
+  .mat-form-field-outline {
+    top   : 9px !important;
+    bottom: 7px !important;
+  }
+}
+
+@media only screen and (max-width: 599px) {
+  .print-btn {
+    bottom: 65px;
+  }
+}
+
+// @media only screen and (min-width: 1200px) {
+//   .mat-dialog-container {
+//       min-width: 600px !important;
+//       // overflow: hidden !important;
+//   }
+
+// }
+// ::ng-deep .mat-dialog-container {
+//   min-width: 600px !important;
+//   // overflow: hidden !important;
+// }
+
+/* Responsive End */

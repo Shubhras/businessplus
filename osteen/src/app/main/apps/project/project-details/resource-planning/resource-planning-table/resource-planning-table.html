@@ -1,0 +1,113 @@
+<div id="resource-planning" class="page-layout blank">
+    <div class="content all-pages-content">
+        <div style="width: 100%;">
+            <div class="left">
+                <div class="main-widget">
+                    <div fxFlex="100" fxFlex.gt-xs="20" fxFlex.gt-md="20" fxLayoutAlign="start">
+                        <button class="mb-4" (click)="sendResourceDashboard('')" mat-raised-button>Dashboard</button>
+                    </div>
+                </div>
+                <div class="main-widget" *ngIf="hideVlue=='showTable'">
+                    <div class="example-container" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSource" id="resourceToplanning">
+                            <!--  <ng-container matColumnDef="{{disCol}}" *ngFor="let disCol of displayedColumns; let colIndex = index" [sticky]="disCol=='Sl.No'">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-name">
+                                    &nbsp;&nbsp;&nbsp;{{disCol}}&nbsp;&nbsp;&nbsp;
+                                </th>
+                                <td mat-cell *cdkCellDef="let element; let slNo = index" class="mat-cell-name">
+                                    <span>{{element[disCol]}}</span>
+                                </td>
+                            </ng-container> -->
+                            <div *ngFor="let disCol of displayedColumns; let colIndex = index">
+                                <template *ngIf="disCol != 'Action'">
+                                    <ng-container matColumnDef="{{disCol}}"
+                                        [sticky]="disCol=='Sl.No' || disCol=='user' || disCol=='T/A'"  [stickyEnd]="disCol=='Total'">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">
+                                               <!--  [ngClass]="{'sticky-cols': isColSticky(disCol)}" -->
+                                            &nbsp;&nbsp;&nbsp;{{disCol}}&nbsp;&nbsp;&nbsp;
+                                        </th>
+                                        <td mat-cell *cdkCellDef="let element; let slNo = index" class="mat-cell-name"
+                                            (click)="sendResourceDashboard(element.user_id)">
+                                            <span *ngIf="element.setColor == ''">{{element[disCol]}}</span>
+                                            <span *ngIf="element.setColor == 'percentageColor'"
+                                                [className]="((element[disCol] < 100 && element[disCol] > 0) ? 'set-color-red' : '') || (element[disCol] >= 100 ? 'set-color-green' : ' ')">{{element[disCol]}}
+                                                <span *ngIf="element[disCol] !='' && element[disCol] !='%'">%</span>
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                </template>
+                                <template *ngIf="disCol == 'Action'">
+                                    <ng-container matColumnDef="{{disCol}}" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">
+                                            &nbsp;&nbsp;&nbsp;{{disCol}}&nbsp;&nbsp;&nbsp;
+                                        </th>
+                                        <td mat-cell *cdkCellDef="let element" class="mat-cell-name">
+                                            <button class="btn__review" *ngIf="element.user_id != hideVlue"
+                                                (click)="editResource(element.user_id,'showFrom')">
+                                                Update
+                                            </button>
+                                        </td>
+                                    </ng-container>
+                                </template>
+                            </div>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <!--  <mat-paginator [pageSizeOptions]="[5, 10, 15]" showFirstLastButtons></mat-paginator> -->
+                        <!-- <mat-table #table [dataSource]="dataSource" class="mat-elevation-z8">
+                            <ng-container *ngFor="let disCol of displayedColumns; let colIndex = index" matColumnDef="{{disCol}}">
+                                <mat-header-cell *matHeaderCellDef>{{disCol}}</mat-header-cell>
+                                <mat-cell *matCellDef="let element ">
+                                    <input matInput value="{{element[disCol]}}">
+                                </mat-cell>
+                            </ng-container>
+                            <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+                            <mat-row *matRowDef="let row; columns: displayedColumns;"></mat-row>
+                        </mat-table> -->
+                    </div>
+                </div>
+                <div *ngIf="hideVlue=='showFrom'">
+                    <form fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" name="resourceForm"
+                        [formGroup]="resourceForm" (ngSubmit)="resourceSubmit()" novalidate>
+                        <div class="single-user">
+                            <div fxFlex="5">
+                                <a (click)="updateResource(1,'showTable')" href="javascript:void(0)">
+                                    <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                </a>
+                            </div>
+                            <div fxFlex="95"> User Name: {{singleUserName}}</div>
+                        </div>
+                        <div formArrayName="data_user" class="search-filter-input">
+                            <div *ngFor="let itemrow of formArrAllocationDept.controls; let i=index"
+                                [formGroupName]="i">
+                                <div fxLayout='column'>
+                                    <div fxLayout='row' class="mt-4">
+                                        <div fxFlex="5" class="mt-8">
+                                            {{itemrow.get('week').value}}
+                                        </div>
+                                        <mat-form-field appearance="outline" fxFlex="15">
+                                            <mat-label>Target</mat-label>
+                                            <input matInput formControlName="target">
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline" class="ml-8" fxFlex="15">
+                                            <mat-label>Actual</mat-label>
+                                            <input matInput formControlName="actual">
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="example-button-row">
+                            <div fxFlex="15" fxLayoutAlign="start">
+                                <button mat-raised-button color="accent">Submit</button>
+                            </div>
+                            <div fxFlex="20" fxLayoutAlign="end">
+                                <button mat-raised-button color="accent"
+                                    (click)="updateResource(1,'showTable')">Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

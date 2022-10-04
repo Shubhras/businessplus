@@ -1,0 +1,254 @@
+<div fxLayoutAlign="end center" style="margin-bottom: 1px;margin-top: -8px;">
+  <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+  </button>
+</div>
+
+<div>
+  <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+    <div class="header-tittle" style="font-weight: 700;font-size: 20px;" fxFlex fxLayoutAlign="center center">
+      Performance Dashboard
+    </div>
+  </div>
+  <div style="font-size: 16px;font-weight: 600;" fxLayoutAlign="center center">Lead KPI status</div>
+</div>
+
+<div id="add-kpi-data" class="page-layout blank">
+
+  <!-- HEADER -->
+  <div class="content all-pages-content">
+
+
+    <div class="function-wrap mat-elevation-z8" *ngFor="let renderData of renderKPIData">
+      <div *ngIf="renderData.add_kpis_data !=''">
+        <div class="left mr-lg-16 dept-header-color">
+          <div class="main-widget">
+            <div class="widget-group" fxLayout="row" fxFlex="100" [@animateStagger]="{value:'50'}">
+              <fuse-widget class="widget" fxLayout="column" fxLayoutAlign="center " fxFlex="100" fxFlex.gt-xs="50"
+                fxFlex.gt-md="50">
+                <div fxLayout="column" fxLayoutAlign="start">
+                  <div class="dept_name">Department:&nbsp;{{renderData.dept_name}}</div>
+                </div>
+              </fuse-widget>
+            </div>
+          </div>
+        </div>
+        <div class="main-widget">
+          <div class="example-container-kpidata">
+            <table mat-table [dataSource]="renderData.datasource" id="contentToConvert">
+              <ng-container matColumnDef="kpi_name">
+                <th class="mat-header-cell-kpi-name" *matHeaderCellDef>KPI</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-kpi-name">{{element.kpi_name}}</td>
+              </ng-container>
+              <ng-container matColumnDef="unit_of_measurement">
+                <th mat-header-cell *matHeaderCellDef>UoM</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-uom">{{element.unit_of_measurement}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="ideal_trend">
+                <th mat-header-cell *matHeaderCellDef>Trend</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-trend">
+                  <a href="javascript:void(0)" matTooltip="positive (good if number goes up)"
+                    aria-label="positive (good if number goes up)">
+                    <img *ngIf="element.ideal_trend == 'positive'" class="kpi-trend-upward-icon"
+                      src="assets/icons/arrow-up-kpi.png">
+                  </a>
+                  <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                    aria-label="negative (good if number goes down)">
+                    <img *ngIf="element.ideal_trend == 'negative'" class="kpi-trend-downward-icon"
+                      src="assets/icons/arrow-kpi-down.png">
+                  </a>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="year_for">
+                <th mat-header-cell *matHeaderCellDef>Year</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-year_for">{{element.year_for}}</td>
+              </ng-container>
+              <ng-container matColumnDef="one_year">
+                <th mat-header-cell *matHeaderCellDef>{{userSelectedYearFull -4}}<span
+                    *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -3}}</span>
+                </th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-year">{{element.one_year}}</td>
+              </ng-container>
+              <ng-container matColumnDef="two_year">
+                <th mat-header-cell *matHeaderCellDef>{{userSelectedYearFull -3}}<span
+                    *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -2}}</span>
+                </th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-year">{{element.two_year}}</td>
+              </ng-container>
+              <ng-container matColumnDef="three_year">
+                <th mat-header-cell *matHeaderCellDef>{{userSelectedYearFull -2}}<span
+                    *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -1}}</span>
+                </th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-year">{{element.three_year}}</td>
+              </ng-container>
+              <ng-container matColumnDef="four_year">
+                <th mat-header-cell *matHeaderCellDef>{{userSelectedYearFull -1}}<span
+                    *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf}}</span>
+                </th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-year">{{element.four_year}}</td>
+              </ng-container>
+              <ng-container matColumnDef="ytd_target_actual">
+                <th mat-header-cell *matHeaderCellDef>YTD</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-ytd"
+                  [ngStyle]="getColor(element.year_for, element.ytd_color)">
+                  {{element.ytd_target_actual}}
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="year_end">
+                <th class="mat-header-cell-year_end" *matHeaderCellDef>YE {{userSelectedYearHalf}}</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-year_end">
+                  {{element.year_end}}
+                </td>
+                <!-- <th class="mat-header-cell-kpi-name" *matHeaderCellDef>KPI</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition-kpi-name">{{element.kpi_name}}</td> -->
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div fxLayout="column" fxLayout.xs="column" fxLayout.sm="column">
+  <div fxFlex="100" class="single-row">
+    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+      <div class="mt-8 pieChart-table" fxLayoutAlign="center" style="border: 1px solid rgba(0, 0, 0, 0.12);overflow: auto;">
+        <table mat-table [dataSource]="dataSourceKPI" style="width: 100%;" class="example-element">
+          <ng-container matColumnDef="dept_name">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition"
+              style="background-color: #cbc8ce;color: #202221; width: 225px;padding-left: 15px;" sticky>
+              Department
+            </th>
+            <td mat-cell *matCellDef="let element" class="mat-cell-definition" style="text-align: left;border-right: 1px solid;
+            border-right-color: rgba(0, 0, 0, 0.12);">
+              <a class="decoration" [routerLink]="[
+                                          '/apps/kpitrackers/keyperformance',
+                                          element.dept_name
+                                      ]" *ngIf="element.dept_name != 'Total'">{{ element.dept_name }}</a>
+              <a class="decoration" [routerLink]="[
+                                          '/apps/kpitrackers/keyperformance'
+                                      ]" *ngIf="element.dept_name == 'Total'">{{ element.dept_name }}</a>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="KPI" style="border-left: 1px solid rgba(0, 0, 0, 0.12);">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition"
+              style="background-color:#cbc8ce; color:#202221; width: 245px;">
+              KPI
+            </th>
+            <td mat-cell *matCellDef="let element" class="mat-cell-definition" style="text-align:left;width: 90px;
+            border-right: 1px solid;
+            border-right-color: rgba(0, 0, 0, 0.12);">
+              <div style="border-bottom: 1px solid;border-bottom-color: rgba(0, 0, 0, 0.12);height: 47px;"
+                *ngFor="let kpirow of element.KPI">{{kpirow.kpi_definition}}</div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="UoM" style="border-left: 1px solid rgba(0, 0, 0, 0.12);">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition"
+              style="background-color: #cbc8ce;color: #202221; width: 90px;">
+              UoM
+            </th>
+            <td mat-cell *matCellDef="let element" class="mat-cell-definition" style="text-align:left;width: 50px;border-right: 1px solid;
+            border-right-color: rgba(0, 0, 0, 0.12);">
+              <div style="border-bottom: 1px solid;border-bottom-color: rgba(0, 0, 0, 0.12);height: 47px;"
+                *ngFor="let kpirow of element.KPI">{{kpirow.unit_of_measurement}}</div>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="five_year_reflection" style="border-left: 1px solid rgba(0, 0, 0, 0.12);">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition"
+              style="background-color: #cbc8ce;color: #202221; width: 177px;text-align: center;">
+              Five Year Reflection-YTD
+              <div fxLayout="row">
+                <div *ngFor="let year_row of year_header" style="width:35px">
+                  <thead>{{year_row.actual_year}}</thead>
+                </div>
+              </div>
+            </th>
+            <td *matCellDef="let element" class="mat-cell-definition" style="border-right: 1px solid;
+            border-right-color: rgba(0, 0, 0, 0.12);
+            border-bottom: 1px solid;
+            border-bottom-color: rgba(0, 0, 0, 0.12);">
+              <div *ngFor="let kpirow of element.KPI" style="text-align:center;border-bottom: 1px solid;
+              border-bottom-color: rgba(0, 0, 0, 0.12);height: 47px;" fxLayout="row">
+                <div style="width: 35px;border-right: 1px solid;
+                border-right-color: rgba(0, 0, 0, 0.12);">
+                  {{kpirow.kpi_actuals[4].avg}}
+                </div>
+                <div style="width: 35px;border-right: 1px solid;
+                border-right-color: rgba(0, 0, 0, 0.12);">
+                  {{kpirow.kpi_actuals[3].avg}}
+                </div>
+                <div style="width: 35px;border-right: 1px solid;
+                border-right-color: rgba(0, 0, 0, 0.12);">
+                  {{kpirow.kpi_actuals[2].avg}}
+                </div>
+                <div style="width: 35px;border-right: 1px solid;
+                border-right-color: rgba(0, 0, 0, 0.12);">
+                  {{kpirow.kpi_actuals[1].avg}}
+                </div>
+                <div style="width: 35px;border-right: 1px solid;
+                border-right-color: rgba(0, 0, 0, 0.12);">
+                  {{kpirow.kpi_actuals[0].ytd}}
+                </div>
+              </div>
+            </td>
+          </ng-container>
+         
+            <th mat-header-cell *matHeaderCellDef class="mat-header-total" style="padding-left: 0px;white-space: nowrap;background-color: #cbc8ce;color: #202221;    width: 80px;
+              text-align: center;">
+              Total KPI
+            </th>
+            <td mat-cell *matCellDef="let element" style="text-align:center;border-right: 1px solid;
+            border-right-color: rgba(0, 0, 0, 0.12);">
+              {{ element.total_kpi }}
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="green">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-color"
+              style="background-color: #cbc8ce;color: #202221;text-align: center;">
+              <img class="status-green-icon imgicn icon-img" src="assets/icons/status-green-icon.png" />
+            </th>
+            <td mat-cell *matCellDef="let element" style="text-align:center">
+              <span class="set-color-circle status-green-color">{{ element.green }}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="yellow">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-color"
+              style="background-color: #cbc8ce;color: #202221;text-align: center;">
+              <img class="status-yellow-icon imgicn icon-img" src="assets/icons/status-yellow-icon.png" />
+            </th>
+            <td mat-cell *matCellDef="let element" style="text-align:center;border-right: 1px solid;
+            border-right-color: rgba(0, 0, 0, 0.12);">
+              <span class="set-color-circle status-yellow-color">{{ element.yellow }}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="red">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-color"
+              style="background-color: #cbc8ce;color: #202221;text-align: center;">
+              <img class="status-red-icon imgicn icon-img" src="assets/icons/status-red-icon.png" />
+            </th>
+            <td mat-cell *matCellDef="let element" style="text-align:center;border-right: 1px solid;
+            border-right-color: rgba(0, 0, 0, 0.12);">
+              <span class="set-color-circle status-red-color">{{ element.red }}</span>
+            </td>
+          </ng-container>
+          <ng-container matColumnDef="gray">
+            <th mat-header-cell *matHeaderCellDef class="mat-header-color"
+              style="padding-right:0;background-color: #cbc8ce;color: #202221;padding-right: 15px;text-align: center;">
+              <img class="status-gray-icon imgicn icon-img" src="assets/icons/status-gray-icon.png" />
+            </th>
+            <td mat-cell *matCellDef="let element" style="text-align: center;
+            padding-right: 15px;border-right: 1px solid;border-right-color: rgba(0, 0, 0, 0.12);">
+              <span class="set-color-circle status-gray-color">{{ element.gray }}</span>
+            </td>
+          </ng-container> 
+          <tr mat-header-row *matHeaderRowDef="displayedColumnsKPI;sticky: true"></tr>
+          <tr mat-row *matRowDef="let row;columns: displayedColumnsKPI" style="text-align:center"
+            class="example-element-row"></tr>
+        </table>
+      </div>
+    </div>
+  </div>
+</div> -->

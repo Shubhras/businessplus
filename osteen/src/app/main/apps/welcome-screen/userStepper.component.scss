@@ -1,0 +1,227 @@
+.close-button {
+  float: right;
+  top: -24px;
+  right: -24px;
+}
+
+.close-icon {
+  transition: 1s ease-in-out;
+}
+
+.close-icon:hover {
+  transform: rotate(180deg);
+}
+
+::ng-deep .icon-outside .close-button {
+  float: right;
+  top: -52px;
+  right: -52px;
+}
+
+
+.testfor.mat-dialog-content {
+  padding: 10px 13px;
+}
+// ::ng-deep .cdk-overlay-pane{
+//   width: 450px !important;
+// }
+.mat-icon-button {
+  padding: 7px 12px 0 0;
+}
+
+.progress {
+
+  display: flex !important;
+  height: 2rem !important;
+  overflow: hidden !important;
+  font-size: 16px !important;
+  background: aliceblue;
+
+  /* background-color: #e9ecef !important; */
+  border-radius: 1.25rem !important;
+}
+
+.progress-bar {
+
+  display: flex !important;
+  -ms-flex-direction: column !important;
+  flex-direction: column !important;
+  -ms-flex-pack: center !important;
+  justify-content: center !important;
+  color: #fff !important;
+  text-align: center !important;
+  white-space: nowrap !important;
+  background-color: #007bff !important;
+  transition: width .6s ease !important;
+}
+
+
+
+
+::ng-deep .mat-dialog-container {
+  // min-width: 400px;
+  // overflow: hidden;
+  position: relative;
+  /* right: 103%; */
+  margin-bottom: 52%;
+}
+/* .mat-dialog-container.fixdialog {
+  min-width: 400px;
+  overflow: hidden;
+  position: relative;
+  margin-bottom: 52%;
+} */
+
+::ng-deep .mat-dialog-content {
+  max-height: 113vh;
+  overflow: hidden;
+}
+
+a:visited {
+  text-decoration: line-through;
+
+}
+
+::ng-deep button.mat-list-item:disabled {
+  cursor: not-allowed !important;
+}
+
+button.mat-list-item {
+  /* column-gap: 16px; */
+  width: 100%;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 27px;
+  border: none;
+  cursor: pointer;
+}
+
+.checklist-body {
+  position: relative;
+}
+
+.checklist-body .items {
+  margin-top: 0.5rem;
+  margin-bottom: 0;
+  padding: 0;
+}
+
+.checklist-body .items .item {
+  padding: 8px 1.25rem;
+  list-style-type: none;
+  color: #555555;
+  cursor: pointer;
+}
+
+.checklist-body .item .completed .checkmark mat-icon {
+  display: inline-block !important;
+  font-size: inherit;
+  height: 1.86em;
+  overflow: visible;
+}
+
+.completed p {
+  text-decoration: line-through;
+}
+
+.itemlock {
+  cursor: pointer;
+}
+
+.checklist-main .checklist-body .item .checkmark>span {
+  display: none !important;
+
+}
+
+.checklist-body .item .completed p {
+  color: #999999;
+  text-decoration: line-through !important;
+}
+
+.checklist-body .items .item .checkmark mat-icon {
+  display: none;
+}
+
+
+
+.checklist-body .item:hover:not(.actionless).locked {
+
+  cursor: not-allowed;
+}
+
+/* .checklist-body .item .locked {
+  padding: 8px 1.25rem;
+  list-style-type: none;
+  color: #999696;
+  cursor: not-allowed;
+} */
+
+.checklist-body .item a {
+  display: flex;
+  text-decoration: none !important;
+  color: rgb(23, 24, 24);
+}
+
+.checklist-body .item a :visited {
+
+  text-decoration: line-through !important;
+
+}
+
+.checklist-body .item p {
+  font-size: 16px;
+  margin: 0;
+  line-height: 1.8;
+}
+
+li.locked {
+  cursor: not-allowed; 
+}
+
+.checklist-body .item .checkmark {
+  display: inline-block;
+  margin-right: 0.80rem;
+  vertical-align: middle;
+  border: 2px solid #555555;
+  border-radius: 100px;
+  width: 3rem;
+  height: 3rem;
+  line-height: 1.86rem;
+  text-align: center;
+  background-color: white;
+  color: white;
+  transition: all 0.25s ease-out;
+  flex-shrink: 0;
+}
+
+.checklist-body .item .checkmark .sequential-label {
+  display: inline-block;
+}
+
+.checklist-body .item .checkmark span {
+  line-height: 2.86rem;
+  position: relative;
+  color: #555555;
+  bottom: 1px;
+}
+
+.singleselect .multiselect-item-checkbox {
+  padding: 0px !important;
+  }
+  .singleselect input[type=checkbox]+div:before {
+  display: none;
+  }
+  
+  .singleselect input[type=checkbox]+div:after {
+  display: none;
+  }
+  
+  .singleselect input[type=checkbox]+div {
+  padding: 6px 10px !important;
+  }
+  
+  .singleselect input[type=checkbox]:checked+div {
+  background-color: #337ab7 !important;
+  color: #fff !important;
+  }

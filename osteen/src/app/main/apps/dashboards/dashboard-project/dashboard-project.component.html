@@ -1,0 +1,222 @@
+<div id="dashboard-project" class="page-layout blank">
+  <!-- HEADER -->
+  <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+    <!-- APP TITLE -->
+    <div fxLayout="row">
+      <div class="logo" fxLayout="row">
+        <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          Project Dashboard
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- HEADER -->
+  <div class="content content-dashboard">
+    <div fxLayout="column" fxLayoutAlign="center" fxFlex="100" fxFlex.gt-xs="100">
+      <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+        <div class="pr-16" fxLayout="column" fxFlex="1 1 auto">
+          <div class="header" fxLayout="row" fxLayoutAlign="start">
+            <div class="widget-group  pl-8 search-filter-select" fxLayout="row wrap" fxFlex="100"
+              [@animateStagger]="{value:'50'}" fxLayoutAlign="start">
+              <div fxFlex="100" fxFlex.gt-xs="46" fxFlex.gt-md="46">
+                <button class="ml-8" mat-raised-button routerLink="/apps/project/project-add">New Project</button>
+                <!-- <mat-form-field class="ml-8" appearance="outline">
+                  <mat-label>Department</mat-label>
+                  <mat-select (selectionChange)="filterRenderedData($event.value)">
+                    <mat-option value="" class="dept-mat-option">All</mat-option>
+                    <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">
+                      {{department.dept_name}}</mat-option>
+                  </mat-select>
+                </mat-form-field> -->
+              </div>
+              <div fxFlex="100" fxFlex.gt-xs="34" fxFlex.gt-md="34" fxHide.xs fxLayoutAlign="start center">
+                <div class="unit_name">{{unit_name}}</div>
+              </div>
+              <div fxFlex="100" fxFlex.gt-xs="20" fxFlex.gt-md="20" fxLayoutAlign="flex-end center">
+                <button mat-raised-button (click)="mainProDashboardPDF()" class="print-button">Print</button>
+              </div>
+            </div>
+          </div>
+        </div>
+       
+        <div class="course mt-4" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+          [@animate]="{value:'*',params:{y:'100%'}}">
+          <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+           
+            <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+              <div class="widget-group dept-graph" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                
+                <div fxLayout="column" class="pieChart-table" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50"
+                fxLayoutAlign="center center">
+                <table mat-table class="mat-table-lesent" [dataSource]="dataSourceLesent">
+                  <ng-container matColumnDef="lesent_name">
+                    <td mat-cell *matCellDef="let element" class="mat-cell-lesentName">
+                      <img *ngIf="element.lesent_name == 'Red'" class="status-red-icon"
+                        src="assets/icons/status-red-icon.png">
+                      <img *ngIf="element.lesent_name == 'Yellow'" class="status-yellow-icon"
+                        src="assets/icons/status-yellow-icon.png">
+                      <img *ngIf="element.lesent_name == 'Green'" class="status-green-icon"
+                        src="assets/icons/status-green-icon.png">
+                      <img *ngIf="element.lesent_name == 'Gray'" class="status-gray-icon"
+                        src="assets/icons/status-gray-icon.png">
+                      <img *ngIf="element.lesent_name == 'Blue'" class="status-blue-icon"
+                        src="assets/icons/status-blue-icon.png">
+                    </td>
+                  </ng-container>
+                  <ng-container matColumnDef="lesent_description">
+                    <td mat-cell *matCellDef="let element">{{element.lesent_description}}
+                    </td>
+                  </ng-container>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumnsLesent;"></tr>
+                </table>
+              </div>
+                <div fxLayout="column" class="pieChart-table" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                  <div id="pieChartPROJECT" fxLayoutAlign="center" #pieChartPROJECT></div>
+                </div>
+               
+              </div>
+              <div class="widget-group dept-graph" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                  <div fxLayoutAlign="center" class="pieChart-table">
+                    <table mat-table [dataSource]="dataSourceYearWiseDept">
+                      <ng-container matColumnDef="sr_no">
+                        <th mat-header-cell *matHeaderCellDef sticky class="mat-header-sr-no">Sr.No.</th>
+                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="year">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-year">Year</th>
+                        <td mat-cell *matCellDef="let element">{{element.year}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-total">Total</th>
+                        <td mat-cell *matCellDef="let element" [routerLink]="['/apps/dashboards/project']">
+                          {{element.total}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="closed">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element" [routerLink]="['/apps/dashboards/project']"><span
+                            class="set-color-circle status-green-color">{{element.closed}}</span></td>
+                      </ng-container>
+                      <ng-container matColumnDef="open">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element" [routerLink]="['/apps/dashboards/project']">
+                          <span class="set-color-circle status-yellow-color">{{element.open}}</span>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="delayed">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element" [routerLink]="['/apps/dashboards/project']"><span
+                            class="set-color-circle status-red-color">{{element.delayed}}</span></td>
+                      </ng-container>
+                      <ng-container matColumnDef="closedWithDelay">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element" [routerLink]="['/apps/dashboards/project']"><span
+                            class="set-color-circle status-gray-color">{{element.closedWithDelay}}</span></td>
+                      </ng-container>
+                      <ng-container matColumnDef="onHold">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-blue-icon-white" src="assets/icons/status-blue-icon-white.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element" [routerLink]="['/apps/dashboards/project']"><span
+                            class="set-color-circle status-blue-color">{{element.onHold}}</span></td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsYearWiseDept"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsYearWiseDept;"></tr>
+                    </table>
+                  </div>
+                </div>
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                  <div fxLayoutAlign="center" class="pieChart-table">
+                    <table mat-table [dataSource]="dataSourceByDept">
+                      <ng-container matColumnDef="sr_no">
+                        <th mat-header-cell *matHeaderCellDef sticky class="mat-header-sr-no">Sr.No.</th>
+                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="dept_name">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition">Department</th>
+                        <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                          <a class="link" [routerLink]="['/apps/dashboards/project-dept-name',element.dept_name]"
+                            *ngIf="element.dept_name !='Total'">
+                            {{element.dept_name}}
+                          </a>
+                          <a class="link" [routerLink]="['/apps/dashboards/project']"
+                            *ngIf="element.dept_name =='Total'">
+                            {{element.dept_name}}
+                          </a>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="total">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-total">Total</th>
+                        <td mat-cell *matCellDef="let element">
+                          {{element.total}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="closed">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <a class="link" [routerLink]="['/apps/dashboards/project-status-dept',3,element.dept_name]"><span
+                              class="set-color-circle status-green-color">{{element.closed}}</span></a></td>
+                      </ng-container>
+                      <ng-container matColumnDef="open">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <a class="link" [routerLink]="['/apps/dashboards/project-status-dept',1,element.dept_name]">
+                            <span class="set-color-circle status-yellow-color">{{element.open}}</span>
+                          </a>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="delayed">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <a class="link" [routerLink]="['/apps/dashboards/project-status-dept',2,element.dept_name]">
+                            <span class="set-color-circle status-red-color">{{element.delayed}}</span>
+                          </a>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="closedWithDelay">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <a class="link" [routerLink]="['/apps/dashboards/project-status-dept',4,element.dept_name]">
+                            <span class="set-color-circle status-gray-color">{{element.closedWithDelay}}</span>
+                          </a>
+                        </td>
+                      </ng-container>
+                      <ng-container matColumnDef="onHold">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                          <img class="status-blue-icon-white" src="assets/icons/status-blue-icon-white.png">
+                        </th>
+                        <td mat-cell *matCellDef="let element">
+                          <a class="link" [routerLink]="['/apps/dashboards/project-status-dept',5,element.dept_name]">
+                            <span class="set-color-circle status-blue-color">{{element.onHold}}</span>
+                          </a>
+                        </td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumnsByDept"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumnsByDept;"></tr>
+                    </table>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- / CONTENT -->
+</div>

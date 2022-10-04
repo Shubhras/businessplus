@@ -1,0 +1,491 @@
+<div id="task-analytics" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Task
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div style="width: 100%;">
+            <div class="left mb-16 header-menu">
+                <div class="main-widget">
+                    <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                        <div class="menu">
+                            <button mat-button routerLink="/apps/main-dashboard">Home</button>
+                            <button mat-button routerLink="/apps/dashboards/dashboard">Dashboard</button>
+                            <button mat-button (click)="AddPopupOpen()" *ngIf="taskPermission.acc_create == 1">New
+                                Task</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="left">
+                <div class="main-widget main-widget-filter">
+                    <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                            <div fxLayout="column" fxLayoutAlign="start">
+                                <div class="example-button-row search-filter-input">
+                                    <button mat-raised-button class="button-filter"
+                                        (click)="TaskShowFilter()">Filter</button>
+                                    <button mat-raised-button class="button-filter" (click)="AddPopupOpen()"
+                                        *ngIf="taskPermission.acc_create == 1">New Task</button>
+                                    <mat-form-field appearance="outline" class="srch-anyy srchinput">
+                                        <mat-label>Search</mat-label>
+                                        <input matInput [formControl]="inputSearchFilter"
+                                            (keyup)="applyFilter($event.target.value)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                            <div fxLayout="column">
+                                <div class="example-button-row button-excel-pdf" fxLayoutAlign="end">
+                                    <button mat-raised-button class="button-excel excel-print-btn"
+                                        (click)="TaskTOExcel()">Excel</button>
+                                    <button mat-raised-button class="button-pdf excel-print-btn"
+                                        (click)="TaskDownloadPDF()">Print</button>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                    <div [hidden]="showfilter" class="search-filter-select">
+                        <mat-form-field class="pr-8 srchinput filter-field " appearance="outline">
+                            <mat-label>Priority</mat-label>
+                            <mat-select [formControl]="priority_nameFilter" class="mtlst-slct">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{priority.name}}" *ngFor="let priority of taskDataPriorities">
+                                    {{priority.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8 srchinput filter-field " appearance="outline">
+                            <mat-label>Department</mat-label>
+                            <mat-select [formControl]="dept_nameFilter" class="mtlst-slct">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{department.dept_name}}" *ngFor="let department of dataDepartment">
+                                    {{department.dept_name}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8 srchinput filter-field " appearance="outline">
+                            <mat-label>Task Owner</mat-label>
+                            <mat-select [formControl]="task_owaner_nameFilter" class="mtlst-slct">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{user.name}}" *ngFor="let user of userListAllData">{{user.name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <mat-form-field class="pr-8 srchinput filter-field " appearance="outline">
+                            <mat-label>Status</mat-label>
+                            <mat-select [formControl]="status_nameFilter" class="mtlst-slct">
+                                <mat-option value="">All</mat-option>
+                                <mat-option value="{{statuss.status_name}}" *ngFor="let statuss of taskDataStatus">
+                                    {{statuss.status_name}}
+                                </mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                        <!-- <mat-form-field class="pr-8" appearance="outline">
+                        <mat-label>My Taks</mat-label>
+                        <mat-select [formControl]="task_createFilter">
+                            <mat-option value="">All</mat-option>
+                            <mat-option value="assignedTo">Assigned To Me</mat-option>
+                            <mat-option value="createdBy">Created By Me</mat-option>
+                        </mat-select>
+                        </mat-form-field> -->
+                        <button class="mb-4 button-reset" mat-raised-button (click)="resetOptions()">Reset</button>
+                    </div>
+                    </div>
+                <div class="main-widget">
+                    <div class="widget-group" fxLayout="row wrap" fxLayoutAlign="center" fxFlex="100" [@animateStagger]="{value:'50'}">
+                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="30"
+                            fxFlex.gt-md="14">
+                            <a (click)="resetOptions()" class="decoration">
+                                <div class="fuse-card totaltask" style="background-color: #6c757d;height: 56px">
+                                    <div class="p-16" fxLayout="column" fxLayoutAlign="space-between center">
+                                        <div>
+                                            <div class="secondary-text" fxLayoutAlign="center">TOTAL TASK</div>
+                                            <div class="total-task-text" fxLayoutAlign="center">{{total_task}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </fuse-widget>
+                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="30"
+                            fxFlex.gt-md="14">
+                            <a (click)="taskFilterByColor('Closed')" class="decoration">
+                                <div class="fuse-card totaltask" style="background-color: #52bb56;">
+                                    <div fxLayout="column" fxLayoutAlign="space-between center">
+                                        <div>
+                                            <div class="secondary-text" fxLayoutAlign="center">CLOSED TASK</div>
+                                            <div class="total-task-text" fxLayoutAlign="center">{{closed_task}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </fuse-widget>
+                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="30"
+                            fxFlex.gt-md="14">
+                            <a (click)="taskFilterByColor('Open')" class="decoration">
+                                <div class="fuse-card totaltask" style="color: #333333;background-color: #FFD933; height: 56px;">
+                                    <div fxLayout="column" fxLayoutAlign="space-between center">
+                                        <div>
+                                            <div class="secondary-open" fxLayoutAlign="center">WIP TASK</div>
+                                            <div class="total-task-open" fxLayoutAlign="center">{{open_task}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </fuse-widget>
+                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="30"
+                            fxFlex.gt-md="14">
+                            <a (click)="taskFilterByColor('Delayed')" class="decoration">
+                                <div class="fuse-card totaltask" style="background-color: #ef5350;">
+                                    <div fxLayout="column" fxLayoutAlign="space-between center">
+                                        <div>
+                                            <div class="secondary-text" fxLayoutAlign="center">DELAYED TASK</div>
+                                            <div class="total-task-text" fxLayoutAlign="center">{{delayed_task}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </fuse-widget>
+                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="30"
+                            fxFlex.gt-md="16">
+                            <a (click)="taskFilterByColor('Closed With Delay')" class="decoration">
+                                <div class="fuse-card totaltask" style="background-color: #a9b7b6;">
+                                    <div fxLayout="column" fxLayoutAlign="space-between center">
+                                        <div>
+                                            <div class="secondary-text" fxLayoutAlign="center">CLOSED WITH DELAY</div>
+                                            <div class="total-task-text" fxLayoutAlign="center">{{closedWithDelay_task}}
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </fuse-widget>
+                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-sm="30"
+                            fxFlex.gt-md="14">
+                            <a (click)="taskFilterByColor('On Hold')" class="decoration">
+                                <div class="fuse-card totaltask" style="background-color: #039cfd;">
+                                    <div fxLayout="column" fxLayoutAlign="space-between center">
+                                        <div>
+                                            <div class="secondary-text" fxLayoutAlign="center">HOLD TASK</div>
+                                            <div class="total-task-text" fxLayoutAlign="center">{{on_hold}}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </a>
+                        </fuse-widget>
+                    </div>
+                </div>
+                <div class="main-widget main-widget-filter">
+                   
+                    <div class="header-first" fxLayoutAlign="center">Assigned To Me</div>
+                    <!-- <div class="header-second mt-4" fxLayoutAlign="center">My Task</div> -->
+                    <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSourceAssignedSelf" id="contentToConvert">
+                            <ng-container matColumnDef="tasks_id" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <td mat-cell *matCellDef="let element; let i=index" class="mat-cell-sr-no">{{i+1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_name">
+                                <th mat-header-cell *matHeaderCellDef>Task</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-definition"><a class="link"
+                                        [routerLink]="['/apps/dashboards/taskremark', element.tasks_id]">{{element.task_name}}</a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="priority_name">
+                                <th mat-header-cell *matHeaderCellDef>Priority</th>
+                                <td mat-cell *matCellDef="let element">{{element.priority_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="event_name">
+                                <th mat-header-cell *matHeaderCellDef>Event Name</th>
+                                <td mat-cell *matCellDef="let element">{{element.event_name}}</td>
+                            </ng-container>
+
+                            <ng-container matColumnDef="dept_name">
+                                <th mat-header-cell *matHeaderCellDef>Department</th>
+                                <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_owaner_name">
+                                <th mat-header-cell *matHeaderCellDef>Task Owner</th>
+                                <td mat-cell *matCellDef="let element">{{element.task_owaner_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_assigns_data">
+                                <th mat-header-cell *matHeaderCellDef>Co-Owner</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="task_assigns" *ngFor="let task_assigns of element.task_assigns_data">
+                                        {{task_assigns.name}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="start_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                                <td mat-cell *matCellDef="let element">{{element.start_date | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="end_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                                <td mat-cell *matCellDef="let element">{{element.end_date | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="completion_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-completion">Completion Date</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span *ngIf="element.completion_date == completion">NA</span>
+                                    <span
+                                        *ngIf="element.completion_date != completion">{{element.completion_date | date:'dd-MM-yyyy'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status_name">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element"
+                                    [ngStyle]="{'color':statusGetColor(element.status_name)}"
+                                    style="font-weight: bold;">{{element.status_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="EditPopupOpen(element)"
+                                            *ngIf="taskPermission.acc_edit == 1">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item (click)="DeleteTasks(element.tasks_id)"
+                                            *ngIf="taskPermission.acc_delete == 1">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Remove</span>
+                                        </button>
+                                        <button mat-menu-item (click)="StatusPopupOpen(element)">
+                                            <mat-icon>star_rate</mat-icon>
+                                            <span>Change Status</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/taskremark', element.tasks_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View Details</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/taskfiles', element.tasks_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View Files</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <!-- <mat-paginator [pageSizeOptions]="[15, 25, 30]" showFirstLastButtons></mat-paginator> -->
+                    </div>
+                    </div>
+                    
+                    <div class="example-container mat-elevation-z8 mb-8 mt-8" id="content" #content #TABLE>
+                        <div class="header-first mt-3" fxLayoutAlign="center">Assigned By Other</div>
+                    <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSourceAssignedOther" id="contentToConvert">
+                            <ng-container matColumnDef="tasks_id" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <td mat-cell *matCellDef="let element; let i=index" class="mat-cell-sr-no">{{i+1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_name">
+                                <th mat-header-cell *matHeaderCellDef>Task</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-definition"><a class="link"
+                                        [routerLink]="['/apps/dashboards/taskremark', element.tasks_id]">{{element.task_name}}</a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="priority_name">
+                                <th mat-header-cell *matHeaderCellDef>Priority</th>
+                                <td mat-cell *matCellDef="let element">{{element.priority_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="event_name">
+                                <th mat-header-cell *matHeaderCellDef>Event Name</th>
+                                <td mat-cell *matCellDef="let element">{{element.event_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="dept_name">
+                                <th mat-header-cell *matHeaderCellDef>Department</th>
+                                <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_owaner_name">
+                                <th mat-header-cell *matHeaderCellDef>Task Owner</th>
+                                <td mat-cell *matCellDef="let element">{{element.task_owaner_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_assigns_data">
+                                <th mat-header-cell *matHeaderCellDef>Co-Owner</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="task_assigns" *ngFor="let task_assigns of element.task_assigns_data">
+                                        {{task_assigns.name}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="start_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                                <td mat-cell *matCellDef="let element">{{element.start_date | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="end_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                                <td mat-cell *matCellDef="let element">{{element.end_date | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="completion_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-completion">Completion Date</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span *ngIf="element.completion_date == completion">NA</span>
+                                    <span
+                                        *ngIf="element.completion_date != completion">{{element.completion_date | date:'dd-MM-yyyy'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status_name">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element"
+                                    [ngStyle]="{'color':statusGetColor(element.status_name)}"
+                                    style="font-weight: bold;">{{element.status_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="EditPopupOpen(element)"
+                                            *ngIf="taskPermission.acc_edit == 1">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item (click)="DeleteTasks(element.tasks_id)"
+                                            *ngIf="taskPermission.acc_delete == 1">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Remove</span>
+                                        </button>
+                                        <button mat-menu-item (click)="StatusPopupOpen(element)">
+                                            <mat-icon>star_rate</mat-icon>
+                                            <span>Change Status</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/taskremark', element.tasks_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View Details</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/taskfiles', element.tasks_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View Files</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <!-- <mat-paginator [pageSizeOptions]="[15, 25, 30]" showFirstLastButtons></mat-paginator> -->
+                    </div>
+                    <div class="example-container mat-elevation-z8 mb-8 mt-8" id="content" #content #TABLE>
+                        <div class="header-first" fxLayoutAlign="center">Created By Me</div>
+                        <table mat-table [dataSource]="dataSourceCreated" id="contentToConvert" style="margin-top: 19px;">
+                            <ng-container matColumnDef="tasks_id" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <td mat-cell *matCellDef="let element; let i=index" class="mat-cell-sr-no">{{i+1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_name">
+                                <th mat-header-cell *matHeaderCellDef>Task</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-definition"><a class="link"
+                                        [routerLink]="['/apps/dashboards/taskremark', element.tasks_id]">{{element.task_name}}</a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="priority_name">
+                                <th mat-header-cell *matHeaderCellDef>Priority</th>
+                                <td mat-cell *matCellDef="let element">{{element.priority_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="event_name">
+                                <th mat-header-cell *matHeaderCellDef>Event Name</th>
+                                <td mat-cell *matCellDef="let element">{{element.event_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="dept_name">
+                                <th mat-header-cell *matHeaderCellDef>Department</th>
+                                <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_owaner_name">
+                                <th mat-header-cell *matHeaderCellDef>Task Owner</th>
+                                <td mat-cell *matCellDef="let element">{{element.task_owaner_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="task_assigns_data">
+                                <th mat-header-cell *matHeaderCellDef>Co-Owner</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <div class="task_assigns" *ngFor="let task_assigns of element.task_assigns_data">
+                                        {{task_assigns.name}}
+                                    </div>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="start_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                                <td mat-cell *matCellDef="let element">{{element.start_date | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="end_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                                <td mat-cell *matCellDef="let element">{{element.end_date | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="completion_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-completion">Completion Date</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <span *ngIf="element.completion_date == completion">NA</span>
+                                    <span
+                                        *ngIf="element.completion_date != completion">{{element.completion_date | date:'dd-MM-yyyy'}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="status_name">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element"
+                                    [ngStyle]="{'color':statusGetColor(element.status_name)}"
+                                    style="font-weight: bold;">{{element.status_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="EditPopupOpen(element)"
+                                            *ngIf="taskPermission.acc_edit == 1">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item (click)="DeleteTasks(element.tasks_id)"
+                                            *ngIf="taskPermission.acc_delete == 1">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Remove</span>
+                                        </button>
+                                        <button mat-menu-item (click)="StatusPopupOpen(element)">
+                                            <mat-icon>star_rate</mat-icon>
+                                            <span>Change Status</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/taskremark', element.tasks_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View Details</span>
+                                        </button>
+                                        <button mat-menu-item
+                                            [routerLink]="['/apps/dashboards/taskfiles', element.tasks_id]">
+                                            <mat-icon>visibility</mat-icon>
+                                            <span>View Files</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[15, 25, 30]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,21 @@
+@import "src/@fuse/scss/fuse";
+
+#pro-deviations-table {
+  .example-container {
+    min-height: 200px;
+  }
+  .mat-header-completion {
+    padding-right: 0px;
+    width: 90px;
+  }
+  /* .mat-elevation-z8 {
+    box-shadow: 0px 0px 6px 0px rgba(0, 0, 0, 0.2);
+  } */
+  div.task_assigns:last-child {
+    border-bottom: 0px;
+  }
+  div.task_assigns {
+    border-bottom: 1px solid #ddd;
+    padding: 5px 0px;
+  }
+}

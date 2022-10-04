@@ -1,0 +1,106 @@
+ <div class="content popup-content">
+        <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="editActionForm" [formGroup]="editActionForm" (ngSubmit)="actionPlanEdit()" novalidate>
+                <div class="h3 mb-12">Edit Action</div>
+                 <div fxLayout="row" class="field-textarea" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                      <mat-label>Definition</mat-label>
+                      <textarea matInput  formControlName="action_plan_definition" required></textarea>
+                      <mat-error>Definition is required!</mat-error>
+                   </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                      <mat-label>Department</mat-label>
+                      <mat-select matNativeControl formControlName="dept_id" (selectionChange)="strategicObjGet($event.value);kpiGet($event.value)">
+                        <mat-option *ngFor="let department of dataDepartment" [value]="department.id" >{{department.dept_name}}</mat-option>
+                      </mat-select>
+                      <mat-error>Department is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                      <mat-label>Strategic</mat-label>
+                      <mat-select matNativeControl formControlName="s_o_id" (selectionChange)="initiativesGet($event.value)">
+                        <mat-option *ngFor="let strategic of dataStraObj" [value]="strategic.id">{{strategic.description}}</mat-option>
+                      </mat-select>
+                      <mat-error>Strategic is required</mat-error>
+                  </mat-form-field>
+              </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                   <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Initiative</mat-label>
+                    <mat-select formControlName="initiatives_id">
+                        <mat-option *ngFor="let initiatives of  dataInitiatives" [value]="initiatives.id">{{initiatives.definition}}</mat-option>
+                      </mat-select>
+                       <mat-error>Initiative is required</mat-error>
+                   </mat-form-field>
+                   <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                      <mat-label>KPI</mat-label>
+                       <mat-select formControlName="kpi_id">
+                           <mat-option *ngFor="let kpi of  kpiDataList" [value]="kpi.kpi_id">{{kpi.kpi_name}}</mat-option>
+                       </mat-select>
+                       <mat-error>KPI is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                      <mat-label>target</mat-label>
+                      <input matInput  formControlName="target" required>
+                      <mat-error>target is required!</mat-error>
+                    </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Owner</mat-label>
+                    <mat-select formControlName="co_owner" [compareWith]="compareFn" multiple>
+                      <mat-option *ngFor="let user of  dataActionOwner" [value]="user.id">{{user.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Owner is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Start Date</mat-label>
+                    <input matInput [matDatepicker]="picker" formControlName="start_date" [(ngModel)]="start_date" required readonly>
+                    <mat-error>Start Date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>End Date</mat-label>
+                    <input matInput [matDatepicker]="picker1" formControlName="end_date" [(ngModel)]="end_date" required readonly>
+                    <mat-error>End date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Control Point</mat-label>
+                    <mat-select formControlName="control_point">
+                      <mat-option value="Monthly">Monthly</mat-option>
+                      <mat-option value="Quarterly">Quarterly</mat-option>
+                      <mat-option value="Half Yearly">Half Yearly</mat-option>
+                      <mat-option value="Yearly">Yearly</mat-option>
+                    </mat-select>
+                    <mat-error>control_point is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Status</mat-label>
+                    <mat-select  formControlName="status">
+                      <mat-option [value]="status.status_id" *ngFor="let status of straObjStatus" [disabled]="(status.status_name !='Blue (Hold)') && (status.status_name !='Open(Un Hold)')">{{status.status_name}}</mat-option>
+                      </mat-select>
+                    <mat-error>Status is required</mat-error>
+                  </mat-form-field>
+               </div>
+               <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Respons For Change</mat-label>
+                    <input matInput  formControlName="comment" required>
+                    <mat-error>Respons For Change is required!</mat-error>
+                  </mat-form-field>    
+               </div>
+                <div class="example-button-row" fxLayoutAlign="end">
+                    <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                    <button mat-raised-button color="accent" (click)="editActionPlanClose()">Cancel</button>
+                </div>
+            </form>
+        </div>
+</div>

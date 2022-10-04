@@ -1,0 +1,98 @@
+<div id="presentation-view" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+    <!-- HEADER -->
+    <div class="header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-sm (click)="toggleSidebar('contacts-main-sidebar')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Presentation
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
+            <div class="content" fusePerfectScrollbar>
+                <div class="sidebar-content">
+                    <div class="card">
+                        <div class="header p-16" fxLayout="row" fxLayoutAlign="start center">
+                            <span class="h4">Presentation</span>
+                            <button mat-icon-button class="sidebar-arrow-back" (click)="toggleSidebarHide('contacts-main-sidebar')" fxHide.gt-md>
+                                <mat-icon class="secondary-text">arrow_back</mat-icon>
+                            </button>
+                        </div>
+                        <div class="py-16" fusePerfectScrollbar>
+                            <div class="nav material2">
+                                <div class="nav-item" aria-label="inbox">
+                                    <a class="nav-link" matRipple (click)="changeTab('corporate')" [ngClass]="{'active accent':tabByVlue ==='corporate'}">
+                                        <span class="title">Corporate</span>
+                                    </a>
+                                </div>
+                                <div class="nav-item" aria-label="inbox" (click)="changeTab('functional')">
+                                    <a class="nav-link" matRipple [ngClass]="{'active accent':tabByVlue ==='functional'}">
+                                        <div class="title">Functional</div>
+                                    </a>
+                                </div>
+                                <div class="nav-item" aria-label="inbox" (click)="changeTab('history')">
+                                    <a class="nav-link" matRipple [ngClass]="{'active accent':tabByVlue ==='history'}">
+                                        <div class="title">History</div>
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </fuse-sidebar>
+        <div class="center p-16 pb-24" fusePerfectScrollbar>
+            <div class="content">
+                <div *ngIf="tabByVlue ==='corporate'">
+                    <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                        <div class="category">Corporate</div>
+                    </div>
+                    <div class="p-16" fxLayout="row">
+                        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <!--  <div class="hading-content" fxLayoutAlign="center">Company History, photographs</div>
+                            <div>
+                                <embed src="assets/images/primaplus_compressed.pdf" type="application/pdf"
+                                    width="1020px" height="520px" />
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="tabByVlue ==='functional'">
+                    <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                        <div class="category">Functional</div>
+                    </div>
+                    <div class="p-16" fxLayout="row">
+                        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <!-- <div class="hading-content" fxLayoutAlign="center">Departmental Presentation</div>
+                            <div>
+                                <embed src="assets/images/primaplus_compressed.pdf" type="application/pdf"
+                                    width="1020px" height="520px" />
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="tabByVlue ==='history'">
+                    <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                        <div class="category">History</div>
+                    </div>
+                    <div class="p-16" fxLayout="row">
+                        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <!-- <div class="hading-content" fxLayoutAlign="center">Corporate Presentation
+                            </div>
+                            <div>
+                                <embed src="assets/images/primaplus_compressed.pdf" type="application/pdf"
+                                    width="1020px" height="520px" />
+                            </div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

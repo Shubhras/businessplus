@@ -1,0 +1,177 @@
+<div id="tasks-remark" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row" style="position: relative;">
+        <!-- APP TITLE -->
+        <div class="pr-16" style="position: absolute;
+        left: 0;
+    ">
+            <div fxLayoutAlign="center">
+                <button class="mat-icon-button" [routerLink]="'/apps/dashboards/analytics'">
+                <span class="mat-button-wrapper">
+                    <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>
+               
+                </span>
+            </button>
+            </div>
+        </div>
+        <div fxLayout="row">
+           
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          Task Remark
+        </span>
+            </div>
+        </div>
+        
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div class="left main-remark">
+            <div class="main-widget">
+                <!-- <div class="widget-group p-0 dept-header-color" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                        <div fxLayoutAlign="start">
+                            <div class="pr-16">
+                                <div fxLayoutAlign="center">
+                                    <button class="mat-icon-button" [routerLink]="'/apps/dashboards/analytics'">
+                                    <span class="mat-button-wrapper">
+                                    <img class="back-arrow-icon" src="assets/icons/back-arrow-icon.png">
+                                    </span>
+                                </button>
+                                </div>
+                            </div>
+                            <div class="pr-16">
+                                <div fxLayoutAlign="center" style="padding-top: 10px;">Task: {{task_name}}</div>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                </div> -->
+                <div class="main-widget main-widget-filter">
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-button-row search-filter-input">
+                                <button mat-raised-button class="button-filter" (click)="AddTaskRemarkOpen(tasks_id,task_name)" *ngIf="taskRemarkPermission.acc_create == 1">Add Remark</button>
+                                <mat-form-field appearance="outline" class="dating srchinput">
+                                    <mat-label>Search</mat-label>
+                                    <input matInput (keyup)="applyFilter($event.target.value)">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                        <div fxLayout="column">
+                            <div class="example-button-row button-excel-pdf" fxLayoutAlign="end">
+                                <button mat-raised-button class="button-excel" (click)="TaskRmarkExcel()">Excel</button>
+                                <button mat-raised-button class="button-pdf" (click)="TaskRmarkPDF()">Print</button>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                </div>
+                </div>
+                <div class="widget-group remark-table" fxLayout="row wrap" [@animateStagger]="{value:'50'}">
+                    
+                    <table mat-table [dataSource]="dataSourceTask">
+                        <ng-container matColumnDef="task_name">
+                            <th mat-header-cell *matHeaderCellDef>Task</th>
+                            <td mat-cell *matCellDef="let element" class="mat-cell-definition">{{element.task_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="priority_name">
+                            <th mat-header-cell *matHeaderCellDef>Priority</th>
+                            <td mat-cell *matCellDef="let element" [ngStyle]="{'color':PriorityGetColor(element.priority_name)}">{{element.priority_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="dept_name">
+                            <th mat-header-cell *matHeaderCellDef>Department</th>
+                            <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="task_owaner_name">
+                            <th mat-header-cell *matHeaderCellDef>Task Owner</th>
+                            <td mat-cell *matCellDef="let element">{{element.task_owaner_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="task_assigns_data">
+                            <th mat-header-cell *matHeaderCellDef>Co-Owner</th>
+                            <td mat-cell *matCellDef="let element"><span *ngFor="let task_assigns of element.task_assigns_data">{{task_assigns.name}} </span></td>
+                        </ng-container>
+                        <ng-container matColumnDef="start_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                            <td mat-cell *matCellDef="let element">{{element.start_date | date:'dd-MM-yyyy'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="end_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                            <td mat-cell *matCellDef="let element">{{element.end_date | date:'dd-MM-yyyy'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="completion_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-completion">Completion Date</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.completion_date == completion">NA</span>
+                                <span *ngIf="element.completion_date != completion">{{element.completion_date | date:'dd-MM-yyyy'}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="status_name">
+                            <th mat-header-cell *matHeaderCellDef>Status</th>
+                            <td mat-cell *matCellDef="let element" [ngStyle]="{'color':StatusGetColor(element.status_name)}">{{element.status_name}}</td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsTask; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsTask;"></tr>
+                    </table>
+                </div>
+                <div class="main-widget main-widget-filter">
+                   
+                    <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                            <ng-container matColumnDef="tasks_id" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef>User Name</th>
+                                <td mat-cell *matCellDef="let element">{{element.name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="status_name">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element" [ngStyle]="{'color':StatusGetColor(element.status_name)}">{{element.status_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="remark">
+                                <th mat-header-cell *matHeaderCellDef>Remark</th>
+                                <td mat-cell *matCellDef="let element">{{element.remark}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="file_name">
+                                <th mat-header-cell *matHeaderCellDef>File Name</th>
+                                <td mat-cell *matCellDef="let element"><a class="link" target="_blank" href="{{filename.image_path}}" *ngFor="let filename of element.tasks_remark_file_data">{{filename.file_name}} </a></td>
+                            </ng-container>
+                            <ng-container matColumnDef="updated_at">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Update Date</th>
+                                <td mat-cell *matCellDef="let element">{{element.updated_at | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="EditTaskRemarkOpen(element)" *ngIf="taskRemarkPermission.acc_edit == 1">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                                        <button mat-menu-item [routerLink]="['/apps/dashboards/taskfiles', element.tasks_id]">
+                      <mat-icon>visibility</mat-icon>
+                      <span>View Files</span>
+                    </button>
+                                        <button mat-menu-item (click)="TasksrRmarkDelete(element.user_id,element.task_remark_id)" *ngIf="taskRemarkPermission.acc_delete == 1">
+                      <mat-icon>delete</mat-icon>
+                      <span>Remove</span>
+                    </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[15, 30, 50]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

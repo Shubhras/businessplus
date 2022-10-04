@@ -1,0 +1,22 @@
+<div class="content popup-content" id="add-governance" style="width: 700px;">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="governanceFormGroup"
+            [formGroup]="governanceFormGroup" (ngSubmit)="addMomSubmit()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add MOM For {{selectedSearchUser}} Meeting</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div class="pb-8" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <angular-editor id="editor2" formControlName="Mom" [config]="editorConfig"></angular-editor>
+            </div>
+            <div fxLayout="row" fxFlex="1 0 auto" class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button"
+                    [routerLink]="['/apps/project/project-details', project_id]">Submit</button>
+                <a mat-raised-button color="accent" (click)="PopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

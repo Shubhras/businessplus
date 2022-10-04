@@ -1,0 +1,14 @@
+@import "src/@fuse/scss/fuse";
+#project-milestone {
+    tr.mat-header-row {
+        height: 25px;
+        background-color: #6497b1;
+        color: #fff !important;
+    }
+  .example-container {
+    .mat-header-action {
+      padding-right: 0px;
+      width: 85px;
+    }
+  }
+}

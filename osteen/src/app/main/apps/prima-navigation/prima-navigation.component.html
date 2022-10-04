@@ -1,0 +1,32 @@
+<div id="prima-navigation" class="fuse-navy navigation-prima" fxLayout="column" fxLayoutAlign="start center" fxFlex fusePerfectScrollbar>
+   <div class="header pt-md-8" fxLayout="row" fxLayoutAlign="center center" fxFlex="0 0 auto" [@animate]="{value:'*',params:{delay:'100ms'}}">
+        <h2>Prima Plus Navigation</h2>
+   </div>
+   <div class="primanaviga-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center" [@animateStagger]="{value:'50'}">
+      <div>
+         <a class="prima-navigation-btn" [routerLink]="'/apps/prima-navigation'">Prima Plus Navigation</a>
+      </div>
+      <div class="primanaviga-list-item" [routerLink]="'/apps/main-dashboard'" fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+         <mat-icon class="s-56">dashboard</mat-icon>
+         <div class="primanaviga-name">Home</div>
+      </div>
+      <div class="primanaviga-list-item" [routerLink]="'/apps/faq'" fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+         <mat-icon class="s-56">help</mat-icon>
+         <div class="primanaviga-name">FAQ</div>
+      </div>
+      <div class="primanaviga-list-item" [routerLink]="'/apps/knowledge-base'" fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+         <mat-icon class="s-56">help_outline</mat-icon>
+         <div class="primanaviga-name">Help</div>
+      </div>
+         <div  class="primanaviga-list-item" [routerLink]="'/apps/prima-process'" fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-icon class="s-56">autorenew</mat-icon>
+            <div class="primanaviga-name">Process Flow</div>
+         </div>
+         <div class="primanaviga-list-item" [routerLink]="'/apps/prima-demo'" fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-icon class="s-56">ondemand_video</mat-icon>
+            <div class="primanaviga-name">Demo</div>
+         </div>
+    </div>
+</div>
+
+

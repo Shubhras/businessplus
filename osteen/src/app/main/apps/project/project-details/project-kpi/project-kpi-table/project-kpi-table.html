@@ -1,0 +1,184 @@
+<div id="project-kpi-table">
+    <div fxLayout="row wrap" fxLayoutAlign="center">
+        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+            <div class="search-filter-select">
+                <button mat-raised-button class="mr-8" (click)="openKpiDialog()">Enter Project Deliverables</button>
+                <mat-form-field class="mr-8" appearance="outline">
+                    <mat-label>Department</mat-label>
+                    <mat-select [formControl]="dept_nameFilter" (selectionChange)="filterRenderedData($event.value)">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">
+                            {{department.dept_name}}</mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button class="mr-8" mat-raised-button (click)="resetOptions()">Reset</button>
+                <button class="mr-8" mat-raised-button (click)="sendKpiMile(project_id)">MileStone Deliverables</button>
+                <button class="mr-8" mat-raised-button (click)="sendKpiDashboard(project_id)">Dashboard</button>
+                <button class="mr-8" mat-raised-button (click)="allExpandState = true">Open All</button>
+                <button class="mr-4" mat-raised-button (click)="allExpandState = false">Close All</button>
+            </div>
+            <!--  <div class="mt-8 ml-4 mr-4 search-filter-select">
+        <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start">
+          <button mat-raised-button class="mr-8" style="height: 37px;
+        margin-top: 4px;" (click)="openKpiDialog()">Enter Project Deliverables</button>
+          <mat-form-field class="mr-8" appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select [formControl]="dept_nameFilter" (selectionChange)="filterRenderedData($event.value)">
+              <mat-option value="">All</mat-option>
+              <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">
+                {{department.dept_name}}</mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button mat-raised-button style="height: 37px;
+        margin-top: 4px;" (click)="resetOptions()">Reset</button>
+        </div>
+        <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="flex-end center">
+          <button class="mr-8" mat-raised-button (click)="sendKpiMile(project_id)">MileStone Deliverables</button>
+          <button class="mr-8" mat-raised-button (click)="sendKpiDashboard(project_id)">Dashboard</button>
+          <button mat-raised-button class="mr-8" (click)="allExpandState = true">Open All</button>
+          <button mat-raised-button (click)="allExpandState = false">Close All</button>
+        </div>
+      </div> -->
+            <div class="box-details" style="margin: 4px 4px 8px 4px;">
+                <div class="box-tittle" fxLayoutAlign="center center">Major kpi plan</div>
+                <div class="activity">
+                    <div class="activity-tittle">
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="5">Sl.No.</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="15">Deliverables</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">Department</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="14" fxFlex.gt-md="14">UOM</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="18" fxFlex.gt-md="18">Definition</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="6" fxFlex.gt-md="6">Ideal Trend</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">Year end target</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="7" fxFlex.gt-md="7">Review Frequency</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">Project Target</div>
+                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="5">Action</div>
+                    </div>
+                    <div class="activity-data" *ngFor="let kpi of proKpiData">
+                        <mat-expansion-panel [expanded]="allExpandState">
+                            <mat-expansion-panel-header>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="5">{{kpi.id}}</div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="15">
+                                    {{kpi.project_kpi_name}}</div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                                    {{kpi.dept_name}}</div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="15">{{kpi.uom_name}}
+                                </div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="17" fxFlex.gt-md="17">
+                                    {{kpi.project_kpi_def}}</div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="7" fxFlex.gt-md="7"
+                                    fxLayoutAlign="center center">
+                                    <img *ngIf="kpi.project_kpi_trend == 'positive'" class="kpi-trend-upward-icon"
+                                        src="assets/icons/arrow-up-kpi.png">
+                                    <img *ngIf="kpi.project_kpi_trend == 'negative'" class="kpi-trend-downward-icon"
+                                        src="assets/icons/arrow-kpi-down.png">
+                                </div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                                    <span *ngIf="kpi.project_kpi_yr_targt == 'sum_up_all'">Sum Up-All</span>
+                                    <span *ngIf="kpi.project_kpi_yr_targt == 'average'">Average</span>
+                                    <span *ngIf="kpi.project_kpi_yr_targt == 'terminal_value'">Terminal (YE)
+                                        Value</span>
+                                </div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="7" fxFlex.gt-md="7">
+                                    {{kpi.project_kpi_freqency}}
+                                </div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                                    {{kpi.project_kpi_value}}</div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="3" fxFlex.gt-md="3">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <button mat-menu-item (click)="editKpiDialog(kpi)">
+                                            <mat-icon>edit</mat-icon>
+                                            <span>Edit</span>
+                                        </button>
+                                        <button mat-menu-item (click)="deleteKPI(kpi)">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Remove</span>
+                                        </button>
+                                    </mat-menu>
+                                </div>
+                            </mat-expansion-panel-header>
+                            <div class="all-table" fxLayoutAlign="center center">
+                                <table mat-table class="kpi-milestone" [dataSource]="kpi.project_kpi_milestone_data">
+                                    <ng-container matColumnDef="sr_no">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                        <td mat-cell *matCellDef="let element;let i=index" (click)="openDialog(element)"
+                                            class="mat-cell-sr-no">
+                                            {{element.project_kpi_sr_no}}
+                                            <!-- {{i+1}} -->
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="milestone_name">
+                                        <th mat-header-cell *matHeaderCellDef>Project Milestone</th>
+                                        <td mat-cell *matCellDef="let element" (click)="openDialog(element)">
+                                            {{element.milestone_name}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="projct_kpi_dstrbt_vl">
+                                        <th mat-header-cell *matHeaderCellDef>Target</th>
+                                        <td mat-cell *matCellDef="let element" (click)="openDialog(element)">
+                                            {{element.projct_kpi_dstrbt_vl}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef='actual'>
+                                        <th mat-header-cell *matHeaderCellDef>Actual</th>
+                                        <td mat-cell *matCellDef="let element" (click)="openDialog(element)">
+                                            {{element.project_kpi_actual}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef='status'>
+                                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                                        <td mat-cell *matCellDef="let element" (click)="openDialog(element)">
+                                            <!--  <span class="tag tag--{{element.project_kpi_status}}">
+                        {{element.project_kpi_status}}
+                      </span> -->
+                                            <img *ngIf="element.project_kpi_status == 'Yellow'"
+                                                class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                            <img *ngIf="element.project_kpi_status == 'Red'" class="status-red-icon"
+                                                src="assets/icons/status-red-icon.png">
+                                            <img *ngIf="element.project_kpi_status == 'Green'" class="status-green-icon"
+                                                src="assets/icons/status-green-icon.png">
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef='reason'>
+                                        <th mat-header-cell *matHeaderCellDef>Remark</th>
+                                        <td mat-cell *matCellDef="let element" (click)="openDialog(element)">
+                                            {{element.project_kpi_reason}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef='solution'>
+                                        <th mat-header-cell *matHeaderCellDef>Solution</th>
+                                        <td mat-cell *matCellDef="let element" (click)="openDialog(element)">
+                                            {{element.project_kpi_solution}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action" stickyEnd>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action Update
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-action"
+                                            style="font-weight: bold;">
+                                            <a class="link" href="javascript:void(0)"
+                                                (click)="openDialog(element)">Update Status</a>
+                                            <!-- <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                      </a>
+                      <mat-menu #menu="matMenu">
+                        <button mat-menu-item (click)="openDialog(element)">
+                          <mat-icon>edit</mat-icon>
+                          <span>Edit</span>
+                        </button>
+                      </mat-menu> -->
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsKpiMile; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsKpiMile;"></tr>
+                                </table>
+                            </div>
+                        </mat-expansion-panel>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

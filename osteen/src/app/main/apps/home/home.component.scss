@@ -1,0 +1,95 @@
+@import "src/@fuse/scss/fuse";
+
+body.theme-default .mat-raised-button.mat-accent,
+body.theme-default .mat-fab.mat-accent,
+body.theme-default .mat-mini-fab.mat-accent {
+    background-color  : #1C5E97 !important;
+    border            : none;
+    color             : rgb(252, 252, 252) !important;
+    //background-color: rgba(255, 255, 255, 0);
+
+}
+
+home {
+
+    #home {
+        width             : 100%;
+        background-image  : url("assets/images/map1.png");
+        background-color  : #2e3340 !important;
+        // background     : url('assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
+        background-size   : cover;
+
+        #home-form-wrapper {
+            flex   : 1 0 auto;
+            padding: 32px;
+
+            @include media-breakpoint('xs') {
+                padding: 16px;
+            }
+
+            #home-form {
+                width        : 100%;
+                max-width    : 100%;
+                padding      : 32px;
+                text-align   : center;
+                border-radius: 10px;
+
+                //@include mat-elevation(16);
+                //font-family: cursive;
+                @include media-breakpoint('xs') {
+                    padding: 24px;
+                    width  : 100%;
+                }
+
+                .logo {
+                    width : 128px;
+                    margin: 32px auto;
+                }
+
+                .title {
+                    font-size  : 53px;
+                    font-weight: 800;
+                    color      : white;
+                    margin     : 16px;
+                }
+
+                .punchline {
+                    color      : white;
+                    font-size  : 34px;
+                    font-weight: 600;
+                    margin     : 16px 22px 16px 22px;
+                    text-align : center;    
+                }
+
+                form {
+                    width     : 100%;
+                    text-align: left;
+
+                    mat-form-field {
+                        width: 100%;
+                    }
+
+                    .submit-button {
+                        width  : 220px;
+                        margin : 16px auto;
+                        display: block;
+
+                        @include media-breakpoint('xs') {
+                            width: 90%;
+                        }
+                    }
+                }
+
+                .login {
+                    margin     : 32px auto 24px auto;
+                    width      : 250px;
+                    font-weight: 600;
+
+                    .text {
+                        margin-right: 8px;
+                    }
+                }
+            }
+        }
+    }
+}

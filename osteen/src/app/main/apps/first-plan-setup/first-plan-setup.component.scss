@@ -1,0 +1,319 @@
+.sodpplus {
+  display: none !important;
+}
+
+.sodpplus_target {
+  margin-left: 4px;
+}
+
+// ::ng-deep .mat-form-field-infix {
+//   padding: 6px 0 !important;
+// }
+.mat-input-element {
+  caret-color: #3c4252;
+  font-size  : 12px;
+  height     : 20px !important;
+  resize     : none;
+}
+
+::ng-deep .mat-expansion-indicator::after {
+  color: rgb(216, 216, 215) !important;
+}
+
+.info_icon {
+  display  : inline;
+  font-size: 19px;
+}
+
+.info_icon2 {
+  color: #30810F !important;
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
+
+::ng-deep .mat-step-header:hover {
+  background-color: #fff !important;
+}
+
+textarea.mat-input-element.cdk-textarea-autosize {
+  resize: auto !important;
+}
+
+.next_btn {
+  background-color: #1D5E97;
+  color           : white;
+}
+
+.mat-expansion-panel-header:hover {
+  background-color: #1c5e97 !important;
+  .mat-expansion-panel-header-title {
+    color           : white ;
+  }
+}
+
+.mat-expansion-panel-body p {
+  text-align: left !important;
+}
+
+
+
+//   final
+mat-button-toggle-group.mat-button-toggle-group.mat-button-toggle-group-appearance-standard {
+  border: none !important;
+}
+
+mat-button-toggle#mat-button-toggle-1 {
+  color           : rgba(255, 255, 255, 0.87);
+  background-color: transparent !important;
+}
+
+mat-button-toggle#mat-button-toggle-2 {
+  color           : rgba(255, 255, 255, 0.87);
+  background-color: transparent !important;
+}
+
+mat-button-toggle#mat-button-toggle-3 {
+  color           : rgba(255, 255, 255, 0.87);
+  background-color: transparent !important;
+}
+
+.mat-button-toggle-label-content {
+  line-height: 1px !important;
+  padding    : 0 !important;
+}
+
+.depsec {
+  flex-wrap: wrap;
+}
+
+mat-icon.mat-icon.ng-tns-c42-14.material-icons {
+  font-size  : 20px !important;
+  line-height: 19px !important;
+  height     : 19px !important;
+  width      : 16px !important;
+
+  min-width: 19px;
+}
+
+.accordion {
+  background-color: #eee0;
+  color           : #fff;
+  cursor          : pointer;
+  padding         : 24px 16px;
+  width           : 100%;
+  border          : none;
+  text-align      : left;
+  outline         : none;
+  font-size       : 13px;
+  transition      : 0.4s;
+  border          : 1px solid #eee;
+}
+
+.active,
+.accordion:hover {
+  background-color: rgb(14, 56, 104);
+}
+
+element.style {
+  white-space: nowrap;
+}
+
+* {
+  text-rendering             : optimizeLegibility;
+  -o-text-rendering          : optimizeLegibility;
+  -ms-text-rendering         : optimizeLegibility;
+  -moz-text-rendering        : optimizeLegibility;
+  -webkit-text-rendering     : optimizeLegibility;
+  -webkit-tap-highlight-color: transparent;
+  box-sizing                 : border-box;
+}
+
+user agent stylesheet p {
+  display            : block;
+  margin-block-start : 1em;
+  margin-block-end   : 1em;
+  margin-inline-start: 0px;
+  margin-inline-end  : 0px;
+}
+
+
+
+.accordion:after {
+  content    : "\2304";
+  color      : #ebd111;
+  font-weight: bold;
+  float      : right;
+  margin-left: 5px;
+  transform  : rotate(-90deg);
+  font-size  : 26px;
+}
+
+.active:after {
+  content  : "\2304";
+  transform: rotate(0deg);
+
+}
+
+.panel {
+  padding         : 0 18px;
+  background-color: #ffffff;
+  color           : rgb(5, 5, 5);
+  text-align      : left;
+  max-height      : 0;
+  overflow        : hidden;
+  transition      : max-height 0.2s ease-out;
+  border          : 0px 1px 0 1px solid;
+}
+
+.activeslide {
+  display   : block;
+  margin    : 0 auto;
+  // width: 480px;
+  margin-top: 10%;
+}
+
+@media only screen and (max-width: 1024px) {
+  .activeslide {
+    display: block;
+    margin : 0 auto;
+    width  : 354px;
+  }
+
+  .accordion {
+    font-size: 10px;
+  }
+}
+
+.activeslide2 {
+  display: none;
+}
+
+// CUSTOM CLASSES
+.accordian_div {
+  margin       : 0 auto;
+  text-align   : center;
+  margin-top   : -6%;
+  // width     : 523px;
+}
+
+.bullet-div {
+  text-align: center;
+  position  : absolute;
+  bottom    : 11%;
+  margin    : 0 auto;
+  /* left   : 24%; */
+  right     : 42%;
+}
+
+mat-icon {
+  font-size  : 20px;
+  width      : 20px;
+  min-width  : 19px !important;
+  min-height : 19px;
+  line-height: 19px !important;
+}
+
+.bullet_one {
+  background   : #225e97;
+  border-radius: 50%;
+}
+
+.bullet_onefill {
+  background   : lightgray;
+  border-radius: 50%;
+}
+
+.bullet_two {
+  background   : #225e97;
+  border-radius: 50%;
+}
+
+.bullet_twofill {
+  background   : lightgray;
+  border-radius: 50%;
+}
+
+.bullet_three {
+  background   : #225e97;
+  border-radius: 50%;
+  font-size    : 12px;
+}
+
+.bullet_threefill {
+  background   : lightgray;
+  border-radius: 50%;
+}
+
+.imgcharts {
+  animation-name    : example;
+  animation-duration: 4s;
+  margin            : 16% 16% 0 16%;
+}
+
+.mat-expansion-panel-header {
+  color : #fff;
+  border: 1px solid #fff;
+}
+
+.mat-expansion-panel-header-title {
+  color           : black ;
+  background-color: #0000;
+}
+
+
+.mat-expansion-panel {
+  background-color: #0000 !important;
+}
+
+::ng-deep .mat-expansion-panel-body {
+  background-color: #fff;
+  border          : 1px solid #ffff !important;
+}
+
+.mat-expansion-panel-spacing {
+  margin: 0 !important;
+}
+
+.mat-step-label {
+  overflow: visible !important;
+}
+
+
+/* Responsive start */
+.dot-dot {
+  .mat-icon {
+    display  : initial !important;
+    font-size: 17px !important;
+  }
+}
+
+.get-start-head {
+  padding    : 20px 0;
+  font-size  : 28px;
+  font-weight: 700;
+  color      : #1d5e97;
+}
+
+.want-help-text {
+  position: absolute;
+  right   : 2%;
+  top     : 1%;
+}
+
+@media only screen and (max-width: 599px) {
+  .get-start-head {
+    padding: 0px;
+  }
+
+  .want-help-text {
+    top: 2%;
+  }
+
+  .fill-swot {
+    padding-top: 71px;
+  }
+}
+
+/* Responbsive end */

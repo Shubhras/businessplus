@@ -1,0 +1,281 @@
+<div id="about" class="p-24" fxLayout="row wrap">
+    <div class="about-content" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="65">
+        <div class="example-button-row mb-4" fxLayoutAlign="start">
+            <button mat-raised-button color="accent" (click)="showProfile()" *ngIf="hideEditButton">
+                <mat-icon>edit</mat-icon>
+            </button>
+            <button mat-raised-button color="accent" (click)="showProfile()" *ngIf="hideEditButton == false">
+                <mat-icon>arrow_back</mat-icon>
+            </button>
+        </div>
+        <div class="profile-box info-box general" fxLayout="column" *ngIf="hideEditButton == false">
+            <header class="accent">
+                <div class="title">Edit Profile</div>
+            </header>
+            <div class="content">
+                <form fxLayout="column" fxLayoutAlign="center" fxFlex="100" name="profileForm" [formGroup]="profileForm"
+                    (ngSubmit)="editProfile()" novalidate>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="50" class="" appearance="outline">
+                            <mat-label>Name</mat-label>
+                            <input matInput formControlName="name" [(ngModel)]="userData.name" required>
+                            <mat-error>Name is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50" class="pl-8" appearance="outline">
+                            <mat-label>Gender</mat-label>
+                            <mat-select matNativeControl formControlName="gender" [(ngModel)]="userData.gender">
+                                <mat-option value="male">Male</mat-option>
+                                <mat-option value="female">Female</mat-option>
+                            </mat-select>
+                            <mat-error>Gender is required!</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <!-- <mat-form-field fxFlex="50" class="" appearance="outline">
+                            <mat-label>Birth Date</mat-label>
+                            <input matInput [max]="maxDate" [matDatepicker]="picker" formControlName="date_birth"
+                                [(ngModel)]="date_birth" required readonly>
+                            <mat-error>Birth Date is required!</mat-error>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field> -->
+                        <!-- <mat-form-field fxFlex="50" class="pl-8" appearance="outline">
+                            <mat-label>PAN Card</mat-label>
+                            <input matInput formControlName="pan_card_no" [(ngModel)]="userData.pan_card_no" required>
+                            <mat-error>PAN Card is required!</mat-error>
+                        </mat-form-field> -->
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="50" class="" appearance="outline">
+                            <mat-label>Unit</mat-label>
+                            <mat-select matNativeControl formControlName="multi_unit_id"
+                                (selectionChange)="departmentGet($event.value, '')" [compareWith]="compareFn" multiple
+                                [disabled]="true">
+                                <mat-option [value]="unit.id" *ngFor="let unit of unitsData">{{unit.unit_name}}
+                                </mat-option>
+                            </mat-select>
+                            <!-- <mat-error>Unit is required</mat-error> -->
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50" class="pl-8" appearance="outline">
+                            <mat-label>Department</mat-label>
+                            <mat-select matNativeControl formControlName="multi_dept_id"
+                                (selectionChange)="sectionGet($event.value, '')" [compareWith]="compareDept" multiple
+                                [disabled]="true">
+                                <mat-option [value]="department.multi_dept_id"
+                                    *ngFor="let department of dataDepartment">{{department.dept_name}}
+                                    ({{department.unit_name}})
+                                </mat-option>
+                            </mat-select>
+                            <!-- <mat-error>Department is required</mat-error> -->
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="50" class="" appearance="outline">
+                            <mat-label>Section</mat-label>
+                            <mat-select matNativeControl formControlName="multi_section_id"
+                                [compareWith]="compareSection" multiple [disabled]="true">
+                                <mat-option [value]="section.multi_section_id" *ngFor="let section of dataSections">
+                                    {{section.section_name}} ({{section.dept_name}})</mat-option>
+                            </mat-select>
+                            <!-- <mat-error>Section is required</mat-error> -->
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50" class="pl-8" appearance="outline">
+                            <mat-label>Designation</mat-label>
+                            <input matInput formControlName="designation" [(ngModel)]="userData.designation" required>
+                            <mat-error>Designation is required!</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="50" class="" appearance="outline">
+                            <mat-label>Address</mat-label>
+                            <input matInput formControlName="address" [(ngModel)]="userData.address" required>
+                            <mat-error>address is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field fxFlex="50" class="pl-8" appearance="outline">
+                            <mat-label>city</mat-label>
+                            <input matInput formControlName="city" [(ngModel)]="userData.city" required>
+                            <mat-error>city is required!</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field fxFlex="50" class="" appearance="outline">
+                            <mat-label>10-digit Mobile Number</mat-label>
+                            <input matInput formControlName="mobile" [(ngModel)]="userData.mobile" maxlength="10"
+                                (keypress)=mobileValidation($event)>
+                            <mat-error *ngIf="profileForm.get('mobile').hasError('required')">
+                                Please fill out this field.
+                            </mat-error>
+                            <mat-error *ngIf="profileForm.get('mobile').hasError('pattern')">
+                                It is not a valid mobile number.
+                            </mat-error>
+                        </mat-form-field>
+                        <!--   <mat-form-field fxFlex="50" class="pl-8" appearance="outline">
+                            <mat-label>10-digit Mobile Number</mat-label>
+                            <input matInput formControlName="mobile2" [(ngModel)]="userData.mobile2" maxlength="10"
+                                (keypress)=mobileValidation($event)>
+                            <mat-error *ngIf="profileForm.get('mobile2').hasError('required')">
+                                Please fill out this field.
+                            </mat-error>
+                            <mat-error *ngIf="profileForm.get('mobile2').hasError('pattern')">
+                                It is not a valid mobile number.
+                            </mat-error>
+                        </mat-form-field> -->
+                    </div>
+                    <input type="hidden" formControlName="emp_id" [(ngModel)]="userData.emp_id">
+                    <input type="hidden" formControlName="email" [(ngModel)]="userData.email">
+                    <input type="hidden" formControlName="date_hire" [(ngModel)]="userData.date_hire">
+                    <div class="example-button-row" fxLayoutAlign="start">
+                        <button mat-raised-button color="accent">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div class="profile-box info-box general" fxLayout="column" *ngIf="hideEditButton">
+            <header class="accent">
+                <div class="title">General Information</div>
+            </header>
+            <div class="content">
+                <div class="info-line">
+                    <div class="title">Gender</div>
+                    <div class="info">{{userData.gender}}</div>
+                </div>
+                <!--  <div class="info-line">
+                    <div class="title">Birthday</div>
+                    <div class="info">{{userData.date_birth}}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">PAN Card</div>
+                    <div class="info">{{userData.pan_card_no}}</div>
+                </div> -->
+            </div>
+        </div>
+        <div class="profile-box info-box work" fxLayout="column" *ngIf="hideEditButton">
+            <header class="accent">
+                <div class="title">Work</div>
+            </header>
+            <div class="content">
+                <div class="info-line">
+                    <div class="title">Unit</div>
+                    <div class="info"><span *ngFor="let unit of userUnitData">{{unit.unit_name}} </span></div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Department</div>
+                    <div class="info"><span *ngFor="let dept of userDepartmentData">{{dept.dept_name}} </span></div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Designation</div>
+                    <div class="info">{{userDataAbout.designation}}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Section</div>
+                    <div class="info"><span *ngFor="let section of userSectionsData">{{section.section_name}} </span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="profile-box info-box contact" fxLayout="column" *ngIf="hideEditButton">
+            <header class="accent">
+                <div class="title">Contact</div>
+            </header>
+            <div class="content">
+                <div class="info-line">
+                    <div class="title">Address</div>
+                    <div class="info">{{userData.address}}</div>
+                    <div class="info">{{userData.city}}</div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Tel.</div>
+                    <div class="info">
+                        <span>{{userData.mobile}}</span><br>
+                        <span>{{userData.mobile2}}</span>
+                    </div>
+                </div>
+                <div class="info-line">
+                    <div class="title">Email</div>
+                    <div class="info">
+                        <span>{{userData.email}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="about-sidebar" fxLayout="column" fxFlex="100" fxFlex.gt-sm="50" fxFlex.gt-md="35">
+        <div class="profile-box friends" fxLayout="column">
+            <header class="accent" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="title">Friends</div>
+                <div class="more secondary-text">
+                    <span>See 454 more...</span>
+                </div>
+            </header>
+            <div class="content" fxLayout="row wrap">
+                <div class="friend" fxFlex="20" *ngFor="let friend of about.friends">
+                    <img [src]="friend.avatar">
+                </div>
+            </div>
+        </div>
+        <div class="profile-box groups" fxLayout="column">
+            <header class="accent" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="title">Joined Groups</div>
+                <!-- <div class="title" click="create_group()">Create Groups</div> -->
+                <div class=" actions" fxLayout="row" fxLayoutAlign="end center" [@animate]="{value:'*',params:{delay:'200ms'}}">
+                    <!-- <button mat-raised-button color="accent" aria-label="Follow">Follow</button> -->
+                    <!-- <button mat-raised-button color="primary" aria-label="Send Message">Send Message</button> -->
+                    <button mat-raised-button class="" (click)="CreateGroupPopupOpen()" >Create Group +</button>
+                </div>
+            </header>
+            <div class="content">
+                <div class="group" *ngFor="let group of profile_groups" fxLayout="row"
+                    fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <div class="logo">{{group.group_name.substring(0,1)}}</div>
+                        <div>
+                            <div class="name">{{group.group_name}}</div>
+                            <!-- <div class="category">{{group.category}}</div> -->
+                            <div class="members">{{group.users_id?.length || '0'}} people</div>
+                        </div>
+                    </div>
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <button mat-icon-button [matMenuTriggerFor]="menu">
+                            <mat-icon>more_vert</mat-icon>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                            <button mat-menu-item class="" (click)="getGroupDetails(group.id)">Edit Group</button>
+                            <button mat-menu-item class="" (click)="DeleteGroup(group.id)">Delete Group</button>
+                            <button mat-menu-item class="" (click)="AddParticipantPopupOpen(group.id)">Add
+                                Paricipant</button>
+                            <!-- <button mat-menu-item>Delete Participant</button> -->
+                        </mat-menu>
+                    </div>
+                    <!-- <button mat-icon-button aria-label="More">
+                        <mat-icon>more_vert</mat-icon>
+                    </button> -->
+
+                </div>
+            </div>
+        </div>
+        <!-- <div class="profile-box groups" fxLayout="column">
+            <header class="accent" fxLayout="row" fxLayoutAlign="space-between center">
+                <div class="title">Joined Groups</div>
+                <div class="more secondary-text">
+                    <span>See 6 more...</span>
+                </div>
+            </header>
+            <div class="content">
+                <div class="group" *ngFor="let group of about.groups" fxLayout="row"
+                    fxLayoutAlign="space-between center">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <div class="logo">{{group.name.substring(0,1)}}</div>
+                        <div>
+                            <div class="name">{{group.name}}</div>
+                            <div class="category">{{group.category}}</div>
+                            <div class="members">{{group.members}} people</div>
+                        </div>
+                    </div>
+                    <button mat-icon-button aria-label="More">
+                        <mat-icon>more_vert</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div> -->
+    </div>
+</div>

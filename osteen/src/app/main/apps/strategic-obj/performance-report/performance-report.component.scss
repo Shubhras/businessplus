@@ -1,0 +1,14 @@
+@import "src/@fuse/scss/fuse";
+#performance-report {
+    .performance-table{
+      .mat-header-kpi-name{
+        text-align: left;
+        padding-left: 3px;
+        width: 250px;
+      }
+      .mat-cell-kpi-name{
+        text-align: left;
+        padding-left: 3px;
+      }
+    }
+}

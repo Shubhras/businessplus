@@ -1,0 +1,1069 @@
+<div id="prima-welcome" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">Welcome
+                    <!-- Prima Plus --> {{user_name}}
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content content-dashboard">
+        <div fxLayout="column" fxLayoutAlign="center" fxFlex="100" fxFlex.gt-xs="100">
+            <div class="courses" fxLayout="row wrap" fxLayoutAlign="center">
+                <div fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100">
+                    <div class="" fxLayoutAlign="flex-end center" style="margin-right: 16px;
+               margin-bottom: 4px;">
+                        <button mat-raised-button (click)="mainDashboardPDF()">Print</button>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100">
+                    <div class="course" fxFlex="100" fxFlex.gt-xs="25" fxFlex.gt-sm="25"
+                        [@animate]="{value:'*',params:{y:'100%'}}">
+                        <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                            <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                                <div class="widget-group location" fxLayout="row wrap" fxFlex="100">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100"
+                                        fxFlexAlign="center">
+                                        <div class="unit-name" fxLayout="column" fxLayoutAlign="space-between center">
+                                            {{unit_name}}
+                                        </div>
+                                        <!-- <span *ngFor="let dept of dataDepartment; let i=index">
+                                 <div class="dept-name" fxLayout="column" fxLayoutAlign="space-between center"
+                                    *ngIf="dataDepartment.length == 1">
+                                    {{dept.dept_name}}
+                                 </div>
+                                 <div class="dept-name" fxLayout="column" fxLayoutAlign="space-between center"
+                                    *ngIf="(dataDepartment.length >1) && (i<1)">
+                                    Senior Executive
+                                 </div>
+                              </span> -->
+                                        <span>
+                                            <div class="dept-name" fxLayout="column"
+                                                fxLayoutAlign="space-between center">
+                                                {{this.designation}}
+                                            </div>
+                                        </span>
+                                        <div class="today-date" fxLayout="column" fxLayoutAlign="space-between center">
+                                            {{todayDate}} {{currentyMonth}} {{currentYearFull}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course" fxFlex="100" fxFlex.gt-xs="75" fxFlex.gt-sm="75"
+                        [@animate]="{value:'*',params:{y:'100%'}}">
+                        <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                            <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                                <div class="header-tittle" fxFlex fxLayoutAlign="center center">
+                                    KPI Status
+                                </div>
+                            </div>
+                            <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                                <div class="widget-group" fxLayout="row wrap" fxFlex="100">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="28">
+                                        <div class="charts-def-title" fxLayoutAlign="center">Overall KPI</div>
+                                        <div id="pieChartKPI" fxLayoutAlign="center" #pieChartKPI></div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="44">
+                                        <div fxLayout="column" class="mt-8 pieChart-table" fxLayoutAlign="center">
+                                            <table mat-table [dataSource]="dataSourceKPI">
+                                                <ng-container matColumnDef="sr_no">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">
+                                                        Sr.No.</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                        {{element.sr_no}}
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="dept_name">
+                                                    <th mat-header-cell *matHeaderCellDef
+                                                        class="mat-header-cell-definition">
+                                                        Department</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                                        <a class="decoration"
+                                                            [routerLink]="['/apps/kpitrackers/keyperformance',element.dept_name]"
+                                                            *ngIf="element.dept_name !='Total'">{{element.dept_name}}</a>
+                                                        <a class="decoration"
+                                                            [routerLink]="['/apps/kpitrackers/keyperformance']"
+                                                            *ngIf="element.dept_name =='Total'">{{element.dept_name}}</a>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="total_kpi">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-total">Total
+                                                        KPI</th>
+                                                    <td mat-cell *matCellDef="let element">{{element.total_kpi}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="green">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                        <img class="status-green-icon"
+                                                            src="assets/icons/status-green-icon.png">
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element"><span
+                                                            class="set-color-circle status-green-color">{{element.green}}</span>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="yellow">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                        <img class="status-yellow-icon"
+                                                            src="assets/icons/status-yellow-icon.png">
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element"><span
+                                                            class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="red">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                        <img class="status-red-icon"
+                                                            src="assets/icons/status-red-icon.png">
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element"><span
+                                                            class="set-color-circle status-red-color">{{element.red}}</span>
+                                                    </td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="gray">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                        <img class="status-gray-icon"
+                                                            src="assets/icons/status-gray-icon.png">
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element"><span
+                                                            class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                                    </td>
+                                                </ng-container>
+                                                <tr mat-header-row *matHeaderRowDef="displayedColumnsKPI"></tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsKPI;"></tr>
+                                            </table>
+                                            <!-- <table mat-table class="mat-table-lesent" [dataSource]="dataSourceKpiLesent">
+                                    <ng-container matColumnDef="lesent_name">
+                                       <td mat-cell *matCellDef="let element" class="mat-cell-lesentName">
+                                          <img *ngIf="element.lesent_name == 'Red'" class="status-red-icon"
+                                             src="assets/icons/status-red-icon.png">
+                                          <img *ngIf="element.lesent_name == 'Yellow'" class="status-yellow-icon"
+                                             src="assets/icons/status-yellow-icon.png">
+                                          <img *ngIf="element.lesent_name == 'Green'" class="status-green-icon"
+                                             src="assets/icons/status-green-icon.png">
+                                          <img *ngIf="element.lesent_name == 'Gray'" class="status-gray-icon"
+                                             src="assets/icons/status-gray-icon.png">
+                                       </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="lesent_description">
+                                       <td mat-cell *matCellDef="let element">{{element.lesent_description}}
+                                       </td>
+                                    </ng-container>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsKpiLesent;"></tr>
+                                 </table> -->
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="28">
+                                        <div class="charts-def-title" fxLayoutAlign="center">Lead KPI</div>
+                                        <div id="pieChartLeadKPI" fxLayoutAlign="center" #pieChartLeadKPI></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+                    [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="header-tittle" fxFlex.gt-xs="100" fxFlex.gt-sm="100" fxLayoutAlign="center">
+                                Lead KPI Status
+                            </div>
+                        </div>
+                        <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <div class="widget-group m-8 mb-32" fxLayout="row wrap" fxFlex="100">
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div *ngFor="let renderData of renderKPIData">
+                                        <div *ngIf="renderData.add_kpis_data !=''">
+                                            <div class="header-second">
+                                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                                                    <div fxLayoutAlign="start">{{renderData.dept_name}}</div>
+                                                </div>
+                                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="40">
+                                                    <div fxLayoutAlign="start">
+                                                        <!--  <mat-button-toggle-group #group="matButtonToggleGroup" [value]="selectedYearVal">
+                                          <mat-button-toggle (click)="kpiDataByYear()">{{selectedYearVal}}
+                                          </mat-button-toggle>
+                                       </mat-button-toggle-group> -->
+                                                    </div>
+                                                </div>
+                                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="10">
+                                                    <div fxLayoutAlign="flex-end">
+                                                        <div fxLayout="column">
+                                                            <a [routerLink]="['/apps/kpitrackers/kpigraph', renderData.id]"
+                                                                matTooltip="Graph" aria-label="Graph">
+                                                                <mat-icon style="color: #fff;  font-size: 19px;">
+                                                                    bar_chart</mat-icon>
+                                                            </a>
+                                                        </div>
+                                                        <div fxLayout="column">
+                                                            <a href="javascript:void(0)" matTooltip="Print"
+                                                                aria-label="Print">
+                                                                <mat-icon style="color: #fff; font-size: 19px;">print
+                                                                </mat-icon>
+                                                            </a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="example-container-kpidata">
+                                                <table mat-table [dataSource]="renderData.datasource"
+                                                    id="contentToConvert">
+                                                    <ng-container matColumnDef="kpi_name">
+                                                        <th mat-header-cell *matHeaderCellDef>KPI</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            style="min-width: 150px; width: 150px; max-width: 150px;"
+                                                            class="mat-cell-definition">{{element.kpi_name}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="kpi_definition">
+                                                        <th mat-header-cell *matHeaderCellDef>Def</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <a href="javascript:void(0)"
+                                                                (click)="kpiDefinitionOpen(element.kpi_definition)"
+                                                                *ngIf="element.kpi_definition != ' ' && element.year_for == 'Target'"
+                                                                matTooltip="Definition" aria-label="Definition">
+                                                                <img class="definition-icon"
+                                                                    src="assets/icons/Receipt-4-icon.jpg">
+                                                            </a>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="unit_of_measurement">
+                                                        <th mat-header-cell *matHeaderCellDef>UoM</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.unit_of_measurement}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="ideal_trend">
+                                                        <th mat-header-cell *matHeaderCellDef>Trend</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <a href="javascript:void(0)"
+                                                                matTooltip="positive (good if number goes up)"
+                                                                aria-label="positive (good if number goes up)">
+                                                                <img *ngIf="element.ideal_trend == 'positive'"
+                                                                    class="kpi-trend-upward-icon"
+                                                                    src="assets/icons/arrow-up-kpi.png">
+                                                            </a>
+                                                            <a href="javascript:void(0)"
+                                                                matTooltip="negative (good if number goes down)"
+                                                                aria-label="negative (good if number goes down)">
+                                                                <img *ngIf="element.ideal_trend == 'negative'"
+                                                                    class="kpi-trend-downward-icon"
+                                                                    src="assets/icons/arrow-kpi-down.png">
+                                                            </a>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="section_name">
+                                                        <th mat-header-cell *matHeaderCellDef>Section</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.section_name}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="year_for">
+                                                        <th mat-header-cell *matHeaderCellDef>Year</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.year_for}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="one_year">
+                                                        <th mat-header-cell *matHeaderCellDef>
+                                                            {{userSelectedYearFull -4}}<span
+                                                                *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -3}}</span>
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let element">{{element.one_year}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="two_year">
+                                                        <th mat-header-cell *matHeaderCellDef>
+                                                            {{userSelectedYearFull -3}}<span
+                                                                *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -2}}</span>
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let element">{{element.two_year}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="three_year">
+                                                        <th mat-header-cell *matHeaderCellDef>
+                                                            {{userSelectedYearFull -2}}<span
+                                                                *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -1}}</span>
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let element">{{element.three_year}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="four_year">
+                                                        <th mat-header-cell *matHeaderCellDef>
+                                                            {{userSelectedYearFull -1}}<span
+                                                                *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf}}</span>
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let element">{{element.four_year}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="jan">
+                                                        <th mat-header-cell *matHeaderCellDef>Jan
+                                                            <span>
+                                                                {{companyFinancialYear =='april-march' ? currentYearPlusOne : userSelectedYearHalf}}
+                                                            </span>
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('jan') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.jan,element.jan_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.jan}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="feb">
+                                                        <th mat-header-cell *matHeaderCellDef>Feb <span>
+                                                                {{companyFinancialYear =='april-march' ? currentYearPlusOne : userSelectedYearHalf}}
+                                                            </span></th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('feb') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.feb,element.feb_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.feb}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="mar">
+                                                        <th mat-header-cell *matHeaderCellDef>Mar <span>
+                                                                {{companyFinancialYear =='april-march' ? currentYearPlusOne : userSelectedYearHalf}}
+                                                            </span></th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('mar') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.mar,element.mar_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.mar}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="apr">
+                                                        <th mat-header-cell *matHeaderCellDef>Apr
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('apr') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.apr,element.apr_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.apr}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="may">
+                                                        <th mat-header-cell *matHeaderCellDef>May
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('may') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.may,element.may_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.may}}</span>
+                                                        </td>jun
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="jun">
+                                                        <th mat-header-cell *matHeaderCellDef>Jun
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('jun') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.jun,element.jun_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.jun}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="jul">
+                                                        <th mat-header-cell *matHeaderCellDef>Jul
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('jul') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.jul,element.jul_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.jul}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="aug">
+                                                        <th mat-header-cell *matHeaderCellDef>Aug
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('aug') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.aug,element.aug_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.aug}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="sep">
+                                                        <th mat-header-cell *matHeaderCellDef>Sep
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('sep') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.sep,element.sep_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.sep}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="oct">
+                                                        <th mat-header-cell *matHeaderCellDef>Oct
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('oct') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.oct,element.oct_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.oct}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="nov">
+                                                        <th mat-header-cell *matHeaderCellDef>Nov
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('nov') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.nov,element.nov_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.nov}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="dec">
+                                                        <th mat-header-cell *matHeaderCellDef>Dec
+                                                            {{userSelectedYearHalf}}</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            [ngStyle]="{'border-top':(element.year_for === 'Actual' && (element.late_review && element.late_review.indexOf('dec') !== -1)) ? '1px solid #f40000' : '' }">
+                                                            <span
+                                                                [ngStyle]="getColorActual(element.year_for,element.dec,element.dec_label)"
+                                                                [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.dec}}</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="ytd_target_actual">
+                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-ytd">YTD
+                                                        </th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.ytd_target_actual}}</td>
+                                                    </ng-container>
+                                                    <tr mat-header-row
+                                                        *matHeaderRowDef="displayedColumnsLeadKPI; sticky: true"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsLeadKPI;">
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+                    [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="header-tittle" fxFlex.gt-xs="100" fxFlex.gt-sm="100" fxLayoutAlign="center">
+                                Business Plan
+                            </div>
+                        </div>
+                        <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <div class="widget-group" fxLayout="row wrap" fxFlex="100" style="padding-top: 4px;">
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="23">
+                                    <div fxLayout="column" fxLayoutAlign="center">
+                                        <div class="charts-def-title" fxLayoutAlign="center">Strategic Objectives</div>
+                                        <div id="pieChartObj" fxLayoutAlign="center" #pieChartObj></div>
+                                    </div>
+                                </div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="23">
+                                    <div fxLayout="column" fxLayoutAlign="center">
+                                        <div class="charts-def-title" fxLayoutAlign="center">Initiatives</div>
+                                        <div id="pieChartIni" fxLayoutAlign="center" #pieChartIni></div>
+                                    </div>
+                                </div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="23">
+                                    <div fxLayout="column" fxLayoutAlign="center">
+                                        <div class="charts-def-title" fxLayoutAlign="center">Action Plan</div>
+                                        <div id="pieChartAction" fxLayoutAlign="center" #pieChartAction></div>
+                                    </div>
+                                </div>
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="31">
+                                    <div fxLayout="column" class="pieChart-table" fxLayoutAlign="center">
+                                        <table mat-table [dataSource]="dataSourceSIA">
+                                            <ng-container matColumnDef="name_StrInitia">
+                                                <th mat-header-cell *matHeaderCellDef
+                                                    class="mat-header-cell-definition">Name
+                                                </th>
+                                                <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                                    <a class="link" routerLink="/apps/strategic-obj/strategic"
+                                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">{{element.name_StrInitia}}</a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data"
+                                                        *ngIf="element.name_StrInitia == 'Initiatives'">{{element.name_StrInitia}}</a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/action-plan"
+                                                        *ngIf="element.name_StrInitia == 'Action Plan'">{{element.name_StrInitia}}</a>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="total">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-total">Total
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">{{element.total}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="green">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                    <img class="status-green-icon"
+                                                        src="assets/icons/status-green-icon.png">
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <a class="link" routerLink="/apps/strategic-obj/strategic/3"
+                                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                                        <span
+                                                            class="set-color-circle status-green-color">{{element.green}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/3"
+                                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                                        <span
+                                                            class="set-color-circle status-green-color">{{element.green}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/3"
+                                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                                        <span
+                                                            class="set-color-circle status-green-color">{{element.green}}</span>
+                                                    </a>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="yellow">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                    <img class="status-yellow-icon"
+                                                        src="assets/icons/status-yellow-icon.png">
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <!--  <span  class="set-color-circle status-yellow-color">{{element.yellow}}</span> -->
+                                                    <a class="link" routerLink="/apps/strategic-obj/strategic/4"
+                                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                                        <span
+                                                            class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/4"
+                                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                                        <span
+                                                            class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/4"
+                                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                                        <span
+                                                            class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                                    </a>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="red">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                    <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <!-- <span class="set-color-circle status-red-color">{{element.red}}</span> -->
+                                                    <a class="link" routerLink="/apps/strategic-obj/strategic/5"
+                                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                                        <span
+                                                            class="set-color-circle status-red-color">{{element.red}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/5"
+                                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                                        <span
+                                                            class="set-color-circle status-red-color">{{element.red}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/5"
+                                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                                        <span
+                                                            class="set-color-circle status-red-color">{{element.red}}</span>
+                                                    </a>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="gray">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                    <img class="status-gray-icon"
+                                                        src="assets/icons/status-gray-icon.png">
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <!--  <span class="set-color-circle status-gray-color">{{element.gray}}</span> -->
+                                                    <a class="link" routerLink="/apps/strategic-obj/strategic/1"
+                                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                                        <span
+                                                            class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/1"
+                                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                                        <span
+                                                            class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/1"
+                                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                                        <span
+                                                            class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                                    </a>
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="blue">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                                    <img class="status-blue-icon-white"
+                                                        src="assets/icons/status-blue-icon-white.png">
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">
+                                                    <!-- <span class="set-color-circle status-blue-color">{{element.blue}}</span> -->
+                                                    <a class="link" routerLink="/apps/strategic-obj/strategic/2"
+                                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                                        <span
+                                                            class="set-color-circle status-blue-color">{{element.blue}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/2"
+                                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                                        <span
+                                                            class="set-color-circle status-blue-color">{{element.blue}}</span>
+                                                    </a>
+                                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/2"
+                                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                                        <span
+                                                            class="set-color-circle status-blue-color">{{element.blue}}</span>
+                                                    </a>
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumnsSIA"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumnsSIA;"></tr>
+                                        </table>
+                                    </div>
+                                    <div fxLayout="column" class="pieChart-table" fxLayoutAlign="center center">
+                                        <table mat-table class="mat-table-lesent" [dataSource]="dataSourceLesent">
+                                            <ng-container matColumnDef="lesent_name">
+                                                <td mat-cell *matCellDef="let element" class="mat-cell-lesentName">
+                                                    <img *ngIf="element.lesent_name == 'Red'" class="status-red-icon"
+                                                        src="assets/icons/status-red-icon.png">
+                                                    <img *ngIf="element.lesent_name == 'Yellow'"
+                                                        class="status-yellow-icon"
+                                                        src="assets/icons/status-yellow-icon.png">
+                                                    <img *ngIf="element.lesent_name == 'Green'"
+                                                        class="status-green-icon"
+                                                        src="assets/icons/status-green-icon.png">
+                                                    <img *ngIf="element.lesent_name == 'Gray'" class="status-gray-icon"
+                                                        src="assets/icons/status-gray-icon.png">
+                                                    <img *ngIf="element.lesent_name == 'Blue'" class="status-blue-icon"
+                                                        src="assets/icons/status-blue-icon.png">
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="lesent_description">
+                                                <td mat-cell *matCellDef="let element">{{element.lesent_description}}
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumnsLesent;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="row wrap" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100">
+                    <div class="course" fxFlex="100" fxFlex.gt-xs="60" fxFlex.gt-sm="60"
+                        [@animate]="{value:'*',params:{y:'100%'}}">
+                        <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                            <div fxLayout="column">
+                                <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                                    <div class="header-tittle" fxFlex fxLayoutAlign="center center">
+                                        Reminders
+                                    </div>
+                                </div>
+                                <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                                    <div class="widget-group" fxLayout="row wrap" fxFlex="100">
+                                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                            <div class="table-heading-first">Business Plan Action</div>
+                                            <mat-table class="remindar-table" #table [dataSource]="dataSourceReAction">
+                                                <ng-container matColumnDef="sr_no">
+                                                    <mat-header-cell class="mat-sr-no" *matHeaderCellDef>Sr.No.
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-sr-no" *matCellDef="let row">
+                                                        {{row.sr_no}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="reminder_tittle">
+                                                    <mat-header-cell class="mat-tittle" *matHeaderCellDef>Tittle
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-tittle" *matCellDef="let row">
+                                                        Action Plan</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="category">
+                                                    <mat-header-cell class="mat-category" *matHeaderCellDef>Category
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-category" *matCellDef="let row"
+                                                        routerLink="/apps/dashboards/analytics/1">
+                                                        {{row.definition}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="status">
+                                                    <mat-header-cell class="mat-status" *matHeaderCellDef>Status
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-status" *matCellDef="let row"
+                                                        [ngStyle]="{'color':row.color, 'font-weight': 'bold' }">
+                                                        {{row.status}}
+                                                        <!-- Upcoming -->
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="reminder_date">
+                                                    <mat-header-cell class="mat-date" *matHeaderCellDef>Date
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-date" *matCellDef="let row">
+                                                        {{row.review_month_date}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsReAction; sticky: true">
+                                                </mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumnsReAction;"
+                                                    [@animate]="{value:'*',params:{y:'100%'}}">
+                                                </mat-row>
+                                            </mat-table>
+                                            <div class="table-heading-first">KPI</div>
+                                            <mat-table class="remindar-table" #table [dataSource]="dataSourceReKPI">
+                                                <ng-container matColumnDef="sr_no">
+                                                    <mat-header-cell class="mat-sr-no" *matHeaderCellDef>Sr.No.
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-sr-no" *matCellDef="let row">
+                                                        {{row.sr_no}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="kpi_name">
+                                                    <mat-header-cell class="mat-tittle-kpi" *matHeaderCellDef>KPI
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-tittle-kpi" *matCellDef="let row">
+                                                        {{row.kpi_name}}</mat-cell>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="month">
+                                                    <mat-header-cell class="mat-month-kpi" *matHeaderCellDef>Month
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-month-kpi" *matCellDef="let row">
+                                                        {{row.month}}
+                                                        <!--    <span *ngFor="let m of row;">{{m}}, </span> -->
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <!-- <ng-container matColumnDef="status">
+                                       <mat-header-cell class="mat-status" *matHeaderCellDef>Status
+                                       </mat-header-cell>
+                                       <mat-cell class="mat-status" *matCellDef="let row"
+                                          style="color: red;font-weight: bold;">Delayed
+                                       </mat-cell>
+                                    </ng-container>
+                                    <ng-container matColumnDef="reminder_date">
+                                       <mat-header-cell class="mat-date" *matHeaderCellDef>Date</mat-header-cell>
+                                       <mat-cell class="mat-date" *matCellDef="let row"> {{row.review_month_date}}
+                                       </mat-cell>
+                                    </ng-container> -->
+                                                <mat-header-row *matHeaderRowDef="displayedColumnsReKPI; sticky: true">
+                                                </mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumnsReKPI;"
+                                                    [@animate]="{value:'*',params:{y:'100%'}}">
+                                                </mat-row>
+                                            </mat-table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="mt-16" fxLayout="column">
+                                <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                                    <div class="header-tittle" fxFlex fxLayoutAlign="center center">
+                                        Upcoming Events
+                                    </div>
+                                </div>
+                                <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                                    <div class="widget-group" fxLayout="row wrap" fxFlex="100">
+                                        <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                            <div class="table-heading-first">Task</div>
+                                            <mat-table class="task-table" #table [dataSource]="dataSourceAssinSelf">
+                                                <ng-container matColumnDef="sr_no">
+                                                    <mat-header-cell class="mat-sr-no" *matHeaderCellDef>Sr.No.
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-sr-no" *matCellDef="let row; let i=index"
+                                                        [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                        {{i+1}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <!-- <ng-container matColumnDef="start">
+                                                    <mat-header-cell class="mat-task" *matHeaderCellDef>Task
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-task" *matCellDef="let row"
+                                                        [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                        hello
+                                                    </mat-cell>
+                                                </ng-container> -->
+                                                <ng-container matColumnDef="task_name">
+                                                    <mat-header-cell class="mat-task" *matHeaderCellDef>Task
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-task" *matCellDef="let row"
+                                                        [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                        {{row.task_name}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <!-- <ng-container matColumnDef="task_owaner_name">
+                                                    <mat-header-cell class="mat-task" *matHeaderCellDef>Task
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-task" *matCellDef="let row"
+                                                        [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                        {{row.task_owaner_name}}
+                                                    </mat-cell>
+                                                </ng-container> -->
+                                                <ng-container matColumnDef="priority_name">
+                                                    <mat-header-cell class="mat-priority" *matHeaderCellDef>Priority
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-priority" *matCellDef="let row"
+                                                        [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                        {{row.priority_name}}
+                                                    </mat-cell>
+                                                </ng-container>
+
+                                                <ng-container matColumnDef="status_name">
+                                                    <mat-header-cell class="mat-status" *matHeaderCellDef>Status
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-status" *matCellDef="let row"
+                                                        [ngStyle]="{'color':statusGetColor(row.status_name)}"
+                                                        style="font-weight: bold;"
+                                                        [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                        {{row.status_name}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <mat-header-row *matHeaderRowDef="displayedColumnsTASK; sticky: true">
+                                                </mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumnsTASK;"
+                                                    [@animate]="{value:'*',params:{y:'100%'}}">
+                                                </mat-row>
+                                            </mat-table>
+                                            <div class="table-heading-first">KPI</div>
+                                            <mat-table class="remindar-table" #table
+                                                [dataSource]="dataSourceReKPIComing">
+                                                <ng-container matColumnDef="sr_no">
+                                                    <mat-header-cell class="mat-sr-no" *matHeaderCellDef>Sr.No.
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-sr-no" *matCellDef="let row; let i=index">
+                                                        {{i+1}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="kpi_name">
+                                                    <mat-header-cell class="mat-tittle-kpi" *matHeaderCellDef>KPI
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-tittle-kpi" *matCellDef="let row">
+                                                        {{row.kpi_name}}</mat-cell>
+                                                </ng-container>
+                                                <ng-container matColumnDef="month">
+                                                    <mat-header-cell class="mat-month-kpi" *matHeaderCellDef>Month
+                                                    </mat-header-cell>
+                                                    <mat-cell class="mat-month-kpi" *matCellDef="let row">{{row.month}}
+                                                    </mat-cell>
+                                                </ng-container>
+                                                <mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsReKPIComing; sticky: true">
+                                                </mat-header-row>
+                                                <mat-row *matRowDef="let row; columns: displayedColumnsReKPIComing;"
+                                                    [@animate]="{value:'*',params:{y:'100%'}}">
+                                                </mat-row>
+                                            </mat-table>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="course" fxLayout="column" fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-sm="40"
+                        [@animate]="{value:'*',params:{y:'100%'}}">
+                        <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                            <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                                <div class="header-tittle" fxFlex fxLayoutAlign="center center">
+                                    Task Status
+                                </div>
+                            </div>
+                            <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                                <div class="widget-group" fxLayout="row wrap" fxFlex="100">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="50">
+                                        <div class="totaltask decoration" routerLink="/apps/dashboards/analytics"
+                                            style="background-color: #6c757d;">
+                                            <div class="p-16" fxLayout="column" fxLayoutAlign="space-between center">
+                                                <div class="secondary-text" fxLayoutAlign="center">Total Task</div>
+                                                <div class="total-task-text" fxLayoutAlign="center">
+                                                    {{totalTaskData.total}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="50">
+                                        <div class="totaltask decoration" routerLink="/apps/dashboards/analytics/3"
+                                            style="background-color: #52bb56;">
+                                            <div class="p-16" fxLayout="column" fxLayoutAlign="space-between center">
+                                                <div class="secondary-text" fxLayoutAlign="center">Closed Task</div>
+                                                <div class="total-task-text" fxLayoutAlign="center">
+                                                    {{totalTaskData.closed}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="50">
+                                        <div class="totaltask decoration" routerLink="/apps/dashboards/analytics/1"
+                                            style="color: #333333;background-color: #FFD933;">
+                                            <div class="p-16" fxLayout="column" fxLayoutAlign="space-between center">
+                                                <div class="secondary-open" fxLayoutAlign="center">WIP Task</div>
+                                                <div class="total-task-open" fxLayoutAlign="center">
+                                                    {{totalTaskData.open}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="50">
+                                        <div class="totaltask decoration" routerLink="/apps/dashboards/analytics/2"
+                                            style="background-color: #ef5350;">
+                                            <div class="p-16" fxLayout="column" fxLayoutAlign="space-between center">
+                                                <div class="secondary-text" fxLayoutAlign="center"> Delayed Task</div>
+                                                <div class="total-task-text" fxLayoutAlign="center">
+                                                    {{totalTaskData.delayed}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="50">
+                                        <div class="totaltask decoration" routerLink="/apps/dashboards/analytics/4"
+                                            style="background-color: #a9b7b6;">
+                                            <div class="p-16" fxLayout="column" fxLayoutAlign="space-between center">
+                                                <div class="secondary-text" fxLayoutAlign="center">
+                                                    Closed With Delay</div>
+                                                <div class="total-task-text" fxLayoutAlign="center">
+                                                    {{totalTaskData.closedWithDelay}}</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="50">
+                                        <div class="totaltask decoration" routerLink="/apps/dashboards/analytics/5"
+                                            style="background-color: #039cfd;">
+                                            <div class="p-16" fxLayout="column" fxLayoutAlign="space-between center">
+                                                <div class="secondary-text" fxLayoutAlign="center">
+                                                    Hold Task</div>
+                                                <div class="total-task-text" fxLayoutAlign="center">
+                                                    {{totalTaskData.onHold}}
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="course-content mt-16" fxLayout="column" fxFlex="1 1 auto">
+                            <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                                <div class="header-tittle" fxFlex fxLayoutAlign="center center">
+                                    Priority Task
+                                </div>
+                            </div>
+                            <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                                <div class="widget-group" fxLayout="row wrap" fxFlex="100">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                        <!-- Assigned To Me -->
+                                        <div class="table-heading-first">Assigned To Me</div>
+                                        <div class="table-heading-second">My Task</div>
+                                        <mat-table class="task-table" #table [dataSource]="dataSourceAssinSelf">
+                                            <ng-container matColumnDef="sr_no">
+                                                <mat-header-cell class="mat-sr-no" *matHeaderCellDef>Sr.No.
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-sr-no" *matCellDef="let row; let i=index"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{i+1}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="task_name">
+                                                <mat-header-cell class="mat-task" *matHeaderCellDef>Task
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-task" *matCellDef="let row"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{row.task_name}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="priority_name">
+                                                <mat-header-cell class="mat-priority" *matHeaderCellDef>Priority
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-priority" *matCellDef="let row"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{row.priority_name}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status_name">
+                                                <mat-header-cell class="mat-status" *matHeaderCellDef>Status
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-status" *matCellDef="let row"
+                                                    [ngStyle]="{'color':statusGetColor(row.status_name)}"
+                                                    style="font-weight: bold;"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{row.status_name}}</mat-cell>
+                                            </ng-container>
+                                            <mat-header-row *matHeaderRowDef="displayedColumnsTASK; sticky: true">
+                                            </mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumnsTASK;"
+                                                [@animate]="{value:'*',params:{y:'100%'}}">
+                                            </mat-row>
+                                        </mat-table>
+                                        <div class="table-heading-first">Assigned By Other</div>
+                                        <mat-table class="task-table" #table [dataSource]="dataSourceAssinOther">
+                                            <ng-container matColumnDef="sr_no">
+                                                <mat-header-cell class="mat-sr-no" *matHeaderCellDef>Sr.No.
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-sr-no" *matCellDef="let row; let i=index"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{i+1}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="task_name">
+                                                <mat-header-cell class="mat-task" *matHeaderCellDef>Task
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-task" *matCellDef="let row"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{row.task_name}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="priority_name">
+                                                <mat-header-cell class="mat-priority" *matHeaderCellDef>Priority
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-priority" *matCellDef="let row"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{row.priority_name}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status_name">
+                                                <mat-header-cell class="mat-status" *matHeaderCellDef>Status
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-status" *matCellDef="let row"
+                                                    [ngStyle]="{'color':statusGetColor(row.status_name)}"
+                                                    style="font-weight: bold;"
+                                                    [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">
+                                                    {{row.status_name}}</mat-cell>
+                                            </ng-container>
+                                            <mat-header-row *matHeaderRowDef="displayedColumnsTASK; sticky: true">
+                                            </mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumnsTASK;"
+                                                [@animate]="{value:'*',params:{y:'100%'}}">
+                                            </mat-row>
+                                        </mat-table>
+                                        <!-- Created By Me -->
+                                        <div class="table-heading-first mt-8">Created By Me</div>
+                                        <mat-table class="task-table" #table [dataSource]="dataSourceCrateTask">
+                                            <ng-container matColumnDef="sr_no">
+                                                <mat-header-cell class="mat-sr-no" *matHeaderCellDef>Sr.No.
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-sr-no" *matCellDef="let row; let i=index">
+                                                    {{i+1}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="task_name">
+                                                <mat-header-cell class="mat-task" *matHeaderCellDef>Task
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-task" *matCellDef="let row">
+                                                    <a class="decoration"
+                                                        [routerLink]="['/apps/dashboards/taskremark', row.tasks_id]">{{row.task_name}}</a>
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="priority_name">
+                                                <mat-header-cell class="mat-priority" *matHeaderCellDef>Priority
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-priority" *matCellDef="let row">
+                                                    {{row.priority_name}}
+                                                </mat-cell>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status_name">
+                                                <mat-header-cell class="mat-status" *matHeaderCellDef>Status
+                                                </mat-header-cell>
+                                                <mat-cell class="mat-status" *matCellDef="let row"
+                                                    [ngStyle]="{'color':statusGetColor(row.status_name)}"
+                                                    style="font-weight: bold;">
+                                                    {{row.status_name}}</mat-cell>
+                                            </ng-container>
+                                            <mat-header-row *matHeaderRowDef="displayedColumnsTASK; sticky: true">
+                                            </mat-header-row>
+                                            <mat-row *matRowDef="let row; columns: displayedColumnsTASK;"
+                                                [@animate]="{value:'*',params:{y:'100%'}}">
+                                            </mat-row>
+                                        </mat-table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

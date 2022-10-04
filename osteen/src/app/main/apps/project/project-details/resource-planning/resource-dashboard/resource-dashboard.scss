@@ -1,0 +1,37 @@
+@import "src/@fuse/scss/fuse";
+#resource-dashboard {
+  .resource-graph {
+    border: 1px solid #dad5d5 !important;
+    margin-bottom: 8px;
+    margin-left: 8px;
+    margin-top: 8px;
+  }
+  .kpi-dashboard {
+    font-weight: 600;
+    font-size: 16px;
+    font-family: "Muli", "Helvetica Neue", "Arial", sans-serif;
+    color: #fff;
+  }
+  .courses {
+    width: 100%;
+    max-width: 1250px !important;
+    margin: 0 auto;
+    background-color: #fff;
+    padding-top: 8px;
+    .header {
+      height: 40px;
+      min-height: 40px;
+      max-height: 50px;
+    }
+  }
+  .mat-table-lesent {
+    border-left: 1px solid #dad5d5;
+    border-top: 1px solid #dad5d5;
+    tr.mat-row {
+      height: 33px;
+      td{
+        font-size: 14px;
+      }
+    }
+  }
+}

@@ -1,0 +1,526 @@
+<div id="action-plan-comment" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Action Plan Status </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div class="left">
+            <div class="main-widget">
+                <div class="widget-group p-0 action-comment-header dept-header-color" fxFlex="100"
+                    [@animateStagger]="{value:'50'}">
+                    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                        <button class="mat-icon-button mat-icon-button-aroow"
+                            [routerLink]="['/apps/strategic-obj/master-action']">
+                            <span class="mat-button-wrapper">
+                                <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>
+                            </span>
+                        </button>
+                    </div>
+                    <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="flex-end center">
+                        <button mat-raised-button class="mat-raised-button-print"
+                            (click)="alanCommentPDF()">Print</button>
+                    </div>
+                </div>
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <div class="widget" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex.gt-xs="12" fxFlex.gt-md="12" class="action-hadding">Strategic
+                                Objectives
+                            </div>
+                            <div fxLayout="column" fxFlex.gt-xs="8" fxFlex.gt-md="8" class="action-def">
+                                :&nbsp;&nbsp;&nbsp;{{strategic_objectives_sr_no}}</div>
+                            <div fxLayout="column" fxFlex.gt-xs="80" fxFlex.gt-md="80" class="action-def">
+                                {{strategic_objectives_description}}</div>
+                        </div>
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex.gt-xs="12" fxFlex.gt-md="12" class="action-hadding">Initiative
+                            </div>
+                            <div fxLayout="column" fxFlex.gt-xs="8" fxFlex.gt-md="8" class="action-def">
+                                :&nbsp;&nbsp;&nbsp;{{initiatives_sr_no}}</div>
+                            <div fxLayout="column" fxFlex.gt-xs="80" fxFlex.gt-md="80" class="action-def">
+                                {{initiatives_definition}}
+                            </div>
+                        </div>
+                        <div fxLayout="row">
+                            <div fxLayout="column" fxFlex.gt-xs="12" fxFlex.gt-md="12" class="action-hadding">Action
+                                Plan</div>
+                            <div fxLayout="column" fxFlex.gt-xs="8" fxFlex.gt-md="8" class="action-def">
+                                :&nbsp;&nbsp;&nbsp;{{action_plans_sr_no}}</div>
+                            <div fxLayout="column" fxFlex.gt-xs="80" fxFlex.gt-md="80" class="action-def">
+                                {{action_plans_definition}}
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!--  <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+            <div class="widget" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100" [ngStyle]="{'background':actionPlanColor}">
+              <div fxLayout="column" fxLayoutAlign="start" class="action-def">
+                {{action_plans_definition}}</div>
+            </div>
+          </div> -->
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <div class="widget" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-container" id="content" #content #TABLE>
+                                <table mat-table [dataSource]="dataSourceAction" id="contentToConvert">
+                                    <ng-container matColumnDef="action_plans_sr_no" sticky>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">S. No.</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                            {{element.action_plans_sr_no}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="definition">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Action Plan</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                            {{element.definition}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action_plans_assign_user">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Resp.</th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <div class="assign_action_plan_user"
+                                                *ngFor="let co_owner of element.action_plans_assign_user">
+                                                {{co_owner.user_name}}</div>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="dept_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Department</th>
+                                        <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action_plan_kpi_data">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Related KPI</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                            <div class="kpi-data-name" *ngFor="let kpi of element.action_plan_kpi_data">
+                                                {{kpi.kpi_name}}
+                                            </div>
+                                            <span *ngIf="element.action_plan_kpi_data == ''">No Related KPI</span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="target">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Target Value</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                            {{element.target}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="start_date">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                                        <td mat-cell *matCellDef="let element">
+                                            {{element.start_date | date:'dd-MM-yyyy'}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="end_date">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                                        <td mat-cell *matCellDef="let element">{{element.end_date | date:'dd-MM-yyyy'}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="percentage">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-percentage">Completion
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">{{element.percentage}}%</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="status_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-status">Status</th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <img *ngIf="element.status_name == 'Red'" class="status-red-icon"
+                                                src="assets/icons/status-red-icon.png">
+                                            <img *ngIf="element.status_name == 'Yellow'" class="status-yellow-icon"
+                                                src="assets/icons/status-yellow-icon.png">
+                                            <img *ngIf="element.status_name == 'Green'" class="status-green-icon"
+                                                src="assets/icons/status-green-icon.png">
+                                            <img *ngIf="element.status_name == 'Gray (Started)'"
+                                                class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                            <img *ngIf="element.status_name == 'Blue (Hold)'" class="status-blue-icon"
+                                                src="assets/icons/status-blue-icon.png">
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsAction; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsAction;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <div class="widget" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                        <div fxLayout="row">Time Line Progress</div>
+                        <div fxLayout="row">
+                            <div class="selectedYear" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50"
+                                fxFlex.gt-md="50">
+                                <mat-button-toggle-group [value]="selectedYearVal" #group="matButtonToggleGroup">
+                                    <mat-button-toggle value="{{actionYear.year_key}}"
+                                        (click)="actionDataByYear(actionYear.year_key)"
+                                        *ngFor="let actionYear of actionPlanYears">{{actionYear.year_value}}
+                                    </mat-button-toggle>
+                                </mat-button-toggle-group>
+                            </div>
+                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                                <div fxLayout="row" fxLayoutAlign="flex-end">
+                                    <img class="status-green-icon lesent-color"
+                                        src="assets/icons/status-green-icon.png"> -
+                                    {{lesentGreen}}%
+                                    <img class="status-yellow-icon lesent-color"
+                                        src="assets/icons/status-yellow-icon.png"> -
+                                    {{lesentYellow}}-100%
+                                    <img class="status-red-icon lesent-color" src="assets/icons/status-red-icon.png">
+                                    &lt; {{lesentRed}}%
+                                    <img class="status-gray-icon lesent-color" src="assets/icons/status-gray-icon.png">
+                                    - On track
+                                    <img class="status-blue-icon lesent-color" src="assets/icons/status-blue-icon.png">
+                                    - Hold
+                                </div>
+                            </div>
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-container" id="content" #content #TABLE>
+                                <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                                    <ng-container matColumnDef="sr_no" sticky>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="definition">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Action Plan</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                            style="width: 20%;">
+                                            {{element.definition}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="target">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Target</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.target}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="co_owner_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Owner</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            {{element.co_owner_name}}</td>
+                                    </ng-container>
+                                    <ng-container *ngFor="let month of MONTHS; let i = index">
+                                        <ng-container matColumnDef="{{month}}">
+                                            <th mat-header-cell *matHeaderCellDef class="mat-header-month">
+                                                {{month | titlecase}}</th>
+                                            <td mat-cell *matCellDef="let element">
+                                                <!-- {{element[month].a | json}}  -->
+                                                <img *ngIf="element[month].a == '0'" class="start-month-icon"
+                                                    src="assets/icons/end-month-icon.png">
+                                                <div *ngIf="element[month].a == '1'">
+                                                    <button class="btn__review"
+                                                        (click)="changeReviewOpen(element,i,element.yearData)">
+                                                        <!-- <img *ngIf="element[month].a == '1'" class="unreview-month-icon" src="assets/icons/unreview-month-icon.png"> -->
+                                                        <svg *ngIf="element[month].a == '1'"
+                                                            [ngStyle]="{'stroke':element[month].b === true ? '#f44336' : 'grey' }"
+                                                            class="svg__icontriangle svg__triangle-stroke"
+                                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"
+                                                            width="66" height="66">
+                                                            <path d="M3.23 69.34L35.77 3.11L69.23 68.88L3.23 69.34Z" />
+                                                        </svg>
+                                                    </button>
+                                                </div>
+
+                                                <!-- <img *ngIf="element[month].a == '2'" class="review-month-icon" src="assets/icons/review-month-icon.png"> -->
+                                                <svg *ngIf="element[month].a == '2'"
+                                                    [ngStyle]="{'fill':element[month].b === true ? '#f44336' : 'grey' }"
+                                                    class="svg__icon svg__triangle" xmlns="http://www.w3.org/2000/svg"
+                                                    viewBox="0 0 72 72" width="66" height="66">
+                                                    <path d="M0.23 66.34L32.77 0.11L66.23 65.88L0.23 66.34Z" />
+                                                </svg>
+                                                <img *ngIf="element[month].a == '3'" class="end-month-icon"
+                                                    src="assets/icons/start-month-icon.png">
+                                            </td>
+                                        </ng-container>
+                                    </ng-container>
+                                    <ng-container matColumnDef="status_name" sticky>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-status">Status</th>
+                                        <td mat-cell *matCellDef="let element">
+                                            <img *ngIf="element.status_name == 'Red'" class="status-red-icon"
+                                                src="assets/icons/status-red-icon.png">
+                                            <img *ngIf="element.status_name == 'Yellow'" class="status-yellow-icon"
+                                                src="assets/icons/status-yellow-icon.png">
+                                            <img *ngIf="element.status_name == 'Green'" class="status-green-icon"
+                                                src="assets/icons/status-green-icon.png">
+                                            <img *ngIf="element.status_name == 'Gray (Started)'"
+                                                class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                            <img *ngIf="element.status_name == 'Blue (Hold)'" class="status-blue-icon"
+                                                src="assets/icons/status-blue-icon.png">
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-group p-0" fxLayout="column" [@animateStagger]="{value:'50'}">
+                    <!-- <div class="widget" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">KPI Status
+            </div> -->
+                    <div class="widget mb-16" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100"
+                        *ngFor="let kpi of kpisData;">
+                        <div class="example-container" id="content" #content #TABLE>
+                            <table mat-table [dataSource]="kpi.dataSourceKPI" id="contentToConvert">
+                                <ng-container matColumnDef="definition">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-name">KPI</th>
+                                    <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.definition}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="year_for">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-name">Year</th>
+                                    <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.year_for}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="one_year">
+                                    <th mat-header-cell *matHeaderCellDef>{{currentYearFull -4}}<span
+                                            *ngIf="companyFinancialYear =='april-march'">-{{currentYear -3}}</span></th>
+                                    <td mat-cell *matCellDef="let element">{{element.one_year}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="two_year">
+                                    <th mat-header-cell *matHeaderCellDef>{{currentYearFull -3}}<span
+                                            *ngIf="companyFinancialYear =='april-march'">-{{currentYear -2}}</span></th>
+                                    <td mat-cell *matCellDef="let element">{{element.two_year}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="three_year">
+                                    <th mat-header-cell *matHeaderCellDef>{{currentYearFull -2}}<span
+                                            *ngIf="companyFinancialYear =='april-march'">-{{currentYear -1}}</span></th>
+                                    <td mat-cell *matCellDef="let element">{{element.three_year}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="four_year">
+                                    <th mat-header-cell *matHeaderCellDef>{{currentYearFull -1}}<span
+                                            *ngIf="companyFinancialYear =='april-march'">-{{currentYear}}</span></th>
+                                    <td mat-cell *matCellDef="let element">{{element.four_year}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="jan">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Jan
+                                        <span>{{companyFinancialYear =='april-march' ? currentYearPlusOne :
+                                            currentYear}}</span>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0', 'border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid && item.months == 'jan') ? '2px solid red' : '#000'}">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.jan,element.jan_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.jan}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="feb">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Feb
+                                        <span>{{companyFinancialYear =='april-march' ? currentYearPlusOne :
+                                            currentYear}}</span>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0', 'border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid && item.months == 'feb') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.feb,element.feb_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.feb}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="mar">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Mar
+                                        <span>{{companyFinancialYear =='april-march' ? currentYearPlusOne :
+                                            currentYear}}</span>
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'mar') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.mar,element.mar_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.mar}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="apr">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Apr {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'apr') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.apr,element.apr_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.apr}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="may">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">May {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'may') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.may,element.may_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.may}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="jun">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Jun {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'jun') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.jun,element.jun_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.jun}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="jul">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Jul {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'jul') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.jul,element.jul_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.jul}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="aug">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Aug {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'aug') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.aug,element.aug_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.aug}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="sep">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Sep {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'sep') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.sep,element.sep_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.sep}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="oct">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Oct {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'oct') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.oct,element.oct_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.oct}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="nov">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Nov {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'nov') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.nov,element.nov_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.nov}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="dec">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">Dec {{currentYear}}
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">
+                                        <div class="lateentry" *ngFor="let item of element.late_review"
+                                            [ngStyle]="{'border-top':(element.year_for === 'Actual') ? '1px solid #f40000' : '1px solid #e0e0e0','border-top':(element.reviewstatus == 1 && element.kpi_id == element.reviewkpiid &&  item.months == 'dec') ? '2px solid red' : '#000' }">
+                                        </div>
+                                        <span [ngStyle]="getColorActual(element.year_for,element.dec,element.dec_label)"
+                                            [className]="element.year_for === 'Actual' ? 'setcolor' : ' '">{{element.dec}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="ytd">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">YTD</th>
+                                    <td mat-cell *matCellDef="let element"
+                                        [ngStyle]="getColor(element.year_for, element.ytd_color)">{{element.ytd}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="action" sticky>
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                    <td mat-cell *matCellDef="let element" class="mat-cell-action">
+
+                                        <!-- Add Target button-->
+
+                                        <!-- Edit Target and Actual button-->
+                                        <!-- || (userSelectedYearFull < 2020) -->
+                                        <!--  {{deptAccorPermission.indexOf(renderData.id) == -1}} -->
+                                        <button class="btn__review" [disabled]="targetAndActualDisabled"
+                                            *ngIf="(element.year_for == 'Target' && element.has_kpi_target && (kpiDataPermission.acc_edit == 1) && (kpiTargetsPermission.acc_edit == 1)) || (element.year_for == 'Actual' && element.has_kpi_actual && (kpiDataPermission.acc_edit == 1) && (kpiActualsPermission.acc_edit == 1))"
+                                            (click)="addActualOpen(element.year_for, element.kpi_id,userSelectedYearFull)">
+                                            <img class="add-edit-icon" src="assets/icons/edit-08-512.jpg">
+                                        </button>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsKPI; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsKPI;"></tr>
+                            </table>
+                        </div>
+                        <div class="mt-12 kpi-line-chart">
+                            <div fxLayoutAlign="flex-end" class="ideal-trend">
+                                <!-- <a style="margin-right: 15px;">
+                  <img class="kpi-defination-icon" src="assets/icons/kpi-defination-info.png">
+                </a> -->
+                                <!-- <a href="javascript:void(0)" (click)="kpiCommentOpen(kpi.kpi_id)" matTooltip="Comment"
+                                    aria-label="Comment" style="margin-right: 15px;">
+                                    <img class="kpi-comment-icon" src="assets/icons/kpi-comment.png">
+                                </a> -->
+                                <a href="javascript:void(0)" matTooltip="positive (good if number goes up)"
+                                    aria-label="positive (good if number goes up)">
+                                    <img *ngIf="kpi.ideal_trend == 'positive'" class="kpi-trend-upward-icon"
+                                        src="assets/icons/arrow-up-kpi.png">
+                                </a>
+                                <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                                    aria-label="negative (good if number goes down)">
+                                    <img *ngIf="kpi.ideal_trend == 'negative'" class="kpi-trend-downward-icon"
+                                        src="assets/icons/arrow-kpi-down.png">
+                                </a>
+                            </div>
+                            <line-chart [data]="kpi.chartData" [config]="config1" [elementId]="kpi.elementID"
+                                [elementTrend]="kpi.IdealTrend" [elementCompare]="kpi.elementCompare"></line-chart>
+                        </div>
+                    </div>
+                </div>
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <div class="widget" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-container" id="content" #content #TABLE>
+                                <table mat-table [dataSource]="dataSourceComment">
+                                    <ng-container matColumnDef="sr_no">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                            {{element.action_plans_sr_no}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="comment">
+                                        <th mat-header-cell *matHeaderCellDef>Gap Assessment</th>
+                                        <td mat-cell *matCellDef="let element">{{element.comment}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="recovery_plan">
+                                        <th mat-header-cell *matHeaderCellDef>Recovery Plan</th>
+                                        <td mat-cell *matCellDef="let element">{{element.recovery_plan}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="review_date">
+                                        <th mat-header-cell class="mat-header-startDate" *matHeaderCellDef>Review Date
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">
+                                            {{element.review_date | date:'dd-MM-yyyy'}}</td>
+                                    </ng-container>
+                                    <!-- <ng-container matColumnDef="status">
+                      <th mat-header-cell *matHeaderCellDef>Status</th>
+                      <td mat-cell *matCellDef="let element">
+                        <img class="status-red-icon" src="assets/icons/status-red-icon.png"> -->
+                                    <!-- <img *ngIf="element.status_name == 'Yellow'" class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                        <img *ngIf="element.status_name == 'Green'" class="status-green-icon" src="assets/icons/status-green-icon.png">
+                        <img *ngIf="element.status_name == 'Gray (Started)'" class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                        <img *ngIf="element.status_name == 'Blue (Hold)'" class="status-blue-icon" src="assets/icons/status-blue-icon.png"> -->
+                                    <!--  </td>
+                    </ng-container> -->
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsComment; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsComment;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

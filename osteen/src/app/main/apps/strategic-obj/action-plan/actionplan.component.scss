@@ -1,0 +1,125 @@
+@import "src/@fuse/scss/fuse";
+
+#actionplan {
+    div.kpi-data-name:last-child {
+        border-bottom: 0px;
+        padding      : 5px 0px;
+    }
+
+    div.kpi-data-name {
+        border-bottom: 1px solid #ddd;
+        padding      : 5px 0px;
+        min-width    : 162px;
+    }
+
+    div.assign_action_plan_user:last-child {
+        border-bottom: 0px;
+    }
+
+    div.assign_action_plan_user {
+        border-bottom: 1px solid #ddd;
+        padding      : 5px 0px;
+    }
+
+    .mat-header-percentage {
+        padding-right: 0px;
+        width        : 61px;
+    }
+
+    .example-container {
+        a {
+            color: #000000de;
+        }
+    }
+}
+
+// .popup-content .mat-form-field-flex {
+//     height: 45px !important;
+// }
+
+// .popup-content textarea.mat-input-element {
+//     height: 23px !important;
+// }
+
+/* responsive start */
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
+    // .topging {
+    //     bottom: 7px;
+    // }
+
+    .action-print-btn {
+        bottom: 80px;
+    }
+}
+
+@media (min-width: 320px) and (max-width: 517px) {
+    .topging {
+        top: 3px;
+    }
+
+    .srch-down {
+        padding-top: 7px;
+    }
+}
+
+.dating {
+    .mat-input-element {
+        height: 0px !important;
+    }
+}
+
+.departmentactionplan {
+    margin  : -10px 0px 0px 0px;
+    position: relative;
+    top     : 6px;
+}
+
+.status-date {
+    .mat-form-field-outline {
+        top   : 7px !important;
+        bottom: 4px !important;
+    }
+}
+
+/* responsive end */
+::ng-deep .body.theme-default .mat-dialog-container {
+    overflow: hidden !important;
+  }
+
+::ng-deep.dropdown-list {
+    width: 18% !important;
+    position: fixed !important;
+    font-size: 12px !important;
+  }
+  
+  ::ng-deep.multiselect-dropdown .dropdown-btn {
+    margin-bottom: 20px !important;
+    height: 44px !important;
+    font-size: 12px !important;
+    padding: 0px 9px 0px 2px !important;
+    width: 98% !important;
+  }
+  
+  ::ng-deep.selected-items {
+    font-size: 12px !important;
+  }
+  
+  ::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-down {
+    display: inline-block !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin-right: -6px !important;
+    border-top: 6px solid #adadad !important;
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+  }
+  
+  ::ng-deep .multiselect-dropdown .dropdown-btn .dropdown-up {
+    display: none !important;
+    width: 0 !important;
+    height: 0 !important;
+    margin-right: -6px !important;
+    border-top: 6px solid #adadad !important;
+    border-left: 6px solid transparent !important;
+    border-right: 6px solid transparent !important;
+  }

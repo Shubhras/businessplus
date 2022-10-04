@@ -1,0 +1,22 @@
+@media only screen and (min-width: 1200px){
+  .mat-dialog-container {
+    max-width: 1050px!important;
+   width: 1040px!important;
+  }
+  }
+.datefield{
+  margin-left: 16px;
+}
+.datefield2{
+  margin-left: 5px;
+}
+
+  .mat-icon {
+    font-size: 20px !important;
+}
+
+@media only screen and (max-width: 599px) {
+  .datefield{
+    margin-left: 0px;
+  }
+}

@@ -1,0 +1,115 @@
+<mat-toolbar class="p-0 mat-elevation-z1">
+    <div fxFlex fxFill fxLayout="row" fxLayoutAlign="start center">
+        <div fxFlex="1 0 auto" fxLayout="row" fxLayoutAlign="start center">
+            <button mat-icon-button class="navbar-toggle-button" *ngIf="!hiddenNavbar && !rightNavbar"
+                (click)="toggleSidebarOpen('navbar')" fxHide.gt-md>
+                <mat-icon class="secondary-text">menu</mat-icon>
+            </button>
+            <div class="toolbar-separator" *ngIf="!hiddenNavbar && !rightNavbar" fxHide.gt-md></div>
+            <div fxLayout="row" fxLayoutAlign="start center" *ngIf="horizontalNavbar">
+                <div class="logo ml-16">
+                    <img class="logo-icon" src="assets/images/logos/cropped-logo-small-final.png">
+                </div>
+            </div>
+            <div class="px-2 px-md-4" *ngIf="company_details == 'true'">
+                <fuse-shortcuts [navigation]="navigation"></fuse-shortcuts>
+            </div>
+            <!-- <div fxLayoutAlign="center center" class="tool-wel" style="width: 100%" fxHide fxShow.gt-xs>
+                <div class="px-2 px-md-8 welcome-user" style="display: none;">
+                   
+                    <span class="user-name">Welcome</span>
+                    <span class="user-name ml-8">{{UserName}} !</span>
+                </div>
+            </div> -->
+            <div fxLayoutAlign="center center" style="width: 100%" fxHide fxShow.gt-xs>
+                <div class="px-2 px-md-8 welcome-user">
+                   
+                    <span class="user-name">Welcome</span>
+                    <span class="user-name ml-8">{{UserName}} !</span>
+                </div>
+            </div>
+            <div fxLayoutAlign="flex-end center" style="    flex: auto;
+            margin-right: 45px;">
+                <div class="px-2 px-md-4 select-year search-filter-select">
+                    <mat-form-field appearance="outline">
+                       
+                           
+                        <mat-label>Select Business Year</mat-label>
+                       
+                        <mat-select [formControl]="changeSelectYear" (selectionChange)="selectYearByUser($event.value)">
+                            <!-- <mat-option [value]="2018">
+                                2018</mat-option>
+                            <mat-option [value]="2019">
+                                2019</mat-option> -->
+                            <mat-option [value]="year.year_key" *ngFor=" let year of showCompanyYearList">
+                                {{year.year_value}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                </div>
+            </div>
+        </div>
+        <div class="px-2 px-md-4" *ngIf="company_details == 'true'" fxHide fxShow.gt-xs>
+            <span class="h4" style="color: #fff; font-weight: 800;">{{unit_name}}</span>
+        </div>
+        <div class="px-2 px-md-4" *ngIf="company_details == 'true'">
+            <!--  <a href="javascript:void(0)" (click)="selectOtherUnit()" mat-button class="pink">
+                <span class="select-unit">Select Location</span>
+            </a> -->
+            <a href="javascript:void(0)" (click)="selectOtherUnit()" class="location-button"
+                matTooltip="Select Location" aria-label="Select Location">
+                <mat-icon class="location-icon">location_on</mat-icon>
+            </a>
+        </div>
+        <div class="" fxFlex="0 1 auto" fxLayout="row" fxLayoutAlign="start center">
+            <!-- <button mat-button fxHide fxShow.gt-xs class="language-button" [matMenuTriggerFor]="languageMenu">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <img class="flag mr-8" [src]="'assets/icons/flags/'+selectedLanguage.flag+'.png'">
+                    <span class="iso text-uppercase">{{selectedLanguage.id}}</span>
+                </div>
+            </button> -->
+            <mat-menu #languageMenu="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item *ngFor="let lang of languages" (click)="setLanguage(lang)">
+                    <span fxLayout="row" fxLayoutAlign="start center">
+                        <img class="flag mr-16" [src]="'assets/icons/flags/'+lang.flag+'.png'">
+                        <span class="iso">{{lang.title}}</span>
+                    </span>
+                </button>
+                <button mat-menu-item [routerLink]="'/components/multi-language'">
+                    <div fxLayout="row" fxLayoutAlign="start center">
+                        <span>Learn more</span>
+                    </div>
+                </button>
+            </mat-menu>
+            <div class="toolbar-separator"></div>
+            <button mat-button [matMenuTriggerFor]="userMenu" class="user-button">
+                <div fxLayout="row" fxLayoutAlign="center center">
+                    <img class="avatar mr-0 mr-sm-16" src="{{userPicture}}">
+                    <span class="mr-12" fxHide fxShow.gt-sm>
+                        <!-- {{LoginUserDetails.name}} --></span>
+                    <mat-icon class="s-16" fxHide.xs style="color: #fff;">keyboard_arrow_down</mat-icon>
+                </div>
+            </button>
+            <mat-menu #userMenu="matMenu" [overlapTrigger]="false">
+                <button mat-menu-item [disabled]="unit_name ==''" *ngIf="company_details == 'true'"
+                    [routerLink]="'/apps/profile'">
+                    <mat-icon>account_circle</mat-icon>My Profile
+                    <!-- <span>
+                    <a class="link" [routerLink]="'/apps/profile'">My Profile</a>
+                    </span>-->
+                </button>
+                <button mat-menu-item [disabled]="unit_name ==''" *ngIf="company_details == 'true'"
+                    [routerLink]="'/apps/password'">
+                    <mat-icon>vpn_key</mat-icon>Password
+                    <!-- <span><a class="link" [routerLink]="'/apps/password'">Password</a></span> -->
+                </button>
+                <button mat-menu-item (click)="logout()">
+                    <mat-icon>exit_to_app</mat-icon>
+                    <span>Logout</span>
+                </button>
+            </mat-menu>
+            <!-- <div class="toolbar-separator"></div> -->
+            <!-- <fuse-search-bar (input)="search($event)"></fuse-search-bar> -->
+            <div class="toolbar-separator"></div>
+        </div>
+    </div>
+</mat-toolbar>

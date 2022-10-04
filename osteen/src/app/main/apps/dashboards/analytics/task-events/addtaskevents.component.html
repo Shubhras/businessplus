@@ -1,0 +1,43 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="AddTaskForm" [formGroup]="AddTaskForm"
+            (ngSubmit)="AddTaskSubmit()" novalidate>
+            <!--  <div class="h3 mb-12">Add Unit</div> -->
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add Events Task</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+                    <mat-label>Event Name</mat-label>
+                    <input matInput formControlName="event_name" style="height: 30px !important;">
+                    <!-- <mat-error>Event Name is required!</mat-error> -->
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+                    <mat-label>Event Area</mat-label>
+                    <input matInput formControlName="event_area" style="height: 30px !important;">
+                    <!-- <mat-error>Event Area is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4 dialog-field">
+                    <mat-label>Event Objective</mat-label>
+                    <textarea matInput formControlName="event_objective"></textarea>
+                    <!-- <mat-error>Event Objective is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <angular-editor id="editor2" formControlName="event_description" [config]="editorConfig">
+                </angular-editor>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end" style="margin-top: 12px;">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="AddTaskPopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

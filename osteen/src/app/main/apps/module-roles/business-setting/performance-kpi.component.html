@@ -1,0 +1,36 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="PerformanceForm"
+            [formGroup]="PerformanceForm" (ngSubmit)="PerformanceSubmit()" novalidate>
+           <!--  <div class="h3 mb-12">Performance Kpi</div> -->
+            <div fxLayout="row" class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Performance Kpi</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="center center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4 edit-dials-ad">
+                    <mat-label>Performance Kpi</mat-label>
+                    <input matInput value="{{editPerformanceKpi.kpi_name}}" readonly>
+                    <!--<mat-error>Contact Person is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="center center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Performance Type</mat-label>
+                    <mat-select matNativeControl formControlName="kpi_performance_dash_id">
+                        <mat-option [value]="kpi.kpi_performance_dash_id" *ngFor="let kpi of perKpiType">{{kpi.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Performance Type is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="performanceKpiClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,94 @@
+@import "src/@fuse/scss/fuse";
+
+#quarterly-summary {
+  .mat-header-name {
+    text-align  : left;
+    padding-left: 3px;
+  }
+
+  .mat-cell-name {
+    text-align  : left;
+    padding-left: 3px;
+  }
+
+  .mat-elevation-z8 {
+    box-shadow: none !important;
+  }
+}
+
+.img-list {
+  width        : 90px;
+  height       : 90px;
+  //margin-left: 15px;
+  margin-bottom: 6px;
+}
+
+.img-list img {
+  width : 100%;
+  height: 100%;
+}
+
+.cross {
+  width        : 12px;
+  height       : 12px;
+  background   : red;
+  color        : white;
+  position     : relative;
+  top          : 10px;
+  float        : right;
+  border-radius: 50%;
+  left         : 2px;
+  cursor       : pointer;
+}
+
+.cross p {
+  position: absolute;
+  bottom  : -17px;
+  left    : 3px;
+}
+
+// Responsive start
+
+
+// @media (min-width: 331px) and (max-width: 369px) {
+//   .size-dial {
+//     .mat-dialog-container {
+//       max-height: 400px !important;
+//     }
+//   }
+ 
+// }
+
+@media only screen and (max-width: 599px) {
+  .lefting {
+    padding-top: 2px;
+  }
+}
+@media only screen and (min-width: 768px) {
+  .lefting {
+    padding-top: 1px;
+  }
+}
+
+// @media (min-width: 601px) and (max-width: 767px) {
+//   .size-dial {
+//     .mat-dialog-container {
+//       max-height: 500px !important;
+//     }
+//   }
+// }
+// @media only screen and (min-width: 1101px) {
+//   .size-dial {
+//     .mat-dialog-container {
+//       min-width : 790px;
+//       max-height: 640px !important;
+//     }
+//   }
+// }
+
+@media only screen and (max-width: 415px) {
+  .renodee {
+      padding: 0px 0px;
+  }
+}
+// Responsive end

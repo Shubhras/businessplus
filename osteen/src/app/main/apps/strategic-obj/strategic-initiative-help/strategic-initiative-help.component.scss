@@ -1,0 +1,51 @@
+@import "src/@fuse/scss/fuse";
+
+.action-help-heading {
+    font-size: 18px;
+    font-weight: 700;
+}
+
+.action-help-container {
+    background: #fff;
+    /* box-shadow: 6px 6px #ded8d8; */
+    box-shadow: 5px 5px 8px 10px #a09c9c36;
+    margin: 11px 19px;
+}
+
+.action-help-para {
+    font-size: 16px;
+    padding-top: -16px;
+    text-align: justify;
+}
+
+.action-help-content {
+    padding: 16px;
+    padding-top: 0px;
+    padding-bottom: 10px;
+}
+
+mat-list-item {
+    height: auto !important;
+}
+
+.icon-size {
+    font-size: 11px !important;
+}
+
+.action-help-para-two {
+    font-size: 17px;
+    padding: 1px 28px;
+    font-weight: 700;
+    background: #c5c5c52b;
+    margin-top: 29px;
+}
+
+.action-help-step {
+    font-size: 22px;
+    font-weight: 700;
+    color: #000;
+}
+
+table {
+    width: 100%;
+}

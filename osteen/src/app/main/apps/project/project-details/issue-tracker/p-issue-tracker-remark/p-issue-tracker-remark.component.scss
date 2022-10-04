@@ -1,0 +1,23 @@
+@import "src/@fuse/scss/fuse";
+#task-analytics {
+    .issue_remark_text{
+        font-size: 20px;
+        font-weight: 800;
+        padding-top: 4px;
+    }
+    /* .remark-table{
+        tr.mat-header-row {
+            height: 25px;
+            background:#6497b1;
+            color: #fff;
+        }
+        .mat-header-completion{
+            padding-right: 0px;
+            width: 90px;
+        }
+        td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+            padding-left: 2px;
+            border-left: 1px solid #e0e0e0;
+        }
+    } */
+}

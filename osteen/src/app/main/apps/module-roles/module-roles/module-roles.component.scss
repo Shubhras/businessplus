@@ -1,0 +1,30 @@
+@import "src/@fuse/scss/fuse";
+
+#module-roles{
+
+      .main-fiels{
+        background-color:#FFFFFF;
+        border-radius: 8px;
+        max-height: 500px;
+        height: 400px;
+       }
+       .fiels-task{
+        border-top-left-radius: 8px;
+        border-top-right-radius:8px;
+       }
+       .roles-hadding{
+       	 background-color: #b0aeb2 ;
+	     height: 35px;
+	      .roles-define{
+            font-size: 13px;
+	      }
+       }
+       .roles-view{
+          height: 35px;
+	      .roles-data{
+             font-size: 12px;
+	      }
+       }
+}
+
+ 

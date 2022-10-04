@@ -1,0 +1,480 @@
+<div id="initiative-data" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Master Action Plans
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="main-widget ml-8 mr-8 mt-8 mb-4">
+        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+            <div fxFlex="100" fxFlex.gt-xs="70" fxFlex.gt-md="70" class="search-filter-select">
+                <mat-form-field class="pr-8" appearance="outline">
+                    <mat-label>Department</mat-label>
+                    <mat-select (selectionChange)="filterRenderedData('department_id', $event.value)"
+                        [formControl]="dept_nameFilter">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">
+                            {{department.dept_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- <mat-form-field class="pr-8" appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="start_taerget_date" (dateInput)="filterRenderedData('start_date', $event.value)" [formControl]="start_dateFilter" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field> -->
+                <mat-form-field class="pr-8" appearance="outline">
+                    <mat-label>Target Date</mat-label>
+                    <input matInput [matDatepicker]="pickertarget" [(ngModel)]="end_taerget_date"
+                        (dateInput)="filterRenderedData('end_date', $event.value)" [formControl]="end_dateFilter"
+                        readonly>
+                    <mat-datepicker-toggle matSuffix [for]="pickertarget"></mat-datepicker-toggle>
+                    <mat-datepicker #pickertarget></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="pr-8" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select (selectionChange)="filterRenderedData('status_name', $event.value)"
+                        [formControl]="status_nameFilter">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="{{status.status_name}}" *ngFor="let status of straObjStatus"
+                            [disabled]="status.status_name =='Open(Un Hold)'">
+                            <span *ngIf="status.status_name == 'Red'">
+                                <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Yellow'">
+                                <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Green'">
+                                <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Gray (Started)'">
+                                <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Blue (Hold)'">
+                                <img class="status-blue-icon" src="assets/icons/status-blue-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Open(Un Hold)'"><img class="status-open-unhold"
+                                    src="assets/icons/status-open-unhold.png"> {{status.status_name}}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button (click)="resetOptions()">Reset</button>
+            </div>
+            <!-- <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+          <div fxLayout="column" fxLayoutAlign="start" class="strObjLesent">
+              <div fxLayout="row">
+                <span class="status-green lesent-color"></span><div>- 100%</div>
+                <span class="status-yellow lesent-color"></span><div>- 80-100%</div>
+                <span class="status-red lesent-color"></span><div>> 80%</div>
+                <span class="status-gray lesent-color"></span><div>- On track</div>
+                <span class="status-blue lesent-color"></span><div>- Hold</div>
+              </div>
+          </div>
+        </div> -->
+            <div fxFlex="100" fxFlex.gt-xs="30" fxFlex.gt-md="30" fxLayoutAlign="flex-end center">
+                <div class="open-close-button">
+                    <button mat-raised-button class="open-all-button mr-8" (click)="allExpandState = true">Open
+                        All</button>
+                    <button mat-raised-button class="close-all-button mr-8" (click)="allExpandState = false">Close
+                        All</button>
+                    <button mat-raised-button (click)="initiativeDataPDF()">Print</button>
+                    <button mat-raised-button [routerLink]="['/apps/action-plan-help']" style="        margin-left: 5px;
+                    background: #1c5e97;
+                    color: #fff;">
+                        <!-- <mat-icon>visibility</mat-icon> -->
+                        <span>Help?</span>
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+                [@animate]="{value:'*',params:{y:'100%'}}">
+                <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                    <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                            <div></div>
+                            <div fxLayout="row" class="" fxFlex="100" fxLayoutAlign="">
+                                <table mat-table class="mat-table-lesent" [dataSource]="dataSourceLesent">
+                                    <ng-container matColumnDef="lesent_name">
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-lesentName">
+                                            <img *ngIf="element.lesent_name == 'Red'" class="status-red-icon"
+                                                src="assets/icons/status-red-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Yellow'" class="status-yellow-icon"
+                                                src="assets/icons/status-yellow-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Green'" class="status-green-icon"
+                                                src="assets/icons/status-green-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Gray'" class="status-gray-icon"
+                                                src="assets/icons/status-gray-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Blue'" class="status-blue-icon"
+                                                src="assets/icons/status-blue-icon.png" >
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="lesent_description">
+                                        <td mat-cell *matCellDef="let element">{{element.lesent_description}}
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsLesent;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="" fxLayout="column " fxFlex="100">
+                <h1>hello</h1>
+            </div> -->
+        </div>
+
+    </div>
+
+
+    <div class="main-widget str_obj_hading">
+        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+            <div fxFlex="100" fxFlex.gt-xs="4" fxFlex.gt-md="4">
+                <div class="str-obj-tittel">S. No.</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="44" fxFlex.gt-md="44">
+                <div class="str-obj-tittel">Strategic Objectives</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="14" fxFlex.gt-md="14">
+                <div class="str-obj-tittel">Department</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="12" fxFlex.gt-md="12">
+                <div class="str-obj-tittel">Target</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="8" fxFlex.gt-md="8">
+                <div class="str-obj-tittel">UoM</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                <div class="str-obj-tittel">Status</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="6" fxFlex.gt-md="6">
+                <div class="str-obj-tittel">%</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="7" fxFlex.gt-md="7">
+                <div class="str-obj-tittel"> Target Date</div>
+            </div>
+        </div>
+    </div>
+    <!-- Deptartments -->
+    <div *ngFor="let department of renderStrategicData">
+        <!-- Strategic Objectives -->
+        <div *ngFor="let renderData of department.strategic_objectives; let i = index">
+            <div class="content all-pages-content">
+                <!-- *ngIf="renderData.initiatives != ''" -->
+                <div class="left">
+                    <mat-expansion-panel [expanded]="allExpandState">
+                        <mat-expansion-panel-header style="height: auto;">
+                            <div class="main-widget" fxLayout="row wrap" fxFlex="100">
+                                <div class="widget-group stra-dept" fxLayout="row wrap" fxFlex="100"
+                                    [@animateStagger]="{value:'50'}">
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3"
+                                        fxFlex.gt-md="3">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.srno}}</div>
+                                            <!-- {{renderData.strategic_objectives_id}} -->
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="45"
+                                        fxFlex.gt-md="45">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.description}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="15"
+                                        fxFlex.gt-md="15">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.dept_name}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="12"
+                                        fxFlex.gt-md="12">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.target}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                        fxFlex.gt-md="8">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.uom_name}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3"
+                                        fxFlex.gt-md="3">
+                                        <div fxLayout="column" fxLayoutAlign="center center">
+                                            <div class="kpifunction">
+                                                <img class="status-red-icon" *ngIf="renderData.status_name == 'Red'"
+                                                    src="assets/icons/status-red-icon.png">
+                                                <img class="status-yellow-icon"
+                                                    *ngIf="renderData.status_name == 'Yellow'"
+                                                    src="assets/icons/status-yellow-icon.png">
+                                                <img class="status-green-icon" *ngIf="renderData.status_name == 'Green'"
+                                                    src="assets/icons/status-green-icon.png">
+                                                <img class="status-gray-icon"
+                                                    *ngIf="renderData.status_name == 'Gray (Started)'"
+                                                    src="assets/icons/status-gray-icon.png">
+                                                <img class="status-blue-icon"
+                                                    *ngIf="renderData.status_name == 'Blue (Hold)'"
+                                                    src="assets/icons/status-blue-icon-white.png">
+                                            </div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="6"
+                                        fxFlex.gt-md="6">
+                                        <div fxLayout="row" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.percentage}}%</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                        fxFlex.gt-md="8">
+                                        <div fxLayout="row" fxLayoutAlign="flex-end">
+                                            <div class="kpifunction">{{renderData.end_date | date:'dd-MM-yyyy'}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                </div>
+                            </div>
+                        </mat-expansion-panel-header>
+                        <!-- initiatives start-->
+                        <div *ngFor="let initiative of renderData.initiatives;">
+                            <div class="main-widget initiative">
+                                <div class="widget-group" fxLayout="row" fxFlex="100" [@animateStagger]="{value:'50'}">
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                        fxFlex.gt-md="5">
+                                        <div fxLayout="column" fxLayoutAlign="start">
+                                            <div class="sr_no initiative_data">{{initiative.sr_no}}</div>
+                                            <!-- {{initiative.sr_no}} -->
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="75"
+                                        fxFlex.gt-md="75">
+                                        <div fxLayout="column" fxLayoutAlign="start">
+                                            <div class="initiative_data">Initiative: {{initiative.definition}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                        fxFlex.gt-md="5">
+                                        <div fxLayout="row" fxLayoutAlign="flex-end">
+                                            <div class="initiative_data">
+                                                <img class="status-red-icon" *ngIf="initiative.status_name == 'Red'"
+                                                    src="assets/icons/status-red-icon.png">
+                                                <img class="status-yellow-icon"
+                                                    *ngIf="initiative.status_name == 'Yellow'"
+                                                    src="assets/icons/status-yellow-icon.png">
+                                                <img class="status-green-icon" *ngIf="initiative.status_name == 'Green'"
+                                                    src="assets/icons/status-green-icon.png">
+                                                <img class="status-gray-icon"
+                                                    *ngIf="initiative.status_name == 'Gray (Started)'"
+                                                    src="assets/icons/status-gray-icon.png">
+                                                <img class="status-blue-icon-white"
+                                                    *ngIf="initiative.status_name == 'Blue (Hold)'"
+                                                    src="assets/icons/status-blue-icon-white.png">
+                                            </div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                        fxFlex.gt-md="5">
+                                        <div fxLayout="row" fxLayoutAlign="flex-end">
+                                            <div class="initiative_data">{{initiative.percentage}}%</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10"
+                                        fxFlex.gt-md="10">
+                                        <div fxLayout="row" fxLayoutAlign="flex-end">
+                                            <div class="initiative_data">Finish:
+                                                {{initiative.end_date | date:'dd-MM-yyyy'}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                </div>
+                            </div>
+                            <!-- action plan start -->
+                            <div *ngFor="let actionPlan of initiative.action_plans;">
+                                <div class="main-widget action-plan">
+                                    <div class="widget-group" fxLayout="row" fxFlex="100"
+                                        [@animateStagger]="{value:'50'}">
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                            fxFlex.gt-md="5">
+                                            <div fxLayout="column" fxLayoutAlign="start">
+                                                <div   class="sr_no kpifunction">{{actionPlan.sr_no}}</div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="75"
+                                            fxFlex.gt-md="75">
+                                            <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                <mat-button-toggle-group [value]="selectedYearVal"
+                                                    #group="matButtonToggleGroup">
+                                                    <mat-button-toggle value="{{actionYear.year_key}}"
+                                                        (click)="actionDataByYear(renderData.department_id,renderData.strategic_objectives_id,initiative.initiatives_id,actionPlan.action_plans_id,actionYear.year_key)"
+                                                        *ngFor="let actionYear of actionPlan.years">
+                                                        {{actionYear.year_value}}
+                                                    </mat-button-toggle>
+
+                                                </mat-button-toggle-group>
+                                            </div>
+                                            <!-- <mat-button-toggle value="{{actionYear}}"
+                                                        (click)="actionDataByYear(renderData.department_id,renderData.strategic_objectives_id,initiative.initiatives_id,actionPlan.action_plans_id,actionYear)"
+                                                        *ngFor="let actionYear of actionPlan.years">
+                                                        {{actionYear}}
+                                                    </mat-button-toggle> -->
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                            fxFlex.gt-md="5">
+                                            <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                <div class="kpifunction" style="margin-right: 3px;">
+                                                    <img class="status-red-icon" *ngIf="actionPlan.status_name == 'Red'"
+                                                        src="assets/icons/status-red-icon.png">
+                                                    <img class="status-yellow-icon"
+                                                        *ngIf="actionPlan.status_name == 'Yellow'"
+                                                        src="assets/icons/status-yellow-icon.png">
+                                                    <img class="status-green-icon"
+                                                        *ngIf="actionPlan.status_name == 'Green'"
+                                                        src="assets/icons/status-green-icon.png">
+                                                    <img class="status-gray-icon"
+                                                        *ngIf="actionPlan.status_name == 'Gray (Started)'"
+                                                        src="assets/icons/status-gray-icon.png">
+                                                    <img class="status-blue-icon-white"
+                                                        *ngIf="actionPlan.status_name == 'Blue (Hold)'"
+                                                        src="assets/icons/status-blue-icon-white.png">
+                                                </div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                            fxFlex.gt-md="5">
+                                            <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                <div class="kpifunction">{{actionPlan.percentage}}%</div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10"
+                                            fxFlex.gt-md="10">
+                                            <div fxLayout="row" fxLayoutAlign="flex-end">
+                                                <div class="kpifunction">Finish:
+                                                    {{actionPlan.end_date | date:'dd-MM-yyyy'}}</div>
+                                            </div>
+                                        </fuse-widget>
+                                    </div>
+                                </div>
+                                <div class="main-widget">
+                                    <div class="table-actionplan">
+                                        <table mat-table [dataSource]="actionPlan.datasource" class="user-table"
+                                            id="contentToConvert">
+                                            <ng-container matColumnDef="sr_no">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.
+                                                </th>
+                                                <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                    {{counter3}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="definition">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-actionPlan">
+                                                    Action Plan</th>
+                                                <td mat-cell *matCellDef="let element" class="mat-cell-actionPlan">
+                                                    {{element.definition}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="target">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-target">Target
+                                                </th>
+                                                <td mat-cell *matCellDef="let element">{{element.target}}</td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="co_owner_name">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-owner">Owner
+                                                </th>
+                                                <td mat-cell *matCellDef="let element" class="mat-cell-owner">
+                                                    {{element.co_owner_name}}</td>
+                                            </ng-container>
+                                            <ng-container *ngFor="let month of MONTHS; let i = index">
+                                                <ng-container matColumnDef="{{month}}">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-month">
+                                                        {{month | titlecase}}</th>
+
+                                                    <td mat-cell *matCellDef="let element">
+                                                        {{element[month].a | json}}
+
+                                                        <img *ngIf="element[month].a == '0'" class="start-month-icon"
+                                                            src="assets/icons/end-month-icon.png">
+                                                        <div *ngIf="element[month].a == '1'">
+                                                            <button class="btn__review"
+                                                                [disabled]="deptAccorPermission.indexOf(initiative.dept_id) == -1"
+                                                                (click)="changeReviewOpen(element,i,element.yearData)">
+                                                                <svg [ngStyle]="{'stroke':element[month].b === true ? '#f44336' : 'grey' }"
+                                                                    class="svg__icontriangle svg__triangle-stroke"
+                                                                    xmlns="http://www.w3.org/2000/svg"
+                                                                    viewBox="0 0 72 72" width="66" height="66">
+                                                                    <path
+                                                                        d="M3.23 69.34L35.77 3.11L69.23 68.88L3.23 69.34Z" />
+                                                                </svg>
+                                                            </button>
+                                                        </div>
+                                                        <svg *ngIf="element[month].a == '2'"
+                                                            [ngStyle]="{'fill':element[month].b === true ? '#f44336' : 'grey' }"
+                                                            class="svg__icon svg__triangle"
+                                                            xmlns="http://www.w3.org/2000/svg" viewBox="0 0 72 72"
+                                                            width="66" height="66">
+                                                            <path d="M0.23 66.34L32.77 0.11L66.23 65.88L0.23 66.34Z" />
+                                                        </svg>
+                                                        <img *ngIf="element[month].a == '3'" class="end-month-icon"
+                                                            src=" assets/icons/start-month-icon.png ">
+                                                    </td>
+                                                </ng-container>
+                                            </ng-container>
+                                            <ng-container matColumnDef="status_name" sticky>
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-month">Status
+                                                </th>
+                                                <td mat-cell *matCellDef="let element" class="mat-header-month">
+                                                    <!-- <span class="status-green" *ngIf="element.status_name == 'Green'"></span>
+                            <span class="status-yellow" *ngIf="element.status_name == 'Yellow'"></span>
+                            <span class="status-red" *ngIf="element.status_name == 'Red'"></span>
+                            <span class="status-blue" *ngIf="element.status_name == 'Blue (Hold)'"></span>
+                            <span class="status-gray" *ngIf="element.status_name == 'Gray (Started)'"></span> -->
+                                                    <img *ngIf="element.status_name == 'Red'" class="status-red-icon"
+                                                        src="assets/icons/status-red-icon.png">
+                                                    <img *ngIf="element.status_name == 'Yellow'"
+                                                        class="status-yellow-icon"
+                                                        src="assets/icons/status-yellow-icon.png">
+                                                    <img *ngIf="element.status_name == 'Green'"
+                                                        class="status-green-icon"
+                                                        src="assets/icons/status-green-icon.png">
+                                                    <img *ngIf="element.status_name == 'Gray (Started)'"
+                                                        class="status-gray-icon"
+                                                        src="assets/icons/status-gray-icon.png">
+                                                    <img *ngIf="element.status_name == 'Blue (Hold)'"
+                                                        class="status-blue-icon"
+                                                        src="assets/icons/status-blue-icon.png">
+                                                </td>
+                                            </ng-container>
+                                            <ng-container matColumnDef="comment">
+                                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Comment
+                                                </th>
+                                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                                    <a href="javascript:void(0)" (click)="openUserComment(element)">
+                                                        <!-- <i class="material-icons" style="font-size: 14px; border-radius: 9px;">remove_red_eye</i> -->
+                                                        <img class="comment-icon" src="assets/icons/comment-24px.svg">
+                                                    </a>
+                                                </td>
+                                            </ng-container>
+                                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- action plan end -->
+                    </mat-expansion-panel>
+                </div>
+            </div>
+            <!-- initiatives  end-->
+        </div>
+        <!-- ./ Strategic Objectives -->
+    </div>
+    <!-- ./ Deptartments -->
+</div>

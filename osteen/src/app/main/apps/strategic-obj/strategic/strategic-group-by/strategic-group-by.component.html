@@ -1,0 +1,82 @@
+<div class="content popup-content">
+    <!--  <div class="h3 mb-8" fxLayoutAlign="center center">New Strategic Objective</div> -->
+    <div fxLayoutAlign="end center" style="margin-bottom: 1px;margin-top: -8px;">
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+        </button>
+    </div>
+    <div class="popup-header">
+        <mat-toolbar matDialogTitle class="m-0">
+            <mat-toolbar-row>
+                <span class="title dialog-title">Overall Strategic Objective Performance</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+    <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+        <table mat-table [dataSource]="dataSource" id="contentToConvert">
+            <ng-container matColumnDef="sr_no" sticky>
+                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">S. No.</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.s_no}}</td>
+                <td mat-footer-cell *matFooterCellDef> Overall status </td>
+            </ng-container>
+            <ng-container matColumnDef="description">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-definition">Description</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition">{{element.description}}</td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+
+            <ng-container matColumnDef="dept_name">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-department">Department</th>
+                <td mat-cell (click)="openUserComment(element)" *matCellDef="let element">
+                    {{element.dept_name}}
+                </td>
+                <td mat-footer-cell *matFooterCellDef></td>
+            </ng-container>
+            <ng-container matColumnDef="status_name">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-status">Status</th>
+                <td mat-cell *matCellDef="let element">
+                    <img *ngIf="element.status_name == 'Red'" class="status-red-icon"
+                        src="assets/icons/status-red-icon.png">
+                    <img *ngIf="element.status_name == 'Yellow'" class="status-yellow-icon"
+                        src="assets/icons/status-yellow-icon.png">
+                    <img *ngIf="element.status_name == 'Green'" class="status-green-icon"
+                        src="assets/icons/status-green-icon.png">
+                    <img *ngIf="element.status_name == 'Gray (Started)'" class="status-gray-icon"
+                        src="assets/icons/status-gray-icon.png">
+                    <img *ngIf="element.status_name == 'Blue (Hold)'" class="status-blue-icon"
+                        src="assets/icons/status-blue-icon.png">
+                </td>
+                <td mat-footer-cell *matFooterCellDef>
+                    <img *ngIf="overall_status == 'Red'" class="status-red-icon" src="assets/icons/status-red-icon.png">
+                    <img *ngIf="overall_status == 'Yellow'" class="status-yellow-icon"
+                        src="assets/icons/status-yellow-icon.png">
+                    <img *ngIf="overall_status == 'Green'" class="status-green-icon"
+                        src="assets/icons/status-green-icon.png">
+                    <img *ngIf="overall_status == 'Gray (Started)'" class="status-gray-icon"
+                        src="assets/icons/status-gray-icon.png">
+                    <img *ngIf="overall_status == 'Blue (Hold)'" class="status-blue-icon"
+                        src="assets/icons/status-blue-icon.png">
+                </td>
+
+            </ng-container>
+            <!-- <ng-container matColumnDef="overall_status">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-definition">Overall status</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                    <img *ngIf="overall_status == 'Red'" class="status-red-icon" src="assets/icons/status-red-icon.png">
+                    <img *ngIf="overall_status == 'Yellow'" class="status-yellow-icon"
+                        src="assets/icons/status-yellow-icon.png">
+                    <img *ngIf="overall_status == 'Green'" class="status-green-icon"
+                        src="assets/icons/status-green-icon.png">
+                    <img *ngIf="overall_status == 'Gray (Started)'" class="status-gray-icon"
+                        src="assets/icons/status-gray-icon.png">
+                    <img *ngIf="overall_status == 'Blue (Hold)'" class="status-blue-icon"
+                        src="assets/icons/status-blue-icon.png">
+                </td>
+                <td mat-footer-cell *matFooterCellDef> {{overall_status}} </td>
+            </ng-container> -->
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            <tr mat-footer-row *matFooterRowDef="displayedColumns"></tr>
+        </table>
+    </div>
+</div>

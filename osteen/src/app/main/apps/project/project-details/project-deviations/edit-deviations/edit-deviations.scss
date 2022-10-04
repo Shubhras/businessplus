@@ -1,0 +1,7 @@
+@import "src/@fuse/scss/fuse";
+#edit-deviations {
+  .custom-file-input::before {
+    content: "Attachement";
+    margin-left: -16px;
+  }
+}

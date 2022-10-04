@@ -1,0 +1,126 @@
+<!-- <mat-vertical-stepper [linear]="isLinear" #stepper>
+
+     <mat-step [editable]="isEditable">
+         <ng-template matStepLabel>Fill out your name
+             <div class="test">
+                 <button [routerLink]="['/apps/kpitrackers/keyperformance']" mat-button matStepperNext
+                     (click)="test('isEditable2')">Next</button>
+             </div>
+         </ng-template>
+     </mat-step>
+     <mat-step [editable]="false">
+         <ng-template matStepLabel>Fill out your address</ng-template>
+
+         <div>
+             <button mat-button matStepperNext (click)="test(isEditable2)">Next</button>
+         </div>
+     </mat-step>
+     <mat-step [editable]="isEditable3">
+         <ng-template matStepLabel>Done</ng-template>
+         You are now done.
+         <div>
+             <button mat-button matStepperPrevious>Back</button>
+             <button mat-button (click)="stepper.reset()">Reset</button>
+         </div>
+     </mat-step>
+ </mat-vertical-stepper> -->
+
+
+<!-- <button mat-list-item (click)="flip()" [routerLink]="['/apps/strategic-obj/initiative-data']">
+    disabled</button>
+<button mat-list-item [disabled]="isDisabled" (click)="flipo()">i can be disabled</button>
+<button mat-list-item [disabled]="isDisabledo" (click)="flipt()">i can be disabled</button>
+<button mat-list-item [disabled]="isDisabledt" (click)="flipf()">i can be disabled</button> -->
+<!-- <mat-action-list>
+    <button mat-list-item> Save </button>
+    <button mat-list-item> Undo </button>
+</mat-action-list> -->
+
+
+<div class="checklist-body">
+    <ul class="items">
+        <li id="testitem" class="item" tabindex="0"  (click)="AddUserOpen()">
+        <a>
+            <span class="checkmark">
+                <span>1</span>
+                <mat-icon>done</mat-icon>
+            </span>
+            <p class="fixdialog"  matDialogClose>Add Users</p>
+            <!-- <mat-icon style="position: relative; left: 4.2em;">done</mat-icon> -->
+        </a>
+    </li>
+    <li id="testitem" class="item" tabindex="0"  (click)="AddDeptOpen()">
+    <a>
+        <span class="checkmark">
+            <span>2</span>
+            <mat-icon>done</mat-icon>
+        </span>
+        <p class="fixdialog"  matDialogClose>Add Department</p>
+        <!-- <mat-icon style="position: relative; left: 4.2em;">done</mat-icon> -->
+    </a>
+</li>
+<li id="testitem" class="item" tabindex="0"  (click)="AddSectionOpen()">
+<a>
+    <span class="checkmark">
+        <span>3</span>
+        <mat-icon>done</mat-icon>
+    </span>
+    <p class="fixdialog"  matDialogClose>Add Section</p>
+    <!-- <mat-icon style="position: relative; left: 4.2em;">done</mat-icon> -->
+</a>
+</li>
+        <li id="testitem" class="item" tabindex="0"  (click)="AddStrategicPopupOpen()">
+            <a>
+                <span class="checkmark">
+                    <span>4</span>
+                    <mat-icon>done</mat-icon>
+                </span>
+                <p class="fixdialog"  matDialogClose>Strategic Objective</p>
+                <!-- <mat-icon style="position: relative; left: 4.2em;">done</mat-icon> -->
+            </a>
+        </li>
+        <li class="item" tabindex="0" (click)="addInitiativeOpen()"
+             >
+        <!-- <li class="item  locked" tabindex="0" (click)="shouldlockedShow = !shouldlockedShow"
+            (click)="addInitiativeOpen()" [ngClass]="{initiativelock: isEditable2, initiativeunlock: isEditable2}"> -->
+            <a><span class="checkmark">
+                    <span>5</span>
+                    <mat-icon>done</mat-icon>
+                </span>
+                <p class="fixdialog"  matDialogClose>Initiative</p>
+                <!-- <mat-icon style="position: relative; left: 4em;">done</mat-icon> -->
+            </a>
+        </li>
+        <li class="item " tabindex="0"  (click)="addActionPlanOpen()">
+            <a>
+                <span class="checkmark">
+                    <span>6</span>
+                    <mat-icon>done</mat-icon>
+                </span>
+                <p class="fixdialog"  matDialogClose>Action Plan</p>
+                <!-- <mat-icon style="position: relative; left: 2.5em;">done</mat-icon> -->
+            </a>
+        </li>
+        <!-- <li class="item locked" tabindex="0">
+            <a>
+                <span class="checkmark">
+                    <span class="sequential-label">4</span>
+                    <mat-icon>done</mat-icon>
+                </span>
+                <p>Any data to upload? Send it our way!</p>
+            </a>
+        </li> -->
+        <!-- <li class="item locked" tabindex="0"><a><span class="checkmark">
+                     <span class="sequential-label">5</span>
+                 </span>
+                 <p>Add some Zaps</p>
+             </a>
+         </li>
+         <li class="item locked" tabindex="0">
+             <a><span class="checkmark"><span class="sequential-label">6</span>
+                 </span>
+                 <span>Want to learn more? Schedule training.</span>
+             </a>
+         </li> -->
+    </ul>
+</div>

@@ -1,0 +1,388 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addActionForm" [formGroup]="addActionForm"
+            (ngSubmit)="addActionPlan() " novalidate>
+            <!-- <div class="h3 mb-12">Add - New Action</div> -->
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end center" fxFlex="1 0 auto"
+                style="margin-bottom: 1px;">
+                <button mat-icon-button class="close-button" [mat-dialog-close]="true" style="background: transparent;">
+                    <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+                </button>
+            </div>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add - New Action Plan</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right rewrk-fileds">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="dept_id"
+                        (selectionChange)="strategicObjGet($event.value);kpiGet($event.value);sectionGet($event.value)"
+                        [disabled]="deptStrIniDisable" class="department-stratgeix rewrap-text">
+                        <mat-option *ngFor="let department of dataDepartment" [value]="department.id">
+                            {{department.dept_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left rewrk-fileds">
+                    <mat-label>Strategic Objective</mat-label>
+                    <mat-select matNativeControl formControlName="s_o_id"
+                        (selectionChange)="initiativesGet($event.value)" [disabled]="deptStrIniDisable"
+                        class="department-stratgeix rewrap-text">
+                        <mat-option *ngFor="let strategic of dataStraObj" [value]="strategic.id">
+                            {{strategic.description}}</mat-option>
+                    </mat-select>
+                    <mat-error>Strategic Objective is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right rewrk-fileds">
+                    <mat-label>Initiative</mat-label>
+                    <mat-select formControlName="initiatives_id" (selectionChange)="mainMaxDtaeInit($event.value)"
+                        [disabled]="deptStrIniDisable" class="department-stratgeix rewrap-text">
+                        <mat-option *ngFor="let initiatives of  dataInitiatives" [value]="initiatives.id">
+                            {{initiatives.definition}}</mat-option>
+                    </mat-select>
+                    <mat-error>Initiative is required</mat-error>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="47" class="pl-4 remove-left rewrk-fileds">
+                    <!--  <mat-label *ngIf="kpiDataList==''">No KPI</mat-label>
+           <mat-label *ngIf="kpiDataList!=''">KPI</mat-label> -->
+                    <mat-label>KPI</mat-label>
+                    <mat-select formControlName="kpi_id" multiple class="department-stratgeix rewrap-text">
+                        <!--   (selectionChange)="noLinkedKPI($event.value)"
+               <mat-option [value]="" [disabled]="linkedKPI == false">No linked KPI</mat-option> -->
+                        <!--  [disabled]="linkedKPI == true" -->
+                        <mat-option>Not Applicable</mat-option>
+                        <mat-option *ngFor="let kpi of  kpiDataList" [value]="kpi.kpi_id">
+                            {{kpi.kpi_name}}
+                        </mat-option>
+
+                    </mat-select>
+                    <!-- <mat-error>Target is required!</mat-error> -->
+                </mat-form-field>
+                <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="3" fxLayoutAlign="center center" *ngIf="kpiPermission.acc_create == 1">
+                    <mat-icon matTooltip="Add New KPI" aria-label="Add New KPI" (click)="addKpiShow()"
+                        *ngIf="addKpiPlus">add_circle</mat-icon>
+                    <mat-icon (click)="addKpiHide()" *ngIf="addKpiMinus">remove_circle</mat-icon>
+                </a>
+            </div>
+            <!-- start date show -->
+
+            <div *ngIf="showInitDate" class="widget-group p-0 mb-16 d-flex" [@animateStagger]="{value:'50'}"
+                [fxLayout]="direction" fxLayout.xs="column">
+                <div class="hadding heading_date" style="margin-right: 12px;">
+                    <span style="font-weight: 400;font-size:14px;"></span>
+                </div>
+                <div class="hadding heading_date" style="margin-right: 12px;"><span
+                        style="font-weight: 900;font-size:14px; ">Start-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.startDate2}}</span>
+                </div>
+                <div class="hadding heading_date"><span style="font-weight: 900;font-size:14px;">End-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.endDate2}}</span>
+                </div>
+            </div>
+            <!-- for master tree plan -->
+            <div *ngIf="showInitDate2" class="widget-group p-0 mb-16 d-flex" [@animateStagger]="{value:'50'}"
+                [fxLayout]="direction" fxLayout.xs="column">
+                <div class="hadding heading_date" style="margin-right: 12px;">
+                    <span style="font-weight: 400;font-size:14px;"></span>
+                </div>
+                <div class="hadding heading_date" style="margin-right: 12px;"><span
+                        style="font-weight: 900;font-size:14px; ">Start-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.startDate2}}</span>
+                </div>
+                <div class="hadding heading_date"><span style="font-weight: 900;font-size:14px;">End-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.endDate2}}</span>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>New Action plan</mat-label>
+                    <textarea cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" matInput
+                        formControlName="definition"></textarea>
+                    <mat-error>New Action plan is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                fxFlex="1 0 auto">
+
+                <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4 edit-dials-ad remove-right">
+                    <mat-label>Target</mat-label>
+                    <input matInput formControlName="target" autocomplete="off" style="height: 30px !important;">
+                    <!-- <mat-error>Target is required!</mat-error> -->
+                </mat-form-field>
+
+                <!-- <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4 remove-right rewrk-fileds">
+                    <mat-label>Owner</mat-label>
+                    <mat-select formControlName="co_owner" multiple class="department-stratgeix rewrap-text">
+                        <mat-option *ngFor="let user of  (dataActionOwner | orderBy:'name')" [value]="user.user_id ">
+                            {{user.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Owner is required</mat-error>
+                </mat-form-field> -->
+
+
+                <ng-multiselect-dropdown formControlName="co_owner" [placeholder]="'Select Owner'"
+                    [data]="dataActionOwner" [settings]="dropdownSettings" (onSelect)="onItemSelect($event)"
+                    (onSelectAll)="onSelectAll($event)" (onDeSelect)="onItemDeSelect($event)" fxFlex="33.33"
+                    >
+                </ng-multiselect-dropdown>
+
+
+               
+             
+
+
+                <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4 pl-4 remove-right rewrk-fileds">
+                    <mat-label>Review Frequency</mat-label>
+                    <mat-select formControlName="control_point" class="department-stratgeix rewrap-text">
+                        <mat-option value="Monthly">Monthly</mat-option>
+                        <mat-option value="Quarterly">Quarterly</mat-option>
+                        <mat-option value="Half Yearly">Half Yearly</mat-option>
+                        <mat-option value="Yearly">Yearly</mat-option>
+                    </mat-select>
+                    <mat-error>Review Frequency is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                fxFlex="1 0 auto">
+
+                <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4 edit-dials-ad remove-right">
+                    <mat-label>Start</mat-label>
+                    <input matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker"
+                        formControlName="start_date" [(ngModel)]="start_date" readonly [disabled]="datepickerDisable"
+                        style="height: 30px !important;">
+                    <mat-error>Start date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4 edit-dials-ad remove-right">
+                    <mat-label>Finish</mat-label>
+                    <input matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker1"
+                        formControlName="end_date" [(ngModel)]="end_date" readonly [disabled]="datepickerDisable"
+                        style="height: 30px !important;">
+                    <mat-error>Finish date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="33.33" class="pr-4 edit-dials-ad remove-right">
+                    <mat-label>Reminder</mat-label>
+                    <input matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker2"
+                        formControlName="reminder_date" [(ngModel)]="reminder_date" readonly
+                        style="height: 30px !important;">
+                    <mat-error>Reminder date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                    <mat-datepicker #picker2></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!-- <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                 fxFlex="1 0 auto">
+                 
+                 
+             </div>
+             <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                 fxFlex="1 0 auto">
+                 
+             </div> -->
+            <div *ngIf="kpiFromShow" fxFlex="1 0 auto"
+                style="margin-top: 14px;padding: 15px; background-color: rgb(243 243 243 / 58%);">
+                <div formArrayName="kpiFromData"
+                    *ngFor="let item of addActionForm.get('kpiFromData').controls; let i = index;">
+                    <div [formGroupName]="i" style="flex-direction: column !important;">
+                        <div class="popup-header">
+                            <mat-toolbar matDialogTitle class="m-0" style="background: #ffffff;
+                            border-radius: 10px;
+                            box-shadow: 0 0 2px #e5e9ec;
+                            border-bottom: 1px solid #eeeeee;">
+                                <mat-toolbar-row>
+                                    <span class="title dialog-title">Add KPI</span>
+                                </mat-toolbar-row>
+                            </mat-toolbar>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right rewrk-fileds">
+                                <mat-label>Section</mat-label>
+                                <mat-select matNativeControl formControlName="section_id"
+                                    class="department-stratgeix rewrap-text">
+                                    <mat-option value="{{section.id}}" *ngFor="let section of dataSections">
+                                        {{section.section_name}}</mat-option>
+                                </mat-select>
+                                <mat-error>Section is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left edit-dials-ad">
+                                <mat-label>KPI Name</mat-label>
+                                <input matInput formControlName="kpi_name" style="height: 30px !important;">
+                                <mat-error>KPI Name is required!</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" class="field-textarea" fxLayout.xs="column"
+                            fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="100" class="dialog-field">
+                                <mat-label>KPI Definition</mat-label>
+                                <textarea matInput formControlName="kpi_definition"></textarea>
+                                <mat-error>KPI Definition is required!</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="rewrk-fileds">
+                                <mat-label>Ideal Trend</mat-label>
+                                <mat-select matNativeControl formControlName="ideal_trend" placeholder="Ideal Trend"
+                                    class="department-stratgeix">
+                                    <mat-option value="positive">positive (good if number goes up)</mat-option>
+                                    <mat-option value="negative">negative (good if number goes down)</mat-option>
+                                </mat-select>
+                                <mat-error>Ideal Trend is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left rewrk-fileds">
+                                <mat-label>Unit Of Measurement</mat-label>
+                                <mat-select matNativeControl formControlName="unit_of_measurement"
+                                    class="department-stratgeix">
+                                    <mat-option *ngFor="let uom of dataunitOfMeasur" [value]="uom.uom_id">
+                                        {{uom.uom_name}}</mat-option>
+                                </mat-select>
+                                <mat-error>Unit Of Measurement is required!</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left rewrk-fileds">
+                                <mat-label>Year End Target</mat-label>
+                                <mat-select matNativeControl formControlName="target_condition"
+                                    class="department-stratgeix">
+                                    <mat-option value="sum_up_all">Sum Up-All</mat-option>
+                                    <mat-option value="average">Average</mat-option>
+                                    <mat-option value="terminal_value">Terminal (YE) Value</mat-option>
+                                </mat-select>
+                                <mat-error>Year End Target is required!</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field appearance="outline" fxFlex="50" class="rewrk-fileds">
+                                <mat-label>Lead KPI</mat-label>
+                                <mat-select matNativeControl formControlName="lead_kpi" placeholder="Lead KPI"
+                                    class="department-stratgeix">
+                                    <mat-option value="1">Yes</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                <mat-error>Lead KPI is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left rewrk-fileds">
+                                <mat-label>Performance KPI</mat-label>
+                                <mat-select matNativeControl formControlName="kpi_performance"
+                                    placeholder="Performance KPI" class="department-stratgeix">
+                                    <mat-option value="1">Yes</mat-option>
+                                    <mat-option value="0">No</mat-option>
+                                </mat-select>
+                                <mat-error>Performance KPI is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left rewrk-fileds">
+                                <mat-label>Frequency</mat-label>
+                                <mat-select matNativeControl formControlName="frequency" class="department-stratgeix">
+                                    <mat-option value="Monthly">Weekly</mat-option>
+                                    <mat-option value="Monthly">Monthly</mat-option>
+                                    <mat-option value="Quarterly">Quarterly</mat-option>
+                                </mat-select>
+                                <mat-error>Frequency is required</mat-error>
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                            *ngIf="companyFinancialYear =='jan-dec'">
+                            <mat-form-field fxFlex="33.33" appearance="outline" class="add-left">
+                                <mat-label>January</mat-label>
+                                <input matInput formControlName="jan" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>February</mat-label>
+                                <input matInput formControlName="feb" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>March</mat-label>
+                                <input matInput formControlName="mar" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="33.33" appearance="outline" class="add-left">
+                                <mat-label>April</mat-label>
+                                <input matInput formControlName="apr" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>May</mat-label>
+                                <input matInput formControlName="may" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>June</mat-label>
+                                <input matInput formControlName="jun" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="33.33" appearance="outline" class="add-left">
+                                <mat-label>July</mat-label>
+                                <input matInput formControlName="jul" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>August</mat-label>
+                                <input matInput formControlName="aug" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>September</mat-label>
+                                <input matInput formControlName="sep" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <mat-form-field fxFlex="33.33" appearance="outline" class="add-left">
+                                <mat-label>October</mat-label>
+                                <input matInput formControlName="oct" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>November</mat-label>
+                                <input matInput formControlName="nov" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>December</mat-label>
+                                <input matInput formControlName="dec" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                        </div>
+                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                            *ngIf="companyFinancialYear =='april-march'">
+                            <mat-form-field fxFlex="33.33" appearance="outline" class="add-left">
+                                <mat-label>January</mat-label>
+                                <input matInput formControlName="jan" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>February</mat-label>
+                                <input matInput formControlName="feb" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                            <mat-form-field fxFlex="33.33" class="pl-4" appearance="outline">
+                                <mat-label>March</mat-label>
+                                <input matInput formControlName="mar" (keypress)="numberValidation($event)"
+                                    class="months">
+                            </mat-form-field>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button" (click)="test()">Submit</button>
+                <a mat-raised-button color="accent" (click)="addActionPlanClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

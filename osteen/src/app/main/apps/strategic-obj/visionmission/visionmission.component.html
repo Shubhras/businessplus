@@ -1,0 +1,61 @@
+<div id="dashboard-analytics" class="page-layout blank">
+    <div class="content all-pages-content" style="background-color:#FFFFFF; border-radius: 3px;">
+        <div class="left mr-lg-32">
+            <div class="main-widget">
+                <div class="widget-group" fxLayout="row wrap" fxFlex="100" *fuseIfOnDom   [@animateStagger]="{value:'50'}">
+                    <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="visionForm" [formGroup]="visionForm" (ngSubmit)="addeditVisionSubmit()">
+                         <div fxLayout="row wrap" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                             <!--<mat-form-field appearance="outline" fxFlex="100">
+                                <mat-label>Vision</mat-label>
+                                <textarea matInput formControlName="vision"></textarea>
+                                <mat-error>Vision is required</mat-error>
+                            </mat-form-field>
+                            <mat-form-field appearance="outline" fxFlex="100">
+                                <mat-label>Mission</mat-label>
+                                <textarea matInput  formControlName="mission"></textarea>
+                                <mat-error>Mission is required</mat-error>
+                            </mat-form-field>
+                             <mat-form-field appearance="outline" fxFlex="100">
+                                <mat-label>Values</mat-label>
+                                <textarea matInput  formControlName="values"></textarea>
+                                <mat-error>Values is required</mat-error>
+                            </mat-form-field>
+                           <mat-form-field appearance="outline" fxFlex="100">
+                                <mat-label>Message of CEO</mat-label>
+                                <textarea matInput formControlName="message_of_ceo" class="h-200"></textarea>
+                                <mat-error>>Message of CEO is required</mat-error>
+                            </mat-form-field> -->
+                            <div fxFlex="100">
+                                <mat-label>Vision</mat-label>
+                                <angular-editor id="editor1" formControlName="vision"  [config]="editorConfig">
+                                </angular-editor>
+                            </div>
+                            <div fxFlex="100">
+                                <mat-label>Mission</mat-label>
+                                <angular-editor id="editor2" formControlName="mission"  [config]="editorConfig">
+                                </angular-editor>
+                            </div>
+                            <div fxFlex="100">
+                                <mat-label>Values</mat-label>
+                                <angular-editor id="editor3" formControlName="values"  [config]="editorConfig">
+                                </angular-editor>
+                            </div>
+                            <div fxFlex="100">
+                                <mat-label>CEO`S msg</mat-label>
+                                <angular-editor id="editor4" formControlName="message_of_ceo"  [config]="editorConfig">
+                                </angular-editor>
+                            </div>
+                            <div fxFlex="100">
+                                <mat-label>Highlights</mat-label>
+                                <angular-editor id="editor5" formControlName="highlights"  [config]="editorConfig">
+                                </angular-editor>
+                            </div>
+                        </div>
+                         <div class="example-button-row" fxLayoutAlign="start">
+                            <button mat-raised-button color="accent">Submit</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+</div>

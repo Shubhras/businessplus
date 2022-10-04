@@ -1,0 +1,29 @@
+<button mat-icon-button class="close-button" [mat-dialog-close]="true">
+    <mat-icon class="close-icon" color="warn">close</mat-icon>
+</button>
+<div mat-dialog-content class="testfor" >
+    <div>
+        <h4 class="header">Quick Links
+        </h4>
+        <!-- <p style="font-size: 16px;
+        font-weight: 700;"> Here are a few things to do first.</p>
+    </div> -->
+    <!-- <div class="progress">
+        <div class="progress-bar" [style.width]="barwidth + '%'">{{barwidth}}%</div>
+    </div> -->
+    <!-- <button type="submit" (click)="next()" class="btn btn-primary">Next</button> -->
+
+    <stepper-overview-example></stepper-overview-example>
+    <!-- <div class="block">
+        <a href="https://www.9lessons.info/2009/06/css-visited-tips-strike-out.html"> Title-1 </a><br />
+        <a href="link-2"> Title-2 </a><br />
+        <a href="link-3"> Title-3 </a><br />
+        .
+        .
+        .
+    </div> -->
+    <div mat-dialog-actions class="footer">
+        <button mat-button (click)="onNoClick()">No Thanks</button>
+        <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial>Ok</button>
+    </div>
+</div>

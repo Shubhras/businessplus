@@ -1,0 +1,19 @@
+@import "src/@fuse/scss/fuse";
+
+#project-dashboard {
+  .huge {
+    width: 110px;
+    min-width: 110px;
+    height: 110px;
+    line-height: 110px;
+  }
+  .pro-deliverable-table {
+    tr.mat-header-row {
+      background-color: #6497b1;
+      color: #fff !important;
+    }
+  }
+  tr.mat-row {
+    cursor: pointer;
+  }
+}

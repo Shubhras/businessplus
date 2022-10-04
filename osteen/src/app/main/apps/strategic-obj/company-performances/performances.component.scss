@@ -1,0 +1,145 @@
+@import "src/@fuse/scss/fuse";
+
+#company-performances {
+    .kpi-graph {
+        background             : #e0e3e8;
+        border-top-left-radius : 8px;
+        border-top-right-radius: 8px;
+        min-height             : 25px;
+        max-height             : 35px;
+        font-size              : 13px;
+        padding                : 3px 8px 0px 8px;
+    }
+
+    .mat-elevation-z8 {
+        // border-radius: 8px;
+        box-shadow: none !important;
+    }
+
+    .customer-graph {
+        border-radius: 8px;
+        padding      : 8px;
+    }
+
+    .fuse-widget-hide {
+        display: none !important;
+    }
+
+
+    .company-performances-table {
+        // max-height: 250px;
+        overflow-y : auto;
+        border-left: 1px solid #dad5d5;
+
+        .mat-header-cell-kpi-name {
+            text-align  : left;
+            padding-left: 5px;
+            padding-top : 3px;
+            width       : 190px;
+        }
+
+        .mat-cell-kpi-name {
+            text-align  : left;
+            padding-left: 5px;
+        }
+
+        .mat-header-target {
+            width     : 40px;
+            text-align: center;
+        }
+
+        .mat-header-year {
+            width     : 60px;
+            text-align: center;
+        }
+
+        .mat-header-kpi-ytd {
+            width     : 60px;
+            text-align: center;
+        }
+    }
+
+    .content {
+        .courses {
+            width    : 100%;
+            max-width: 100%;
+            margin   : 0 auto;
+
+            .course {
+                padding: 10px;
+
+                &:hover {
+                    .course-content {
+                        border: none;
+                        @include mat-elevation(12);
+                    }
+                }
+
+                .course-content {
+                    min-height   : 100px;
+                    border-radius: 4px;
+                    overflow     : hidden;
+                    transition   : box-shadow 200ms ease-in-out;
+                    @include mat-elevation(1);
+
+                    .header-kpigraph {
+                        height     : 35px !important;
+                        min-height : 35px !important;
+                        max-height : 35px !important;
+                        font-size  : 18px;
+                        font-weight: 600;
+                    }
+
+                    .header {
+                        padding   : 4px 4px;
+                        height    : 25px !important;
+                        min-height: 25px !important;
+                        max-height: 25px !important;
+
+                        .category {
+                            text-transform: capitalize;
+                            text-align    : left;
+                            //font-weight: 600;
+                            font-family   : Muli, Helvetica Neue, Arial, sans-serif;
+                            color         : #fff;
+                        }
+
+                        .length {
+                            .length-icon {
+                                margin-right: 8px;
+                            }
+
+                            .min {
+                                font-size: 16px;
+                            }
+                        }
+                    }
+
+                    .content {
+
+                        //padding: 2px;
+                        .h1 {
+                            font-size : 16px;
+                            text-align: center;
+                        }
+
+                        .vission-content {
+                            font-size    : 13px;
+                            padding      : 8px;
+                            //font-weight: 600;
+                            // margin-top: 4px;
+                            font-family  : Muli, Helvetica Neue, Arial, sans-serif;
+                        }
+                        .highlight-content {
+                            font-size    : 13px;
+                            padding      : 30px;
+                            //font-weight: 600;
+                            // margin-top: 4px;
+                            font-family  : Muli, Helvetica Neue, Arial, sans-serif;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

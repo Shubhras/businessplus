@@ -1,0 +1,109 @@
+@import "src/@fuse/scss/fuse";
+
+#dashboard-project {
+  .content-dashboard {
+    .box-details {
+      border         : 1px solid #0000001f;
+      //border-radius: 4px;
+      // margin: 16px;
+      //min-height: 150px;
+      min-width      : 300px;
+
+      .box-tittle {
+        color          : #fff;
+        background     : #6497b1;
+        //border-radius: 4px 4px 0px 0px;
+        font-size      : 15px;
+        font-weight    : 600;
+        padding        : 4px;
+      }
+    }
+
+    .pieChart-table {
+      padding: 8px;
+
+      .mat-table {
+        border-left: 1px solid #dad5d5;
+
+        .mat-header-row {
+          background-color: #b0aeb2 !important;
+        }
+
+        .mat-header-year {
+          width     : 80px;
+          text-align: center;
+        }
+
+        /*  .mat-header-sr-no {
+          width: 50px;
+          text-align: center;
+        }
+
+        .mat-header-total {
+          width: 80px;
+          text-align: center;
+        }
+        .mat-header-color {
+          width: 80px;
+          text-align: center;
+        } */
+      }
+    }
+
+    .overall-totaltable {
+      //border-left: 1px solid #dad5d5;
+      //border-top: 1px solid #dad5d5;
+      border-top: 1px solid #dad5d5;
+      max-width : 278px;
+
+      //margin: 10px;
+      .mat-header-color {
+        height   : 33px;
+        font-size: 14px;
+      }
+
+      /*  .tag {
+        display: inline-block;
+        padding: 0.7em 2em;
+        font-size: 12px;
+        text-align: center;
+        color: #fff;
+        text-transform: capitalize;
+        border-radius: 0.25em;
+        &--Open {
+          background-color:  #ffd933;
+        }
+        &--Closed {
+          background-color:  #4caf50;
+          color: #fff;
+        }
+        &--Delayed {
+          background-color:  #f44336;
+          color: #fff;
+        }
+        &--Closed_With_Delay {
+          background-color:  #a9b7b6;
+          color: #fff;
+        }
+        &--On_Hold {
+          background-color: #7dabf5;
+          color: #fff;
+        }
+      } */
+    }
+
+    .mat-table-lesent {
+      border-left: 1px solid #dad5d5;
+      border-top : 1px solid #dad5d5;
+      max-width  : 280px;
+    }
+  }
+}
+
+/* Responsive start */
+@media only screen and (max-width: 599px) {
+  .print-button {
+    bottom: 36px;
+  }
+}
+/* Responsive end */

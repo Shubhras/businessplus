@@ -1,0 +1,66 @@
+@import "src/@fuse/scss/fuse";
+
+#presentation-view {
+    .content {
+        overflow: hidden;
+        .sidebar {
+          &:not(.locked-open) {
+            background: white;
+          }
+        }
+        .sidebar-content {
+          display: flex;
+          flex-direction: column;
+          padding: 0;
+          @include media-breakpoint(gt-sm) {
+            padding: 16px 4px 24px 24px;
+          }
+          .card {
+            display: flex;
+            flex-direction: column;
+            flex: 0 1 auto;
+            padding: 0;
+            border-radius: 4px;
+            background: #ffffff;
+            @include media-breakpoint(gt-sm) {
+              @include mat-elevation(1);
+            }
+            > .header {
+              flex: 0 1 auto;
+              border-bottom: 1px solid rgba(0, 0, 0, 0.12);
+            }
+            > .content {
+              flex: 0 1 auto;
+            }
+            .title {
+              padding-left: 3px;
+            }
+            .nav-item {
+              .nav-link {
+                padding: 0 4px 0 8px;
+              }
+            }
+            .sidebar-arrow-back {
+              margin-left: 75px;
+            }
+          }
+        }
+        .hading {
+          padding: 0px 8px;
+          height: 35px !important;
+          min-height: 35px !important;
+          max-height: 35px !important;
+          // background: mat-color($mat-blue, 500);
+          .category {
+            text-transform: capitalize;
+            text-align: left;
+            font-weight: 600;
+            color: white;
+          }
+        }
+        .hading-content{
+         margin-bottom: 8px;
+         font-size: 14px;
+        }
+      }
+}

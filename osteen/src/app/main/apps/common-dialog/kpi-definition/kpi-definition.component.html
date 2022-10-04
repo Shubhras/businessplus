@@ -1,0 +1,17 @@
+<div class="content popup-small">
+    <div fxLayout="column">
+        <div fxLayout="row" class="popup-header">
+            <mat-toolbar matDialogTitle class="m-0">
+                <mat-toolbar-row>
+                    <span class="title dialog-title">Definition</span>
+                </mat-toolbar-row>
+            </mat-toolbar>
+        </div>
+        <div fxLayout="row" class="popup-main-content">
+            {{kpiDef}}
+        </div>
+        <div fxLayout="row" fxLayoutAlign="end">
+            <a mat-raised-button color="accent" (click)="definitionClose()">Cancel</a>
+        </div>
+    </div>
+</div>

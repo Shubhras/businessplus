@@ -1,0 +1,149 @@
+<div class="content popup-content">
+  <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+       <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addMatrixForm" [formGroup]="addMatrixForm" (ngSubmit)="addMatrix()" novalidate>
+              <div class="h3 mb-12">Add Matrix</div>
+              <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right hght-dial-fields">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="dept_id" (selectionChange)="strategicObjGet($event.value)" required class="department-stratgeix">
+                      <mat-option *ngFor="let department of dataDepartment" [value]="department.id" >{{department.dept_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left hght-dial-fields">
+                    <mat-label>Strategic Objective</mat-label>
+                    <mat-select matNativeControl formControlName="str_obj_id" (selectionChange)="initiativesGet($event.value)" required class="department-stratgeix">
+                      <mat-option *ngFor="let strategic of dataStraObj" [value]="strategic.id">{{strategic.description}}</mat-option>
+                    </mat-select>
+                    <mat-error>Strategic Objective is required</mat-error>
+                </mat-form-field>
+              </div>
+              <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right hght-dial-fields">
+                     <mat-label>Initiative</mat-label>
+                     <mat-select formControlName="initiatives_id" (selectionChange)="actionPlansGet($event.value)" required class="department-stratgeix">
+                         <mat-option *ngFor="let initiatives of  dataInitiatives" [value]="initiatives.id">{{initiatives.definition}}</mat-option>
+                     </mat-select>
+                     <mat-error>Initiative is required</mat-error>
+                 </mat-form-field>
+                 <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left hght-dial-fields">
+                    <mat-label>Action Plan</mat-label>
+                     <mat-select formControlName="action_plan_id" (selectionChange)="kpiGetByAction($event.value)" required class="department-stratgeix"> 
+                      <mat-option *ngFor="let action of  actionPlansData" [value]="action.action_plan_id">{{action.definition}}</mat-option>
+                    </mat-select>
+                     <mat-error>Action Plan is required</mat-error>
+                  </mat-form-field>
+              </div>
+              <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right hght-dial-fields">
+                    <mat-label>KPI</mat-label>
+                    <mat-select formControlName="kpi_id" (selectionChange)="kpiTargetValue($event.value)" required class="department-stratgeix">
+                          <mat-option *ngFor="let kpi of  kpiDataList" [value]="kpi.kpi_id">{{kpi.kpi_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>KPI is required</mat-error>
+                  </mat-form-field>
+               </div>
+               <div fxLayoutAlign="center center">Overall Responsibility</div>
+              <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right hght-dial-fields">
+                  <mat-label>Area Manager</mat-label>
+                  <mat-select formControlName="area_manager" required class="department-stratgeix">
+                    <mat-option *ngFor="let user of  dataActionOwner" [value]="user.id">{{user.name}}</mat-option>
+                  </mat-select>
+                  <mat-error>Area Manager is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="25" class="pl-4 remove-left dialog-field">
+                  <mat-label>Value</mat-label>
+                  <input matInput  formControlName="area_manager_value" readonly>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="25" class="pl-4 remove-left dialog-field">
+                    <input matInput  formControlName="area_manager_percent" value="100%" readonly>
+                </mat-form-field>
+              </div>
+            <div fxLayoutAlign="center center">Allocation Matrix</div>
+            <mat-card>
+              <div formArrayName="itemDepartment" fxLayout="column">
+                <div [fxLayout]="direction" fxLayout.xs="column" [fxLayoutAlign]="i == 0 ? 'start center' : 'end'" fxFlex="1 0 auto" *ngFor="let itemrow of formArrDepartment.controls; let i=index"  [formGroupName]="i">
+                  <mat-form-field appearance="outline" [fxFlex]="i == 0 ? 50 : 40" class="pr-4 hght-dial-fields">
+                    <mat-label>Department Head</mat-label>
+                    <mat-select formControlName="itemhead" required class="department-stratgeix">
+                      <mat-option *ngFor="let user of  dataActionOwner" [value]="user.id">{{user.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Department Head is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-4 remove-left dialog-field" style="padding-right: 4px;">
+                    <mat-label>Value</mat-label>
+                    <input matInput  formControlName="itemvalue" readonly>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-4 remove-left dialog-field" style="padding-right: 4px;">
+                    <input matInput formControlName="itemparsent" (change)="chackParsentValidation('itemDepartment', i)" (keypress)="numberValidation($event)">
+                    </mat-form-field>
+                  <a href="javascript:void(0)" class="mb-16 delete-circle-color" fxFlex="10" fxLayoutAlign="center center" *ngIf="i > 0">
+                    <mat-icon (click)="deleteDepartment(i)">delete</mat-icon>
+                  </a>
+                  <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="10" fxLayoutAlign="center center" *ngIf="i == 0">
+                    <mat-icon (click)="addNewDepartment()">add_circle</mat-icon>
+                  </a>
+                </div>
+              </div>
+            </mat-card>
+            <mat-card>
+              <div formArrayName="itemSection" fxLayout="column">
+                <div [fxLayout]="direction" fxLayout.xs="column" [fxLayoutAlign]="i == 0 ? 'start center' : 'end'" fxFlex="1 0 auto"  *ngFor="let itemrow of formArrSection.controls; let i=index"  [formGroupName]="i">
+                   <mat-form-field appearance="outline" [fxFlex]="i == 0 ? 50 : 40" class="pr-4 hght-dial-fields">
+                    <mat-label>Section Head</mat-label>
+                    <mat-select formControlName="itemhead" required class="department-stratgeix">
+                      <mat-option *ngFor="let user of  dataActionOwner" [value]="user.id">{{user.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Section Head is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-4 remove-left dialog-field" style="padding-right: 4px;">
+                    <mat-label>Value</mat-label>
+                    <input matInput formControlName="itemvalue" readonly>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-4 remove-left dialog-field" style="padding-right: 4px;">
+                      <input matInput formControlName="itemparsent" (change)="chackParsentValidation('itemSection', i)" (keypress)="numberValidation($event)">
+                  </mat-form-field>
+                  <a href="javascript:void(0)" class="mb-16 delete-circle-color" fxFlex="10" fxLayoutAlign="center center" *ngIf="i > 0">
+                    <mat-icon (click)="deleteSection(i)">delete</mat-icon>
+                  </a>
+                  <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="10" fxLayoutAlign="center center" *ngIf="i == 0">
+                    <mat-icon (click)="addNewSection()" fxLayoutAlign="center center">add_circle</mat-icon>
+                  </a>
+                </div>
+              </div>
+            </mat-card>
+            <mat-card>
+             <div formArrayName="itemSupervisor" fxLayout="column">
+              <div [fxLayout]="direction" fxLayout.xs="column" [fxLayoutAlign]="i == 0 ? 'start center' : 'end'" fxFlex="1 0 auto"  *ngFor="let itemrow of formArrSupervisor.controls; let i=index"  [formGroupName]="i">
+                   <mat-form-field appearance="outline" [fxFlex]="i == 0 ? 50 : 40" class="pr-4 hght-dial-fields">
+                    <mat-label>Supervisor Head</mat-label>
+                    <mat-select formControlName="itemhead" required class="department-stratgeix">
+                      <mat-option *ngFor="let user of  dataActionOwner" [value]="user.id">{{user.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Supervisor Head is required</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-4 remove-left dialog-field" style="padding-right: 4px;">
+                    <mat-label>Value</mat-label>
+                    <input matInput formControlName="itemvalue" readonly>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-4 remove-left dialog-field" style="padding-right: 4px;">
+                    <input matInput formControlName="itemparsent" (change)="chackParsentValidation('itemSupervisor', i)" (keypress)="numberValidation($event)">
+                  </mat-form-field>
+                  <a href="javascript:void(0)" class="mb-16 delete-circle-color" fxFlex="10" fxLayoutAlign="center center" *ngIf="i > 0">
+                    <mat-icon (click)="deleteSupervisor(i)">delete</mat-icon>
+                  </a>
+                  <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="10" fxLayoutAlign="center center" *ngIf="i == 0">
+                    <mat-icon (click)="addNewSupervisor()">add_circle</mat-icon>
+                  </a>
+                </div>
+              </div>
+            </mat-card>
+              <div *ngIf="matrixError" style="color: red;" fxLayoutAlign="center center">{{matrixErrorShow}}</div>
+              <div class="example-button-row" fxLayoutAlign="end">
+                  <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                  <button mat-raised-button color="accent" (click)="addActionPlanClose()">Cancel</button>
+              </div>
+        </form>
+  </div>
+</div>

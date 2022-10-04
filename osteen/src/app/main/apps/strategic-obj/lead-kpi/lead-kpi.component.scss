@@ -1,0 +1,204 @@
+@import "src/@fuse/scss/fuse";
+
+#lead-kpi {
+    .all-pages-content {
+        display       : flex;
+        flex          : 1 1 auto;
+        flex-direction: column;
+        padding-top   : 10px;
+        padding-left  : 10px;
+        padding-right : 0px;
+        padding-bottom: 10px;
+        min-width     : 0;
+
+        @include media-breakpoint('lt-lg') {
+            flex-direction: column;
+        }
+
+        .left {
+            display        : flex;
+            flex-direction : column;
+            flex           : 1 1 auto;
+            //border-radius: 5px 5px 0px 0px;
+            max-width      : 100%;
+            width          : 100%;
+
+            .widget {
+                flex     : 1 1 auto;
+                min-width: 0;
+            }
+
+            a.mat-icon-shadow {
+                position             : relative;
+                text-decoration      : none;
+                height               : 23px;
+                width                : 40px;
+                display              : flex;
+                align-items          : center;
+                justify-content      : center;
+                margin-right         : 15px;
+                text-align           : center;
+                background           : #ffffff;
+                -webkit-border-radius: 10px;
+                -moz-border-radius   : 10px;
+                border-radius        : 0px;
+                box-shadow           : 0 0 2px #e5e9ec;
+                border-bottom        : 1px solid #eeeeee;
+            }
+        }
+
+        .right {
+            display  : flex;
+            flex     : 0 0 auto;
+            width    : 320px;
+            min-width: 320px;
+            max-width: 320px;
+
+            @include media-breakpoint('lt-lg') {
+                flex      : 1 0 100%;
+                margin-top: 32px;
+                width     : 100%;
+                min-width : 0;
+                max-width : none;
+            }
+
+            .fuse-card {
+                @include media-breakpoint('lt-lg') {
+                    width    : 100%;
+                    min-width: 0;
+                    max-width: none;
+                }
+            }
+        }
+
+        .main-widget {
+            display       : flex;
+            flex-direction: column;
+
+            .widget-group {
+                .widget {
+                    padding: 5px;
+
+                    .function {
+                        color: white !important;
+                    }
+                }
+            }
+        }
+
+        .mat-table-lesent {
+            border-left: 1px solid #dad5d5;
+            border-top : 1px solid #dad5d5;
+            max-width  : 280px;
+
+            .mat-cell-lesentName {
+                width       : 40px;
+                padding-left: 0px;
+            }
+        }
+
+        .example-container-kpidata {
+            overflow: auto;
+
+            // border-bottom-left-radius: 5px;
+            // border-bottom-right-radius: 5px;
+            td.mat-cell:last-of-type,
+            td.mat-footer-cell:last-of-type,
+            th.mat-header-cell:last-of-type {
+                padding-right: 0px;
+                width        : 4%;
+            }
+        }
+
+        .mat-header-cell,
+        .mat-cell {
+            box-sizing: border-box;
+            font-size : 11px;
+        }
+
+        .mat-footer-cell,
+        .mat-cell {
+            font-size   : 11px;
+            text-align  : center;
+            border-right: 1px solid #e0e0e0;
+        }
+
+        tr.mat-header-row {
+            height          : 25px;
+            background-color: #b0aeb2;
+            color           : white !important;
+        }
+
+        tr.mat-footer-row,
+        tr.mat-row {
+            height: 35px;
+        }
+
+        th.mat-header-cell {
+            color     : rgba(0, 0, 0, 0.87) !important;
+            text-align: center;
+        }
+
+        table.mat-table {
+            border: 1px solid #dad5d5;
+        }
+
+        .mat-cell-definition {
+            text-align  : left;
+            padding-left: 2px;
+        }
+
+        .mat-header-ytd {
+            width: 50px;
+        }
+
+        .mat-elevation-z8 {
+            box-shadow: none;
+        }
+
+        .dept-header-color {
+            background-color: #fff !important;
+            color           : #000;
+        }
+
+        .function-wrap {
+            //border-radius: 5px;
+            margin-bottom: 5px;
+            margin-right : 9px;
+            background   : #fff;
+            padding      : 0 10px 10px 10px;
+        }
+
+        .setcolor {
+            //color: #fff;
+            align-items    : center;
+            min-width      : 41px;
+            max-width      : 40px;
+            height         : 15px;
+            padding        : 0 2px;
+            font-size      : 11px;
+            border-radius  : 20px;
+            transition     : opacity .2s ease-in-out .1s;
+            display        : flex;
+            text-align     : center;
+            justify-content: center;
+            margin         : 0 auto;
+        }
+    }
+}
+
+
+/* Responsive start */
+.department-lead {
+    .mat-form-field-outline {
+        bottom: 4px !important;
+        top: 9px !important;
+    }
+}
+@media only screen and (max-width: 599px) {
+    .lead-print {
+        bottom: 40px;
+    }
+}
+
+/* Responsive end */

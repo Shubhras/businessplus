@@ -1,0 +1,122 @@
+<div class="content popup-content" id="edit-governance" style="width: 700px;">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="governanceFormGroup"
+            [formGroup]="governanceFormGroup" (ngSubmit)="editGovernance()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Edit Governance Structure</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Meeting name </mat-label>
+                    <input matInput formControlName="meeting_name">
+                    <mat-error>Meeting name is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Chair person</mat-label>
+                    <mat-select matNativeControl formControlName="chair_person"
+                        (selectionChange)="proCompanyUserChange($event.value,0)">
+                        <mat-option [value]="user.user_id" *ngFor="let user of proCompanyUser"
+                            [disabled]="selectedProCompanyUser.indexOf(user.user_id) !== -1 || governanceFormGroup.get('gov_member').value.indexOf(user.user_id) !== -1">
+                            {{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Chair person is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Co-chair person</mat-label>
+                    <mat-select matNativeControl formControlName="co_chair_person"
+                        (selectionChange)="proCompanyUserChange($event.value,1)">
+                        <mat-option [value]="user.user_id" *ngFor="let user of proCompanyUser"
+                            [disabled]="selectedProCompanyUser.indexOf(user.user_id) !== -1 || governanceFormGroup.get('gov_member').value.indexOf(user.user_id) !== -1">
+                            {{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Co-chair person is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Member</mat-label>
+                    <!-- [compareWith]="compareFn" -->
+                    <mat-select matNativeControl formControlName="gov_member" multiple>
+                        <mat-option [value]="user.user_id" *ngFor="let user of proCompanyUser"
+                            [disabled]="selectedProCompanyUser.indexOf(user.user_id) !== -1">
+                            {{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Member is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4"
+                    *ngIf="governanceFormGroup.get('gov_frequency').value == 'Monthly'">
+                    <mat-label>Meeting shedule</mat-label>
+                    <mat-select matNativeControl formControlName="meeting_shedule">
+                        <mat-option value="1st">1st</mat-option>
+                        <mat-option value="2nd">2nd</mat-option>
+                        <mat-option value="3rd">3rd</mat-option>
+                        <mat-option value="4th">4th</mat-option>
+                    </mat-select>
+                    <mat-error>Meeting shedule is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Frequency</mat-label>
+                    <mat-select matNativeControl formControlName="gov_frequency">
+                        <mat-option value="Monthly">Monthly</mat-option>
+                        <mat-option value="Weekly">Weekly</mat-option>
+                        <mat-option value="Daily">Daily</mat-option>
+                    </mat-select>
+                    <mat-error>Frequency is required!</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4"
+                    *ngIf="(governanceFormGroup.get('gov_frequency').value == 'Monthly') || (governanceFormGroup.get('gov_frequency').value == 'Weekly')">
+                    <mat-label>Meeting days</mat-label>
+                    <mat-select matNativeControl formControlName="meeting_day">
+                        <mat-option value="Monday">Monday</mat-option>
+                        <mat-option value="Tuesday">Tuesday</mat-option>
+                        <mat-option value="Tuesday">Wednesday</mat-option>
+                        <mat-option value="Thursday">Thursday</mat-option>
+                        <mat-option value="Friday">Friday</mat-option>
+                        <mat-option value="Saturday">Saturday</mat-option>
+                        <mat-option value="Sunday">Sunday</mat-option>
+                    </mat-select>
+                    <mat-error>Meeting days is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Meeting duration</mat-label>
+                    <mat-select matNativeControl formControlName="gov_duration">
+                        <mat-option value="half_hour">30 minute</mat-option>
+                        <mat-option value="one_hour">1 hour</mat-option>
+                        <mat-option value="two_hour">2 hour</mat-option>
+                        <mat-option value="half_day">Half day</mat-option>
+                        <mat-option value="full_Day">Full day</mat-option>
+                    </mat-select>
+                    <mat-error>Meeting duration is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Venue</mat-label>
+                    <input matInput formControlName="gov_venue">
+                    <mat-error>Venue is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" class="pb-8" fxLayout.xs="column" fxLayoutAlign="start center"
+                fxFlex="1 0 auto">
+                <angular-editor id="editor2" formControlName="agenda" [config]="editorConfig"></angular-editor>
+            </div>
+            <div fxLayout="row" fxFlex="1 0 auto" class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button"
+                    [routerLink]="project_step_id == 5 ?['/apps/project/project-details', project_id]:['/apps/project/project-edit', project_id, 4]">Submit</button>
+                <a mat-raised-button color="accent" (click)="PopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

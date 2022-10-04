@@ -1,0 +1,71 @@
+<mat-sidenav-container class="mat-sidenav-container" style="background-color: #ffff;">
+
+  <mat-sidenav #mySideNav mode="side" class="sidenavcontent">
+    <app-sidenavcontent></app-sidenavcontent>
+  </mat-sidenav>
+  <mat-sidenav-content>
+    <!-- <div class="tab-button-container">
+    <div class="tab-buttons" *ngFor="let tree of treeLists">
+      <div [ngClass]=" currentlySelectedTreeId == tree[0][0].id ? 'tab-selected': 'tab-not-selected'" (click)="differentTreeSelected(tree)">
+          {{tree[0][0].name}}
+      </div>
+    </div>
+  </div> -->
+    <div class="header header-pages-content" fxLayout="column" fxLayoutAlign="flex-end" fxLayout.gt-xs="row">
+      <!-- APP TITLE -->
+      <div fxLayout="row" fxLayoutAlign="flex-end" style="column-gap: 1%; width: 100%;">
+        <!-- <div class="logo" fxLayout="row" style="color: #1e1e5f;background: #ffff;
+        padding: 8px 12px;">
+          <span class="logo-text header-tittle" style="font-size: 16px;"
+            [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+            Graph View
+          </span>
+        </div> -->
+        <div class="logo" fxLayout="row" style="color: #1e1e5f;background: #ffff;
+        padding: 8px 12px; cursor: pointer;" [routerLink]="['/apps/business-plan-list-view']">
+          <span class="logo-text header-tittle" style="font-size: 16px;"
+            [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+            List View
+          </span>
+        </div>
+      </div>
+    </div>
+    <div style="display: flex;
+    justify-content: flex-end;
+    column-gap: 1%;
+    padding: 12px 12px 0 0;">
+      <div style="display: flex; column-gap: 7px;">
+        <div style="width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #1c5e97;">
+        </div><span>Strategic Objective</span>
+      </div>
+      <div style="display: flex; column-gap: 7px;">
+        <div style="width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: green;">
+        </div><span>Initiative</span>
+      </div>
+      <div style="display: flex; column-gap: 7px;">
+        <div style="width: 20px;
+          height: 20px;
+          border-radius: 50%;
+          background: #ffa500;">
+        </div><span>Action Plan</span>
+      </div>
+      <div style="display: flex; column-gap: 7px;">
+        <div style="width: 20px;
+        height: 20px;
+        border-radius: 50%;
+        background: #00d0ff;">
+        </div><span>KPI</span>
+      </div>
+    </div>
+    <div>
+      <app-treepane [treelist]="currentlySelectedTree"></app-treepane>
+    </div>
+  </mat-sidenav-content>
+</mat-sidenav-container>
+<!-- <ngx-org-chart [nodes]="nodes" direction="vertical" (itemClick)="test($event)"></ngx-org-chart> -->

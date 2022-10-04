@@ -1,0 +1,127 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="kpiFormGroup" [formGroup]="kpiFormGroup"
+            (ngSubmit)="AddKpiSubmit()" novalidate>
+            <!-- <div class="h3 mb-12">Add KPI</div> -->
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Enter Project Deliverables</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="project_kpi_dept">
+                        <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">
+                            {{department.dept_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>KPI Name</mat-label>
+                    <input matInput formControlName="project_kpi_name" required>
+                    <mat-error>KPI Name is required!</mat-error>
+                </mat-form-field>
+
+            </div>
+            <div fxLayout="row" class="field-textarea" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>KPI Definition</mat-label>
+                    <textarea matInput formControlName="project_kpi_def" required></textarea>
+                    <mat-error>KPI Definition is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Ideal Trend</mat-label>
+                    <mat-select matNativeControl placeholder="Ideal Trend" formControlName="project_kpi_trend">
+                        <mat-option value="positive">positive (good if number goes up)</mat-option>
+                        <mat-option value="negative">negative (good if number goes down)</mat-option>
+                    </mat-select>
+                    <mat-error>Ideal Trend is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Unit Of Measurement</mat-label>
+                    <mat-select matNativeControl formControlName="project_kpi_uom">
+                        <mat-option *ngFor="let uom of dataunitOfMeasur" [value]="uom.uom_id">{{uom.uom_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Unit Of Measurement is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="48" class="pl-4">
+                    <mat-label>Year End Target</mat-label>
+                    <mat-select matNativeControl formControlName="project_kpi_yr_targt">
+                        <mat-option value="sum_up_all">Sum Up-All</mat-option>
+                        <mat-option value="average">Average</mat-option>
+                        <mat-option value="terminal_value">Terminal (YE) Value</mat-option>
+                    </mat-select>
+                    <mat-error>Year End Target is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="48" class="pl-4">
+                    <mat-label>Review Frequency</mat-label>
+                    <mat-select matNativeControl formControlName="project_kpi_freqency">
+                        <mat-option value="Monthly">Monthly</mat-option>
+                        <mat-option value="Quarterly">Quarterly</mat-option>
+                    </mat-select>
+                    <mat-error>Review Frequency is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="25" class="pl-4">
+                    <mat-label>Value</mat-label>
+                    <input matInput formControlName="project_kpi_value" (keypress)=numberValidation($event)>
+                    <mat-error>Value is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <!-- kpi + milestone -->
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Project Milestone</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div fxLayout="row" fxFlex="100">
+                <div fxFlex="100" formArrayName="kpi_mile_stone" fxLayout="column">
+                    <div [fxLayout]="direction" *ngFor="let itemrow of formArrKpiMileStone.controls; let i=index"
+                        [formGroupName]="i" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        class="other-member">
+                        <mat-form-field appearance="outline" fxFlex="40" class="pl-4">
+                            <mat-label>Milestone</mat-label>
+                            <mat-select matNativeControl (selectionChange)="kpiMileStone($event.value, i)"
+                                formControlName="milestone_id">
+                                <mat-option [value]="mile.project_milestone_id" *ngFor="let mile of mileStoneGet"
+                                    [disabled]="selectedMileStone.indexOf(mile.project_milestone_id) !== -1">
+                                    {{mile.milestone_name}}</mat-option>
+                            </mat-select>
+                            <mat-error>Milestone is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="40" class="pl-4">
+                            <mat-label>Value</mat-label>
+                            <input matInput formControlName="projct_kpi_dstrbt_vl" (keypress)=numberValidation($event)>
+                            <mat-error>Value is required!</mat-error>
+                        </mat-form-field>
+                        <a *ngIf="i==0" fxFlex="10" fxLayoutAlign="center center" class="add-circle-color">
+                            <mat-icon class="mb-16" matTooltip="Add new" aria-label="Add new"
+                                (click)="addKpiMileStone()">
+                                add_circle</mat-icon>
+                        </a>
+                        <a *ngIf="i> 0" fxFlex="10" fxLayoutAlign="center center" class="delete-circle-color">
+                            <mat-icon class="mb-16" matTooltip="Delete" aria-label="Delete"
+                                (click)="deleteKpiMileStone(i)">
+                                delete</mat-icon>
+                        </a>
+                    </div>
+                    <div *ngIf="kpiValueError" style="color: red;" fxLayoutAlign="center center">{{kpiValueErrorShow}}
+                    </div>
+                </div>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="AddKpiPopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

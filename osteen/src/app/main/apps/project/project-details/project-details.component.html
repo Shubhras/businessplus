@@ -1,0 +1,1151 @@
+<div id="project-details" class="page-layout blank simple left-sidebar inner-scroll">
+    <fuse-sidebar class="sidebar" name="academy-course-left-sidebar-1" position="left" lockedOpen="gt-md">
+        <div class="content" fusePerfectScrollbar>
+            <div fxLayoutAlign="flex-end">
+                <button mat-icon-button class="sidebar-arrow-back"
+                    (click)="toggleSidebarHide('academy-course-left-sidebar-1')" fxHide.gt-md>
+                    <mat-icon class="secondary-text">arrow_back</mat-icon>
+                </button>
+            </div>
+            <div class="steps">
+                <div class="step" [ngClass]="{selected: currentStep==='11'}" (click)="gotoStep('11')">
+                    <mat-icon class="navgrey">dashboard</mat-icon>
+                    <div class="title">Project Dashboard</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='1'}" (click)="gotoStep('1')">
+                    <mat-icon class="navgrey">account_circle</mat-icon>
+                    <div class="title">Project Charter</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='15'}" (click)="gotoStep('15')">
+                    <mat-icon class="navgrey">insert_chart</mat-icon>
+                    <div class="title">Master Time chart</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='17'}" (click)="gotoStep('17')">
+                    <mat-icon class="navgrey">assignment</mat-icon>
+                    <div class="title">Project Milestone</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='2'}" (click)="gotoStep('2')">
+                    <mat-icon class="navgrey">assignment</mat-icon>
+                    <div class="title">Major Activity Plan</div>
+                </div>
+
+                <div class="step" [ngClass]="{selected: currentStep==='3'}" (click)="gotoStep('3')">
+                    <mat-icon class="navgrey">assignment_ind</mat-icon>
+                    <div class="title">Sub Activity Plan</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='4' || currentStep==='16'}"
+                    (click)="gotoStep('4')">
+                    <mat-icon class="navgrey">event</mat-icon>
+                    <div class="title">Resource Planning</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='5'}" (click)="gotoStep('5')">
+                    <mat-icon class="navgrey">call_to_action</mat-icon>
+                    <div class="title">Risk Accessment Log</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='6' || currentStep==='10' || currentStep==='8'}"
+                    (click)="gotoStep('6')">
+                    <mat-icon class="navgrey">assignment_late</mat-icon>
+                    <div class="title">Issue Tracker</div>
+                </div>
+                <div class="step"
+                    [ngClass]="{selected: (currentStep==='7' || currentStep==='14' || currentStep==='12')}"
+                    (click)="gotoStep('7')">
+                    <mat-icon class="navgrey">account_circle</mat-icon>
+                    <div class="title">Project Deliverables</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='9'}" (click)="gotoStep('9')">
+                    <mat-icon class="navgrey">account_circle</mat-icon>
+                    <div class="title">Governance Structure</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='13'}" (click)="gotoStep('13')">
+                    <mat-icon class="navgrey">account_circle</mat-icon>
+                    <div class="title">Project Deviations</div>
+                </div>
+                <div class="step" [ngClass]="{selected: currentStep==='19'}" (click)="gotoStep('19')">
+                    <mat-icon class="navgrey">assignment</mat-icon>
+                    <div class="title">Project Feeds</div>
+                </div>
+                <!--  <div class="step" [ngClass]="{selected: currentStep==='14'}" (click)="gotoStep('14')">
+                    <mat-icon class="navgrey">account_circle</mat-icon>
+                    <div class="title">Kpi Milestone View</div>
+                    </div> -->
+            </div>
+        </div>
+    </fuse-sidebar>
+    <div class="center">
+        <!-- HEADER -->
+        <div class="header header-content-dashboard" fxLayout="column" fxLayout.gt-xs="row" fxLayoutAlign="center start"
+            fxHide.gt-md>
+            <div fxLayout="row">
+                <button mat-icon-button class="sidebar-toggle mr-16"
+                    (click)="toggleSidebar('academy-course-left-sidebar-1')">
+                    <mat-icon>menu</mat-icon>
+                </button>
+                <div class="logo" fxLayout="row">
+                    <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                        <!--  {{proAllDetails.project_name}} -->
+                    </span>
+                </div>
+            </div>
+        </div>
+        <!-- / HEADER -->
+        <!-- CENTER -->
+        <div id="course-content" class="content">
+            <ng-container>
+                <!-- Project Charter -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '1'" class="content all-pages-content course-step"
+                    id="project-charter">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="15" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="80" fxFlex.gt-xs="80" fxFlex.gt-md="80" fxLayoutAlign="center center">
+                                    <div class="project-tittle">
+                                        Project Charter: &nbsp;{{project_name}}
+                                    </div>
+                                </div>
+                                <!-- <div fxFlex="100" fxFlex.gt-xs="30" fxFlex.gt-md="30" fxLayoutAlign="start center">
+                                <div class="project-tittle">
+                                    Project Charter
+                                </div>
+                                </div> -->
+                                <div fxFlex="20" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="flex-end center">
+                                    <button mat-raised-button class="mat-raised-button-print"
+                                        (click)="projectDetailsPDF()">Print</button>
+                                </div>
+                            </div>
+                            <div class="widget-group m-8" fxLayout="column" fxFlex="100" *fuseIfOnDom
+                                [@animateStagger]="{value:'50'}">
+                                <!-- <div fxLayout="row wrap" fxLayoutAlign="center">
+                                <div class="pro-details" fxLayout="column" fxFlex="100" fxFlex.gt-xs="33.33" fxFlex.gt-md="33.33"
+                                    fxLayoutAlign="center center">
+                                    <div class="start-finish">Start:- {{proAllDetails.start_date}}</div>
+                                    <div class="start-finish">Finsh:- {{proAllDetails.end_date}}</div>
+                                </div>
+                                <div class="pro-details" fxLayout="column" fxFlex="100" fxFlex.gt-xs="33.33" fxFlex.gt-md="33.33"
+                                    fxLayoutAlign="center center">
+                                    <div>Duration:- {{proAllDetails.project_duration}}</div>
+                                </div>
+                                <div class="pro-details" fxLayout="column" fxFlex="100" fxFlex.gt-xs="33.33" fxFlex.gt-md="33.33"
+                                    fxLayoutAlign="center center">
+                                    <div>Project logo</div>
+                                    <div class="pro-image mt-8">
+                                    <img class="project-image avatar huge"
+                                        src="{{proAllDetails.file_name ? proAllDetails.file_name: dummyPicture}}"
+                                        [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                    </div>
+                                </div>
+                                </div> -->
+                                <div fxLayout="row wrap" fxLayoutAlign="center">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="65" fxFlex.gt-md="65">
+                                        <div fxLayout="row">
+                                            <div fxLayout="column" class="box-details" fxFlex="100" fxFlex.gt-xs="22"
+                                                fxFlex.gt-md="22">
+                                                <div fxLayout="row" class="pro-image" fxLayoutAlign="center center"
+                                                    *ngIf="proAllDetails">
+                                                    <img style="margin: 19px 0px 0 0; width: 110px; min-width: 110px; height: 110px; line-height: 110px;"
+                                                        class="avatar"
+                                                        src="{{proAllDetails.file_name ? proAllDetails.file_name: dummyPicture}}"
+                                                        [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                </div>
+                                            </div>
+                                            <div fxLayout="column" class="box-details" fxFlex="100" fxFlex.gt-xs="78"
+                                                fxFlex.gt-md="78">
+                                                <div fxLayout="row" style="margin: 4px;" *ngIf="proAllDetails">
+                                                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="start"
+                                                        fxFlex.gt-xs="30" fxFlex.gt-md="30">
+                                                        <div class="meeting-tittle">Lead Department:-</div>
+                                                        <div class="meeting-tittle">Start Date:-</div>
+                                                        <div class="meeting-tittle">Finish Date:-</div>
+                                                        <div class="meeting-tittle">Duration:-</div>
+                                                        <div class="meeting-tittle">Budget:-</div>
+                                                    </div>
+                                                    <div fxLayout="column" fxFlex="100" fxLayoutAlign="start"
+                                                        fxFlex.gt-xs="70" fxFlex.gt-md="70">
+                                                        <div class="m-4">{{proAllDetails.dept_name}}</div>
+                                                        <div class="m-4">{{proAllDetails.start_date}}</div>
+                                                        <div class="m-4">{{proAllDetails.end_date}}</div>
+                                                        <div class="m-4">{{proAllDetails.project_duration}}</div>
+                                                        <div class="m-4">{{proAllDetails.project_cost}}</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-details">
+                                            <div class="box-tittle" fxLayoutAlign="center center">Key objective</div>
+                                            <div fxLayoutAlign="center center">
+                                                <div class="kpi-objecy-data">
+                                                    <span [innerHtml]="key_objectives"></span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="box-details">
+                                            <div class="box-tittle" fxLayoutAlign="center center">Mission</div>
+                                            <div fxLayoutAlign="center center">
+                                                <div class="kpi-objecy-data">{{proAllDetails.project_mission}}</div>
+                                            </div>
+                                        </div>
+                                        <div class="box-details">
+                                            <div class="box-tittle" fxLayoutAlign="center center">Major milestone</div>
+                                            <div class="all-table" fxLayoutAlign="center center">
+                                                <table mat-table [dataSource]="dataSourceMileStone">
+                                                    <ng-container matColumnDef="sr_no">
+                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">
+                                                            Sr.No.</th>
+                                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                            {{element.sr_no}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="milestone_name">
+                                                        <th mat-header-cell *matHeaderCellDef>Milestone Name</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.milestone_name}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="symbol">
+                                                        <th mat-header-cell *matHeaderCellDef
+                                                            class="mat-header-startDate">Symbol</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <mat-icon style="font-size: 20px;">{{element.symbol}}
+                                                            </mat-icon>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="mile_stone_date">
+                                                        <th mat-header-cell *matHeaderCellDef
+                                                            class="mat-header-startDate">Target Date</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.mile_stone_date}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="actual_date">
+                                                        <th mat-header-cell *matHeaderCellDef
+                                                            class="mat-header-startDate">Actual Date</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.actual_date}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="milestone_status">
+                                                        <th mat-header-cell *matHeaderCellDef>Status</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            class="mat-header-status">
+                                                            <!-- <span class="tag--{{element.status}}">{{element.cmnt}}</span> -->
+                                                            <img *ngIf="element.milestone_status == 'Red'"
+                                                                class="status-yellow-icon"
+                                                                src="assets/icons/status-yellow-icon.png">
+                                                            <img *ngIf="element.milestone_status == 'Yellow'"
+                                                                class="status-red-icon"
+                                                                src="assets/icons/status-red-icon.png">
+                                                            <img *ngIf="element.milestone_status == 'Green'"
+                                                                class="status-green-icon"
+                                                                src="assets/icons/status-green-icon.png">
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="comments">
+                                                        <th mat-header-cell *matHeaderCellDef style="min-width: 200px;">
+                                                            Comments</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.comments}}</td>
+                                                    </ng-container>
+                                                    <tr mat-header-row
+                                                        *matHeaderRowDef="displayedColumnsMileStone; sticky: true"></tr>
+                                                    <tr mat-row
+                                                        *matRowDef="let row; columns: displayedColumnsMileStone;"></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="35" fxFlex.gt-md="35">
+                                        <div class="box-details">
+                                            <!-- style="height: 100%;max-height: 60%;overflow-y: scroll;overflow-x: hidden;" -->
+                                            <div class="box-tittle" fxLayoutAlign="center center">Project Team</div>
+                                            <div class="member-tittle">Project leader</div>
+                                            <div *ngFor="let user of proCompanyUser">
+                                                <div fxLayout="row" class="pro-member" *ngIf="user.project_leader == 1">
+                                                    <div fxLayout="column" fxFlex="70" fxLayoutAlign="start">
+                                                        <div class="member-name">{{user.name}}</div>
+                                                        <div class="member-name">{{user.email}}</div>
+                                                        <div class="member-name">{{user.mobile}}</div>
+                                                    </div>
+                                                    <div fxLayout="column" fxFlex="30" fxLayoutAlign="center center">
+                                                        <img class="project-image avatar huge"
+                                                            src="{{user.file_name ? user.file_name: dummyPicture}}"
+                                                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="member-tittle">Project Co-leader</div>
+                                            <div *ngFor="let user of proCompanyUser">
+                                                <div fxLayout="row" class="pro-member" *ngIf="user.project_leader == 2">
+                                                    <div fxLayout="column" fxFlex="70" fxLayoutAlign="start">
+                                                        <div class="member-name">{{user.name}}</div>
+                                                        <div class="member-name">{{user.email}}</div>
+                                                        <div class="member-name">{{user.mobile}}</div>
+                                                    </div>
+                                                    <div fxLayout="column" fxFlex="30" fxLayoutAlign="center center">
+                                                        <img class="project-image avatar huge"
+                                                            src="{{user.file_name ? user.file_name: dummyPicture}}"
+                                                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="member-tittle">Company user</div>
+                                            <div *ngFor="let user of proCompanyUser">
+                                                <div fxLayout="row" class="pro-member" *ngIf="user.project_leader == 0">
+                                                    <div fxLayout="column" fxFlex="70" fxLayoutAlign="start">
+                                                        <div class="member-name">{{user.name}}</div>
+                                                        <div class="member-name">{{user.email}}</div>
+                                                        <div class="member-name">{{user.mobile}}</div>
+                                                    </div>
+                                                    <div fxLayout="column" fxFlex="30" fxLayoutAlign="center center">
+                                                        <img class="project-image avatar huge"
+                                                            src="{{user.file_name ? user.file_name: dummyPicture}}"
+                                                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="member-tittle">External user</div>
+                                            <div fxLayout="row" class="pro-member" *ngFor="let user of proExternalUser">
+                                                <div fxLayout="column" fxFlex="70" fxLayoutAlign="start">
+                                                    <div class="member-name">{{user.ex_membar_name}}</div>
+                                                    <div class="member-name">{{user.email_id}}</div>
+                                                    <div class="member-name">{{user.phone_number}}</div>
+                                                </div>
+                                                <div fxLayout="column" fxFlex="30" fxLayoutAlign="center center">
+                                                    <img class="project-image avatar huge"
+                                                        src="{{user.file_name ? user.file_name: dummyPicture}}"
+                                                        [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="center">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                        <div class="box-details">
+                                            <div class="box-tittle" fxLayoutAlign="center center">Milestone Deliverable
+                                            </div>
+                                            <div class="activity">
+                                                <div class="">
+                                                    <table mat-table id="contentToConvert" [dataSource]="dataSourceKpi">
+                                                        <ng-container matColumnDef="milestoneName">I
+                                                            <th mat-header-cell *matHeaderCellDef>Project Milestone</th>
+                                                            <td mat-cell *matCellDef="let element"
+                                                                class="mat-cell-milestone">
+                                                                {{element.milestoneName}}</td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="dept_name">
+                                                            <th mat-header-cell *matHeaderCellDef>Department</th>
+                                                            <td mat-cell *matCellDef="let element">{{element.dept_name}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="project_kpi_name">
+                                                            <th mat-header-cell *matHeaderCellDef>Deliverable</th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.project_kpi_name}}</td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="uom_name">
+                                                            <th mat-header-cell *matHeaderCellDef>UOM</th>
+                                                            <td mat-cell *matCellDef="let element">{{element.uom_name}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="project_kpi_def">
+                                                            <th mat-header-cell *matHeaderCellDef>Definition</th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.project_kpi_def}}</td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="project_kpi_trend">
+                                                            <th mat-header-cell *matHeaderCellDef>Ideal Trend</th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                <img *ngIf="element.project_kpi_trend == 'positive'"
+                                                                    class="kpi-trend-upward-icon"
+                                                                    src="assets/icons/arrow-up-kpi.png">
+                                                                <img *ngIf="element.project_kpi_trend == 'negative'"
+                                                                    class="kpi-trend-downward-icon"
+                                                                    src="assets/icons/arrow-kpi-down.png">
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="project_kpi_yr_targt">
+                                                            <th mat-header-cell *matHeaderCellDef>Year end target</th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                <span
+                                                                    *ngIf="element.project_kpi_yr_targt == 'sum_up_all'">Sum
+                                                                    Up-All</span>
+                                                                <span
+                                                                    *ngIf="element.project_kpi_yr_targt == 'average'">Average</span>
+                                                                <span
+                                                                    *ngIf="element.project_kpi_yr_targt == 'terminal_value'">Terminal
+                                                                    (YE)
+                                                                    Value</span>
+                                                            </td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="project_kpi_freqency">
+                                                            <th mat-header-cell *matHeaderCellDef>Review Frequency</th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.project_kpi_freqency}}</td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="project_kpi_value">
+                                                            <th mat-header-cell *matHeaderCellDef>Project Target</th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.project_kpi_value}}</td>
+                                                        </ng-container>
+                                                        <ng-container matColumnDef="projct_kpi_dstrbt_vl">
+                                                            <th mat-header-cell *matHeaderCellDef>Target</th>
+                                                            <td mat-cell *matCellDef="let element">
+                                                                {{element.projct_kpi_dstrbt_vl}}
+                                                            </td>
+                                                        </ng-container>
+                                                        <tr mat-header-row
+                                                            *matHeaderRowDef="displayedColumnsKpiMilee; sticky: true">
+                                                        </tr>
+                                                        <tr mat-row
+                                                            *matRowDef="let row; columns: displayedColumnsKpiMilee;">
+                                                        </tr>
+                                                    </table>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- <div fxLayout="row wrap" fxLayoutAlign="center">
+                  <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                    <div class="box-details">
+                      <div class="box-tittle" fxLayoutAlign="center center">Milestone Deliverablesssssss</div>
+                      <div class="activity">
+                        <div class="activity-tittle">
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="5">Sr.No.</div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="15">Deliverables</div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="15">UOM
+                          </div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">Department</div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="17" fxFlex.gt-md="17">Definition</div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="8" fxFlex.gt-md="8">Ideal Trend</div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">Year end target</div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">Review Frequency</div>
+                          <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">Project Target</div>
+                        </div>
+                        <div class="activity-data" *ngFor="let kpi of proKpiData">
+                          <mat-expansion-panel [expanded]="allExpandStateKpi">
+                            <mat-expansion-panel-header>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="5">{{kpi.id}}</div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="15">
+                                {{kpi.project_kpi_name}}</div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="15">{{kpi.uom_name}}
+                              </div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">{{kpi.dept_name}}
+                              </div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="17" fxFlex.gt-md="17">
+                                {{kpi.project_kpi_def}}</div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="8" fxFlex.gt-md="8">
+                                <img *ngIf="kpi.project_kpi_trend == 'positive'" class="kpi-trend-upward-icon"
+                                  src="assets/icons/arrow-up-kpi.png">
+                                <img *ngIf="kpi.project_kpi_trend == 'negative'" class="kpi-trend-downward-icon"
+                                  src="assets/icons/arrow-kpi-down.png">
+                              </div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                                <span *ngIf="kpi.project_kpi_yr_targt == 'sum_up_all'">Sum Up-All</span>
+                                <span *ngIf="kpi.project_kpi_yr_targt == 'average'">Average</span>
+                                <span *ngIf="kpi.project_kpi_yr_targt == 'terminal_value'">Terminal (YE) Value</span>
+                              </div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                                {{kpi.project_kpi_freqency}}</div>
+                              <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                                {{kpi.project_kpi_value}}</div>
+                            </mat-expansion-panel-header>
+                            <div class="all-table" fxLayoutAlign="center center">
+                              <table mat-table class="kpi-milestone" [dataSource]="kpi.project_kpi_milestone_data">
+                                <ng-container matColumnDef="sr_no">
+                                  <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                  <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                    {{element.project_kpi_sr_no}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="milestone_name">
+                                  <th mat-header-cell *matHeaderCellDef>Project Milestone</th>
+                                  <td mat-cell *matCellDef="let element">
+                                    {{element.milestone_name}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="projct_kpi_dstrbt_vl">
+                                  <th mat-header-cell *matHeaderCellDef>Target</th>
+                                  <td mat-cell *matCellDef="let element">
+                                    {{element.projct_kpi_dstrbt_vl}}
+                                  </td>
+                                </ng-container>
+                                <ng-container matColumnDef='actual'>
+                                  <th mat-header-cell *matHeaderCellDef>Actual</th>
+                                  <td mat-cell *matCellDef="let element">
+                                    {{element.project_kpi_actual}}
+                                  </td>
+                                </ng-container>
+                                <ng-container matColumnDef='status'>
+                                  <th mat-header-cell *matHeaderCellDef>Status</th>
+                                  <td mat-cell *matCellDef="let element">
+                                    <span class="tag tag--{{element.project_kpi_status}}">
+                                      {{element.project_kpi_status}}
+                                    </span>
+                                    <img *ngIf="element.project_kpi_status == 'Red'" class="status-yellow-icon"
+                                      src="assets/icons/status-yellow-icon.png">
+                                    <img *ngIf="element.project_kpi_status == 'Yellow'" class="status-red-icon"
+                                      src="assets/icons/status-red-icon.png">
+                                    <img *ngIf="element.project_kpi_status == 'Green'" class="status-green-icon"
+                                      src="assets/icons/status-green-icon.png">
+                                  </td>
+                                </ng-container>
+                                <ng-container matColumnDef='reason'>
+                                  <th mat-header-cell *matHeaderCellDef>Remark</th>
+                                  <td mat-cell *matCellDef="let element">
+                                    {{element.project_kpi_reason}}
+                                  </td>
+                                </ng-container>
+                                <ng-container matColumnDef='solution'>
+                                  <th mat-header-cell *matHeaderCellDef>Solution</th>
+                                  <td mat-cell *matCellDef="let element">
+                                    {{element.project_kpi_solution}}
+                                  </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsKpiMile; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsKpiMile;"></tr>
+                              </table>
+                            </div>
+                          </mat-expansion-panel>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div> -->
+                                <div fxLayout="row wrap" fxLayoutAlign="center">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                        <div class="box-details">
+                                            <div class="box-tittle" fxLayoutAlign="center center">Major activity plan
+                                            </div>
+                                            <div class="activity">
+                                                <div class="activity-tittle">
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                                        fxFlex.gt-md="5">Sr.No.</div>
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15"
+                                                        fxFlex.gt-md="15">Activity</div>
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="20"
+                                                        fxFlex.gt-md="20">Linked milestone
+                                                    </div>
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                                        fxFlex.gt-md="8">Start</div>
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                                        fxFlex.gt-md="8">Finish</div>
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="16"
+                                                        fxFlex.gt-md="16">Preceeding activity
+                                                    </div>
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="16"
+                                                        fxFlex.gt-md="16">Next activity</div>
+                                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="12"
+                                                        fxFlex.gt-md="12">Responsibility</div>
+                                                </div>
+                                                <div class="activity-data" *ngFor="let activity of proActivityData">
+                                                    <mat-expansion-panel [expanded]="allExpandState">
+                                                        <mat-expansion-panel-header>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="5"
+                                                                fxFlex.gt-md="5">
+                                                                {{activity.id}}
+                                                            </div>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="15"
+                                                                fxFlex.gt-md="15">
+                                                                {{activity.activity_name}}</div>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="20"
+                                                                fxFlex.gt-md="20">
+                                                                {{activity.milestone_name}}</div>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                                                fxFlex.gt-md="8">
+                                                                {{activity.activity_start_date}}</div>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="8"
+                                                                fxFlex.gt-md="8">
+                                                                {{activity.activity_end_date}}</div>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="16"
+                                                                fxFlex.gt-md="16">
+                                                                {{activity.preceeding_activity_name}}</div>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="16"
+                                                                fxFlex.gt-md="16">
+                                                                {{activity.next_activity_name}}</div>
+                                                            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="12"
+                                                                fxFlex.gt-md="12">
+                                                                {{activity.responsibility_person}}</div>
+                                                        </mat-expansion-panel-header>
+                                                        <div class="all-table" fxLayoutAlign="center center">
+                                                            <table mat-table class="sub-activity-table"
+                                                                [dataSource]="activity.project_sub_activity_data">
+                                                                <ng-container matColumnDef="sr_no">
+                                                                    <th mat-header-cell *matHeaderCellDef
+                                                                        class="mat-header-sr-no">Sr.No.</th>
+                                                                    <td mat-cell *matCellDef="let element"
+                                                                        class="mat-cell-sr-no">
+                                                                        <span>
+                                                                            {{element.sub_activity_sr_no}}
+                                                                        </span>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="sub_activity_name">
+                                                                    <th mat-header-cell *matHeaderCellDef>Sub activity
+                                                                    </th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        <span>
+                                                                            {{element.sub_activity_name}}
+                                                                        </span>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="sb_actvity_strt_date">
+                                                                    <th mat-header-cell *matHeaderCellDef
+                                                                        class="mat-header-startDate">Start</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        <span>
+                                                                            {{element.sb_actvity_strt_date}}
+                                                                        </span>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <ng-container matColumnDef="sb_actvity_end_date">
+                                                                    <th mat-header-cell *matHeaderCellDef
+                                                                        class="mat-header-startDate">Finish</th>
+                                                                    <td mat-cell *matCellDef="let element">
+                                                                        <span>
+                                                                            {{element.sb_actvity_end_date}}
+                                                                        </span>
+                                                                    </td>
+                                                                </ng-container>
+                                                                <tr mat-header-row
+                                                                    *matHeaderRowDef="displayedColumnsSubActivity; sticky: true">
+                                                                </tr>
+                                                                <tr mat-row
+                                                                    *matRowDef="let row; columns: displayedColumnsSubActivity;">
+                                                                </tr>
+                                                            </table>
+                                                        </div>
+                                                    </mat-expansion-panel>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="center">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                        <div class="box-details">
+                                            <div class="box-tittle" fxLayoutAlign="center center"> Governance Structure
+                                                <!--  review meeting -->
+                                            </div>
+                                            <div class="all-table">
+                                                <table mat-table [dataSource]="dataSourceGoverance"
+                                                    id="contentToConvert">
+                                                    <ng-container matColumnDef="sr_no" sticky>
+                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">
+                                                            Sr.No.</th>
+                                                        <td mat-cell *matCellDef="let element;let i=index"
+                                                            class="mat-cell-sr-no">
+                                                            <!-- {{element.sr_no}} -->
+                                                            {{i+1}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="meeting_name">
+                                                        <th mat-header-cell *matHeaderCellDef>Meeting Name</th>
+                                                        <td mat-cell *matCellDef="let element"
+                                                            class="mat-cell-definition">
+                                                            {{element.meeting_name}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="chair_person_name">
+                                                        <th mat-header-cell *matHeaderCellDef>Chair Person</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.chair_person_name}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="co_chair_person_name">
+                                                        <th mat-header-cell *matHeaderCellDef>Co-chair Person</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.co_chair_person_name}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="gov_member">
+                                                        <th mat-header-cell *matHeaderCellDef>Member</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <!-- {{element.gov_members}} -->
+                                                            <span
+                                                                *ngFor="let user of element.gov_members">{{user.member_name}},
+                                                            </span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="gov_frequency">
+                                                        <th mat-header-cell *matHeaderCellDef>Frequency</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.gov_frequency}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="meeting_day">
+                                                        <th mat-header-cell *matHeaderCellDef>Days</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.meeting_day}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="meeting_shedule">
+                                                        <th mat-header-cell *matHeaderCellDef>Meeting Shedule</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.meeting_shedule}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="gov_venue">
+                                                        <th mat-header-cell *matHeaderCellDef>Venue</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.gov_venue}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="gov_duration">
+                                                        <th mat-header-cell *matHeaderCellDef>Duration</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <span *ngIf="element.gov_duration == 'half_hour'">30
+                                                                Minute</span>
+                                                            <span *ngIf="element.gov_duration == 'one_hour'">1
+                                                                Hour</span>
+                                                            <span *ngIf="element.gov_duration == 'two_hour'">2
+                                                                Hour</span>
+                                                            <span *ngIf="element.gov_duration == 'half_day'">Half
+                                                                day</span>
+                                                            <span *ngIf="element.gov_duration == 'full_Day'">Full
+                                                                day</span>
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="agenda">
+                                                        <th mat-header-cell *matHeaderCellDef>Agenda</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            <a href="javascript:void(0)" matTooltip="Agenda"
+                                                                aria-label="Agenda" (click)="agendaOpen(element)">
+                                                                <img class="definition-icon"
+                                                                    src="assets/icons/Receipt-4-icon.jpg">
+                                                            </a>
+                                                        </td>
+                                                    </ng-container>
+                                                    <tr mat-header-row
+                                                        *matHeaderRowDef="displayedColumnsGovernance; sticky: true">
+                                                    </tr>
+                                                    <tr mat-row
+                                                        *matRowDef="let row; columns: displayedColumnsGovernance;"></tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div fxLayout="row wrap" fxLayoutAlign="start center">
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40">
+                                        <div class="box-details">
+                                            <div class="box-tittle" fxLayoutAlign="center center">Budget tracking</div>
+                                            <div class="mt-4" fxLayoutAlign="center center">Total project cost:-
+                                                {{proAllDetails.project_cost}}
+                                            </div>
+                                            <div class="all-table" fxLayoutAlign="center center">
+                                                <table mat-table class="kpi-milestone" [dataSource]="dataSourceBudget">
+                                                    <ng-container matColumnDef="sr_no">
+                                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">
+                                                            Sr.No.</th>
+                                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                            {{element.sr_no}}</td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="dept_name">
+                                                        <th mat-header-cell *matHeaderCellDef>Department</th>
+                                                        <td mat-cell *matCellDef="let element">{{element.dept_name}}
+                                                        </td>
+                                                    </ng-container>
+                                                    <ng-container matColumnDef="allocation_dstrbt_vl">
+                                                        <th mat-header-cell *matHeaderCellDef>Value</th>
+                                                        <td mat-cell *matCellDef="let element">
+                                                            {{element.allocation_dstrbt_vl}}</td>
+                                                    </ng-container>
+                                                    <tr mat-header-row
+                                                        *matHeaderRowDef="displayedColumnsBudget; sticky: true"></tr>
+                                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsBudget;">
+                                                    </tr>
+                                                </table>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="70" fxFlex.gt-md="70">
+                                        <!--   <div class="box-details">
+                      <div class="box-tittle" fxLayoutAlign="center center">Governance review meeting</div>
+                      <div class="m-8" fxLayoutAlign="start center" *ngIf="proGoverancesList !=''"><span
+                          class="meeting-tittle">Meeting name:-</span> {{proGoverancesList.meeting_name}}
+                      </div>
+                      <div fxLayout="row" style="margin: 10px;" *ngIf="proGoverancesList !=''">
+                        <div fxLayout="column" fxFlex="50" fxLayoutAlign="start">
+                          <div> <span class="meeting-tittle">Person:-</span> {{proGoverancesList.chair_person_name}}
+                          </div>
+                          <div> <span class="meeting-tittle">Co-chair person:-</span>
+                            {{proGoverancesList.co_chair_person_name}}</div>
+                          <div> <span class="meeting-tittle">Member:-</span><span
+                              *ngFor="let member of proGoverances">{{member.member_name}}, </span></div>
+                          <div> <span class="meeting-tittle">Venue:-</span> {{proGoverancesList.gov_venue}}</div>
+                        </div>
+                        <div fxLayout="column" fxFlex="50" fxLayoutAlign="start">
+                          <div> <span class="meeting-tittle">Frequency:-</span> {{proGoverancesList.gov_frequency}}
+                          </div>
+                          <div> <span class="meeting-tittle">Days:-</span> {{proGoverancesList.meeting_day}}</div>
+                          <div> <span class="meeting-tittle">Duration:-</span>
+                            <span *ngIf="proGoverancesList.gov_duration == 'half_hour'">30 minute</span>
+                            <span *ngIf="proGoverancesList.gov_duration == 'one_hour'">1 hour</span>
+                            <span *ngIf="proGoverancesList.gov_duration == 'two_hour'">2 hour</span>
+                            <span *ngIf="proGoverancesList.gov_duration == 'half_day'">Half day</span>
+                            <span *ngIf="proGoverancesList.gov_duration == 'full_Day'">Full day</span>
+                          </div>
+                          <div> <span class="meeting-tittle"> Meeting shedule:-</span>
+                            {{proGoverancesList.meeting_shedule}}</div>
+                        </div>
+                      </div>
+                    </div> -->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- ProjectMilestone -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '17'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle pl-8">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Milestone
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <project-milestone-table class="mt-4"></project-milestone-table>
+                    </div>
+                </div>
+                <!-- activity -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '2'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Major Activity Plan
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <majar-activity-table class="mt-4"></majar-activity-table>
+                    </div>
+                </div>
+                <div fusePerfectScrollbar *ngIf="currentStep == '19'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Feeds
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <feed-timeline></feed-timeline>
+                    </div>
+                </div>
+                <!-- sub activity Planning -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '3'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Sub Activity Plan
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <sub-activity-table class="mt-4"></sub-activity-table>
+                    </div>
+                </div>
+                <!-- Resource Planning -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '4'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Resource Planning
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <resource-planning-table (DashboardResourceClickEvent)="DashboardResourceClick($event)">
+                        </resource-planning-table>
+                    </div>
+                </div>
+                <!--resource Dashboard-->
+                <div fusePerfectScrollbar *ngIf="currentStep == '16'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <resource-dashboard [sendDataResourceDash]="userIdSendResourceDash"
+                            (arrowclickResourceDashEvent)="TbChangeArowResourceDashClik()"></resource-dashboard>
+                    </div>
+                </div>
+                <!-- Risk Accessment -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '5'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Risk Accessment Log
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <risk-accessment-table></risk-accessment-table>
+                    </div>
+                </div>
+                <!-- kpi data -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '7'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Deliverables
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <project-kpi-table (DashboardKpiClickEvent)="DashboardKpiClick($event)"
+                            (MileKpiClickEvent)="MileKpiClick($event)"></project-kpi-table>
+                    </div>
+                </div>
+                <!--kpi Dashboard-->
+                <div fusePerfectScrollbar *ngIf="currentStep == '12'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <project-kpi-dashboard [sendDataKpiDash]="proIdSendKpiDash"
+                            (arrowclickKpiDashEvent)="TbChangeArowKpiDashClik()"></project-kpi-dashboard>
+                    </div>
+                </div>
+                <!--pro kpi mile stone  -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '14'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <pro-kpi-mile-view [sendDataKpiMile]="proIdSendKpiMile"
+                            (arrowclickKpiMileEvent)="TbChangeArowKpiMileClik()"></pro-kpi-mile-view>
+                    </div>
+                </div>
+                <!-- Issue Tracker -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '6'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Issue Tracker
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <p-issue-tracker (RemarkClickEvent)="RemarkClick($event)"
+                            (DashboardClickEvent)="DashboardClick($event)">
+                        </p-issue-tracker>
+                    </div>
+                </div>
+                <!--Issue Tracker remark-->
+                <div fusePerfectScrollbar *ngIf="currentStep == '8'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <app-p-issue-tracker-remark [IssueTrackerId]="issueId" (arrowclickEvent)="TbChangeArowClik()">
+                        </app-p-issue-tracker-remark>
+                    </div>
+                </div>
+                <!--Issue tracker Dashboard-->
+                <div fusePerfectScrollbar *ngIf="currentStep == '10'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <issue-tracker-dashboard [sendDataTrackerDash]="proIdSendDash"
+                            (arrowclickDashboardEvent)="TbChangeArowClik()"></issue-tracker-dashboard>
+                    </div>
+                </div>
+                <!--Governance Structure-->
+                <div fusePerfectScrollbar *ngIf="currentStep == '9'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Governance Structure
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <governance-table></governance-table>
+                    </div>
+                </div>
+                <!--project-dashboard-->
+                <div fusePerfectScrollbar *ngIf="currentStep == '11'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <project-dashboard (mainDashToMileClickEvent)="mainDashToMileClick()"
+                            (mainDashToDeviationsClickEvent)="mainDashToDeviationsClick()"
+                            (mainDashToIssuesClickEvent)="mainDashToIssuesClick()"></project-dashboard>
+                    </div>
+                </div>
+                <!--Project Deviations-->
+                <div fusePerfectScrollbar *ngIf="currentStep == '13'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Deviations
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <pro-deviations-table></pro-deviations-table>
+                    </div>
+                </div>
+                <!--pro-gantt-chart  -->
+                <div fusePerfectScrollbar *ngIf="currentStep == '15'" class="content all-pages-content course-step">
+                    <div class="left">
+                        <div class="main-widget">
+                            <div class="widget-group p-0 project-header dept-header-color" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxFlex="10" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                                    <button class="mat-icon-button mat-icon-button-aroow"
+                                        [routerLink]="['/apps/dashboards/project']">
+                                        <span class="mat-button-wrapper">
+   <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Project Name: {{project_name}}
+                                    </div>
+                                </div>
+                                <div fxFlex="25" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                    <div class="project-tittle">
+                                        Master Time chart
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <pro-gantt-chart></pro-gantt-chart>
+                    </div>
+                </div>
+            </ng-container>
+        </div>
+    </div>
+</div>

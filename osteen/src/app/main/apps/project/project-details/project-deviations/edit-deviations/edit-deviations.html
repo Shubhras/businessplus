@@ -1,0 +1,91 @@
+<div class="content popup-content" id="edit-deviations">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="deviationsFormGroup"
+            [formGroup]="deviationsFormGroup" (ngSubmit)="editDeviations()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Edit Project Deviation</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Deviation</mat-label>
+                        <input matInput formControlName="deviation_name">
+                        <mat-error>Deviation is required!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Reason</mat-label>
+                        <input matInput formControlName="deviation_region">
+                        <mat-error>Reason is required!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Deviation From</mat-label>
+                        <input matInput [min]="minDate" [matDatepicker]="periodFromPicker"
+                            formControlName="deviation_start_date" [(ngModel)]="deviation_start_date" readonly>
+                        <mat-error>Deviation From is required!</mat-error>
+                        <mat-datepicker-toggle matSuffix [for]="periodFromPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #periodFromPicker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                        <mat-label>Deviation To</mat-label>
+                        <input matInput [min]="deviationsFormGroup.get('deviation_start_date').value" [matDatepicker]="periodToPicker"
+                            formControlName="deviation_end_date" [(ngModel)]="deviation_end_date" readonly>
+                        <mat-error>Deviation To is required!</mat-error>
+                        <mat-datepicker-toggle matSuffix [for]="periodToPicker"></mat-datepicker-toggle>
+                        <mat-datepicker #periodToPicker></mat-datepicker>
+                    </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Risk Level</mat-label>
+                        <mat-select matNativeControl formControlName="deviation_risk">
+                            <mat-option [value]="priority.id" *ngFor="let priority of taskDataPriorities">
+                                {{priority.name}}</mat-option>
+                        </mat-select>
+                        <mat-error>Risk Level is required!</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                        <mat-label>Qty</mat-label>
+                        <input matInput formControlName="deviation_qty">
+                        <mat-error>Qty is required!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                        <mat-label>Department</mat-label>
+                        <mat-select matNativeControl formControlName="deviation_dept">
+                            <mat-option [value]="department.id" *ngFor="let department of dataDepartment">
+                                {{department.dept_name}}</mat-option>
+                        </mat-select>
+                        <mat-error>Department is required!</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                        <mat-label>Approved By</mat-label>
+                        <mat-select matNativeControl formControlName="deviation_aprove_usr">
+                                <!-- <input matInput placeholder="Search" (keyup)="companyUserSearch($event.target.value)"
+                                style="height: 32px; padding-left: 12px;"> -->
+                            <mat-option [value]="user.user_id" *ngFor="let user of selectedSearchUser">
+                                {{user.name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Approved By is required!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <input class="custom-file-input" type="file"
+                        accept="application/pdf,application/vnd.ms-excel,image/x-png,image/gif,image/jpeg,image/jpg"
+                        id="customFile" (change)="onFileSelected($event)">
+                </div>
+            <div fxLayout="row" fxFlex="1 0 auto" class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="PopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

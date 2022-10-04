@@ -1,0 +1,67 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addRiskAccessmentForm"
+            [formGroup]="editRiskAccessmentForm" (ngSubmit)="editRiskButton()" novalidate>
+            <!-- <div class="h3 mb-12">Add Task</div> -->
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add Risk Accessment Log</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Risk Item</mat-label>
+                    <textarea matInput formControlName="risk_item" required></textarea>
+                    <mat-error>Risk Item is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Time required</mat-label>
+                    <mat-select matNativeControl formControlName="risk_time_required">
+                        <mat-option value="Less">Less</mat-option>
+                        <mat-option value="Medium">Medium</mat-option>
+                        <mat-option value="More">More</mat-option>
+                    </mat-select>
+                    <mat-error>Time is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Risk Level</mat-label>
+                    <mat-select matNativeControl formControlName="risk_level">
+                        <mat-option [value]="priority.id" *ngFor="let priority of taskDataPriorities">
+                            {{priority.name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Risk Level is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Responsibility</mat-label>
+                    <mat-select matNativeControl formControlName="risk_responsibility">
+                        <!-- <input matInput placeholder="Search" (keyup)="companyUserSearch($event.target.value)"
+                            style="height: 32px; padding-left: 12px;"> -->
+                        <mat-option [value]="user.user_id" *ngFor="let user of selectedSearchUser">
+                            {{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Responsibility is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Mitigation Plan</mat-label>
+                    <textarea matInput formControlName="risk_mtiqation_plan" required></textarea>
+                    <!--  <mat-select formControlName="mitigation_plan" multiple>
+                        <mat-option *ngFor="let user of userListAllData" [value]="user.user_id">{{user.name}}
+                        </mat-option>
+                    </mat-select> -->
+                    <mat-error>Mitigation Plan is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxFlex="1 0 auto" class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="PopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

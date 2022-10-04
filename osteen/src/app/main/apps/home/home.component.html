@@ -1,0 +1,23 @@
+<div id="home" fxLayout="column">
+    <div class="example-button-row mr-24 mt-24" fxLayoutAlign="end">
+        <!--  <button mat-raised-button color="accent" class="mr-12" [routerLink]="'/apps/company-setup'">Company</button> -->
+        <button mat-raised-button color="accent" class="mr-12" [routerLink]="'/apps/login'">Login</button>
+        <button mat-raised-button color="accent" [routerLink]="'/apps/register'">Register</button>
+    </div>
+    <div id="home-form-wrapper" fxLayout="column" fxLayoutAlign="center center">
+        <div id="home-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+            <div class="logo">
+                <img src="assets/images/logos/cropped-logo-small-final.png">
+            </div>
+            <div class="title">Prima Plus</div>
+            <div class="punchline">Your Business Partner - Anywhere- Anytime</div>
+        </div>
+       
+    </div>
+    <!-- <div  class="punchline" fxLayout="column" fxLayoutAlign="center center">
+        <div [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}">
+            
+        </div>
+    </div> -->
+
+</div>

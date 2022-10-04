@@ -1,0 +1,1070 @@
+<div id="project-add" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column">
+        <div fxLayout="row">
+            <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="3" fxLayoutAlign="start center">
+                <button class="mat-icon-button mat-icon-button-aroow" [routerLink]="['/apps/dashboards/project']">
+                    <span class="mat-button-wrapper">
+                        <mat-icon class="secondary-text" style="color: #fff;transform: scale(1.3);">first_page</mat-icon>                    </span>
+                </button>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="97" fxLayoutAlign="center center">
+                <div class="logo" fxLayout="row">
+                    <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                        {{project_name ? project_name : 'Add Project'}}
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div class="left">
+            <div class="main-widget">
+                <div class="widget-group m-16" fxLayout="column" fxFlex="100" *fuseIfOnDom
+                    [@animateStagger]="{value:'50'}">
+                    <mat-vertical-stepper [linear]="isLinear" #stepper>
+                        <mat-step [stepControl]="proFormGroup">
+                            <form [formGroup]="proFormGroup" class="form_field" (ngSubmit)="projectSubmit()"
+                                fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" novalidate>
+                                <ng-template matStepLabel>Add New Project</ng-template>
+                                <div fxLayout="row" fxFlex="100">
+                                    <div fxLayout="column" fxFlex="70">
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="50">
+                                                <mat-label>Project title</mat-label>
+                                                <input matInput formControlName="project_name">
+                                                <mat-error>Project title is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="50">
+                                                <mat-label>Department</mat-label>
+                                                <mat-select matNativeControl formControlName="department_id">
+                                                    <mat-option [value]="department.id"
+                                                        *ngFor="let department of dataDepartment">
+                                                        {{department.dept_name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Department is required!</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="100">
+                                                <mat-label>Project mission</mat-label>
+                                                <input matInput formControlName="project_mission">
+                                                <mat-error>Project mission is required!</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div fxLayout="column" fxFlex="100">
+                                            <div [fxLayout]="direction" fxLayout.xs="column"
+                                                fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                <mat-form-field appearance="outline" fxFlex="30">
+                                                    <mat-label>Start</mat-label>
+                                                    <input matInput formControlName="start_date" [min]="minDate"
+                                                        [matDatepicker]="startPicker" readonly>
+                                                    <mat-error>Start Date is required!</mat-error>
+                                                    <mat-datepicker-toggle matSuffix [for]="startPicker">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #startPicker></mat-datepicker>
+                                                </mat-form-field>
+                                                <mat-form-field appearance="outline" fxFlex="30">
+                                                    <mat-label>Finish</mat-label>
+                                                    <input matInput formControlName="end_date"
+                                                        [min]="datepipe.transform(proFormGroup.get('start_date').value, 'yyyy-MM-dd')"
+                                                        [matDatepicker]="endPicker" readonly>
+                                                    <mat-error>Finish Date is required!</mat-error>
+                                                    <mat-datepicker-toggle matSuffix [for]="endPicker">
+                                                    </mat-datepicker-toggle>
+                                                    <mat-datepicker #endPicker></mat-datepicker>
+                                                </mat-form-field>
+                                                <div fxLayoutAlign="center center" fxFlex="15" class="mb-16">Total
+                                                    duration
+                                                </div>
+                                                <div fxLayoutAlign="start center" fxFlex="30">
+                                                    <mat-form-field appearance="outline" fxFlex="100">
+                                                        <input matInput readonly value="{{projectDuration}}"
+                                                            placeholder="Total duration">
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto" style="margin-bottom: 20px;">
+
+                                            <angular-editor id="editor2" formControlName="key_objective"
+                                                [config]="editorConfig"></angular-editor>
+                                        </div>
+                                        <!-- <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="100">
+                                                <mat-label>Project key objective</mat-label>
+                                                <textarea class="h-80" matInput
+                                                    formControlName="key_objective"></textarea>
+                                                <mat-error>Project key objective is required!</mat-error>
+                                            </mat-form-field>
+                                        </div> -->
+
+
+                                    </div>
+                                    <div fxLayout="column" fxFlex="30">
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="center center">
+                                            Project logo</div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="center center"
+                                            class="pro-image mt-8">
+                                            <label class="company__user-pic" for="project_logo">
+                                                <img class="project-image avatar huge"
+                                                    src="{{proFormGroup.get('project_logo').value ? proFormGroup.get('project_logo').value : dummyPicture}}"
+                                                    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                <mat-icon class="upload-button">camera_alt</mat-icon>
+                                                <input type='file' id="project_logo" accept=".png, .jpg, .jpeg"
+                                                    #fileInput (change)="proLogoSelected($event)" />
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div fxLayoutAlign="start center">
+                                    <button mat-raised-button matStepperNext [disabled]="proFormGroup.invalid">Save
+                                        &
+                                        Next</button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="proTeamFormGroup">
+                            <form [formGroup]="proTeamFormGroup" class="form_field" (ngSubmit)="projectTeamSubmit()"
+                                fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                                <ng-template matStepLabel>Project Team</ng-template>
+                                <div fxLayout="row" fxFlex="100">
+                                    <mat-card fxFlex="100">
+                                        <div class="form-hadding mr-8" fxLayoutAlign="start center">Project leader</div>
+                                        <div class="other-member mb-0">
+                                            <div fxFlex="65" fxLayout="column">
+                                                <div [fxLayout]="direction" fxLayout.xs="column"
+                                                    fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                    <mat-form-field appearance="outline" fxFlex="50">
+                                                        <mat-label>Project leader</mat-label>
+                                                        <mat-select matNativeControl formControlName="user_id"
+                                                            (selectionChange)="singleUser($event.value,'proLeader',0)">
+                                                            <!-- <input matInput placeholder="Search" (keyup)="companyUserSearch($event.target.value)" style="height: 32px; padding-left: 12px;"> -->
+                                                            <mat-option [value]="user.user_id"
+                                                                *ngFor="let user of selectedSearchUser"
+                                                                [disabled]="selectedUser.indexOf(user.user_id) !== -1">
+                                                                {{user.name}}
+                                                            </mat-option>
+                                                        </mat-select>
+                                                        <mat-error>Name is required!</mat-error>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline" fxFlex="50">
+                                                        <mat-label>Department</mat-label>
+                                                        <mat-select matNativeControl formControlName="department_id"
+                                                            disabled>
+                                                            <mat-option [value]="department.id"
+                                                                *ngFor="let department of dataDepartment">
+                                                                {{department.dept_name}}</mat-option>
+                                                            <mat-option [value]="0">Senior Executive</mat-option>
+                                                        </mat-select>
+                                                        <mat-error>Department is required!</mat-error>
+                                                    </mat-form-field>
+                                                </div>
+                                                <div [fxLayout]="direction" fxLayout.xs="column"
+                                                    fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                    <mat-form-field appearance="outline" fxFlex="50">
+                                                        <mat-label>Email</mat-label>
+                                                        <input matInput formControlName="email">
+                                                        <mat-error>Email is required!</mat-error>
+                                                    </mat-form-field>
+                                                    <mat-form-field appearance="outline" fxFlex="50">
+                                                        <mat-label>Mobile</mat-label>
+                                                        <input matInput formControlName="mobile" maxlength="10"
+                                                            (keypress)=mobileValidation($event)>
+                                                        <mat-error
+                                                            *ngIf="proTeamFormGroup.get('mobile').hasError('required')">
+                                                            Mobile is required!
+                                                        </mat-error>
+                                                        <mat-error
+                                                            *ngIf="proTeamFormGroup.get('mobile').hasError('pattern')">
+                                                            It is not a valid mobile number.
+                                                        </mat-error>
+                                                    </mat-form-field>
+                                                </div>
+                                            </div>
+                                            <div fxFlex="30" fxLayout="column">
+                                                <div [fxLayout]="direction" fxLayout.xs="column"
+                                                    fxLayoutAlign="center center">
+                                                    Photo</div>
+                                                <div [fxLayout]="direction" fxLayout.xs="column"
+                                                    fxLayoutAlign="center center" class="pro-image mt-8">
+                                                    <label class="company__user-pic" for="leader_user_logo">
+                                                        <img class="project-image avatar huge"
+                                                            src="{{leaderPicture ? leaderPicture : dummyPicture}}"
+                                                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                        <mat-icon class="upload-button">camera_alt</mat-icon>
+                                                        <input type='file' id="leader_user_logo"
+                                                            accept=".png, .jpg, .jpeg" #fileInput
+                                                            (change)="leaderLogoSelected($event)" />
+                                                    </label>
+                                                </div>
+                                            </div>
+                                            <div fxFlex="5" fxLayout="column"></div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <div fxLayout="row" fxFlex="100">
+                                    <mat-card fxFlex="100" formArrayName="pro_co_leader">
+                                        <div class="form-hadding mr-8" fxLayoutAlign="start center">Project Co-leader
+                                        </div>
+                                        <div *ngFor="let itemrow of formArrCoLeaderUser.controls; let i=index"
+                                            [formGroupName]="i">
+                                            <div class="other-member mb-0">
+                                                <div fxFlex="65" fxLayout="column">
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Project Co-leader</mat-label>
+                                                            <mat-select matNativeControl formControlName="user_id"
+                                                                (selectionChange)="singleUser($event.value,'proCoLeader',0)">
+                                                                <mat-option [value]="user.user_id"
+                                                                    *ngFor="let user of selectedSearchUser"
+                                                                    [disabled]="selectedUser.indexOf(user.user_id) !== -1">
+                                                                    {{user.name}}
+                                                                </mat-option>
+                                                            </mat-select>
+                                                            <mat-error>Name is required!</mat-error>
+                                                        </mat-form-field>
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Department</mat-label>
+                                                            <mat-select matNativeControl formControlName="department_id"
+                                                                disabled>
+                                                                <mat-option [value]="department.id"
+                                                                    *ngFor="let department of dataDepartment">
+                                                                    {{department.dept_name}}</mat-option>
+                                                                <mat-option [value]="0">Senior Executive</mat-option>
+                                                            </mat-select>
+                                                            <mat-error>Department is required!</mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Email</mat-label>
+                                                            <input matInput formControlName="email">
+                                                            <mat-error>Email is required!</mat-error>
+                                                        </mat-form-field>
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Mobile</mat-label>
+                                                            <input matInput formControlName="mobile" maxlength="10"
+                                                                (keypress)=mobileValidation($event)>
+                                                            <mat-error
+                                                                *ngIf="itemrow.get('mobile').hasError('required')">
+                                                                Mobile is required!
+                                                            </mat-error>
+                                                            <mat-error
+                                                                *ngIf="itemrow.get('mobile').hasError('pattern')">
+                                                                It is not a valid mobile number.
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div fxFlex="30" fxLayout="column">
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="center center">
+                                                        Photo</div>
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="center center" class="pro-image mt-8">
+                                                        <label class="company__user-pic" for="leader_user_logo_{{i}}">
+                                                            <img class="project-image avatar huge"
+                                                                src="{{itemrow.get('pro_co_leader_logo').value ? itemrow.get('pro_co_leader_logo').value : dummyPicture}}"
+                                                                [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                            <mat-icon class="upload-button">camera_alt</mat-icon>
+                                                            <input type='file' id="leader_user_logo_{{i}}"
+                                                                accept=".png, .jpg, .jpeg" #fileInput
+                                                                (change)="coLeaderLogoSelected($event,i)" />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div fxFlex="5" fxLayout="column"></div>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <div fxLayout="row" fxFlex="100">
+                                    <mat-card fxFlex="100">
+                                        <div class="form-hadding mr-8" fxLayoutAlign="start center">Team member</div>
+                                        <div fxLayout="row" class="pl-4 mb-16 mt-16">
+                                            <div fxLayout="row" fxFlex="50">
+                                                <span>Add company user</span>
+                                                <a fxLayoutAlign="start center" class="add-circle-color">
+                                                    <mat-icon class="ml-8" matTooltip="Add new" aria-label="Add new"
+                                                        (click)="addCompanyUser()">
+                                                        add_circle</mat-icon>
+                                                </a>
+                                            </div>
+                                            <div fxLayout="row" fxFlex="50">
+                                                <span>Add external user</span>
+                                                <a fxLayoutAlign="start center" class="add-circle-color">
+                                                    <mat-icon class="ml-8" matTooltip="Add new" aria-label="Add new"
+                                                        (click)="addExternalUser()">
+                                                        add_circle</mat-icon>
+                                                </a>
+                                            </div>
+                                        </div>
+                                        <div formArrayName="company_user">
+                                            <div class="form-hadding mr-8" style="background: #6497b1;"
+                                                fxLayoutAlign="start center">
+                                                Company user
+                                            </div>
+                                            <div *ngFor="let itemrow of formArrCompanyUser.controls; let i=index"
+                                                [formGroupName]="i">
+                                                <div class="other-member">
+                                                    <div fxFlex="65" fxLayout="column">
+                                                        <div [fxLayout]="direction" fxLayout.xs="column"
+                                                            fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                            <mat-form-field appearance="outline" fxFlex="50">
+                                                                <mat-label>Name</mat-label>
+                                                                <mat-select matNativeControl formControlName="user_id"
+                                                                    (selectionChange)="singleUser($event.value,'proUser',i)">
+                                                                    <!--  <input matInput placeholder="Search" (keyup)="companyUserSearch($event.target.value)" style="height: 32px; padding-left: 12px;"> -->
+                                                                    <mat-option [value]="user.user_id"
+                                                                        *ngFor="let user of selectedSearchUser"
+                                                                        [disabled]="selectedUser.indexOf(user.user_id) !== -1">
+                                                                        {{user.name}}
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                                <mat-error>Name is required!</mat-error>
+                                                            </mat-form-field>
+                                                            <mat-form-field appearance="outline" fxFlex="50">
+                                                                <mat-label>Department</mat-label>
+                                                                <mat-select matNativeControl
+                                                                    formControlName="department_id" disabled>
+                                                                    <mat-option [value]="department.id"
+                                                                        *ngFor="let department of dataDepartment">
+                                                                        {{department.dept_name}}</mat-option>
+                                                                    <mat-option [value]="0">Senior Executive
+                                                                    </mat-option>
+                                                                </mat-select>
+                                                                <mat-error>Department is required!</mat-error>
+                                                            </mat-form-field>
+                                                        </div>
+                                                        <div [fxLayout]="direction" fxLayout.xs="column"
+                                                            fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                            <mat-form-field appearance="outline" fxFlex="50">
+                                                                <mat-label>Email</mat-label>
+                                                                <input matInput formControlName="email">
+                                                                <mat-error>Email is required!</mat-error>
+                                                            </mat-form-field>
+                                                            <mat-form-field appearance="outline" fxFlex="50">
+                                                                <mat-label>Mobile</mat-label>
+                                                                <input matInput formControlName="mobile" maxlength="10"
+                                                                    (keypress)=mobileValidation($event)>
+                                                                <mat-error
+                                                                    *ngIf="itemrow.get('mobile').hasError('required')">
+                                                                    Mobile is required!
+                                                                </mat-error>
+                                                                <mat-error
+                                                                    *ngIf="itemrow.get('mobile').hasError('pattern')">
+                                                                    It is not a valid mobile number.
+                                                                </mat-error>
+                                                            </mat-form-field>
+                                                        </div>
+                                                    </div>
+                                                    <div fxFlex="30" fxLayout="column">
+                                                        <div [fxLayout]="direction" fxLayout.xs="column"
+                                                            fxLayoutAlign="center center">
+                                                            Photo</div>
+                                                        <div [fxLayout]="direction" fxLayout.xs="column"
+                                                            fxLayoutAlign="center center" class="pro-image mt-8">
+                                                            <label class="company__user-pic"
+                                                                for="company_user_logo_{{i}}">
+                                                                <img class="project-image avatar huge"
+                                                                    src="{{itemrow.get('company_user_logo').value ? itemrow.get('company_user_logo').value : dummyPicture}}"
+                                                                    [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                                <mat-icon class="upload-button">camera_alt</mat-icon>
+                                                                <input type='file' id="company_user_logo_{{i}}"
+                                                                    accept=".png, .jpg, .jpeg" #fileInput
+                                                                    (change)="companyUserLogo($event,i)" />
+                                                            </label>
+                                                        </div>
+                                                    </div>
+                                                    <div fxFlex="5" fxLayout="column">
+                                                        <a *ngIf="i>0" fxLayoutAlign="center center"
+                                                            class="delete-circle-color mt-32">
+                                                            <mat-icon matTooltip="Delete" aria-label="Delete"
+                                                                (click)="deleteCompanyUser(i)">delete
+                                                            </mat-icon>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div *ngIf="formArrExternalUser.length >0" formArrayName="external_user">
+                                            <div class="form-hadding mr-8" style="background: #6497b1;"
+                                                fxLayoutAlign="start center">External
+                                                user</div>
+                                            <div *ngFor="let itemrow of formArrExternalUser.controls; let i=index"
+                                                [formGroupName]="i" class="other-member">
+                                                <div fxFlex="65" fxLayout="column">
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Name</mat-label>
+                                                            <input matInput formControlName="ex_membar_name">
+                                                            <mat-error>Name is required!</mat-error>
+                                                        </mat-form-field>
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Company name</mat-label>
+                                                            <input matInput formControlName="company_name">
+                                                            <mat-error>Company name is required!</mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Email</mat-label>
+                                                            <input matInput formControlName="email_id">
+                                                            <mat-error
+                                                                *ngIf="itemrow.get('email_id').hasError('required')">
+                                                                Email is required
+                                                            </mat-error>
+                                                            <mat-error
+                                                                *ngIf="itemrow.get('email_id').hasError('email')">Please
+                                                                enter a valid email
+                                                                address</mat-error>
+                                                        </mat-form-field>
+                                                        <mat-form-field appearance="outline" fxFlex="50">
+                                                            <mat-label>Mobile</mat-label>
+                                                            <input matInput maxlength="10"
+                                                                formControlName="phone_number"
+                                                                (keypress)=mobileValidation($event)>
+                                                            <mat-error
+                                                                *ngIf="itemrow.get('phone_number').hasError('required')">
+                                                                Mobile is required!
+                                                            </mat-error>
+                                                            <mat-error
+                                                                *ngIf="itemrow.get('phone_number').hasError('pattern')">
+                                                                It is not a valid mobile number.
+                                                            </mat-error>
+                                                        </mat-form-field>
+                                                    </div>
+                                                </div>
+                                                <div fxFlex="30" fxLayout="column">
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="center center">
+                                                        Photo</div>
+                                                    <div [fxLayout]="direction" fxLayout.xs="column"
+                                                        fxLayoutAlign="center center" class="pro-image mt-8">
+                                                        <label class="company__user-pic" for="external_user_logo_{{i}}">
+                                                            <img class="project-image avatar huge"
+                                                                src="{{itemrow.get('external_user_logo').value ? itemrow.get('external_user_logo').value : dummyPicture}}"
+                                                                [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                                            <mat-icon class="upload-button">camera_alt</mat-icon>
+                                                            <input type='file' id="external_user_logo_{{i}}"
+                                                                accept=".png, .jpg, .jpeg" #fileInput
+                                                                (change)="externalUserLogo($event,i)" />
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                                <div fxFlex="5" fxLayout="column">
+                                                    <a fxLayoutAlign="center center" class="delete-circle-color mt-32">
+                                                        <mat-icon matTooltip="Delete" aria-label="Delete"
+                                                            (click)="deleteExternalUser(i)">delete
+                                                        </mat-icon>
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <div fxLayoutAlign="start center">
+                                    <!-- <button mat-raised-button matStepperPrevious class="mr-8">Back</button> -->
+                                    <button mat-raised-button matStepperNext [disabled]="proTeamFormGroup.invalid">Save
+                                        & Next</button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="mileStoneFormGroup">
+                            <form [formGroup]="mileStoneFormGroup" class="form_field" (ngSubmit)="projectMileSubmit()"
+                                fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                                <ng-template matStepLabel>Project Milestone Dates</ng-template>
+                                <!-- <div fxLayout="column" fxFlex="100">
+                                    <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                        fxFlex="1 0 auto">
+                                        <mat-form-field appearance="outline" fxFlex="20">
+                                            <mat-label>Start</mat-label>
+                                            <input matInput formControlName="start_date" [min]="minDate"
+                                                [matDatepicker]="startPicker" readonly>
+                                            <mat-error>Start Date is required!</mat-error>
+                                            <mat-datepicker-toggle matSuffix [for]="startPicker">
+                                            </mat-datepicker-toggle>
+                                            <mat-datepicker #startPicker></mat-datepicker>
+                                        </mat-form-field>
+                                        <mat-form-field appearance="outline" fxFlex="20">
+                                            <mat-label>Finish</mat-label>
+                                            <input matInput formControlName="end_date"
+                                                [min]="datepipe.transform(mileStoneFormGroup.get('start_date').value, 'yyyy-MM-dd')"
+                                                [matDatepicker]="endPicker" readonly>
+                                            <mat-error>Finish Date is required!</mat-error>
+                                            <mat-datepicker-toggle matSuffix [for]="endPicker"></mat-datepicker-toggle>
+                                            <mat-datepicker #endPicker></mat-datepicker>
+                                        </mat-form-field>
+                                        <div fxLayoutAlign="center center" fxFlex="15" class="mb-16">Total duration
+                                        </div>
+                                        <div fxLayoutAlign="start center" fxFlex="20">
+                                            <mat-form-field appearance="outline" fxFlex="100">
+                                                <input matInput readonly value="{{projectDuration}}"
+                                                    placeholder="Total duration">
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div> -->
+                                <div class="form-hadding" fxLayoutAlign="start center">Major milestone</div>
+                                <div fxLayout="row" fxFlex="100">
+                                    <mat-card fxFlex="100" formArrayName="mile_stone" fxLayout="column">
+                                        <div *ngFor="let itemrow of formArr.controls; let i=index" [formGroupName]="i"
+                                            [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto" class="other-member">
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Name</mat-label>
+                                                <input matInput formControlName="milestone_name">
+                                                <mat-error>Name is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="15">
+                                                <mat-label>Date</mat-label>
+                                                <input matInput formControlName="mile_stone_date"
+                                                    [matDatepicker]="mileStoneDate"
+                                                    [min]="proFormGroup.get('start_date').value ? proFormGroup.get('start_date').value : minDate"
+                                                    [max]="proFormGroup.get('end_date').value" readonly>
+                                                <mat-error>Date is required!</mat-error>
+                                                <mat-datepicker-toggle matSuffix [for]="mileStoneDate">
+                                                </mat-datepicker-toggle>
+                                                <mat-datepicker #mileStoneDate></mat-datepicker>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="10">
+                                                <mat-label>Symbol</mat-label>
+                                                <mat-select matNativeControl formControlName="symbol">
+                                                    <mat-select-trigger>
+                                                        <mat-icon>{{itemrow.get('symbol').value}}</mat-icon>
+                                                    </mat-select-trigger>
+                                                    <mat-option value="change_history">
+                                                        <mat-icon>change_history</mat-icon>
+                                                    </mat-option>
+                                                    <mat-option value="details">
+                                                        <mat-icon>details</mat-icon>
+                                                    </mat-option>
+                                                    <mat-option value="crop_square">
+                                                        <mat-icon>crop_square</mat-icon>
+                                                    </mat-option>
+                                                    <mat-option value="lens">
+                                                        <mat-icon>lens</mat-icon>
+                                                    </mat-option>
+                                                    <mat-option value="control_point">
+                                                        <mat-icon>control_point</mat-icon>
+                                                    </mat-option>
+                                                    <mat-option value="check_circle">
+                                                        <mat-icon>check_circle</mat-icon>
+                                                    </mat-option>
+                                                    <mat-option value="star">
+                                                        <mat-icon>star</mat-icon>
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Symbol is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="35">
+                                                <mat-label>Description</mat-label>
+                                                <input matInput formControlName="description">
+                                                <mat-error>Description is required!</mat-error>
+                                            </mat-form-field>
+                                            <a *ngIf="i==0" fxFlex="15" fxLayoutAlign="center center"
+                                                class="add-circle-color">
+                                                <mat-icon class="mb-16" matTooltip="Add new" aria-label="Add new"
+                                                    (click)="addMileStone()">
+                                                    add_circle</mat-icon>
+                                            </a>
+                                            <a *ngIf="i>0" fxFlex="15" fxLayoutAlign="center center"
+                                                class="delete-circle-color">
+                                                <mat-icon class="mb-16" matTooltip="Delete" aria-label="Delete"
+                                                    (click)="deleteMileStone(i)">
+                                                    delete</mat-icon>
+                                            </a>
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <div fxLayoutAlign="start center">
+                                    <!--  <button mat-raised-button matStepperPrevious class="mr-8">Back</button> -->
+                                    <button mat-raised-button matStepperNext
+                                        [disabled]="mileStoneFormGroup.invalid">Save & Next</button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <!-- <mat-step [stepControl]="activityFormGroup">
+              <form [formGroup]="activityFormGroup" class="form_field" (ngSubmit)="projectActivitySubmit()"
+                fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                <ng-template matStepLabel>Majar Activity Plan</ng-template>
+                <div fxLayout="row" fxFlex="100">
+                  <mat-card fxFlex="100" formArrayName="majar_activity" fxLayout="column">
+                    <div fxFlex="100" fxLayout="column"
+                      *ngFor="let itemrow of formArrMajarActivity.controls; let i=index" [formGroupName]="i"
+                      class="other-member">
+                      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <input type="hidden" formControlName="activity_sr_no" [(ngModel)]="i">
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Activity</mat-label>
+                          <input matInput formControlName="activity_name">
+                          <mat-error>Activity is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Linked milestone</mat-label>
+                          <mat-select matNativeControl formControlName="milestone_id"
+                            (selectionChange)="mileStoneChange($event.value,i)">
+                            <mat-option [value]="mile.project_milestone_id" *ngFor="let mile of mileStoneGet">
+                              {{mile.milestone_name}}</mat-option>
+                          </mat-select>
+                          <mat-error>Linked milestone is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Start</mat-label>
+                          <input matInput [matDatepicker]="activityStart" formControlName="activity_start_date"
+                            [min]="activityMinDate"
+                            [max]="activityMinMaxDate[i].endDate ? activityMinMaxDate[i].endDate :activityMaxDate"
+                            readonly>
+                          <mat-error>Start Date is required!</mat-error>
+                          <mat-datepicker-toggle matSuffix [for]="activityStart"></mat-datepicker-toggle>
+                          <mat-datepicker #activityStart></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Finish</mat-label>
+                          <input matInput [matDatepicker]="activityFinish" formControlName="activity_end_date"
+                            [min]="activityMinDate"
+                            [max]="activityMinMaxDate[i].endDate ? activityMinMaxDate[i].endDate :activityMaxDate"
+                            readonly>
+                          <mat-error>Finish Date is required! </mat-error>
+                          <mat-datepicker-toggle matSuffix [for]="activityFinish"></mat-datepicker-toggle>
+                          <mat-datepicker #activityFinish></mat-datepicker>
+                        </mat-form-field>
+                      </div>
+                      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Preceeding activity</mat-label>
+                          <mat-select matNativeControl formControlName="preceeding_activity">
+                            <mat-option value="">No activity</mat-option>
+                            <mat-option [value]="activity.project_activity_id" *ngFor="let activity of activityGet"
+                              [disabled]="activity.project_activity_id == itemrow.get('project_activity_id').value">
+                              {{activity.activity_name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Next activity</mat-label>
+                          <mat-select matNativeControl formControlName="next_activity">
+                            <mat-option value="">No activity</mat-option>
+                            <mat-option [value]="activity.project_activity_id" *ngFor="let activity of activityGet"
+                              [disabled]="activity.project_activity_id == itemrow.get('project_activity_id').value">
+                              {{activity.activity_name}}
+                            </mat-option>
+                          </mat-select>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Responsibility</mat-label>
+                          <mat-select matNativeControl formControlName="responsibility">
+                            <mat-option [value]="user.user_id" *ngFor="let user of proCompanyUser">{{user.name}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error>Responsibility is required!</mat-error>
+                        </mat-form-field>
+                        <div class="ml-4" fxFlex="25">
+                          <a *ngIf="i==0" fxLayoutAlign="center center" class="add-circle-color">
+                            <mat-icon class="mb-16" matTooltip="Add new" aria-label="Add new"
+                              (click)="addMajarActivity()">add_circle</mat-icon>
+                          </a>
+                          <a *ngIf="i>0" fxLayoutAlign="center center" class="delete-circle-color">
+                            <mat-icon class="mb-16" matTooltip="Delete" aria-label="Delete"
+                              (click)="deleteMajarActivity(i)">delete</mat-icon>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+                <div fxLayoutAlign="start center">
+                  <button mat-raised-button matStepperNext [disabled]="formArrMajarActivity.invalid">Save &
+                    Next</button>
+                </div>
+              </form>
+            </mat-step> -->
+                        <!--  <mat-step [stepControl]="subActivityFormGroup">
+              <form [formGroup]="subActivityFormGroup" class="form_field" (ngSubmit)="subActivitySubmit()"
+                fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                <ng-template matStepLabel>Add Sub Activity</ng-template>
+                <div fxLayout="row" fxFlex="100">
+                  <mat-card fxFlex="100" formArrayName="sub_activity" fxLayout="column">
+                    <div fxFlex="100" fxLayout="column" *ngFor="let itemrow of formArrSubActivity.controls; let i=index"
+                      [formGroupName]="i" class="other-member">
+                      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Activity</mat-label>
+                          <mat-select matNativeControl (selectionChange)="activityChange($event.value,i)"
+                            formControlName="major_activity_id">
+                            <mat-option [value]="activity.project_activity_id" *ngFor="let activity of activityGet">
+                              {{activity.activity_name}}
+                            </mat-option>
+                          </mat-select>
+                          <mat-error>Activity is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="25">
+                          <mat-label>Sub activity</mat-label>
+                          <input matInput formControlName="sub_activity_name">
+                          <mat-error>Sub activity is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                          <mat-label>Start</mat-label>
+                          <input matInput [matDatepicker]="subActivityStart" formControlName="sb_actvity_strt_date"
+                            [min]="subActivityMinMaxDate[i].startDate" [max]="subActivityMinMaxDate[i].endDate"
+                            readonly>
+                          <mat-error>Start Date is required!</mat-error>
+                          <mat-datepicker-toggle matSuffix [for]="subActivityStart"></mat-datepicker-toggle>
+                          <mat-datepicker #subActivityStart></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="20">
+                          <mat-label>Finish</mat-label>
+                          <input matInput [matDatepicker]="subActivityFinish" formControlName="sb_actvity_end_date"
+                            [min]="subActivityMinMaxDate[i].startDate" [max]="subActivityMinMaxDate[i].endDate"
+                            readonly>
+                          <mat-error>Finish Date is required! </mat-error>
+                          <mat-datepicker-toggle matSuffix [for]="subActivityFinish"></mat-datepicker-toggle>
+                          <mat-datepicker #subActivityFinish></mat-datepicker>
+                        </mat-form-field>
+                        <div fxFlex="10">
+                          <a *ngIf="i==0" fxLayoutAlign="center center" class="add-circle-color">
+                            <mat-icon class="mb-16" matTooltip="Add new" aria-label="Add new"
+                              (click)="addSubActivity()">add_circle</mat-icon>
+                          </a>
+                          <a *ngIf="i>0" fxLayoutAlign="center center" class="delete-circle-color">
+                            <mat-icon class="mb-16" matTooltip="Delete" aria-label="Delete"
+                              (click)="deleteSubActivity(i)">delete</mat-icon>
+                          </a>
+                        </div>
+                      </div>
+                    </div>
+                  </mat-card>
+                </div>
+                <div fxLayoutAlign="start center">
+                  <button mat-raised-button matStepperNext [disabled]="subActivityFormGroup.invalid">Save &
+                    Next</button>
+                </div>
+              </form>
+            </mat-step> -->
+                        <!-- <mat-step [stepControl]="kpiFormGroup">
+              <form [formGroup]="kpiFormGroup" class="form_field" (ngSubmit)="kpiSubmit()" fxLayout="column"
+                fxLayoutAlign="start" fxFlex="1 0 auto" novalidate>
+                <ng-template matStepLabel>KPI</ng-template>
+                <div fxLayout="column" fxFlex="100">
+                  <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="25">
+                      <mat-label>KPI name</mat-label>
+                      <input matInput formControlName="project_kpi_name">
+                      <mat-error>KPI name is required!</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25">
+                      <mat-label>Department</mat-label>
+                      <mat-select matNativeControl formControlName="project_kpi_dept">
+                        <mat-option [value]="department.id" *ngFor="let department of dataDepartment">
+                          {{department.dept_name}}</mat-option>
+                      </mat-select>
+                      <mat-error>Department is required!</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25">
+                      <mat-label>Unit of measurement</mat-label>
+                      <mat-select matNativeControl formControlName="project_kpi_uom">
+                        <mat-option [value]="uom.uom_id" *ngFor="let uom of dataUoM">
+                          {{uom.uom_name}}</mat-option>
+                      </mat-select>
+                      <mat-error>Unit of measurement is required!</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="25">
+                      <mat-label>Value</mat-label>
+                      <input matInput formControlName="project_kpi_value" (keypress)=mobileValidation($event)>
+                      <mat-error>Value is required!</mat-error>
+                    </mat-form-field>
+                  </div>
+                </div>
+                <div class="form-hadding" fxLayoutAlign="start center">Milestone</div>
+                <div fxLayout="row" fxFlex="100">
+                  <mat-card fxFlex="100" formArrayName="kpi_mile_stone" fxLayout="column">
+                    <div *ngFor="let itemrow of formArrKpiMileStone.controls; let i=index" [formGroupName]="i"
+                      [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                      class="other-member">
+                      <mat-form-field appearance="outline" fxFlex="25">
+                        <mat-label>Milestone</mat-label>
+                        <mat-select matNativeControl (selectionChange)="kpiMileStone($event.value,i)"
+                          formControlName="milestone_id">
+                          <mat-option [value]="mile.project_milestone_id" *ngFor="let mile of mileStoneGet"
+                            [disabled]="selectedMileStone.indexOf(mile.project_milestone_id) !== -1">
+                            {{mile.milestone_name}}</mat-option>
+                        </mat-select>
+                        <mat-error>Milestone is required!</mat-error>
+                      </mat-form-field>
+                      <mat-form-field appearance="outline" fxFlex="25">
+                        <mat-label>Value</mat-label>
+                        <input matInput formControlName="projct_kpi_dstrbt_vl" (keypress)=mobileValidation($event)>
+                        <mat-error>Value is required!</mat-error>
+                      </mat-form-field>
+                      <a *ngIf="i==0" fxFlex="10" fxLayoutAlign="center center" class="add-circle-color">
+                        <mat-icon class="mb-16" matTooltip="Add new" aria-label="Add new" (click)="addKpiMileStone()">
+                          add_circle</mat-icon>
+                      </a>
+                      <a *ngIf="i>0" fxFlex="10" fxLayoutAlign="center center" class="delete-circle-color">
+                        <mat-icon class="mb-16" matTooltip="Delete" aria-label="Delete" (click)="deleteKpiMileStone(i)">
+                          delete</mat-icon>
+                      </a>
+                    </div>
+                    <div *ngIf="kpiValueError" style="color: red;" fxLayoutAlign="center center">{{kpiValueErrorShow}}
+                    </div>
+                  </mat-card>
+                </div>
+                <div fxLayoutAlign="start center">
+                  <button mat-raised-button matStepperNext [disabled]="kpiFormGroup.invalid || kpiValueError">Save &
+                    Next</button>
+                </div>
+              </form>
+            </mat-step> -->
+                        <mat-step [stepControl]="governanceFormGroup">
+                            <form [formGroup]="governanceFormGroup" class="form_field" (ngSubmit)="governanceSubmit()"
+                                fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" novalidate>
+                                <ng-template matStepLabel>Governance Structure</ng-template>
+                                <mat-card fxFlex="100" formArrayName="govMeting" fxLayout="column">
+                                    <div fxLayout="column" fxFlex="100"
+                                        *ngFor="let itemrow of govMetting.controls; let i=index" [formGroupName]="i">
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Meeting name</mat-label>
+                                                <input matInput formControlName="meeting_name">
+                                                <mat-error>Meeting name is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Chair person</mat-label>
+                                                <mat-select matNativeControl formControlName="chair_person"
+                                                    (selectionChange)="proCompanyUserChange($event.value,i)">
+                                                    <!-- [disabled]="selectedProCompanyUser.indexOf(user.user_id) !== -1 || isPartOfGovernance(user.user_id)" -->
+                                                    <mat-option [value]="user.user_id"
+                                                        *ngFor="let user of proCompanyUser">
+                                                        {{user.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Chair person is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Co-chair person</mat-label>
+                                                <mat-select matNativeControl formControlName="co_chair_person"
+                                                    (selectionChange)="proCompanyUserChange($event.value,1)">
+                                                    <!-- [disabled]="selectedProCompanyUser.indexOf(user.user_id) !== -1 || isPartOfGovernance(user.user_id)" -->
+                                                    <mat-option [value]="user.user_id"
+                                                        *ngFor="let user of proCompanyUser">
+                                                        {{user.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Co-chair person is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Member</mat-label>
+                                                <mat-select matNativeControl formControlName="gov_member" multiple>
+                                                    <!--  [disabled]="selectedProCompanyUser.indexOf(user.user_id) !== -1 || isPartOfGovernance(user.user_id)" -->
+                                                    <mat-option [value]="user.user_id"
+                                                        *ngFor="let user of proCompanyUser">
+                                                        {{user.name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Member is required!</mat-error>
+                                            </mat-form-field>
+                                            <a *ngIf="i==0" fxFlex="15" fxLayoutAlign="center center"
+                                                class="add-circle-color">
+                                                <mat-icon class="mb-16" matTooltip="Add new" aria-label="Add new"
+                                                    (click)="addGovMeting()">
+                                                    add_circle</mat-icon>
+                                            </a>
+                                            <a *ngIf="i>0" fxFlex="15" fxLayoutAlign="center center"
+                                                class="delete-circle-color">
+                                                <mat-icon class="mb-16" matTooltip="Delete" aria-label="Delete"
+                                                    (click)="deleteGovMeting(i)">
+                                                    delete</mat-icon>
+                                            </a>
+                                        </div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <!-- second div will be from here -->
+                                            <mat-form-field appearance="outline" fxFlex="18">
+                                                <mat-label>Frequency</mat-label>
+                                                <mat-select matNativeControl formControlName="gov_frequency">
+                                                    <mat-option value="Monthly">Monthly</mat-option>
+                                                    <mat-option value="Weekly">Weekly</mat-option>
+                                                    <mat-option value="Daily">Daily</mat-option>
+                                                </mat-select>
+                                                <mat-error>Frequency is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="18"
+                                                *ngIf="(itemrow.get('gov_frequency').value == 'Monthly') || (itemrow.get('gov_frequency').value == 'Weekly')">
+                                                <mat-label>Days</mat-label>
+                                                <mat-select matNativeControl formControlName="meeting_day"
+                                                    required="true">
+                                                    <mat-option value="Monday">Monday</mat-option>
+                                                    <mat-option value="Tuesday">Tuesday</mat-option>
+                                                    <mat-option value="Tuesday">Wednesday</mat-option>
+                                                    <mat-option value="Thursday">Thursday</mat-option>
+                                                    <mat-option value="Friday">Friday</mat-option>
+                                                    <mat-option value="Saturday">Saturday</mat-option>
+                                                    <mat-option value="Sunday">Sunday</mat-option>
+                                                </mat-select>
+                                                <mat-error>Days is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="18"
+                                                *ngIf="itemrow.get('gov_frequency').value == 'Monthly'">
+                                                <mat-label>Meeting shedule</mat-label>
+                                                <mat-select matNativeControl formControlName="meeting_shedule"
+                                                    required="true">
+                                                    <mat-option value="1st">1st</mat-option>
+                                                    <mat-option value="2nd">2nd</mat-option>
+                                                    <mat-option value="3rd">3rd</mat-option>
+                                                    <mat-option value="4th">4th</mat-option>
+                                                </mat-select>
+                                                <mat-error>Meeting shedule is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Venue</mat-label>
+                                                <input matInput formControlName="gov_venue">
+                                                <mat-error>Venue is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="21">
+                                                <mat-label>Duration</mat-label>
+                                                <mat-select matNativeControl formControlName="gov_duration">
+                                                    <mat-option value="half_hour">30 minute</mat-option>
+                                                    <mat-option value="one_hour">1 hour</mat-option>
+                                                    <mat-option value="two_hour">2 hour</mat-option>
+                                                    <mat-option value="half_day">Half day</mat-option>
+                                                    <mat-option value="full_Day">Full day</mat-option>
+                                                </mat-select>
+                                                <mat-error>Duration is required!</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                        <div [fxLayout]="direction" class="pb-8" fxLayout.xs="column"
+                                            fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                            <!-- <mat-form-field appearance="outline" fxFlex="50">
+                        <mat-label>Agenda</mat-label>
+                        <textarea matInput formControlName="agenda"></textarea>
+                        <mat-error>Agenda is required!</mat-error>
+                      </mat-form-field> -->
+                                            <angular-editor id="editor2" formControlName="agenda"
+                                                [config]="editorConfig"></angular-editor>
+                                        </div>
+                                    </div>
+                                </mat-card>
+                                <div fxLayoutAlign="start center">
+                                    <button mat-raised-button matStepperNext
+                                        [disabled]="governanceFormGroup.invalid">Save & Next</button>
+                                </div>
+                            </form>
+                        </mat-step>
+                        <mat-step [stepControl]="budgetFormGroup">
+                            <form [formGroup]="budgetTrackFormGroup" class="form_field" (ngSubmit)="budgetTrackSubmit()"
+                                fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" novalidate>
+                                <ng-template matStepLabel>Project Budget</ng-template>
+                                <div fxLayout="column" fxFlex="100">
+                                    <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                        fxFlex="1 0 auto">
+                                        <div fxLayoutAlign="center center" fxFlex="15" class="mb-16">Total project cost
+                                        </div>
+                                        <mat-form-field>
+                                            <mat-label>Preffered currency</mat-label>
+                                            <mat-select formControlName="currency" [(value)]="selected">
+
+                                                <mat-option *ngFor="let currency of currencies" [value]="currency.text">
+                                                    {{currency.value}}
+                                                </mat-option>
+
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <!-- <mat-form-field appearance="outline" fxFlex="25">
+
+                                            <mat-label>Preffered currency</mat-label>
+                                            <mat-select formControlName="currency">
+                                                <mat-option *ngFor="let currency of currencygetarray"
+                                                    [value]="currency.name">
+                                                    {{currency.name}}</mat-option>
+                                            </mat-select>
+
+                                        </mat-form-field> -->
+                                        <mat-form-field appearance="outline" fxFlex="25">
+                                            <mat-label>Total project cost</mat-label>
+                                            <!-- <span style="position: absolute; margin-left: 1px;margin-top: 2px;
+                                                color: gray;font-size: 13px;font-weight: 600;">$</span> -->
+                                            <input matInput formControlName="total_pro_cost"
+                                                (keypress)=mobileValidation($event)>
+                                            <mat-error>Total project cost is required!</mat-error>
+                                        </mat-form-field>
+                                        <!-- <mat-form-field>
+                                            <mat-label>Preffered currency</mat-label>
+                                            <mat-select [(value)]="selected">
+
+                                                <mat-option *ngFor="let currency of currencies"
+                                                    [value]="currency.value">
+                                                    {{currency.text}}
+                                                </mat-option>
+
+                                            </mat-select>
+                                        </mat-form-field>
+                                        <p>
+                                            Selected Value: {{selected}}
+                                        </p> -->
+                                    </div>
+                                </div>
+                                <div class="form-hadding" fxLayoutAlign="start center">Allocation To Department</div>
+                                <div fxLayout="row" fxFlex="100">
+                                    <mat-card fxFlex="100" formArrayName="allocation_dept" fxLayout="column">
+                                        <div *ngFor="let itemrow of formArrAllocationDept.controls; let i=index"
+                                            [formGroupName]="i" [fxLayout]="direction" fxLayout.xs="column"
+                                            fxLayoutAlign="start center" fxFlex="1 0 auto" class="other-member">
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Department</mat-label>
+                                                <mat-select matNativeControl formControlName="dept_id"
+                                                    (selectionChange)="allocationDept($event.value,i)">
+                                                    <mat-option [value]="department.id"
+                                                        *ngFor="let department of dataDepartment"
+                                                        [disabled]="selectedAllocationDept.indexOf(department.id) !== -1">
+                                                        {{department.dept_name}}</mat-option>
+                                                </mat-select>
+                                                <mat-error>Department is required!</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="25">
+                                                <mat-label>Value</mat-label>
+                                                <input matInput formControlName="allocation_dstrbt_vl"
+                                                    (keypress)=mobileValidation($event)>
+                                                <!-- <mat-error>Value is required!</mat-error> -->
+                                            </mat-form-field>
+                                            <a *ngIf="i==0" fxFlex="10" fxLayoutAlign="center center"
+                                                class="add-circle-color">
+                                                <mat-icon class="mb-16" matTooltip="Add new" aria-label="Add new"
+                                                    (click)="addAllocationDept()">
+                                                    add_circle</mat-icon>
+                                            </a>
+                                            <a *ngIf="i>0" fxFlex="10" fxLayoutAlign="center center"
+                                                class="delete-circle-color">
+                                                <mat-icon class="mb-16" matTooltip="Delete" aria-label="Delete"
+                                                    (click)="deleteAllocationDept(i)">
+                                                    delete</mat-icon>
+                                            </a>
+                                        </div>
+                                        <div *ngIf="budgetValueError" style="color: red;" fxLayoutAlign="center center">
+                                            {{budgetValueErrorShow}}
+                                        </div>
+                                    </mat-card>
+                                </div>
+                                <div fxLayoutAlign="start center">
+                                    <button mat-raised-button
+                                        [disabled]="budgetTrackFormGroup.invalid || budgetValueError">Submit</button>
+                                </div>
+                            </form>
+                        </mat-step>
+                    </mat-vertical-stepper>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

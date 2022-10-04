@@ -1,0 +1,171 @@
+<div id="task-analytics" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div class="left main-remark">
+            <div class="main-widget">
+                <div class="widget-group p-0 dept-header-color" fxLayout="row">
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                        <div fxLayoutAlign="start">
+                            <div class="pr-16">
+                                <div fxLayoutAlign="center">
+                                    <button class="mat-icon-button" (click)="arrowclick()">
+                                        <span class="mat-button-wrapper">
+                                            <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                        </span>
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="pr-16">
+                                <div fxLayoutAlign="center" style="padding-top: 10px;">Issue: {{issue_task_name}}</div>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                        <div fxLayoutAlign="start" class="issue_remark_text">Issue Remark</div>
+                    </fuse-widget>
+                </div>
+                <div class="widget-group remark-table" fxLayout="row wrap">
+                    <table mat-table [dataSource]="dataSourceTask" class="m-16">
+                        <ng-container matColumnDef="issue_task_name">
+                            <th mat-header-cell *matHeaderCellDef>Issue Name</th>
+                            <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                {{element.issue_task_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="priority_name">
+                            <th mat-header-cell *matHeaderCellDef>Priority</th>
+                            <td mat-cell *matCellDef="let element"
+                                [ngStyle]="{'color':PriorityGetColor(element.priority_name)}">
+                                {{element.priority_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="dept_name">
+                            <th mat-header-cell *matHeaderCellDef>Department</th>
+                            <td mat-cell *matCellDef="let element">{{element.dept_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="issue_owaner_name">
+                            <th mat-header-cell *matHeaderCellDef>Responsibility</th>
+                            <td mat-cell *matCellDef="let element">{{element.issue_task_owner_name}}</td>
+                        </ng-container>
+                        <!-- <ng-container matColumnDef="task_assigns_data">
+              <th mat-header-cell *matHeaderCellDef>Co-Owner</th>
+              <td mat-cell *matCellDef="let element"><span
+                  *ngFor="let task_assigns of element.task_assigns_data">{{task_assigns.name}} </span></td>
+            </ng-container> -->
+                        <ng-container matColumnDef="issue_start_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Issue Log Date</th>
+                            <td mat-cell *matCellDef="let element">{{element.issue_start_date | date:'dd-MM-yyyy'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="issue_end_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Target Date</th>
+                            <td mat-cell *matCellDef="let element">{{element.issue_end_date | date:'dd-MM-yyyy'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="completion_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-completion">Completion Date</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.completion_date == completion">NA</span>
+                                <span
+                                    *ngIf="element.completion_date != completion">{{element.completion_date | date:'dd-MM-yyyy'}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="issue_revised_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-completion">Revised Date</th>
+                            <td mat-cell *matCellDef="let element">
+                                <span *ngIf="element.issue_revised_date == completion">NA</span>
+                                <span
+                                    *ngIf="element.issue_revised_date != completion">{{element.issue_revised_date | date:'dd-MM-yyyy'}}</span>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="status_name">
+                            <th mat-header-cell *matHeaderCellDef>Status</th>
+                            <td mat-cell *matCellDef="let element"
+                                [ngStyle]="{'color':StatusGetColor(element.status_name)}">
+                                {{element.status_name}}</td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumnsIssue; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumnsIssue;"></tr>
+                    </table>
+                </div>
+                <div>
+                    <div class="widget-group p-0" fxLayout="row">
+                        <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                            <div fxLayout="column">
+                                <div class="example-button-row search-filter-input">
+                                    <button mat-raised-button class="mr-8" (click)="AddIssueRemarkOpen()">Action
+                                        Update</button>
+                                    <mat-form-field appearance="outline">
+                                        <mat-label>Search</mat-label>
+                                        <input matInput (keyup)="applyFilter($event.target.value)">
+                                    </mat-form-field>
+                                </div>
+                            </div>
+                        </fuse-widget>
+                    </div>
+                    <div class="example-container" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSourceRemark" id="contentToConvert">
+                            <ng-container matColumnDef="issues_id" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <!-- <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.id}}</td> -->
+                                <td mat-cell *matCellDef="let element; let i=index" class="mat-cell-sr-no">{{i+1}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="name">
+                                <th mat-header-cell *matHeaderCellDef>User Name</th>
+                                <td mat-cell *matCellDef="let element"></td>
+                            </ng-container>
+                            <ng-container matColumnDef="status_name">
+                                <th mat-header-cell *matHeaderCellDef>Status</th>
+                                <td mat-cell *matCellDef="let element"
+                                    [ngStyle]="{'color':StatusGetColor(element.status_name)}">
+                                    {{element.status_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="remark">
+                                <th mat-header-cell *matHeaderCellDef>Remark</th>
+                                <td mat-cell *matCellDef="let element">{{element.remark}}</td>
+                            </ng-container>
+                            <!-- <ng-container matColumnDef="file_name">
+                                <th mat-header-cell *matHeaderCellDef>File Name</th>
+                                <td mat-cell *matCellDef="let element"><a class="link" target="_blank"
+                                        href="{{filename.image_path}}"
+                                        *ngFor="let filename of element.tasks_remark_file_data">{{filename.file_name}}
+                                    </a></td>
+                            </ng-container> -->
+                            <ng-container matColumnDef="file_name">
+                                <th mat-header-cell *matHeaderCellDef>File Name</th>
+                                <td mat-cell *matCellDef="let element"><a class="link" target="_blank"
+                                        href="{{element.file_name}}">{{element.file_name}}</a></td>
+                            </ng-container>
+                            <ng-container matColumnDef="updated_at">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Update Date</th>
+                                <td mat-cell *matCellDef="let element">{{element.updated_at | date:'dd-MM-yyyy'}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="action">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                        <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a>
+                                    <mat-menu #menu="matMenu">
+                                        <!-- <button mat-menu-item (click)="EditIssueRemarkOpen(element)"
+                      *ngIf="issueRemarkPermission.acc_edit == 1">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button> -->
+                                        <!-- <button mat-menu-item [routerLink]="['/apps/dashboards/taskfiles', element.tasks_id]">
+                      <mat-icon>visibility</mat-icon>
+                      <span>View Files</span>
+                    </button> -->
+                                        <button mat-menu-item (click)="deleteIssueRemark(element)"
+                                            *ngIf="issueRemarkPermission.acc_delete == 1">
+                                            <mat-icon>delete</mat-icon>
+                                            <span>Remove</span>
+                                        </button>
+                                    </mat-menu>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                        </table>
+                        <mat-paginator [pageSizeOptions]="[15, 30, 50]" showFirstLastButtons></mat-paginator>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

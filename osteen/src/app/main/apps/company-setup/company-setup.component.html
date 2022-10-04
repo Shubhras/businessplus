@@ -1,0 +1,634 @@
+<div id="company-setup">
+    <div id="company-setup-form-wrapper" style="display:flex; flex: 0 0 auto; margin: 0 21px;" fxFlex="100"
+        fxLayout="column">
+        <div class="welcome">
+            <div class="welcome-massage" fxLayoutAlign="center center">Welcome {{userName}}</div>
+            <div class="welcome-massage" fxLayoutAlign="center center">Please follow simple steps to complete the
+                registration process</div>
+        </div>
+        <div id="company-setup-form-wrapper" style="display:flex; flex: 0 0 auto;" fxLayoutAlign="center center"
+            fxFlex="100" fxLayout="row">
+            <div id="company-setup-form" [@animate]="{value:'*',params:{duration:'300ms',y:'100px'}}" fxFlex="50"
+                style="align-self: flex-start;height: 740px;">
+                <div class="company-header">Company Profile</div>
+                <mat-vertical-stepper [linear]="isLinear" #stepper [(selectedIndex)]="selectedIndex" id="stepper">
+                    <mat-step [stepControl]="companyFormGroup">
+                        <form [formGroup]="companyFormGroup" (ngSubmit)="companyProfileAdd()" autocomplete="off"
+                            fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                            <ng-template matStepLabel>
+                                <div (click)="panelnext0()" class="panel-link"> Enter details of your Organization
+                                    including the address.
+                                    <!-- <mat-icon class="info_icon" matTooltip="Enter name of company with logo"
+                                matTooltipPosition="right">info    
+                            </mat-icon> -->
+                                    <mat-icon *ngIf="isfiled == true" class="info_icon info_icon2"
+                                        matTooltipPosition="right" color="seagreen">check_circle_outline
+                                    </mat-icon>
+
+                                    <!-- <mat-icon *ngIf="testclass >= 1" class="info_icon info_icon2"
+                                matTooltipPosition="right" color="seagreen">check_circle_outline
+                            </mat-icon> -->
+                                </div>
+                            </ng-template>
+                            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="center center"
+                                fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                    <mat-label>Company name</mat-label>
+                                    <input matInput formControlName="company_name">
+                                    <mat-error>Company name is required</mat-error>
+                                </mat-form-field>
+
+                                <div class="company-info company-image" fxLayout="column" fxFlex="50"
+                                    fxLayoutAlign="center center" fxLayout.gt-sm="row"
+                                    fxLayoutAlign.gt-sm="start center">
+                                    <label class="company__company-pic" for="company_logo">
+                                        <div style="color: #000000de; margin-right: 16px;">Company logo</div>
+                                        <img class="profile-image avatar huge"
+                                            src="{{companyFormGroup.get('company_logo').value ? companyFormGroup.get('company_logo').value : companyPicture}}"
+                                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                                        <mat-icon class="upload-button">camera_alt</mat-icon>
+                                        <input type='file' id="company_logo" accept=".png, .jpg, .jpeg" #fileInput
+                                            (change)="comLogoSelected($event)" />
+                                    </label>
+                                </div>
+                            </div>
+                            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                fxFlex="1 0 auto">
+                                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                    <mat-label>Company address</mat-label>
+                                    <textarea matInput formControlName="company_address" cdkTextareaAutosize
+                                        #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="4">
+                                    </textarea>
+                                    <mat-error>Company address is required</mat-error>
+                                </mat-form-field>
+                            </div>
+
+                            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                fxFlex="1 0 auto" class="description">
+                                <!-- <div fxFlex="75" fxLayoutAlign="start center">
+                                    In your Business plan calculator Jan - Des Or April - March. select the start month 
+                                </div> -->
+                                <div fxFlex="100" fxLayoutAlign="center center">
+                                    <button mat-raised-button style="width: 90%;" matStepperNext (click)="callnext()"
+                                        [ngStyle]="{'background-color':isfiled == true? 'green' : '#ffff'}">Next</button>
+                                    <!-- (click)="isClicked = !isClicked"
+                                    [class.myClass]="isClicked" -->
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+                    <mat-step [stepControl]="unitFormGroup">
+                        <form [formGroup]="unitFormGroup" (ngSubmit)="companyUnitsAdd()" autocomplete="off"
+                            fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                            <ng-template matStepLabel *ngIf="companyProfileAddstep == true"> <span
+                                    (click)="panelnext1()" (click)="companyProfileAdd()" class="panel-link2">Enter
+                                    Business
+                                    Units and Locations.
+
+                                    <mat-icon *ngIf="isfiled2 == true" class="info_icon info_icon2"
+                                        matTooltipPosition="right" color="seagreen">check_circle_outline
+                                    </mat-icon>
+                                </span>
+
+                            </ng-template>
+                            <!-- <ng-template matStepLabel *ngIf="companyProfileAddstep == false"> <span (click)="panelnext1()"class="panel-link2">Enter Business
+                                Units and Locations.
+                                
+                                <mat-icon *ngIf="isfiled2 == true" class="info_icon info_icon2"
+                                    matTooltipPosition="right" color="seagreen">check_circle_outline
+                                </mat-icon>
+                            </span> 
+                          
+                        </ng-template>-->
+                            <!--  class="add_scroll" -->
+                            <div formArrayName="itemunits" style="overflow: scroll; max-height: 173px;" #scrollMe
+                                [scrollTop]="scrollMe.scrollHeight">
+                                <div *ngFor="let itemrow of formArrUnits.controls; let i=index" [formGroupName]="i">
+                                    <div fxFlex="100" fxLayout="column">
+                                        <div *ngIf="i > 0" class="mb-16" fxFlex="10" fxLayoutAlign="left left">Other
+                                            Locations</div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="45" class="pr-4">
+                                                <mat-label>Name</mat-label>
+                                                <input matInput formControlName="unit_name" autocomplete="off">
+                                                <mat-error>Name is required</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="45" class="pl-4">
+                                                <mat-label>Address</mat-label>
+                                                <textarea matInput formControlName="unit_address" autocomplete="off"
+                                                    cdkTextareaAutosize #autosize="cdkTextareaAutosize">
+                                                </textarea>
+                                                <mat-error>Address is required</mat-error>
+                                            </mat-form-field>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="10"
+                                                fxLayoutAlign="center center" *ngIf="i > 0">
+                                                <mat-icon (click)="deleteUnits(i)">delete</mat-icon>
+                                            </a>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="10"
+                                                fxLayoutAlign="center center" *ngIf="i == 0">
+                                                <mat-icon (click)="addNewUnits()">add_circle</mat-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end" fxFlex="1 0 auto"
+                                class="description">
+                                <!-- <div fxFlex="75" fxLayoutAlign="start center">
+                                    Add other units and location
+                                </div> -->
+                                <div fxFlex="100" fxLayoutAlign="center center">
+                                    <button mat-raised-button style="width: 87%;" matStepperNext (click)="callnext2()"
+                                        [ngStyle]="{'background-color':testclass >= 2 ? 'green' : '#ffff' }">Next</button>
+                                    <button mat-raised-button matStepperPrevious class="ml-8">Back</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+
+                    <!-- test for user -->
+                    <mat-step [stepControl]="usrFormGroup">
+                        <form [formGroup]="usrFormGroup" (ngSubmit)="companyUsrAdd()" fxLayout="column"
+                            fxLayoutAlign="start" fxFlex="1 0 auto">
+                            <ng-template matStepLabel><span (click)="panelnext2()" (click)="companyUnitsAdd()"
+                                    class="panel-link3">Create Department
+                                    & Department Admin
+
+                                    <mat-icon *ngIf="isfiled3 == true" class="info_icon info_icon2"
+                                        matTooltipPosition="right" color="seagreen">check_circle_outline
+                                    </mat-icon>
+                                </span>
+                            </ng-template>
+                            <!-- class="add_scroll" -->
+                            <div formArrayName="itemUsers" style="overflow-y: scroll;
+                            overflow-x: hidden; max-height: 173px;" #scrollMe2 [scrollTop]="scrollMe2.scrollHeight">
+                                <div *ngFor="let lessonforms of formArrUsr.controls; let i=index">
+                                    <div fxFlex="100" fxLayout="column" [formGroupName]="i">
+                                        <div *ngIf="i > 0" class="mb-16" fxFlex="10" fxLayoutAlign="left left">Other
+                                            Users</div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto" class="depsec">
+                                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                                                <mat-label>Unit</mat-label>
+                                                <mat-select matNativeControl placeholder="Unit"
+                                                    formControlName="multi_unit_id">
+                                                    <mat-option [value]="unit.id" *ngFor="let unit of unitsData">
+                                                        {{unit.unit_name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Unit is required</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                                                <mat-label>Department</mat-label>
+                                                <input matInput formControlName="dept_name">
+                                                <mat-error>Department is required</mat-error>
+                                            </mat-form-field>
+
+                                            <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                                                <mat-label>Department Admin</mat-label>
+                                                <input matInput formControlName="name">
+                                                <mat-error>Department Admin is required</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="47" class="pl-4">
+                                                <mat-label>User email</mat-label>
+                                                <input matInput formControlName="email">
+                                                <mat-error>Name is required</mat-error>
+                                            </mat-form-field>
+                                            <!-- <mat-form-field appearance="outline" fxFlex="30" class="pr-4">
+                                                <mat-label>User role</mat-label>
+                                                <mat-select matNativeControl formControlName="role_id">
+                                                    <mat-option [value]="role.id" *ngFor="let role of userrole">
+                                                        {{role.display_name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>User role is required</mat-error>
+                                            </mat-form-field> -->
+
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="3"
+                                                fxLayoutAlign="center center" *ngIf="i > 0">
+                                                <mat-icon (click)="deleteLesson(i)">delete</mat-icon>
+                                            </a>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="3"
+                                                fxLayoutAlign="center center" *ngIf="i == 0 && testnextstep == false">
+                                                <mat-icon (click)="addNewUsr()">add_circle</mat-icon>
+                                            </a>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="3"
+                                                fxLayoutAlign="center center" *ngIf="i == 0 && testnextstep == true">
+                                                <mat-icon (click)="addNewUsr()" (click)="testnextstepbtn()">add_circle
+                                                </mat-icon>
+                                            </a>
+
+                                            <!-- <a href="javascript:void(0)" class="mb-16" fxFlex="10"
+                                                fxLayoutAlign="center center" *ngIf="i == 0">
+                                                <mat-icon (click)="addNewUsr()">add_circle</mat-icon>
+                                            </a>
+                                            <mat-icon class="delete-btn" (click)="deleteLesson(i)">
+                                                delete_forever</mat-icon> -->
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end" fxFlex="1 0 auto"
+                                class="description mt-16">
+
+                                <div *ngIf="testnextstep == false" fxFlex="100" fxLayoutAlign="center center">
+                                    <button mat-raised-button style="width: 87%;"
+                                        [ngStyle]="{'background-color':testclass >= 3 ? 'green' : '#fffff' }">Next</button>
+                                    <button mat-raised-button matStepperPrevious class="ml-8">Back</button>
+                                </div>
+                                <!-- *ngIf="companyProfileAddstep == true" -->
+                                <div *ngIf="testnextstep == true" fxFlex="100" fxLayoutAlign="center center">
+                                    <button mat-raised-button style="width: 87%;" matStepperNext
+                                        [ngStyle]="{'background-color':testclass >= 3 ? 'green' : '#fffff' }">Next</button>
+                                    <button mat-raised-button matStepperPrevious class="ml-8">Back</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+
+                    <!--  -->
+
+                    <!-- <mat-step [stepControl]="deptFormGroup" >  
+                        <form [formGroup]="deptFormGroup" (ngSubmit)="companyDeptAdd()" fxLayout="column"
+                            fxLayoutAlign="start" fxFlex="1 0 auto">
+                            <ng-template matStepLabel><span (click)="panelnext3()" class="panel-link">Create Departments
+                                    <mat-icon *ngIf="isfiled4 == true" class="info_icon info_icon2"
+                                        matTooltipPosition="right" color="seagreen">check_circle_outline
+                                    </mat-icon>
+                                </span>
+                            </ng-template>
+                            <div formArrayName="itemDept" class="add_scroll">
+                                <div *ngFor="let itemrow of formArrDept.controls; let i=index" [formGroupName]="i">
+                                    <div fxFlex="100" fxLayout="column">
+                                        <div *ngIf="i > 0" class="mb-16" fxFlex="10" fxLayoutAlign="left left">Other
+                                            Departments</div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="30" class="pr-4">
+                                                <mat-label>Unit</mat-label>
+                                                <mat-select formControlName="unit_id">
+                                                    <mat-option [value]="unit.id" *ngFor="let unit of unitsData">
+                                                        {{unit.unit_name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Unit is required
+                                                </mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                                                <mat-label>Department Head</mat-label>
+                                                <mat-select matNativeControl formControlName="user_id">
+                                                    <mat-option value="{{user.user_id}}"
+                                                        *ngFor="let user of userListAllData">{{user.name}}</mat-option>
+                                                </mat-select>
+                                                <mat-error>Department Head is required</mat-error>
+                                            </mat-form-field>
+                                       
+                                            <mat-form-field appearance="outline" fxFlex="35" class="pl-4">
+                                                <mat-label>Department</mat-label>
+                                                <input matInput formControlName="dept_name">
+                                                <mat-error>Department is required</mat-error>
+                                            </mat-form-field>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="10"
+                                                fxLayoutAlign="center center" *ngIf="i > 0">
+                                                <mat-icon (click)="deleteDept(i)">delete</mat-icon>
+                                            </a>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="10"
+                                                fxLayoutAlign="center center" *ngIf="i == 0">
+                                                <mat-icon (click)="addNewDept()">add_circle</mat-icon>
+                                            </a>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end" fxFlex="1 0 auto"
+                                class="description mt-16">
+
+                                <div fxFlex="25" fxLayoutAlign="end center">
+                                    <button mat-raised-button color="accent" matStepperPrevious
+                                        class="mr-8">Back</button>
+                                    <button mat-raised-button color="accent" matStepperNext (click)="callnext4()"
+                                        [ngStyle]="{'background-color':testclass >= 3 ? 'green' : '#1c5e97' }">Next</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>  -->
+
+                    <mat-step #step2 [stepControl]="sectionsFormGroup">
+                        <form [formGroup]="sectionsFormGroup" (ngSubmit)="companySectionAdd()" fxLayout="column"
+                            fxLayoutAlign="start" fxFlex="1 0 auto">
+                            <ng-template matStepLabel><span (click)="panelnext4()" (click)="companyUsrAdd()"
+                                    class="panel-link4">Create Sections.
+                                    <mat-icon *ngIf="isfiled5 == true" class="info_icon info_icon2"
+                                        matTooltipPosition="right" color="seagreen">check_circle_outline
+                                    </mat-icon>
+                                </span>
+                            </ng-template>
+                            <!-- class="add_scroll_section" -->
+                            <div formArrayName="itemSections" style="overflow: scroll; max-height: 173px;"
+                                #scrollMeSection [scrollTop]="scrollMeSection.scrollHeight">
+                                <div *ngFor="let itemrow of formArrSections.controls; let i=index" [formGroupName]="i">
+                                    <div fxFlex="100" fxLayout="column">
+                                        <div *ngIf="i > 0" class="mb-16" fxFlex="10" fxLayoutAlign="left left">Other
+                                            Sections</div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="45" class="pr-4">
+                                                <mat-label>Unit</mat-label>
+                                                <mat-select (selectionChange)="departmentGet($event.value)"
+                                                    formControlName="unit_id" >
+
+                                                    <mat-option [value]="unit.id" *ngFor="let unit of unitsData" >
+                                                        {{unit.unit_name}}</mat-option>
+                                                </mat-select>
+                                                <mat-error>Unit is required</mat-error>
+                                            </mat-form-field>
+                                            <mat-form-field appearance="outline" fxFlex="45" class="pl-4">
+                                                <mat-label>Department</mat-label>
+                                                <mat-select formControlName="dept_id" (selectionChange)="testtt($event.value)">
+                                                    <mat-option *ngFor="let department of dataDepartment"
+                                                        [value]="department.multi_dept_id" #iddd>{{department.dept_name}}
+                                                    </mat-option>
+                                                </mat-select>
+                                                <mat-error>Department is required</mat-error>
+                                            </mat-form-field>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="10"
+                                                fxLayoutAlign="center center" *ngIf="i > 0">
+                                                <mat-icon (click)="deleteSections(i)">delete</mat-icon>
+                                            </a>
+                                            <a href="javascript:void(0)" class="mb-16" fxFlex="10"
+                                                fxLayoutAlign="center center" *ngIf="i == 0">
+                                                <button>
+                                                    <mat-icon (click)="addNewSections()" (click)="companySectionAdd()">
+                                                        add_circle</mat-icon>
+                                                </button> </a>
+                                        </div>
+                                        <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                            fxFlex="1 0 auto">
+                                            <mat-form-field appearance="outline" fxFlex="45" class="pr-4">
+                                                <mat-label>Section</mat-label>
+                                                <input matInput formControlName="section_name" autocomplete=off>
+                                                <mat-error>Section is required</mat-error>
+                                            </mat-form-field>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end" fxFlex="1 0 auto"
+                                class="description">
+
+                                <div fxFlex="100" fxLayoutAlign="center center">
+                                    <button mat-raised-button style="width: 87%;" matStepperNext
+                                        (click)="callnext5()">Next
+                                    </button>
+                                    <button mat-raised-button matStepperPrevious class="ml-8">Back</button>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+
+                    <mat-step [stepControl]="userContSetFormGroup">
+                        <form [formGroup]="userContSetFormGroup" (ngSubmit)="companyuserContSetAdd()" fxLayout="column"
+                            fxLayoutAlign="start" fxFlex="1 0 auto">
+                            <ng-template matStepLabel><span (click)="panelnext5()" (click)="companySectionAdd()"
+                                    class="panel-link5">User control
+                                    setting.
+
+                                </span>
+                            </ng-template>
+                            <div fxLayout="column">
+                                <div [fxLayout]="direction" fxLayout.xs="column" fxFlex="1 0 auto">
+                                    <div fxFlex="50">
+                                        <mat-form-field appearance="outline" class="pr-4">
+                                            <mat-label>Company financial year cycle</mat-label>
+                                            <mat-select formControlName="financial_year">
+                                                <mat-option value="jan-dec">jan-dec</mat-option>
+                                                <mat-option value="april-march">april-march</mat-option>
+                                            </mat-select>
+                                            <mat-error>Start Month is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                    <div fxFlex="50">
+                                        <mat-form-field appearance="outline" class="pl-4">
+                                            <mat-label>Monthly data updation date</mat-label>
+                                            <mat-select formControlName="reminder_date">
+                                                <mat-option value="1">Day 1</mat-option>
+                                                <mat-option value="2">Day 2</mat-option>
+                                                <mat-option value="3">Day 3</mat-option>
+                                                <mat-option value="4">Day 4</mat-option>
+                                                <mat-option value="5">Day 5</mat-option>
+                                            </mat-select>
+                                            <mat-error>Date is required</mat-error>
+                                        </mat-form-field>
+                                    </div>
+                                </div>
+                                <div [fxLayout]="direction" fxLayout.xs="column" fxFlex="1 0 auto">
+                                    <div fxFlex="100">
+                                        <mat-form-field appearance="outline" class="pr-4">
+                                            <mat-label>Advance reminder alert</mat-label>
+                                            <mat-select formControlName="reminder_frequency">
+                                                <mat-option value="1">1 day</mat-option>
+                                                <mat-option value="2">2 days</mat-option>
+                                                <mat-option value="3">3 days</mat-option>
+                                            </mat-select>
+                                            <mat-error>Day is required</mat-error>
+                                        </mat-form-field>
+
+                                    </div>
+
+                                </div>
+                                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                                    fxFlex="1 0 auto" class="description">
+                                    <div fxFlex="75" fxLayoutAlign="start center">
+                                        <!-- Enter user list -->
+                                    </div>
+                                    <div fxFlex="100" fxLayoutAlign="center center">
+                                        <button mat-raised-button style="width: 90%;"
+                                            [ngStyle]="{'background-color':testclass >= 5 ? 'green' : '#ffff' }">Submit</button>
+                                        <button mat-raised-button matStepperPrevious class="ml-8">Back</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </mat-step>
+
+                </mat-vertical-stepper>
+            </div>
+            <div fxFlex="50"
+                style="max-width: 50%; background: #222E40;position: relative;align-self: flex-start;color: #ffff;  height: 740px;">
+                <h2 class="company-header2" style="text-align: center;">Registration Process Help</h2>
+
+                <div class="accordian_div">
+                    <div [ngClass]="slideshow1 ? 'activeslide':'activeslide2'" class="imgcharts">
+                        <!-- <h3 style="font-size: 20px;color: yellow;text-align: center;"> -> Clues to fill the Form - </h3> -->
+
+                        <!--  <div *ngFor="let item of data;let i = index;">
+                    <button class="accordion" (click)="toggleAccordian($event, i)"> {{item.parentName}} </button>
+                    <div class="panel" hide="!item.isActive">
+                   
+                      <p *ngFor="let child of item.childProperties" style="color: black;">{{child.propertyName}} </p>
+                    </div>
+                  </div>
+                -->
+                        <mat-accordion class="example-headers-align">
+                            <mat-expansion-panel [expanded]="stepexpand === 0" (opened)="setStep(stepexpand)">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <p style="white-space: nowrap;">1. Enter details of your Organization including
+                                            the address.</p>
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <p>Please enter the name of your Organization/ Company and also the address.</p>
+                                <!-- <mat-form-field appearance="fill">
+                        <mat-label>Age</mat-label>
+                        <input matInput type="number" min="1"> -->
+                                <!-- </mat-form-field>
+                      <mat-action-row>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+                      </mat-action-row> -->
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel [expanded]="stepexpand === 1" (opened)="setStep(stepexpand)">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        2. Enter Business Units and Locations.
+                                    </mat-panel-title>
+                                    <!-- <mat-panel-description>
+                          Type the country name
+                          <mat-icon>map</mat-icon> 
+                        </mat-panel-description>-->
+                                </mat-expansion-panel-header>
+                                <p>If you want to enter other locations addresses of your organization, now you can do
+                                    it, Else you can enter these details later after the registration process is over.
+                                </p>
+                                <!-- <mat-form-field appearance="fill">
+                        <mat-label>Country</mat-label>
+                        <input matInput>
+                      </mat-form-field> -->
+
+                                <!-- <mat-action-row>
+                        <button mat-button color="warn" (click)="prevStep()">Previous</button>
+                        <button mat-button color="primary" (click)="nextStep()">Next</button>
+                      </mat-action-row> -->
+                            </mat-expansion-panel>
+
+
+                            <mat-expansion-panel [expanded]="stepexpand === 2" (opened)="setStep(stepexpand)">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        3. Create Departments & Department Head.
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        <mat-icon style="color: black;">arrow</mat-icon>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <p>Please enter the name of the user, Department and also the role of the user. All
+                                    users should be registered in the Prima Plus tool using this menu. You can enter
+                                    users names at a later stage as well. However, you need to make at least one entry
+                                    to start the process.</p>
+                                <!-- <mat-form-field appearance="fill">
+                          <mat-label>Age</mat-label>
+                          <input matInput type="number" min="1"> -->
+                                <!-- </mat-form-field>
+                        <mat-action-row>
+                          <button mat-button color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row> -->
+                            </mat-expansion-panel>
+                            <!-- 
+                      <mat-expansion-panel [expanded]="stepexpand === 3" (opened)="setStep(stepexpand)" >
+                        <mat-expansion-panel-header>
+                          <mat-panel-title>
+                          4.Create Departments
+                          </mat-panel-title>
+  
+                        </mat-expansion-panel-header>        
+                        <p>Please enter various Departments in your Organization/company for tracking Strategic Objectives and Business plans. You may enter all departments now or you may decide to do later as well.</p>          
+                      
+                      </mat-expansion-panel> -->
+
+                            <mat-expansion-panel [expanded]="stepexpand === 4" (opened)="setStep(stepexpand)">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        4. Create Sections.
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        <mat-icon style="color: black;">arrow</mat-icon>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <p>Please enter various Sections within a department for Tracking Initiatives and Action
+                                    plans. Each and every Section under various departments has to be listed. You may
+                                    enter all sections now or you may decide to do at a later stage. MAKE AT LEAST ONE
+                                    ENTRY.</p>
+                                <!-- <mat-form-field appearance="fill">
+                          <mat-label>Age</mat-label>
+                          <input matInput type="number" min="1"> -->
+                                <!-- </mat-form-field>
+                        <mat-action-row>
+                          <button mat-button color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row> -->
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel [expanded]="stepexpand === 5" (opened)="setStep(stepexpand)">
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        5. User control setting.
+                                    </mat-panel-title>
+                                    <mat-panel-description>
+                                        <mat-icon style="color: black;">arrow</mat-icon>
+                                    </mat-panel-description>
+                                </mat-expansion-panel-header>
+                                <p><span style="font-weight: 700;">5.1 -</span> Select your financial year -
+                                    January-December or April-March</p>
+                                <p><span style="font-weight: 700;">5.2 -</span> Monthly data update date - when you
+                                    would like to generate all reports of the previous month. 1st of every month, 2nd of
+                                    every month and so on. The report will be for the month but the report will be
+                                    published by the date selected</p>
+                                <p><span style="font-weight: 700;">5.3 -</span> Reminder Date - Suggest how many days in
+                                    advance the alert should be sent for reminders - 1 day in advance, 2 days in
+                                    advance.</p>
+                                <!-- <mat-form-field appearance="fill">
+                          <mat-label>Age</mat-label>
+                          <input matInput type="number" min="1"> -->
+                                <!-- </mat-form-field>
+                        <mat-action-row>
+                          <button mat-button color="primary" (click)="nextStep()">Next</button>
+                        </mat-action-row> -->
+                            </mat-expansion-panel>
+                        </mat-accordion>
+                    </div>
+                    <div [ngClass]="slideshow2 ?'activeslide':'activeslide2'">
+                        <h3 style="font-size: 20px;color: yellow;text-align: center;margin-top: 11px;"> -> Structure Of
+                            Your Plans <- </h3>
+                                <img src="assets/images/charts.png" style="width:300px; height:300px;margin-top: 11%;">
+                    </div>
+                    <div [ngClass]="slideshow3 ?'activeslide':'activeslide2'">
+                        <p>Hello</p>
+                    </div>
+                </div>
+                <div class="bullet-div">
+                    <mat-button-toggle-group name="fontStyle" aria-label="Font Style">
+                        <mat-button-toggle value="bold" (click)="bulletOne()" class="dot-dot">
+                            <mat-icon [ngClass]="slideshow1 ? 'bullet_one':'bullet_onefill'">panorama_fish_eye
+                            </mat-icon>
+                        </mat-button-toggle>
+                        <mat-button-toggle value="italic" (click)="bulletTwo()" class="dot-dot">
+                            <mat-icon [ngClass]="slideshow2 ? 'bullet_two':'bullet_twofill'">panorama_fish_eye
+                            </mat-icon>
+                        </mat-button-toggle>
+                        <mat-button-toggle value="underline" (click)="bulletThree()" class="dot-dot">
+                            <mat-icon [ngClass]="slideshow3 ? 'bullet_three':'bullet_onethree'">panorama_fish_eye
+                            </mat-icon>
+                        </mat-button-toggle>
+                    </mat-button-toggle-group>
+                    <!-- <button (click)="bulletTwo()">test</button> -->
+                </div>
+
+
+
+            </div>
+        </div>
+    </div>
+</div>

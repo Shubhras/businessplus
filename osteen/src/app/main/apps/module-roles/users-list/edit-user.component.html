@@ -1,0 +1,125 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form class="comman-big-select" fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="editUserForm"
+            [formGroup]="editUserForm" (ngSubmit)="editUserSubmit()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Edit User</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+                    <mat-label>Name</mat-label>
+                    <input matInput formControlName="name">
+                    <mat-error>Name is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left add-right">
+                    <mat-label>Gender</mat-label>
+                    <mat-select matNativeControl formControlName="gender">
+                        <mat-option value="male">Male</mat-option>
+                        <mat-option value="female">Female</mat-option>
+                    </mat-select>
+                    <mat-error>Gender is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <!--  <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Birth Date</mat-label>
+                    <input matInput formControlName="date_birth" [max]="maxDate" [matDatepicker]="picker">
+                    <mat-error>Birth Date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+                 <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>PAN Card</mat-label>
+                    <input matInput formControlName="pan_card_no">
+                    <mat-error>PAN Card is required!</mat-error>
+                </mat-form-field>
+            </div> -->
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Unit</mat-label>
+                    <mat-select matNativeControl placeholder="Unit" formControlName="multi_unit_id"
+                        (selectionChange)="departmentGet($event.value, '')" [compareWith]="compareFn" multiple>
+                        <mat-option [value]="unit.id" *ngFor="let unit of unitsData">{{unit.unit_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Unit is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left add-right">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="multi_dept_id"
+                        (selectionChange)="sectionGet($event.value, '')" [compareWith]="compareDept" multiple>
+                        <mat-option [value]="department.multi_dept_id" *ngFor="let department of dataDepartment">
+                            {{department.dept_name}} ({{department.unit_name}})</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Section</mat-label>
+                    <mat-select matNativeControl formControlName="multi_section_id" [compareWith]="compareSection"
+                        multiple>
+                        <mat-option [value]="section.multi_section_id" *ngFor="let section of dataSections">
+                            {{section.section_name}} ({{section.dept_name}})</mat-option>
+                    </mat-select>
+                    <mat-error>Section is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>User role</mat-label>
+                    <mat-select matNativeControl formControlName="role_id">
+                        <mat-option [value]="role.id" *ngFor="let role of userrole.user_role">{{role.display_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>User role is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left add-right edit-dials-ad">
+                    <mat-label>Designation</mat-label>
+                    <input matInput formControlName="designation">
+                    <mat-error>Designation is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+                    <mat-label>Address</mat-label>
+                    <input matInput formControlName="address">
+                    <!-- <mat-error>address is required!</mat-error> -->
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 edit-dials-ad remove-left add-right">
+                    <mat-label>city</mat-label>
+                    <input matInput formControlName="city">
+                    <!-- <mat-error>city is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+                    <mat-label>10-digit Mobile Number</mat-label>
+                    <input matInput formControlName="mobile" maxlength="10" (keypress)=mobileValidation($event)>
+                    <mat-error *ngIf="editUserForm.get('mobile').hasError('required')">
+                        Please fill out this field.
+                    </mat-error>
+                    <!-- <mat-error *ngIf="editUserForm.get('mobile').hasError('pattern')">
+                        It is not a valid mobile number.
+                    </mat-error> -->
+                </mat-form-field>
+                <!--   <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>10-digit Mobile Number</mat-label>
+                    <input matInput formControlName="mobile2" maxlength="10" (keypress)=mobileValidation($event)>
+                    <mat-error *ngIf="editUserForm.get('mobile2').hasError('required')">
+                        Please fill out this field.
+                    </mat-error>
+                    <mat-error *ngIf="editUserForm.get('mobile2').hasError('pattern')">
+                        It is not a valid mobile number.
+                    </mat-error>
+                </mat-form-field> -->
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <!-- [disabled]="editUserForm.invalid" -->
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="editUserClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

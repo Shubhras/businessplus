@@ -1,0 +1,131 @@
+@import "src/@fuse/scss/fuse";
+
+#user-list {
+    .mat-header-name {
+        text-align  : left;
+        padding-left: 3px;
+    }
+
+    .mat-cell-name {
+        text-align    : left;
+        //padding-left: 3px;
+        padding       : 0 6px;
+    }
+
+    .mat-header-action {
+        padding-right: 0px;
+        width        : 70px;
+
+    }
+
+    .mat-cell-action {
+        padding-right: 2px;
+    }
+
+    .mat-icon-edit {
+        font-size       : 18px;
+        min-height      : 25px;
+        height          : 25px;
+        border-radius   : 4px;
+        background-color: #3972b9e8;
+        color           : white;
+        margin-left     : 4px;
+    }
+
+    .mat-icon-clear {
+        font-size       : 18px;
+        min-height      : 25px;
+        height          : 25px;
+        border-radius   : 4px;
+        background-color: #f44336;
+        color           : white;
+        margin-left     : 4px;
+    }
+
+    .custom-file-input {
+        color: transparent;
+    }
+
+    .custom-file-input::-webkit-file-upload-button {
+        visibility: hidden;
+    }
+
+    .custom-file-input::before {
+        content            : 'Select File';
+        display            : inline-block;
+        background         : -webkit-linear-gradient(top, #1c5e97, #1c5e97);
+        border-radius      : 4px;
+        padding            : 10px 10px;
+        outline            : none;
+        white-space        : nowrap;
+        -webkit-user-select: none;
+        cursor             : pointer;
+        text-shadow        : 1px 1px #fff;
+        font-family        : Muli, Helvetica Neue, Arial, sans-serif;
+        font-size          : 14px;
+        font-weight        : 600;
+    }
+
+    /* .custom-file-input:hover::before {
+          border-color: black;
+        }
+        .custom-file-input:active {
+          outline: 0;
+        }
+        .custom-file-input:active::before {
+          background: -webkit-linear-gradient(top, #e3e3e3, #f9f9f9);
+        }*/
+}
+
+
+// Responsive start
+
+.search-hght {
+    .mat-input-element {
+        height: 20px !important;
+    }
+}
+
+@media only screen and (max-width: 599px) {
+    .select-file-btn {
+        margin-top: 16px
+    }
+
+    .download-print {
+        bottom: 42px;
+    }
+
+    .rmve-pad-select {
+        padding: 0px !important;
+    }
+}
+@media (min-width: 600px) and (max-width: 959px) {
+    .rmve-pad-select {
+        padding: 0px !important;
+    }
+    .select-file-btn {
+        margin-top: 8px
+    }
+}
+@media (min-width: 960px) {
+    .rmve-pad-select {
+        padding: 0px 10px !important;
+    }
+}
+
+// @media (min-width: 301px) and (max-width: 369px) {
+//     .adduser-dial {
+//         .mat-dialog-container {
+//             max-height: 400px !important;
+//         }
+//     }
+// }
+
+// @media only screen and (min-width: 1200px) {
+//     .adduser-dial {
+//         .mat-dialog-container {
+//             min-width: 859px !important
+//         }
+//     }
+// }
+// Responsive end

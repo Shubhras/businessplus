@@ -1,0 +1,16 @@
+<div id="event-home" class="fuse-navy home-event" fxLayout="column" fxLayoutAlign="start center" fxFlex
+    fusePerfectScrollbar>
+    <div class="header pt-md-32" fxLayout="row" fxLayoutAlign="center center" fxFlex="0 0 auto"
+        [@animate]="{value:'*',params:{delay:'100ms'}}">
+        <span class="h2">Select Location</span>
+    </div>
+    <div class="eventhome-list" fxFlex="0 0 auto" fxLayout="row wrap" fxLayoutAlign="center center"
+        [@animateStagger]="{value:'50'}">
+        <div class="eventhome-list-item" *ngFor="let units of allUnitsGet;"
+            (click)="selectUnit(units.id,units.unit_name)" fxLayout="column" fxLayoutAlign="center center"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <mat-icon class="s-56">event</mat-icon>
+            <div class="eventhome-name">{{units.unit_name}}</div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,35 @@
+ <div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addFacilityForm" [formGroup]="addFacilityForm" (ngSubmit)="addFacilitySubmit()" novalidate>
+           <!--  <div class="h3 mb-12">Add Facility</div> -->
+           <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                <mat-toolbar-row>
+                    <span class="title dialog-title">Add Facility</span>
+                </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4 dialog-field add-dials-ad">
+                    <mat-label>Facility Name</mat-label>
+                    <input matInput formControlName="name" required>
+                    <mat-error>Facility Name is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="dialog-field add-right">
+                    <mat-label>Description</mat-label>
+                   <textarea matInput formControlName="description" required></textarea>
+                   <mat-error>Description is required!</mat-error>
+               </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <input type="file" accept="application/pdf,application/vnd.ms-excel,image/x-png,image/gif,image/jpeg,image/jpg" id="customFile" (change)="onFileSelected($event)">
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="addFacilityClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

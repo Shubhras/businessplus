@@ -1,0 +1,166 @@
+@import "src/@fuse/scss/fuse";
+
+/* body.theme-default .mat-card:not([class*="mat-elevation-z"]) {
+  box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+    0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+  //box-shadow: 0px 0px 0px 0px rgba(0, 0, 0, 0.2), 1px 1px 1px 1px rgba(0, 0, 0, 0), 0px 1px 1px 1px rgba(0, 0, 0, 0.12);
+}
+body.theme-default .mat-card {
+  transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+  display: block;
+  position: relative;
+  border-radius: 4px;
+  margin-bottom: 14px;
+  padding: 8px 0px 8px 8px;
+}
+.other-leader {
+  border: 1px solid #e4dfdf;
+  border-radius: 4px;
+  margin-top: 8px !important;
+  margin-right: 8px;
+  margin-bottom: 4px;
+  padding: 8px 0px 0px 8px;
+} */
+
+
+/* .pro-file{
+  .file-upload {
+    display: block;
+    text-align: center;
+    font-family: Helvetica, Arial, sans-serif;
+    font-size: 12px;
+    width: 100%;
+  }
+  .file-upload .file-select {
+    display: block;
+    border: 1px solid #dce4ec;
+    color: #34495e;
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    text-align: left;
+    background: #ffffff;
+    overflow: hidden;
+    position: relative;
+    border-radius: 4px;
+  }
+  .file-upload .file-select .file-select-button {
+    background: #dce4ec;
+    padding: 0 10px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+  }
+  .file-upload .file-select .file-select-name {
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 10px;
+  }
+  .file-upload .file-select:hover {
+    border-color: #34495e;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+  }
+  .file-upload .file-select:hover .file-select-button {
+    background: #34495e;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+  }
+  .file-upload.active .file-select {
+    border-color: #3fa46a;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+  }
+  .file-upload.active .file-select .file-select-button {
+    background: #3fa46a;
+    color: #ffffff;
+    transition: all 0.2s ease-in-out;
+    -moz-transition: all 0.2s ease-in-out;
+    -webkit-transition: all 0.2s ease-in-out;
+    -o-transition: all 0.2s ease-in-out;
+  }
+  .file-upload .file-select input[type="file"] {
+    z-index: 100;
+    cursor: pointer;
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    filter: alpha(opacity=0);
+  }
+  .file-upload .file-select.file-select-disabled {
+    opacity: 0.65;
+  }
+  .file-upload .file-select.file-select-disabled:hover {
+    cursor: default;
+    display: block;
+    border: 2px solid #dce4ec;
+    color: #34495e;
+    cursor: pointer;
+    height: 40px;
+    line-height: 40px;
+    margin-top: 5px;
+    text-align: left;
+    background: #ffffff;
+    overflow: hidden;
+    position: relative;
+  }
+  .file-upload .file-select.file-select-disabled:hover .file-select-button {
+    background: #dce4ec;
+    color: #666666;
+    padding: 0 10px;
+    display: inline-block;
+    height: 40px;
+    line-height: 40px;
+  }
+  .file-upload .file-select.file-select-disabled:hover .file-select-name {
+    line-height: 40px;
+    display: inline-block;
+    padding: 0 10px;
+  }
+} */
+
+#project-data {
+    .header-menu {
+        background-color: #1c5e97;
+        .menu {
+            padding: 4px;
+            color: #fff;
+        }
+    }
+}
+
+
+/* Responsive Start */
+.departmentproject {
+  margin  : -10px 0px 0px 0px;
+  position: relative;
+  top     : 6px;
+}
+.status-date {
+  .mat-form-field-outline {
+      top   : 7px !important;
+      bottom: 4px !important;
+  }
+}
+.list-field {
+  padding-top: 5px;
+}
+@media only screen and (max-width: 599px) {
+  
+  .field-wdth {
+    .mat-form-field-wrapper {
+      width: 168px !important;
+    }
+  }
+}
+/* Responsive End */

@@ -1,0 +1,95 @@
+<!-- <h1 mat-dialog-title>Hi</h1> -->
+
+<div mat-dialog-content class="welcome-dial ">
+
+
+  <div>
+    <div style="text-align:right">
+      <button mat-icon-button class="close-button" [mat-dialog-close]="true" style="background: transparent;" [routerLink]="['/apps/event-home']">
+        <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+      </button>
+    </div>
+    <h2 style="text-align: center;" class="welcome-popup-heading fmly-fnt-wlcm">Welcome</h2>
+    <div fxLayout="row">
+      <div fxFlex='20' fxFlex.xs="2">
+      </div>
+      <div fxFlex='60' fxFlex.xs="96" style="text-align: center;" class="fmly-fnt-wlcm">
+        <p style="font-weight: 700;color: #134066;font-size: 14px;">Congratulations! You have successfully registered
+          your company to Prima Plus. To start using this
+          application please select one of the option mentioned below. </p>
+      </div>
+      <div fxFlex='20' fxFlex.xs="2">
+      </div>
+    </div>
+    <h2 class="welcome-popup-heading fmly-fnt-wlcm" style="text-align: center;">Start With</h2>
+    <div id="event-home" class="home-event" fxLayout="row" fxLayout.gt-md="row" fxLayout.xs="row"
+      style="margin-top: 4%;overflow: auto;">
+      <div fxFlex='20' fxFlex.gt-xs='100' (click)="openclose()" class="wlcm-bx" fxFlex="0 0 auto" fxLayout="row wrap"
+        fxLayoutAlign="center center" [@animateStagger]="{value:'50'}">
+        <div *ngIf="isopened == false" class="eventhome-name">Business Plan</div>
+        <div *ngIf="isopened == true" class="branch-button" fxLayout="column" style="column-gap: 10px;">
+          <button class="welcm-popup-box-btn" style="position: relative;border-radius: 5px"
+            (click)="Swot()">SWOT</button>
+          <span style="margin: 15px;"></span>
+          <button class="welcm-popup-box-btn" style="position: relative;border-radius: 5px;padding: 6px 14px;"
+            (click)="Onboard()">Strategic Objective</button>
+        </div>
+      </div>
+      <!-- <h3 class="welcm-popup-box-heading">Business Plan</h3> -->
+
+      <!-- </div> -->
+      <!-- <div fxFlex='25' class="welcome-popup-boxes">
+        <h3 class="welcm-popup-box-heading">Task Tracker</h3>
+        <div>
+          <button [ngClass]="isopened ?'btn-margin-box':'btn-margin-box-del'" class="welcm-popup-box-btn "
+            [routerLink]="['/apps/dashboards/dashboard']" (click)="onNoClick()">Click here</button>
+        </div>
+      </div> -->
+      <div fxFlex='20' fxFlex.gt-xs='100' class="wlcm-bx" fxFlex="0 0 auto" fxLayout="row wrap"
+        fxLayoutAlign="center center" (click)="TaskTrackers()" [@animateStagger]="{value:'50'}">
+        <div fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+          <div class="eventhome-name">Task Tracker</div>
+        </div>
+      </div>
+      <!-- <div fxFlex='25' class="welcome-popup-boxes">
+        <h3 class="welcm-popup-box-heading">Project tracker </h3>
+        <div>
+          <button [ngClass]="isopened ?'btn-margin-box':'btn-margin-box-del'" class="welcm-popup-box-btn"
+            [routerLink]="['/apps/dashboards/dashboard-project']" (click)="onNoClick()" (click)="onNoClick()">Click
+            here</button>
+        </div>
+      </div> -->
+      <div fxFlex='20' fxFlex.gt-xs='100' class="wlcm-bx" fxFlex="0 0 auto" fxLayout="row wrap"
+        fxLayoutAlign="center center" [routerLink]="['/apps/dashboards/dashboard-project']" (click)="onNoClick()"
+        [@animateStagger]="{value:'50'}">
+        <div fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+          <div class="eventhome-name">Project Tracker</div>
+        </div>
+      </div>
+      <!-- <div fxFlex='25' class="welcome-popup-boxes">
+        <h3 class="welcm-popup-box-heading ">KPI tracker </h3>
+        <div>
+          <button [ngClass]="isopened ?'btn-margin-box':'btn-margin-box-del'" class="welcm-popup-box-btn "
+            (click)="onNoClick()" [routerLink]="['apps/kpitrackers/keyperformance']">Click here</button>
+        </div>
+      </div> -->
+      <div fxFlex='20' fxFlex.gt-xs='100' class="wlcm-bx" fxFlex="0 0 auto" fxLayout="row wrap"
+        fxLayoutAlign="center center" (click)="KPITrackers()" [@animateStagger]="{value:'50'}">
+        <div fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+          <div class="eventhome-name">KPI Tracker</div>
+        </div>
+      </div>
+      <div fxFlex='20' fxFlex.gt-xs='100' class="wlcm-bx" fxFlex="0 0 auto" fxLayout="row wrap"
+        fxLayoutAlign="center center" (click)="CompanySetup()" [@animateStagger]="{value:'50'}">
+        <div fxLayout="column" fxLayoutAlign="center center" [@animate]="{value:'*',params:{y:'100%'}}">
+          <div class="eventhome-name">Company Setup</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- <div mat-dialog-actions> -->
+<!-- <button mat-button (click)="onNoClick()">No Thanks</button> -->
+<!-- onNoClick -->
+<!-- <button mat-button [mat-dialog-close]="data.animal" cdkFocusInitial [routerLink]="['/apps/Onboard']" >Ok</button> -->
+<!-- </div> -->

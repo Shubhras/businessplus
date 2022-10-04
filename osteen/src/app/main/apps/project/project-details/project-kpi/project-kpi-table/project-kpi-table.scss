@@ -1,0 +1,10 @@
+@import "src/@fuse/scss/fuse";
+#project-kpi-table {
+    .kpi-milestone {
+        max-width: 850px;
+        .mat-header-action {
+            padding-right: 2px;
+            width: 80px;
+        }
+      }
+}

@@ -1,0 +1,33 @@
+ <div class="content popup-content">
+        <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addFaqForm" [formGroup]="addFaqForm" (ngSubmit)="addFaqSubmit()" novalidate>
+                <div class="h3 mb-12">Add Faq</div>
+                <div fxLayout="row" class="pb-8" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                     <!-- <mat-form-field appearance="outline" fxFlex="100">
+                      <mat-label>Question</mat-label>
+                      <textarea matInput  formControlName="question" required></textarea>
+                      <mat-error>Question is required!</mat-error>
+                   </mat-form-field> -->
+                   <div style="max-width: 642px;margin-right: auto;margin-left: auto;">
+                    <div>Question</div>
+                     <angular-editor id="editor1" formControlName="question" [config]="editorConfig"></angular-editor>
+                   </div>
+               </div>
+                <div fxLayout="row" class="pb-8" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                    <!-- <mat-form-field appearance="outline" fxFlex="100">
+                      <mat-label>Answer</mat-label>
+                      <textarea matInput  formControlName="answer" required></textarea>
+                      <mat-error>Answer is required!</mat-error>
+                   </mat-form-field> -->
+                   <div style="max-width: 642px;margin-right: auto;margin-left: auto;">
+                    <div>Answer</div>
+                     <angular-editor id="editor2" formControlName="answer" [config]="editorConfig"></angular-editor>
+                   </div>
+                </div>
+                <div class="example-button-row" fxLayoutAlign="end">
+                    <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                    <a mat-raised-button color="accent" (click)="addFaqClose()">Cancel</a>
+                </div>
+            </form>
+        </div>
+</div>

@@ -1,0 +1,226 @@
+@import "src/@fuse/scss/fuse";
+
+body.theme-default .mat-grid-tile.mat-tile.mat-grid-tile figure {
+    border         : 1px solid #a79a9a;
+    justify-content: end;
+    align-items    : end;
+
+    .swot-tile {
+        font-size  : 16px;
+        font-family: Muli, Helvetica Neue, Arial, sans-serif;
+    }
+
+    .swot-content {
+        padding: 6px 0px 0px 6px;
+    }
+}
+
+body.theme-default .mat-grid-tile .mat-figure {
+    top            : 0;
+    left           : 0;
+    right          : 0;
+    bottom         : 0;
+    position       : absolute;
+    display        : block;
+    align-items    : center;
+    justify-content: center;
+    height         : 100%;
+    padding        : 0;
+    margin         : auto;
+}
+
+.strength {
+    background-color: #90ee90;
+}
+
+.vision {
+    background-color: #90ee90;
+}
+
+.mission {
+    background-color: #90ee90;
+}
+
+.emerging {
+    background-color: #90ee90;
+}
+
+.weaknes {
+    background-color: orange;
+}
+
+.opportunity {
+    background-color: #add8e6;
+}
+
+.priority {
+    background-color: orange;
+}
+
+.threats {
+    background-color: #e84747;
+}
+
+.test {
+    background-color: #add8e6;
+}
+
+.test2 {
+    background-color: #e84747;
+}
+
+.stra-form {
+    .fromStrategic {
+        padding: 8px;
+    }
+}
+
+#str-initi-action-kp {
+    .all-pages-content {
+        display       : flex;
+        flex          : 1 1 auto;
+        flex-direction: column;
+        padding-top   : 10px;
+        padding-left  : 10px;
+        padding-right : 0px;
+        padding-bottom: 10px;
+        min-width     : 0;
+
+        @include media-breakpoint("lt-lg") {
+            flex-direction: column;
+        }
+
+        .left {
+            display         : flex;
+            flex-direction  : column;
+            flex            : 1 1 auto;
+            border-radius   : 5px 5px 0px 0px;
+            max-width       : 100%;
+            width           : 100%;
+            /* overflow     : hidden;
+            overflow-y      : scroll;
+            height          : 562px;
+            height          : auto;
+            max-height      : 72vh; */
+            background-color: #f5f5f5;
+
+            // margin-top: 8px;
+            .widget {
+                flex     : 1 1 auto;
+                min-width: 0;
+            }
+        }
+
+        .right {
+            display  : flex;
+            flex     : 0 0 auto;
+            width    : 320px;
+            min-width: 320px;
+            max-width: 320px;
+
+            @include media-breakpoint("lt-lg") {
+                flex      : 1 0 100%;
+                margin-top: 32px;
+                width     : 100%;
+                min-width : 0;
+                max-width : none;
+            }
+
+            .fuse-card {
+                @include media-breakpoint("lt-lg") {
+                    width    : 100%;
+                    min-width: 0;
+                    max-width: none;
+                }
+            }
+        }
+
+        .main-widget {
+            display       : flex;
+            flex-direction: column;
+
+            .widget-group {
+                .widget {
+                    padding: 5px;
+
+                    .function {
+                        color: white !important;
+                    }
+                }
+            }
+        }
+
+        .strategic-data {
+            a.link {
+                text-decoration: none !important;
+                cursor         : pointer;
+            }
+
+            border-radius   : 4px 0px 4px 4px;
+            background-color: #fff;
+            margin          : 0px 10px 16px 0px;
+            padding         : 8px 8px 0px 16px;
+            overflow        : hidden;
+            overflow-y      : scroll;
+            max-height      : 585px;
+
+            .hadding {
+                font-size  : 15px;
+                font-weight: 700;
+            }
+
+            .initiative-data {
+                min-height   : 50px;
+                border       : 1px solid #00000033;
+                border-radius: 4px;
+                padding      : 10px 20px 10px 20px;
+                margin-bottom: 16px;
+                background   : #f7f7f7;
+
+                .actionplan-data {
+                    border       : 1px solid #00000033;
+                    border-radius: 4px;
+                    padding      : 10px 20px 10px 20px;
+                    margin-bottom: 16px;
+                    background   : #e6e3e3;
+
+                    .kpidata-data {
+                        border       : 1px solid #00000033;
+                        border-radius: 4px;
+                        padding      : 10px;
+                        margin-bottom: 16px;
+                        background   : #c7c7c7;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.render_descrip {
+    width: 44vh;
+}
+
+.heading_date {
+    //border: 1px solid #b7b2b2;
+    padding: 2px 5px;
+}
+
+// .mat-dialog-container {
+
+//     width: 807px !important;
+// }
+
+
+/* Responsive start */
+
+// @media (min-width: 1101px) and (max-width: 1439px) {
+//     .adding-dial {
+//         .mat-dialog-container {
+//             min-width: 790px !important;
+//         }
+//     }
+
+// }
+
+/* Responsive end */

@@ -1,0 +1,62 @@
+<div id="modules-permission" class="page-layout blank">
+  <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+      <!-- APP TITLE -->
+      <div fxLayout="row">
+        <div class="logo" fxLayout="row">
+          <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+           Modules
+          </span>
+        </div>
+      </div>
+    </div>
+     <!-- HEADER -->
+  <div class="content all-pages-content">
+      <div class="left">
+            <div class="main-widget main-widget-filter">
+              <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                <fuse-widget  class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                    <div fxLayout="column" fxLayoutAlign="start">
+                      <div class="example-button-row search-filter-input">
+                        <mat-form-field appearance="outline" class="srch-anyy srchinput">
+                          <mat-label>Search</mat-label>
+                          <input matInput (keyup)="applyFilter($event.target.value)">
+                        </mat-form-field>
+                      </div>
+                    </div>
+                </fuse-widget>
+              </div>
+               <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                  <fuse-widget  class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100" >
+                      <div fxLayout="column" fxLayoutAlign="start">
+                          <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                           <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                            <ng-container matColumnDef="sr_no" sticky>
+                              <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                              <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+                            </ng-container>
+                             <ng-container matColumnDef="display_name">
+                              <th mat-header-cell *matHeaderCellDef class="mat-header-name">Name</th>
+                              <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.display_name}}</td>
+                             <!--  <td mat-cell *matCellDef="let element">{{(element.name).replace("_", " ")}}</td> -->
+                            </ng-container>
+                            <ng-container matColumnDef="action" sticky>
+                              <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                              <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                <a href="javascript:void(0)" [routerLink]="['/apps/module-roles',element.id]">
+                                  <img class="add-edit-icon" src="assets/icons/edit-08-512.jpg">
+                                 </a>
+                              </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table>
+                          <mat-paginator  [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons></mat-paginator>
+                        </div>
+                      </div>
+                  </fuse-widget>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

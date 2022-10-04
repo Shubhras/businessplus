@@ -1,0 +1,71 @@
+@import "src/@fuse/scss/fuse";
+
+#profile {
+  .header {
+    height: 320px;
+    min-height: 320px;
+    max-height: 320px;
+    background: url("assets/images/backgrounds/dark-material-bg.jpg") no-repeat 0 45%;
+    background-size: cover;
+    .user-image {
+      color: #049be5;
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+      .company__user-pic {
+        width: 90px;
+        height: 90px;
+        border-radius: 50%;
+        position: relative;
+        cursor: pointer;
+        margin-right: 24px;
+      }
+      .company__user-pic > input[type="file"] {
+        visibility: hidden;
+        width: 1px;
+        height: 1px;
+      }
+      .company__user-pic > .upload-button {
+        position: absolute;
+        bottom: 0px;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 11;
+      }
+      .profile-image {
+        width: 90px;
+        min-width: 90px;
+        height: 90px;
+        line-height: 90px;
+        margin: 0px;
+        @include media-breakpoint("sm") {
+          margin: 0 0 16px 0;
+        }
+      }
+    }
+    .user-image:hover {
+      transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+    .user-name {
+      font-size: 25px;
+      color: #ffffff;
+      @include media-breakpoint("sm") {
+        margin-bottom: 32px;
+      }
+    }
+    .actions {
+      button {
+        text-transform: none;
+        padding: 0 16px;
+        margin: 0 0 0 8px;
+      }
+    }
+  }
+  .content {
+    flex: 1;
+    mat-tab-group {
+      height: 100%;
+      .mat-tab-body-wrapper {
+        flex-grow: 1;
+      }
+    }
+  }
+}

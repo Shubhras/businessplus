@@ -1,0 +1,21 @@
+@import "src/@fuse/scss/fuse";
+#project-kpi-dashboard {
+  .kpi-dashboard {
+    font-weight: 600;
+    font-size: 16px;
+    font-family: "Muli", "Helvetica Neue", "Arial", sans-serif;
+    color: #fff;
+  }
+  .courses {
+    width: 100%;
+    max-width: 1250px !important;
+    margin: 0 auto;
+    background-color: #fff;
+    padding-top: 8px;
+    .header {
+      height: 40px;
+      min-height: 40px;
+      max-height: 50px;
+    }
+  }
+}

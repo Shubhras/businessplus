@@ -1,0 +1,705 @@
+<div class="content popup-content">
+    <div fxLayoutAlign="end center" style="margin-bottom: 1px;margin-top: -8px;">
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+            <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+        </button>
+    </div>
+    <div class="popup-header">
+        <mat-toolbar matDialogTitle class="m-0">
+            <mat-toolbar-row>
+                <span class="title dialog-title">Edit Strategic Objective</span>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+    <div fxLayout="row" fxLayout.xs="column">
+        <div fxLayout="column" fxFlex="48" fxFlex.gt-md="100" fxFlex.gt-sm="100" fxFlex.gt-xs="100">
+            <!-- <div fxFlex="100" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" class="fromStrategic"> -->
+            <form fxLayout="column" fxLayoutAlign="start" name="EditStraForm" [formGroup]="EditStraForm"
+                (ngSubmit)="EditStrategicSubmit()" novalidate>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" fxFlex="100">
+                        <mat-label>Description</mat-label>
+                        <textarea cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" matInput
+                            formControlName="description" required [(ngModel)]="EditStraDataGet.description"></textarea>
+                        <mat-error>Description is required!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div fxLayout="row" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" fxFlex="100" class="rewrk-fileds">
+                        <mat-label>Department</mat-label>
+                        <mat-select matNativeControl formControlName="department_id"
+                            [(ngModel)]="EditStraDataGet.department_id" class="department-stratgeix" [disabled]="true">
+                            <mat-option [value]="department.id" *ngFor="let department of dataDepartment">
+                                {{department.dept_name}}</mat-option>
+                        </mat-select>
+                        <mat-error>Department is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign.xs="start"
+                    fxLayoutAlign="start center">
+                    <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4 remove-right rewrk-fileds ">
+                            <mat-label>Department</mat-label>
+                            <mat-select matNativeControl formControlName="department_id"
+                                [(ngModel)]="EditStraDataGet.department_id" class="department-stratgeix rewrap-text">
+                                <mat-option [value]="department.id" *ngFor="let department of dataDepartment">
+                                    {{department.dept_name}}</mat-option>
+                            </mat-select>
+                            <mat-error>Department is required</mat-error>
+                        </mat-form-field> -->
+                    <mat-form-field appearance="outline" fxFlex="40"
+                        class="pr-4 remove-right dialog-field add-dials-ad">
+                        <mat-label>Target (Current Year) </mat-label>
+                        <input matInput formControlName="target" [(ngModel)]="EditStraDataGet.target" required
+                            class="add-dials-ad">
+                        <mat-error>Target (Current Year) is required!</mat-error>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="60" class="pl-4 remove-left rewrk-fileds">
+                        <mat-label>Unit Of Measurement</mat-label>
+                        <mat-select matNativeControl formControlName="unit_of_measurement"
+                            [(ngModel)]="EditStraDataGet.uom_id" class="department-stratgeix rewrap-text">
+                            <mat-option [value]="uom.uom_id" *ngFor="let uom of dataunitOfMeasur">{{uom.uom_name}}
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Unit Of Measurement is required!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" fxFlex="33.5"
+                        class="pr-4 dialog-field remove-right srch-anyy add-dials-ad">
+                        <mat-label>Start</mat-label>
+                        <input matInput [matDatepicker]="picker" formControlName="start_date" [(ngModel)]="start_date"
+                            required readonly class="add-dials-ad">
+                        <mat-error>Start Date is required!</mat-error>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33.5"
+                        class="pl-4 remove-left dialog-field srch-anyy add-dials-ad">
+                        <mat-label>Finish</mat-label>
+                        <input matInput [min]="datepipe.transform(EditStraForm.get('start_date').value, 'yyyy-MM-dd')"
+                            [matDatepicker]="picker1" formControlName="end_date" [(ngModel)]="end_date" required
+                            readonly class="add-dials-ad">
+                        <mat-error>Finish Date is required!</mat-error>
+                        <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                        <mat-datepicker #picker1></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field appearance="outline" fxFlex="33.5" class="pl-4 remove-left rewrk-fileds">
+                        <mat-label>Status</mat-label>
+                        <mat-select matNativeControl formControlName="status" class="department-stratgeix rewrap-text"
+                            [(ngModel)]="EditStraDataGet.status_id">
+                            <mat-option [value]="status.status_id" *ngFor="let status of straObjStatus">
+                                <span *ngIf="status.status_name == 'Red'">
+                                    <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Yellow'">
+                                    <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Green'">
+                                    <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Gray (Started)'">
+                                    <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Blue (Hold)'">
+                                    <img class="status-blue-icon" src="assets/icons/status-blue-icon.png"><span
+                                        class="hold">
+                                        {{status.status_name}}</span>
+                                </span>
+                                <span *ngIf="status.status_name == 'Open(Un Hold)'"><img class="status-open-unhold"
+                                        src="assets/icons/status-open-unhold.png"> {{status.status_name}}</span>
+                            </mat-option>
+                        </mat-select>
+                        <mat-error>Status is required</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="field-textarea" fxLayoutAlign.xs="start" [fxLayout]="direction" fxLayout.xs="column"
+                    fxLayoutAlign="start center">
+                    <mat-form-field appearance="outline" fxFlex="`100">
+                        <mat-label>Reason For Change</mat-label>
+                        <input matInput formControlName="comment" required autocomplete="off"
+                            style="height: 30px !important;">
+                        <mat-error>Reason For Change is required!</mat-error>
+                    </mat-form-field>
+                </div>
+                <div class="example-button-row" fxLayoutAlign="end">
+                    <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                    <a mat-raised-button color="accent" (click)="EditStrategicPopupClose()">Cancel</a>
+                </div>
+            </form>
+
+            <!-- </div> -->
+            <div fxFlex="100" style="overflow: auto;min-width: 250px;padding: 0 12px 0 12px;margin-bottom: 15px;">
+                <!-- <div class="swot-tile test" fxLayoutAlign="center center">Performance</div> -->
+                <div class="swot-content" style="margin-top: 12px;" fxLayout="column" fxLayoutAlign="center"
+                    fxLayout.gt-md="row">
+                    <div fxLayout="column" fxLayoutAlign="start">
+                        <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                            <a style="font-size: 16px;" href="javascript:void(0)"
+                                (click)="performanceOpen()">Performance Dashboard</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div fxFlex="4"></div>
+        <div fxFlex="48">
+            <div class="content all-pages-content">
+                <div fxLayout="row wrap" fxLayout="column" class="left" style="margin-top: -19px;">
+                    <mat-nav-list class="articles-list" fxFlex="50">
+                        <div class="main-widget main-widget-filter">
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100"
+                                    fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start start">
+                                        <div class="example-button-row search-filter-input">
+                                            <button mat-raised-button class="button-filter"
+                                                style="background-color: green;border-color: green;color: #fff;">
+                                                Strength <mat-icon>playlist_add</mat-icon></button>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start">
+                                        <div class="example-container2 strength-table" id="content" #content #TABLE
+                                            style="margin-top:12px;box-shadow: none">
+                                            <table mat-table [dataSource]="dataSourceStrength"
+                                                class="change-header-back table-onhvr" id="contentToConvert"
+                                                style="border-left: 1px solid lightgray">
+                                                <ng-container matColumnDef="sr_no" sticky>
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no"
+                                                        style="color: aqua;">Sr.No.</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                        {{element.sr_no}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="strength">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-name">
+                                                        Strength</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.strength}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="keywords">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">
+                                                        Keywords
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.keywords}}</td>
+                                                </ng-container>
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsStrength; sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsStrength;">
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                        </div>
+                    </mat-nav-list>
+                    <mat-nav-list class="articles-list" fxFlex="50" style="margin-top:12px">
+                        <div class="main-widget main-widget-filter">
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start start">
+                                        <div class="example-button-row search-filter-input">
+                                            <button mat-raised-button class="button-filter"
+                                                style="background-color: orange;border-color: orange;color: #fff;">
+                                                Weaknesses <mat-icon>playlist_add</mat-icon></button>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start">
+                                        <div class="example-container2 weaknesses-table" id="content" #content #TABLE
+                                            style="margin-top:12px; box-shadow: none">
+                                            <table mat-table [dataSource]="dataSourceWeakness"
+                                                class="change-header-back" id="contentToConvert"
+                                                style="border-left: 1px solid lightgray">
+                                                <ng-container matColumnDef="sr_no" sticky>
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">
+                                                        Sr.No.</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                        {{element.sr_no}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="weaknesses">class="inmorevert-butn"
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-name">
+                                                        Weaknesses
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.weaknesses}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="keywords">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">
+                                                        Keywords
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.keywords}}</td>
+                                                </ng-container>
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsWeakness; sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsWeakness;">
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                        </div>
+                    </mat-nav-list>
+                    <mat-nav-list class="articles-list" fxFlex="50" style="margin-top:12px">
+                        <div class="main-widget main-widget-filter">
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start start">
+                                        <div class="example-button-row search-filter-input">
+                                            <button mat-raised-button class="button-filter"
+                                                style="background-color: skyblue;border-color: skyblue;color: #fff;">
+                                                Opportunities <mat-icon>playlist_add</mat-icon></button>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start">
+                                        <div class="example-container2  opportunities-table" id="content" #content
+                                            #TABLE style="margin-top:12px;box-shadow: none">
+                                            <table mat-table [dataSource]="dataSourceOpportunity"
+                                                class="change-header-back" id="contentToConvert"
+                                                style="border-left: 1px solid lightgray">
+                                                <ng-container matColumnDef="sr_no" sticky>
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">
+                                                        Sr.No.</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                        {{element.sr_no}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="opportunities">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-name">
+                                                        Opportunities
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.opportunities}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="keywords">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">
+                                                        Keywords
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.keywords}}</td>
+                                                </ng-container>
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsOpportunity; sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsOpportunity;">
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                        </div>
+                    </mat-nav-list>
+                    <mat-nav-list class="articles-list" fxFlex="50" style="margin-top:12px">
+                        <div class="main-widget main-widget-filter">
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start start">
+                                        <div class="example-button-row search-filter-input">
+                                            <button mat-raised-button class="button-filter"
+                                                style="background-color: red;border-color: red;color: #fff;">
+                                                Threats <mat-icon>playlist_add</mat-icon></button>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                            <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                                <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <div fxLayout="column" fxLayoutAlign="start">
+                                        <div class="example-container2 threats-table" id="content" #content #TABLE
+                                            style="margin-top:12px;box-shadow: none">
+                                            <table mat-table [dataSource]="dataSourceThreats" class="change-header-back"
+                                                id="contentToConvert" style="border-left: 1px solid lightgray">
+                                                <ng-container matColumnDef="sr_no" sticky>
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">
+                                                        Sr.No.</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                                        {{element.sr_no}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="threats">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-name">
+                                                        Threats</th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.threats}}</td>
+                                                </ng-container>
+                                                <ng-container matColumnDef="keywords">
+                                                    <th mat-header-cell *matHeaderCellDef class="mat-header-keywords">
+                                                        Keywords
+                                                    </th>
+                                                    <td mat-cell *matCellDef="let element" class="mat-cell-name"
+                                                        style="text-align: left !important; padding-left: 5px;">
+                                                        {{element.keywords}}</td>
+                                                </ng-container>
+                                                <tr mat-header-row
+                                                    *matHeaderRowDef="displayedColumnsThreats; sticky: true">
+                                                </tr>
+                                                <tr mat-row *matRowDef="let row; columns: displayedColumnsThreats;">
+                                                </tr>
+                                            </table>
+                                        </div>
+                                    </div>
+                                </fuse-widget>
+                            </div>
+                        </div>
+                    </mat-nav-list>
+                </div>
+            </div>
+            <!-- <div fxLayout="column">
+                <div fxFlex="48"
+                    style="overflow: auto;min-width: 250px;padding: 0 12px 0 12px; background: #f7f7f7;height: 162px;">
+                    <div class="swot-tile strength" fxLayoutAlign="center center">Strength</div>
+                    <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row"
+                        style="margin-top: 12px;">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                                *ngFor="let strength of viewStrengthData; let s = index">
+                                <div>{{s+1}}. {{strength.keywords}} </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex="4"></div>
+                <div fxFlex="48"
+                    style="overflow: auto;min-width: 250px;padding: 0 12px 0 12px;background: #f7f7f7;height: 162px;margin-top: 16px;">
+                    <div class="swot-tile weaknes" fxLayoutAlign="center center">Weaknesses</div>
+                    <div class="swot-content" style="margin-top: 12px;" fxLayout="column" fxLayoutAlign="start"
+                        fxLayout.gt-md="row">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                                *ngFor="let weaknes of viewWeaknesData; let w = index">
+                                <div>{{w+1}}. {{weaknes.keywords}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div fxLayout="column" style="margin-top: 16px;">
+                <div fxFlex="48"
+                    style="overflow: auto;min-width: 250px;padding: 0 12px 0 12px; background: #f7f7f7;height: 162px;">
+                    <div class="swot-tile opportunity" fxLayoutAlign="center center">Opportunities</div>
+                    <div class="swot-content" style="margin-top: 12px;" fxLayout="column" fxLayoutAlign="start"
+                        fxLayout.gt-md="row">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                                *ngFor="let opportunity of opportunityData; let o = index">
+                                <div>{{o+1}}. {{opportunity.keywords}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div fxFlex="4"></div>
+                <div fxFlex="48"
+                    style="overflow: auto;min-width: 250px;padding: 0 12px 0 12px;background: #f7f7f7;height: 162px;margin-top: 16px;">
+                    <div class="swot-tile threats" fxLayoutAlign="center center">Threats</div>
+                    <div class="swot-content" style="margin-top: 12px;" fxLayout="column" fxLayoutAlign="start"
+                        fxLayout.gt-md="row">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                                *ngFor="let threats of viewThreatData; let t = index">
+                                <div>{{t+1}}. {{threats.keywords}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div fxLayout="column" style="margin-top: 16px;">
+                <div fxFlex="48"
+                    style="overflow: auto;min-width: 250px;padding: 0 12px 0 12px; background: #f7f7f7;height: 162px;">
+                    <div class="swot-tile emerging" fxLayoutAlign="center center">Emerging Trend</div>
+                    <div class="swot-content" style="margin-top: 12px;" fxLayout="column" fxLayoutAlign="start"
+                        fxLayout.gt-md="row">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                                *ngFor="let emerging of viewObjData; let e = index">
+                                <div>{{e+1}}. {{emerging.keywords}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxFlex="4"></div>
+                <div fxFlex="48"
+                    style="overflow: auto;min-width: 250px;padding: 0 12px 0 12px;background: #f7f7f7; height: 162px; margin-top: 16px;">
+                    <div class="swot-tile priority" fxLayoutAlign="center center">Priority</div>
+                    <div class="swot-content" style="margin-top: 12px;" fxLayout="column" fxLayoutAlign="start"
+                        fxLayout.gt-md="row">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                                *ngFor="let priority of viewPriorityData; let p = index">
+                                <div>{{p+1}}. {{priority.keywords}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+            <!-- <div fxLayout="row" style="margin-top: 16px;">
+                <div fxFlex="100" style="box-shadow: 0.3rem 0.3rem 2rem -2px rgba(51, 51, 51, 0.41);
+                     overflow: auto;min-width: 250px;padding: 0 12px 0 12px; background: #f7f7f7;height: 162px;">
+                    <div class="swot-tile test" fxLayoutAlign="center center">Performance</div>
+                    <div class="swot-content" style="margin-top: 12px;" fxLayout="column" fxLayoutAlign="center"
+                        fxLayout.gt-md="row">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                                <a href="javascript:void(0)" (click)="performanceOpen()">View</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> -->
+        </div>
+    </div>
+    <!-- <mat-grid-list cols="4" rowHeight="2:1" style="width: 1050px;"> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile strength" fxLayoutAlign="center center">Strength</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        *ngFor="let strength of viewStrengthData; let s = index">
+                        <div>{{s+1}} {{strength.keywords}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile vision" fxLayoutAlign="center center">Vision</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                      
+                        <span [innerHtml]="viewVision"></span>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile mission" fxLayoutAlign="center center">Mission</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        
+                        <span [innerHtml]="viewMission"></span>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile emerging" fxLayoutAlign="center center">Emerging Trend</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        *ngFor="let emerging of viewObjData; let e = index">
+                        <div>{{e+1}} {{emerging.keywords}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile weaknes" fxLayoutAlign="center center">Weaknesses</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        *ngFor="let weaknes of viewWeaknesData; let w = index">
+                        <div>{{w+1}} {{weaknes.keywords}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="2" [rowspan]="3" class="stra-form">
+            <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" class="fromStrategic">
+                <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="EditStraForm"
+                    [formGroup]="EditStraForm" (ngSubmit)="EditStrategicSubmit()" novalidate>
+                    <div class="h3 mb-12">Edit Strategic Objective</div>
+                    <div fxLayout="row" class="field-textarea" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="100">
+                            <mat-label>Description</mat-label>
+                            <textarea matInput formControlName="description" required
+                                [(ngModel)]="EditStraDataGet.description"></textarea>
+                            <mat-error>Description is required!</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Target (Current Year) </mat-label>
+                            <input matInput formControlName="target" [(ngModel)]="EditStraDataGet.target" required>
+                            <mat-error>Target (Current Year) is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                            <mat-label>Unit Of Measurement</mat-label>
+                            <mat-select matNativeControl formControlName="unit_of_measurement"
+                                [(ngModel)]="EditStraDataGet.uom_id">
+                                <mat-option [value]="uom.uom_id" *ngFor="let uom of dataunitOfMeasur">{{uom.uom_name}}
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Unit Of Measurement is required!</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Start</mat-label>
+                            <input matInput [matDatepicker]="picker" formControlName="start_date"
+                                [(ngModel)]="start_date" required readonly>
+                            <mat-error>Start Date is required!</mat-error>
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                            <mat-label>Finish</mat-label>
+                            <input matInput
+                                [min]="datepipe.transform(EditStraForm.get('start_date').value, 'yyyy-MM-dd')"
+                                [matDatepicker]="picker1" formControlName="end_date" [(ngModel)]="end_date" required
+                                readonly>
+                            <mat-error>Finish Date is required!</mat-error>
+                            <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                            <mat-datepicker #picker1></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                          <mat-select placeholder="Department" formControlName="department_id" [compareWith]="compareFn" multiple>
+                     <mat-option *ngFor="let department of DataStraDepartment" [value]="department.id">{{department.dept_name}}</mat-option>
+                     </mat-select> 
+                            <mat-label>Department</mat-label>
+                            <mat-select matNativeControl formControlName="department_id"
+                                [(ngModel)]="EditStraDataGet.department_id">
+                                <mat-option [value]="department.id" *ngFor="let department of dataDepartment">
+                                    {{department.dept_name}}</mat-option>
+                            </mat-select>
+                            <mat-error>Department is required</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                  <mat-label>Frequency</mat-label>
+                  <mat-select matNativeControl formControlName="tracking_frequency" [(ngModel)]="EditStraDataGet.tracking_frequency">
+                      <mat-option value="Weekly">Weekly</mat-option>
+                      <mat-option value="Monthly">Monthly</mat-option>
+                      <mat-option value="Quarterly">Quarterly</mat-option>
+                      <mat-option value="Yearly">Yearly</mat-option>
+                   </mat-select>
+                   <mat-error>Frequency is required</mat-error>
+                  </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                            <mat-label>Status</mat-label>
+                            <mat-select matNativeControl formControlName="status"
+                                [(ngModel)]="EditStraDataGet.status_id">
+                                <mat-option [value]="status.status_id" *ngFor="let status of straObjStatus">
+                                    [disabled]="(status.status_name !='Blue (Hold)') && (status.status_name !='Open(Un Hold)')"
+                                    <span *ngIf="status.status_name == 'Red'">
+                                        <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                        {{status.status_name}}
+                                    </span>
+                                    <span *ngIf="status.status_name == 'Yellow'">
+                                        <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                        {{status.status_name}}
+                                    </span>
+                                    <span *ngIf="status.status_name == 'Green'">
+                                        <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                        {{status.status_name}}
+                                    </span>
+                                    <span *ngIf="status.status_name == 'Gray (Started)'">
+                                        <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                        {{status.status_name}}
+                                    </span>
+                                    <span *ngIf="status.status_name == 'Blue (Hold)'">
+                                        <img class="status-blue-icon" src="assets/icons/status-blue-icon.png"><span
+                                            class="hold"> {{status.status_name}}</span>
+                                    </span>
+                                    <span *ngIf="status.status_name == 'Open(Un Hold)'"><img class="status-open-unhold"
+                                            src="assets/icons/status-open-unhold.png"> {{status.status_name}}</span>
+                                </mat-option>
+                            </mat-select>
+                            <mat-error>Status is required</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Respons For Change</mat-label>
+                            <input matInput formControlName="comment" required>
+                            <mat-error>Respons For Change is required!</mat-error>
+                        </mat-form-field>
+                    </div>
+                    <div class="example-button-row" fxLayoutAlign="end">
+                        <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                        <a mat-raised-button color="accent" (click)="EditStrategicPopupClose()">Cancel</a>
+                    </div>
+                </form>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile priority" fxLayoutAlign="center center">Priority</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        *ngFor="let priority of viewPriorityData; let p = index">
+                        <div>{{p+1}} {{priority.keywords}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile opportunity" fxLayoutAlign="center center">Opportunities</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        *ngFor="let opportunity of opportunityData; let o = index">
+                        <div>{{o+1}} {{opportunity.keywords}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="2" class="mat-tile">
+            <div class="swot-tile test" fxLayoutAlign="center center">Performance</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <a href="javascript:void(0)" (click)="performanceOpen()">View</a>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="swot-tile threats" fxLayoutAlign="center center">Threats</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        *ngFor="let threats of viewThreatData; let t = index">
+                        <div>{{t+1}} {{threats.keywords}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile> -->
+    <!-- <mat-grid-tile [colspan] = "1" [rowspan] = "1" class="mat-tile">
+            <div class="swot-tile test2" fxLayoutAlign="center center">Test2</div>
+            <div class="swot-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+            <div fxLayout="column" fxLayoutAlign="start">
+               <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                  <div>Test2</div>
+               </div>
+            </div>
+            </div>
+            </mat-grid-tile> -->
+    <!-- </mat-grid-list> -->
+</div>

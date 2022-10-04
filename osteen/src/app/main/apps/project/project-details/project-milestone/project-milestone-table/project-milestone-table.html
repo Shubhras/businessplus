@@ -1,0 +1,77 @@
+<div id="project-milestone" class="page-layout blank">
+    <div class="content all-pages-content">
+        <div style="width: 100%;">
+            <div class="left">
+                <div class="main-widget">
+                    <div class="example-container" id="content" #content #TABLE>
+                        <table mat-table [dataSource]="dataSourceMileStone">
+                            <ng-container matColumnDef="sr_no" sticky>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                                    <span>{{element.sr_no}}</span>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="milestone_name">
+                                <th mat-header-cell *matHeaderCellDef>Milestone Name</th>
+                                <td mat-cell *matCellDef="let element">{{element.milestone_name}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="mile_stone_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start Date</th>
+                                <td mat-cell *matCellDef="let element">{{element.mile_stone_date}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="symbol">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Symbol</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <mat-icon style="font-size: 20px;">{{element.symbol}}</mat-icon>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="description">
+                                <th mat-header-cell *matHeaderCellDef>Description</th>
+                                <td mat-cell *matCellDef="let element">{{element.description}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="actual_date">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Actual Date</th>
+                                <td mat-cell *matCellDef="let element">{{element.actual_date}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="milestone_status">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-status">Status</th>
+                                <td mat-cell *matCellDef="let element">
+                                    <img *ngIf="element.milestone_status == 'Yellow'" class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                    <img *ngIf="element.milestone_status == 'Red'" class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                    <img *ngIf="element.milestone_status == 'Green'" class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="comments">
+                                <th mat-header-cell *matHeaderCellDef>Comments</th>
+                                <td mat-cell *matCellDef="let element">
+                                    {{element.comment}}
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="action" stickyEnd>
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action Update</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                    <a class="link" href="javascript:void(0)" (click)="updateMileStoneStatus(element)">Update Status</a>
+                                    <!--  <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                                      <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                    </a> -->
+                                    <!--  <mat-menu #menu="matMenu">
+                                  <button mat-menu-item (click)="updateMileStoneStatus(element)">
+                                      <mat-icon>edit</mat-icon>
+                                      <span>Edit</span>
+                                  </button>
+                                  <button mat-menu-item (click)="deleteMajrActivity(element)">
+                                      <mat-icon>delete</mat-icon>
+                                      <span>Delete</span>
+                                    </button>
+                                </mat-menu> -->
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumsMilestone; sticky: true"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumsMilestone;"></tr>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,157 @@
+@import "src/@fuse/scss/fuse";
+
+login {
+
+    #login {
+        width          : 100%;
+        // background     : url('assets/images/backgrounds/dark-material-bg.jpg') no-repeat;
+        background-size: cover;
+        background-image: url("assets/images/map1.png");
+        background-color: #2e3340!important;
+
+        #login-form-wrapper {
+            flex   : 1 0 auto;
+            padding: 32px;
+
+            @include media-breakpoint('xs') {
+                padding: 16px;
+            }
+
+            #login-form {
+                width        : 400px;
+                max-width    : 400px;
+                padding      : 20px;
+                text-align   : center;
+                border-radius: 10px;
+                @include mat-elevation(16);
+
+                @include media-breakpoint('xs') {
+                    padding: 24px;
+                    width  : 100%;
+                }
+
+                .logo {
+                    width : 128px;
+                    margin: 32px auto;
+                }
+
+                .title {
+                    font-size  : 16px;
+                    font-weight: 800;
+                    margin     : 1px 0 17px 0;
+                    color      : #1c5e97;
+                }
+
+                form {
+                    width     : 100%;
+                    text-align: left;
+
+                    mat-form-field {
+                        width: 100%;
+                    }
+
+                    mat-checkbox {
+                        margin: 0;
+                    }
+
+                    .remember-forgot-password {
+                        font-size : 13px;
+                        margin-top: 8px;
+
+                        .remember-me {
+                            margin-bottom: 16px;
+                            font-size    : 13px;
+                        }
+
+                        .forgot-password {
+                            font-size    : 13px;
+                            font-weight  : 600;
+                            margin-bottom: 16px
+                        }
+                    }
+
+                    .submit-button {
+                        width  : 220px;
+                        margin : 3px auto;
+                        display: block;
+
+                        @include media-breakpoint('xs') {
+                            width: 90%;
+                        }
+                    }
+                }
+
+                .login {
+                    margin     : 10px auto 10px auto;
+                    font-weight: 600;
+
+                    .text {
+                        margin-right: 8px;
+                    }
+                }
+
+                .separator {
+                    font-size  : 15px;
+                    font-weight: 600;
+                    margin     : 9px auto;
+                    position   : relative;
+                    overflow   : hidden;
+                    width      : 100px;
+
+                    .text {
+                        display : inline-flex;
+                        position: relative;
+                        padding : 0 8px;
+                        z-index : 9999;
+
+                        &:before,
+                        &:after {
+                            content   : '';
+                            display   : block;
+                            width     : 30px;
+                            position  : absolute;
+                            top       : 10px;
+                            border-top: 1px solid;
+                        }
+
+                        &:before {
+                            right: 100%;
+                        }
+
+                        &:after {
+                            left: 100%;
+                        }
+                    }
+                }
+
+                button {
+
+                    &.google,
+                    &.facebook {
+                        width         : 170px;
+                        text-transform: none;
+                        color         : #FFFFFF;
+                        font-size     : 13px;
+                    }
+
+                    &.facebook {
+                        margin-top: -7px;
+                    }
+
+                    @include media-breakpoint('xs') {
+                        width: 80%;
+                    }
+
+                    &.google {
+                        background-color: #D73D32;
+                        margin-bottom   : 8px;
+                    }
+
+                    &.facebook {
+                        background-color: rgb(63, 92, 154);
+                    }
+                }
+            }
+        }
+    }
+}

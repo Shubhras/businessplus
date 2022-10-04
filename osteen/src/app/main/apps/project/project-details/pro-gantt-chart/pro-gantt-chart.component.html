@@ -1,0 +1,44 @@
+<!-- <div id="project-gantt-chart-view" class="main-widget"> -->
+<!--  <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}"> -->
+<!-- <div class="widget-group p-0" fxLayout="row">
+        <div class="widget p-0 search-filter-select" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+            <div fxLayout="row" fxLayoutAlign="end">
+                <div class="example-button-row button-excel-pdf" fxLayoutAlign="end">
+                    <button mat-raised-button class="button-excel" (click)="openCloseTasks(1)">Open All</button> -->
+<!--  <button mat-raised-button class="button-excel" (click)="openCloseTasks(2)">Open All Level 2</button> -->
+<!--        <button mat-raised-button class="button-excel" (click)="openCloseTasks(0)">Close All</button>
+                    <button mat-raised-button class="button-pdf" (click)="proGanttChartPDF();">Print</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div #project_gantt_here class='project-gantt-chart'></div>
+</div> -->
+<div id="project-gantt-chart-view" class="page-layout blank">
+    <div class="content all-pages-content">
+        <div style="width: 100%;">
+            <div class="left">
+                <div class="main-widget">
+                    <div class="widget-group p-0" fxLayout="row">
+                        <div class="widget p-0 search-filter-select" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                            <div fxLayout="row" fxLayoutAlign="end">
+                                <div class="example-button-row button-excel-pdf" fxLayoutAlign="end">
+                                    <button mat-raised-button class="button-excel" (click)="openCloseTasks(1)">Open
+                                        All</button>
+                                    <!--  <button mat-raised-button class="button-excel" (click)="openCloseTasks(2)">Open All Level 2</button> -->
+                                    <button mat-raised-button class="button-excel" (click)="openCloseTasks(0)">Close
+                                        All</button>
+                                    <button mat-raised-button class="button-pdf"
+                                        (click)="proGanttChartPDF();">Print</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="main-widget">
+                    <div #project_gantt_here class='project-gantt-chart'></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

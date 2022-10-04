@@ -1,0 +1,21 @@
+@import "src/@fuse/scss/fuse";
+
+#pro-lessons-learnt{
+  .mat-header-name{
+        text-align: left;
+        padding-left: 3px;
+    }
+    .mat-cell-name{
+        text-align: left;
+        padding-left: 3px;
+    }
+    .mat-header-action{
+        padding-right: 0px;
+        width: 70px;
+
+      }
+      .mat-cell-action{
+        padding-right: 2px;
+      }
+}
+

@@ -1,0 +1,85 @@
+<div id="project-kpi-dashboard" class="page-layout blank">
+    <div class="content content-dashboard">
+        <div fxLayout="column" fxLayoutAlign="center" fxFlex="100" fxFlex.gt-xs="100">
+            <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+                <div style="padding-left: 14px; padding-right: 14px !important;" fxLayout="column" fxFlex="1 1 auto">
+                    <div class="header"
+                        style="max-height: 40px!important;min-height: 40px!important; background: #1c5e97!important;"
+                        fxLayout="row" fxLayoutAlign="start">
+                        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}"
+                            fxLayoutAlign="start">
+                            <div fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                                <button (click)="arrowclick()" class="mat-icon-button">
+                                    <span class="mat-button-wrapper">
+                                        <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                                    </span>
+                                </button>
+                            </div>
+                            <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start center">
+                                <div class="kpi-dashboard">Project Name: {{project_name}}</div>
+                            </div>
+                            <div fxFlex="100" fxFlex.gt-xs="30" fxFlex.gt-md="30" fxLayoutAlign="start center">
+                                <div class="kpi-dashboard">Project Deliverables Dashboard</div>
+                            </div>
+                            <div fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="flex-end center">
+                                <button mat-raised-button class="mat-raised-button-print"
+                                    (click)="projectKpiDashboardPDF()">Print</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+                    [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                                    <div class="charts-def-title" fxLayoutAlign="center"> Deliverable</div>
+                                    <div id="pieChartTASK" fxLayoutAlign="center" #pieChartTASK></div>
+                                </div>
+                                <div fxLayout="column" class="pieChart-table" fxFlex="100" fxFlex.gt-xs="50"
+                                    fxFlex.gt-md="50" fxLayoutAlign="center center">
+                                    <table mat-table class="mat-table-lesent" [dataSource]="dataSourceLesent">
+                                        <ng-container matColumnDef="lesent_name">
+                                            <td mat-cell *matCellDef="let element" class="mat-cell-lesentName">
+                                                <img *ngIf="element.lesent_name == 'Red'" class="status-red-icon"
+                                                    src="assets/icons/status-red-icon.png">
+                                                <img *ngIf="element.lesent_name == 'Yellow'" class="status-yellow-icon"
+                                                    src="assets/icons/status-yellow-icon.png">
+                                                <img *ngIf="element.lesent_name == 'Green'" class="status-green-icon"
+                                                    src="assets/icons/status-green-icon.png">
+                                                <img *ngIf="element.lesent_name == 'Gray'" class="status-gray-icon"
+                                                    src="assets/icons/status-gray-icon.png">
+                                            </td>
+                                        </ng-container>
+                                        <ng-container matColumnDef="lesent_description">
+                                            <td mat-cell *matCellDef="let element">{{element.lesent_description}}
+                                            </td>
+                                        </ng-container>
+                                        <tr mat-row *matRowDef="let row; columns: displayedColumnsLesent;"></tr>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+                    [@animate]="{value:'*',params:{y:'100%'}}">
+                    <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                        <div class="header-department" fxLayout="row" fxLayoutAlign="center center">
+                            <div class="header-tittle" fxFlex fxLayoutAlign="center center">Kpi
+                            </div>
+                        </div>
+                        <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                            <div class="widget-group dept-graph" fxLayout="row wrap" fxFlex="100"
+                                [@animateStagger]="{value:'50'}">
+                                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                                    <!-- <div #chartsTASK></div> -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,49 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="mileStatusFormGroup"
+            [formGroup]="mileStatusFormGroup" (ngSubmit)="moileStatusSubmit()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Milestone Status</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div fxLayout="row" fxFlex="100">
+                <div fxFlex="100" fxLayout="column">
+                    <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        class="other-member">
+                        <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                            <mat-label>Status</mat-label>
+                            <mat-select matNativeControl formControlName="milestone_status">
+                                <mat-option value="Green">Green</mat-option>
+                                <mat-option value="Yellow">Yellow</mat-option>
+                                <mat-option value="Red">Red</mat-option>
+                            </mat-select>
+                            <mat-error>Priority is required!</mat-error>
+                        </mat-form-field>
+                        <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                            <mat-label>Actual Date</mat-label>
+                            <input matInput [matDatepicker]="actualPicker" [min]="proStart_date"
+                                formControlName="actual_date" readonly>
+                            <mat-error>Actual Date is required!</mat-error>
+                            <mat-datepicker-toggle matSuffix [for]="actualPicker"></mat-datepicker-toggle>
+                            <mat-datepicker #actualPicker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div fxLayout="row" class="field-textarea" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <mat-form-field appearance="outline" fxFlex="100">
+                            <mat-label>Comment</mat-label>
+                            <textarea matInput required formControlName="comment"></textarea>
+                            <mat-error>Comment is required!</mat-error>
+                        </mat-form-field>
+                    </div>
+                </div>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="AddKpiPopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

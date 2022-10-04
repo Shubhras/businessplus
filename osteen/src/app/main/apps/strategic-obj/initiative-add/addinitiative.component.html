@@ -1,0 +1,185 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addInitiaForm" [formGroup]="addInitiaForm"
+            (ngSubmit)="addInitiative()" novalidate>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end center" fxFlex="1 0 auto"  style="margin-bottom: 1px;">
+                <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+                    <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+                </button>
+            </div>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add - New Initiative</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="30" class="pr-4 remove-right rewrk-fileds">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="dept_id"
+                        (selectionChange)="sectionGet($event.value);strategicObjGet($event.value)"
+                        [disabled]="deptStrObjDisable" class="department-stratgeix rewrap-text">
+                        <mat-option *ngFor="let department of dataDepartment" [value]="department.id">
+                            {{department.dept_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="70" class="pl-4 remove-left rewrk-fileds">
+                    <mat-label>Strategic Objective</mat-label>
+                    <mat-select matNativeControl formControlName="s_o_id"
+                        (selectionChange)="mainMaxDtaeStrObj($event.value)" [disabled]="deptStrObjDisable" class="department-stratgeix rewrap-text">
+                        <mat-option *ngFor="let strategic of dataStraObj" [value]="strategic.id">
+                            {{strategic.description}}</mat-option>
+                    </mat-select>
+                    <mat-error>Strategic Objective is required</mat-error>
+                </mat-form-field>
+            </div>
+
+            <!-- Start date show -->
+            <div *ngIf="showStrDate" class="widget-group p-0 mb-16 d-flex" [@animateStagger]="{value:'50'}"
+                [fxLayout]="direction" fxLayout.xs="column">
+                <!-- <div class="hadding heading_date" style="margin-right: 12px;">
+                    <span style="font-weight: 400;font-size:14px;">Start-date & End-date of Strategic Object</span>
+                </div> -->
+                <div class="hadding heading_date" style="margin-right: 12px;">
+                    <span style="font-weight: 900;font-size:14px; ">Start-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.startDate2}}</span>
+                </div>
+                <div class="hadding heading_date"><span style="font-weight: 900;font-size:14px;">End-date </span>-
+                    <span style="font-weight: 300;font-size:12px;">{{this.endDate2}}</span>
+                </div>
+            </div>
+
+
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Definition</mat-label>
+                    <textarea cdkTextareaAutosize #autosize="cdkTextareaAutosize" cdkAutosizeMinRows="2" matInput
+                        formControlName="definition" required></textarea>
+                    <mat-error>Definition is required!</mat-error>
+                </mat-form-field>
+            </div>
+
+
+
+
+            <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="31.68" class="rewrk-fileds">
+                    <mat-label>Section</mat-label>
+                    <mat-select matNativeControl formControlName="section_id" class="department-stratgeix rewrap-text">
+                        <!-- <mat-option [value]="Null">Not Applicable
+                         </mat-option> -->
+                        <mat-option *ngFor="let section of dataSections" [value]="section.id"> {{section.section_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Section is required</mat-error>
+                </mat-form-field>
+                <a *ngIf="showsectionplus && sectionPermission.acc_create == 1" href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="5" fxLayoutAlign="center center"
+                    style="margin-left: -9px; margin-right: -19px;">
+                    <mat-icon matTooltip="Add New Section" aria-label="Add New Section" (click)="addSectionShow()"
+                        *ngIf="addsectionPlus">add_circle
+                    </mat-icon>
+                    <mat-icon (click)="addSectionHide()" *ngIf="addsectionMinus">remove_circle</mat-icon>
+                </a>
+                <!-- <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="5" fxLayoutAlign="center center"
+                    style="margin-left: -12px; margin-right: -15px;">
+                    <mat-icon matTooltip="Add New Section" aria-label="Add New Section" (click)="AddSectionOpen()"
+                        *ngIf="addsectionPlus">add_circle
+                    </mat-icon>
+                </a>
+                <a href="javascript:void(0)" class="mb-16 add-circle-color" fxFlex="9" fxLayoutAlign="center center"
+                style="margin-left: -17px; margin-right: -15px;">
+                <mat-icon matTooltip="Add New Section" aria-label="Add New Section" (click)="addSectionShow()"
+                  *ngIf="addsectionPlus">add_circle
+                </mat-icon>
+                <mat-icon (click)="addSectionHide()" *ngIf="addsectionMinus">remove_circle</mat-icon>
+              </a> -->
+
+                <!-- <p class="fixdialog"  matDialogClose (click)="AddSectionOpen()">Add Section.</p>   -->
+                <!-- [ngClass]="showsectionplus === false ? 'addsectionbutton' :'addsectionbutton2' " -->
+                <mat-form-field  appearance="outline" fxFlex="31.66" class="pr-4" [ngClass]="showsectionplus === false ? 'datefield' : 'datefield2' " class="dialog-field">
+                    <mat-label>Start</mat-label>
+                    <input  matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker"
+                        formControlName="start_date" [(ngModel)]="start_date" readonly [disabled]="datepickerDisable"
+                        style="height: 30px !important;">
+                    <mat-error>Start date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker></mat-datepicker>
+                </mat-form-field>
+
+                <mat-form-field appearance="outline" fxFlex="34.66" [ngClass]="showsectionplus === false ? 'datefield' : 'datefield2' " class="dialog-field">
+                    <mat-label>Finish</mat-label>
+                    <!-- [min]="minStartDate" -->
+                    <input matInput [min]="minStartDate" [max]="maxStartDate" [matDatepicker]="picker1"
+                        formControlName="end_date" [(ngModel)]="end_date" readonly [disabled]="datepickerDisable"
+                        style="height: 30px !important;">
+                    <mat-error>Finish date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="picker1"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <!-- <div class="field-textarea" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center"
+                 fxFlex="1 0 auto">
+                 
+             </div> -->
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="addInitiativeClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+
+    <!-- Add Section -->
+    <!-- <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" *ngIf="SectionFromShow" style="margin-top: 14px;">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="AddSectionForm"
+            [formGroup]="AddSectionForm" (ngSubmit)="AddSectionSubmit()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add Sections</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Unit</mat-label>
+                    <mat-select matNativeControl formControlName="unit_id"
+                        (selectionChange)="departmentGet($event.value)">
+                        <mat-option [value]="unit.id" *ngFor="let unit of unitsData">{{unit.unit_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Unit is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="dept_id">
+                        <mat-option *ngFor="let department of dataDepartment" [value]="department.multi_dept_id">
+                            {{department.dept_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Department is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Section</mat-label>
+                    <input matInput formControlName="section_name" required>
+                    <mat-error>Section is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Section Admin</mat-label>
+                    <mat-select matNativeControl formControlName="user_id">
+                        <mat-option value="{{user.user_id}}" *ngFor="let user of userListAllData">{{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Section Admin is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="addSectionHide()">Cancel</a>
+            </div>
+        </form>
+    </div> -->
+
+</div>

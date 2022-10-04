@@ -1,0 +1,61 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addRiskAccessmentForm"
+            [formGroup]="addRiskAccessmentForm" (ngSubmit)="addRiskAccessment()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add Resource Planning</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>test</mat-label>
+                    <textarea matInput formControlName="risk_item" required></textarea>
+                    <mat-error>Test is required!</mat-error>
+                </mat-form-field>
+            </div>
+          <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Test1</mat-label>
+                    <mat-select matNativeControl formControlName="time_required">
+                       <!--  <mat-option [value]="1">Less</mat-option>
+                        <mat-option [value]="2">Medium</mat-option>
+                        <mat-option [value]="3">More</mat-option> -->
+                    </mat-select>
+                    <mat-error>Test1 is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Test2</mat-label>
+                    <mat-select matNativeControl formControlName="risk_level">
+                       <!--  <mat-option [value]="1">Low</mat-option>
+                        <mat-option [value]="2">Medium</mat-option>
+                        <mat-option [value]="3">High</mat-option> -->
+                    </mat-select>
+                    <mat-error>Test2 is required!</mat-error>
+                </mat-form-field>
+            </div>
+              <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Test3</mat-label>
+                    <mat-select matNativeControl formControlName="responsibility">
+                        <mat-option [value]="1">user</mat-option>
+                        <mat-option [value]="2">user1</mat-option>
+                        <mat-option [value]="3">user2</mat-option>
+                    </mat-select>
+                    <mat-error>Test3 is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Test4</mat-label>
+                    <textarea matInput formControlName="mitigation_plan" required></textarea>
+                    <mat-error>Test4 is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxFlex="1 0 auto" class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="PopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

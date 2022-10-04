@@ -1,0 +1,136 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form [formGroup]="activityFormGroup" class="form_field" (ngSubmit)="projectActivitySubmit()" fxLayout="column"
+            fxLayoutAlign="start" fxFlex="1 0 auto">
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Edit Major Activity Plan</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <input type="hidden" formControlName="activity_sr_no">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Activity</mat-label>
+                    <input matInput formControlName="activity_name">
+                    <mat-error>Activity is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Linked milestone</mat-label>
+                    <mat-select matNativeControl formControlName="milestone_id"
+                        (selectionChange)="mileStoneChange($event.value)">
+                        <mat-option [value]="mile.project_milestone_id" *ngFor="let mile of mileStoneGet"
+                            [disabled]="mile.isDisabled">
+                            {{mile.milestone_name}}</mat-option>
+                    </mat-select>
+                    <mat-error>Linked milestone is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+                    <mat-label>Preceeding activity</mat-label>
+                    <mat-select matNativeControl formControlName="preceeding_activity">
+                        <mat-option value="">No activity</mat-option>
+                        <mat-option [value]="activity.project_activity_id" *ngFor="let activity of activityGet">
+                            {{activity.activity_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Next activity</mat-label>
+                    <mat-select matNativeControl formControlName="next_activity">
+                        <mat-option value="">No activity</mat-option>
+                        <mat-option [value]="activity.project_activity_id" *ngFor="let activity of activityGet">
+                            {{activity.activity_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field> -->
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Start</mat-label>
+                    <input matInput [matDatepicker]="activityStart" formControlName="activity_start_date"
+                        [min]="start_datedie" [max]="activityMinMaxDate ? activityMinMaxDate :activityMaxDate" readonly>
+                    <mat-error>Start Date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="activityStart"></mat-datepicker-toggle>
+                    <mat-datepicker #activityStart></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Finish</mat-label>
+                    <input matInput [matDatepicker]="activityFinish" formControlName="activity_end_date"
+                        [min]="datepipe.transform(activityFormGroup.get('activity_start_date').value, 'yyyy-MM-dd')"
+                        [max]="activityMinMaxDate ? activityMinMaxDate :activityMaxDate" readonly>
+                    <mat-error>Finish Date is required! </mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="activityFinish"></mat-datepicker-toggle>
+                    <mat-datepicker #activityFinish></mat-datepicker>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Responsibility</mat-label>
+                    <mat-select matNativeControl formControlName="responsibility">
+                        <!--  <input matInput placeholder="Search" (keyup)="companyUserSearch($event.target.value)"
+                            style="height: 32px; padding-left: 12px;"> -->
+                        <mat-option [value]="user.user_id" *ngFor="let user of selectedSearchUser">{{user.name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Responsibility is required!</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Other Responsibility</mat-label>
+                    <mat-select matNativeControl formControlName="other_responsibility">
+                        <mat-option [value]="user.project_ex_user_id" *ngFor="let user of exmemberUser">
+                            {{user.ex_membar_name}}
+                        </mat-option>
+                    </mat-select>
+                    <!-- <mat-error>Responsibility is required!</mat-error> -->
+                </mat-form-field>
+            </div>
+            <div class="example-button-row mr-4 mb-4" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="AddUserClose()">Cancel</a>
+            </div>
+        </form>
+        <div class="popup-header">
+            <mat-toolbar matDialogTitle class="m-0">
+                <mat-toolbar-row>
+                    <span class="title dialog-title">Mile Stone Dates</span>
+                </mat-toolbar-row>
+            </mat-toolbar>
+            <div style="padding: 8px 5px;">
+                <span>Project Start date: {{activityMinDate}}</span>
+            </div>
+            <table mat-table [dataSource]="dataSourceProActivity" style="width: 100%; border: 1px solid lightgray;">
+                <ng-container matColumnDef="milestone_name">
+                    <th mat-header-cell *matHeaderCellDef>Milestone</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span>
+                            {{element.milestone_name}}
+                        </span>
+                    </td>
+                </ng-container>
+                <ng-container matColumnDef="mile_stone_date">
+                    <th mat-header-cell *matHeaderCellDef style="padding:20px">End Date</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span style="padding:20px">
+                            {{element.mile_stone_date}}
+                        </span>
+                    </td>
+                </ng-container>
+                <!-- <ng-container matColumnDef="mile_stone_date">
+                    <th mat-header-cell *matHeaderCellDef>Finish</th>
+                    <td mat-cell *matCellDef="let element">
+                        <span>
+                            {{element.mile_stone_date}}
+                        </span>
+                    </td>
+                </ng-container> -->
+                <tr mat-header-row *matHeaderRowDef="displayedColumnsProActivity"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumnsProActivity;"></tr>
+            </table>
+        </div>
+    </div>
+</div>

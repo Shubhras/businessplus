@@ -1,0 +1,103 @@
+@import "src/@fuse/scss/fuse";
+#kpidata-graph {
+.content {
+        display: flex;
+        flex: 1 1 auto;
+        padding-top: 10px;
+        padding-left: 10px;
+        padding-right: 0px;
+        min-width: 0;
+        @include media-breakpoint('lt-lg') {
+          flex-direction: column;
+        }
+        .left {
+            display: flex;
+            flex-direction: column;
+            flex: 1 1 auto;
+            min-width: 0;
+            .widget {
+              flex: 1 1 auto;
+              min-width: 0;
+            }
+        }
+        .right {
+            display: flex;
+            flex: 0 0 auto;
+            width: 320px;
+            min-width: 320px;
+            max-width: 320px;
+            @include media-breakpoint('lt-lg') {
+              flex: 1 0 100%;
+              margin-top: 32px;
+              width: 100%;
+              min-width: 0;
+              max-width: none;
+            }
+            .fuse-card {
+                @include media-breakpoint('lt-lg') {
+                  width: 100%;
+                  min-width: 0;
+                  max-width: none;
+                }
+            }
+        }
+        .main-widget {
+          display: flex;
+          flex-direction: column;
+          .mat-raised-button {
+             background-color: #ffffff;
+             color: #000000de;
+             line-height: 31px;
+             margin-right: 8px;
+          }
+          .mat-button-toggle-appearance-standard .mat-button-toggle-label-content {
+            line-height: 20px;
+            padding: 0 12px;
+            font-size: 13px;
+            font-family: Muli, Helvetica Neue, Arial, sans-serif;
+          }
+          .mat-button-toggle-group-appearance-standard,
+          .mat-button-toggle-standalone.mat-button-toggle-appearance-standard {
+            border-radius: 0px;
+          }
+          .mat-button-toggle-group-appearance-standard {
+            border: solid 0px rgba(0, 0, 0, 0.12);
+          }
+          .mat-button-toggle-checked {
+            background-color: #9fbccc !important;
+            color: rgba(0, 0, 0, 0.54);
+            border-radius: 4px;
+          }
+          .mat-button-toggle + .mat-button-toggle {
+            border-left: solid 0px rgba(0, 0, 0, 0.12);
+          }
+          .mat-button-toggle-appearance-standard {
+            height: 22px;
+            color: #fff;
+            background: #2a80ad;
+            margin-right: 10px;
+            border-radius: 2px;
+          }
+        }
+        .mat-elevation-z8{
+          border-radius: 8px;
+         // box-shadow: 1px 1px 1px 1px rgba(0, 0, 0, 0.2), 1px 0px 1px 1px rgba(0, 0, 0, 0.14), 0px 0px 0px 1px rgba(0, 0, 0, 0.12);
+        }
+       .department{
+          border-top-left-radius: 8px;
+          border-top-right-radius:8px;
+       }
+       .kpi-graph{
+          background: #e0e3e8;
+          border-top-left-radius: 8px;
+          border-top-right-radius:8px;
+          min-height: 25px;
+          max-height: 35px;
+          font-size: 13px;
+          padding: 3px 8px 0px 8px;
+       }
+       .mat-drawer-container {
+         border-radius: 8px;
+      }
+    }
+}

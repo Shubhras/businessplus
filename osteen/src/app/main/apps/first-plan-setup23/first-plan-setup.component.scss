@@ -1,0 +1,25 @@
+.info_icon {
+  display  : inline;
+  font-size: 19px;
+}
+
+.info_icon2 {
+  color: #30810F !important;
+}
+
+.mat-form-field {
+  margin-top: 16px;
+}
+
+::ng-deep .mat-step-header:hover {
+  background-color: #fff !important;
+}
+
+textarea.mat-input-element.cdk-textarea-autosize {
+  resize: auto !important;
+}
+
+.next_btn {
+  background-color: #1D5E97;
+  color           : white;
+}

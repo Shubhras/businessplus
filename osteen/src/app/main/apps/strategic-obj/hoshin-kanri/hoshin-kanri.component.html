@@ -1,0 +1,108 @@
+<div id="hoshin-kanri" class="page-layout blank">
+  <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+      <!-- APP TITLE -->
+      <div fxLayout="row">
+        <div class="logo" fxLayout="row">
+          <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          Hoshin Kanri ( People Accountability )
+          </span>
+        </div>
+      </div>
+    </div>
+     <!-- HEADER -->
+  <div class="content all-pages-content">
+    <div class="left">
+      <div class="main-widget main-widget-filter">
+        <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+          <fuse-widget  class="widget p-0" fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40">
+            <div fxLayout="column" fxLayoutAlign="start">
+              <div class="example-button-row search-filter-input">
+                <button mat-raised-button class="button-filter" (click)="addHoshinOpen()" *ngIf="hoshinPermission.acc_create == 1">Add Matrix</button>
+                  <mat-form-field appearance="outline" class="srch-anyy srchinput dating">
+                  <mat-label>Search</mat-label>
+                  <input matInput>
+                </mat-form-field>
+              </div>
+            </div>
+          </fuse-widget>
+        </div>
+        <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+          <table mat-table [dataSource]="dataSource" id="contentToConvert">
+            <ng-container matColumnDef="sr_no" sticky>
+              <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+            </ng-container>
+            <ng-container matColumnDef="str_obj_description">
+              <th mat-header-cell *matHeaderCellDef>Strategic Objectives</th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-definition">{{element.str_obj_description}}</td>
+            </ng-container>
+            <ng-container matColumnDef="initiatives_definition">
+              <th mat-header-cell *matHeaderCellDef>initiatives_definition</th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-definition">{{element.initiatives_definition}}</td>
+            </ng-container>
+            <ng-container matColumnDef="action_plan_definition">
+              <th mat-header-cell *matHeaderCellDef>Action Plan</th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-definition">{{element.action_plan_definition}}</td>
+            </ng-container>
+            <ng-container matColumnDef="kpi_name">
+              <th mat-header-cell *matHeaderCellDef>Kpi Name</th>
+              <td mat-cell *matCellDef="let element">{{element.kpi_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="area_manager_value">
+              <th mat-header-cell *matHeaderCellDef>Kpi Target</th>
+              <td mat-cell *matCellDef="let element" class="mat-cell-definition">{{element.area_manager_value}}</td>
+            </ng-container>
+            <ng-container matColumnDef="area_manager_user_name">
+              <th mat-header-cell *matHeaderCellDef>Overall Responsibility</th>
+              <td mat-cell *matCellDef="let element">{{element.area_manager_user_name}}</td>
+            </ng-container>
+            <ng-container matColumnDef="allocation_matrix">
+              <th mat-header-cell *matHeaderCellDef class="matrix_haddind">Allocation Matrix
+              <table>
+                  <tr>
+                    <th colspan="3">Department Head</th>
+                    <th colspan="3">Section Head</th>
+                    <th colspan="3">Supervisor Head</th>
+                  </tr>
+                  <tr style="background-color: #1c5e97;">
+                    <td class="costum-with-user">User</td>
+                    <td class="costum-with-value">Value</td>
+                    <td class="costum-with">%</td>
+                    <td class="costum-with-user">User</td>
+                    <td class="costum-with-value">Value</td>
+                    <td class="costum-with">%</td>
+                    <td class="costum-with-user">User</td>
+                    <td class="costum-with-value">Value</td>
+                    <td class="costum-with">%</td>
+                  </tr>
+                </table>
+              </th>
+              <td mat-cell *matCellDef="let element"><!-- {{element.allocation_matrix }} -->
+                <table>
+                  <tr *ngFor="let alloc of element.allocation_matrix">
+                    <td class="costum-with-user">{{alloc.dept_assign_user_name ? alloc.dept_assign_user_name : '-'}}</td>
+                    <td class="costum-with-value">{{alloc.dept_value ? alloc.dept_value : '-'}}</td>
+                    <td class="costum-with" style="text-align: right;
+                    ">{{alloc.dept_percent ? alloc.dept_percent + '%' : '-'}}</td>
+                    <td class="costum-with-user">{{alloc.section_assign_user_name ? alloc.section_assign_user_name : '-'}}</td>
+                    <td class="costum-with-value">{{alloc.section_value ? alloc.section_value : '-'}}</td>
+                    <td class="costum-with" style="text-align: right;
+                    ">{{alloc.section_percent ? alloc.section_percent + '%' : '-'}}</td>
+                    <td class="costum-with-user">{{alloc.supervisor_assign_user_name ? alloc.supervisor_assign_user_name : '-'}}</td>
+                    <td class="costum-with-value">{{alloc.supervisor_value ? alloc.supervisor_value : '-'}}</td>
+                    <td class="costum-with" style="text-align: right;
+                    ">{{alloc.supervisor_percent ? alloc.supervisor_percent + '%' : '-'}}</td>
+                  </tr>
+                  </table>
+              </td>
+            </ng-container>
+            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+          </table>
+          <mat-paginator  [pageSizeOptions]="[15, 25, 30]" showFirstLastButtons></mat-paginator>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

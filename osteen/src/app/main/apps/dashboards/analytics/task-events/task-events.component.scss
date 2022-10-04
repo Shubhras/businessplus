@@ -1,0 +1,152 @@
+@import "src/@fuse/scss/fuse";
+
+@media only screen and (min-width: 1200px) {
+    .mat-dialog-container {
+        min-width: 100% !important;
+    }
+}
+
+#unit-change {
+    .mat-header-name {
+        text-align  : center;
+        padding-left: 3px;
+    }
+
+    .mat-cell-name {
+        text-align  : center;
+        padding-left: 3px;
+    }
+
+    .mat-header-action {
+        padding-right: 0px;
+        width        : 70px;
+
+    }
+
+    .mat-cell-action {
+        padding-right: 2px;
+    }
+
+    .mat-icon-edit {
+        font-size       : 18px;
+        min-height      : 25px;
+        height          : 25px;
+        border-radius   : 4px;
+        background-color: #3972b9e8;
+        color           : white;
+        margin-left     : 4px;
+    }
+
+    .mat-icon-clear {
+        font-size       : 18px;
+        min-height      : 25px;
+        height          : 25px;
+        border-radius   : 4px;
+        background-color: #f44336;
+        color           : white;
+        margin-left     : 4px;
+    }
+}
+
+@import "src/@fuse/scss/fuse";
+
+#task-analytics {
+
+    .decoration {
+        text-decoration: none !important;
+        cursor         : pointer;
+    }
+
+    .example-container {
+        min-height: 200px;
+    }
+
+    .mat-header-completion {
+        padding-right: 0px;
+        width        : 90px;
+    }
+
+    .mat-elevation-z8 {
+        box-shadow: none;
+    }
+
+    tr.mat-header-row {
+        height          : 25px;
+        background-color: #b3cde0;
+    }
+
+    th.mat-header-cell {
+        color     : #040404de !important;
+        text-align: center;
+    }
+
+    .totaltask {
+        min-width      : 0px;
+        max-width      : 290px;
+        min-height     : 95px;
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+
+        .secondary-text {
+            font-size  : 13px;
+            color      : white;
+            font-weight: 700;
+        }
+
+        .total-task-text {
+            font-size  : 20px;
+            font-weight: 700;
+            color      : white;
+        }
+
+        .secondary-open {
+            font-size  : 13px;
+            color      : #333333;
+            font-weight: 600;
+        }
+
+        .total-task-open {
+            font-size  : 20px;
+            font-weight: 700;
+            color      : #333333;
+        }
+    }
+
+    div.task_assigns:last-child {
+        border-bottom: 0px;
+    }
+
+    div.task_assigns {
+        border-bottom: 1px solid #ddd;
+        padding      : 5px 0px;
+    }
+}
+
+// responsive start
+
+@media (min-width: 331px) and (max-width: 369px) {
+    .addtask-dial {
+        .mat-dialog-container {
+            min-width : 265px !important;
+            max-height: 400px !important;
+        }
+    }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+    .addtask-dial {
+        .mat-dialog-container {
+            min-width : 309px !important;
+            max-height: 500px !important;
+        }
+    }
+}
+
+@media only screen and (max-width:768px) {
+    .angular-editor {
+        width: auto !important;
+    }
+}
+
+// responsive end

@@ -1,0 +1,381 @@
+<div id="initiativedata" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Strategic Initiative
+                </span>
+            </div>
+        </div>
+        <div style="position: absolute; right:16px" fxLayout="row" fxHide.xs>
+            <button style="background: none;border:none;cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all master action plans" [routerLink]="['/apps/business-plan-list-view']"> <img
+                    src="assets/images/master.png" width="30px"></button>
+            <button style="background: none;border:none;cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all strategic objective" [routerLink]="['/apps/strategic-obj/strategic']"> <img
+                    src="assets/images/so1.png" width="30px"></button>
+            <button style="background: none;border:none; cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all initiative" [routerLink]="['/apps/strategic-obj/initiative-data']"> <img
+                    src="assets/images/si.png" width="30px"></button>
+            <button style="background: none; border:none; cursor:pointer" matTooltipClass="my-tooltip"
+                matTooltip="View all action plan" [routerLink]="['/apps/strategic-obj/action-plan']"> <img
+                    src="assets/images/action.png" width="30px"></button>
+            <button style="background: none; border:none; cursor:pointer" matTooltipClass="my-tooltip" matTooltip="View all kpi" [routerLink]="['/apps/kpitrackers/keyperformance']">
+                <img src="assets/images/kpi.png" width="30px"></button>
+        </div>
+        <div style="position: absolute; left:16px" fxLayout="row">
+            <button style="background: none;border:none;cursor:pointer"  matTooltip="View all master action plans"
+            [routerLink]="['/apps//business-plan-list-view']">
+            <mat-icon class="secondary-text" style="transform: scale(1.3);">first_page</mat-icon>
+            </button>
+
+
+
+            <!-- <button  style="background: none;border:none; cursor:pointer" matTooltip="view All Initiative"  [routerLink]="['/apps/strategic-obj/initiative-data']"   > <img
+                    src="assets/images/icons8-web-analytics-60.png" width="26px"></button>
+                    <button  style="background: none; border:none; cursor:pointer" matTooltip="view All Action Plan"  [routerLink]="['/apps/strategic-obj/action-plan']" > <img
+                        src="assets/images/icons8-strategy-news-60.png" width="22px"></button> -->
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div class="left">
+            <div class="main-widget main-widget-filter">
+                <div class="widget-group p-0" fxLayout="row" fxLayout.xs="column" fxLayout.sm="column"
+                    fxLayout.md="column" [@animateStagger]="{value:'50'}" style="padding-left: 8px !important;">
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-button-row search-filter-input">
+                                <button mat-raised-button class="button-filter topg"
+                                    (click)="funShowFilter()">Filter</button>
+                                <button mat-raised-button class="button-filter topg" (click)="addInitiativeOpen()"
+                                    *ngIf="initiativesPermission.acc_create == 1"
+                                    [disabled]="(buttonDisabled == false)">Add - New Initiative</button>
+                                <mat-form-field appearance="outline" class="srch-anyy srchinput srch-down dating">
+                                    <mat-label>Search</mat-label>
+                                    <input matInput [formControl]="inputSearchFilter"
+                                        (keyup)="applyFilter($event.target.value)">
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="44" fxFlex.gt-md="44">
+                        <div fxLayout="column" fxLayoutAlign="start" class="strObjLesent">
+                            <div fxLayout="row">
+                                <img class="status-green-icon lesent-color" src="assets/icons/status-green-icon.png"> -
+                                {{lesentGreen}}%
+                                <img class="status-yellow-icon lesent-color" src="assets/icons/status-yellow-icon.png">
+                                - {{lesentYellow}}-100%
+                                <img class="status-red-icon lesent-color" src="assets/icons/status-red-icon.png"> &lt;
+                                {{lesentRed}}%
+                                <img class="status-gray-icon lesent-color" src="assets/icons/status-gray-icon.png"> - On
+                                track
+                                <img class="status-blue-icon lesent-color" src="assets/icons/status-blue-icon.png"> -
+                                Hold
+                            </div>
+                        </div>
+                    </fuse-widget>
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10">
+                        <div fxLayout="column">
+                            <div class="example-button-row button-excel-pdf" fxLayoutAlign="end">
+                                <button mat-raised-button class="button-excel printing"
+                                    (click)="initiativeTOExcel()">Excel</button>
+                                <button mat-raised-button class="button-excel printing"
+                                    (click)="initiativeDownloadPDF()">Print</button>
+                                <button mat-raised-button class="printing"
+                                    [routerLink]="['/apps/strategic-initiative-help']">Help?</button>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                </div>
+                <div [hidden]="showfilter" class="search-filter-select mt-4">
+                    <mat-form-field class="pr-8 status-date dating" appearance="outline">
+                        <mat-label>Department</mat-label>
+                        <mat-select [formControl]="dept_nameFilter" (selectionChange)="filterRenderedData($event.value)"
+                            class="departmentinitiative">
+                            <mat-option value="">All</mat-option>
+                            <mat-option value="{{department.dept_name}}" *ngFor="let department of dataDepartment">
+                                {{department.dept_name}}</mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <mat-form-field class="pr-8 srch-anyy dating status-date" appearance="outline">
+                        <mat-label>Start</mat-label>
+                        <input matInput [matDatepicker]="picker" [(ngModel)]="start_date"
+                            [formControl]="start_dateFilter" readonly>
+                        <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                        <mat-datepicker #picker></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="pr-8 srch-anyy dating status-date" appearance="outline">
+                        <mat-label>Finish</mat-label>
+                        <input matInput [matDatepicker]="pickerto" [(ngModel)]="end_date" [formControl]="end_dateFilter"
+                            readonly>
+                        <mat-datepicker-toggle matSuffix [for]="pickerto"></mat-datepicker-toggle>
+                        <mat-datepicker #pickerto></mat-datepicker>
+                    </mat-form-field>
+                    <mat-form-field class="pr-8 status-date dating" appearance="outline">
+                        <mat-label>Status</mat-label>
+                        <mat-select [formControl]="status_nameFilter" multiple class="departmentinitiative">
+                            <!--  <mat-option value="">All</mat-option> -->
+                            <mat-option value="{{status.status_name}}" *ngFor="let status of straObjStatus"
+                                [disabled]="status.status_name =='Open(Un Hold)'">
+                                <span *ngIf="status.status_name == 'Red'">
+                                    <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Yellow'">
+                                    <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Green'">
+                                    <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Gray (Started)'">
+                                    <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Blue (Hold)'">
+                                    <img class="status-blue-icon" src="assets/icons/status-blue-icon.png">
+                                    {{status.status_name}}
+                                </span>
+                                <span *ngIf="status.status_name == 'Open(Un Hold)'"><img class="status-open-unhold"
+                                        src="assets/icons/status-open-unhold.png"> {{status.status_name}}</span>
+                            </mat-option>
+                        </mat-select>
+                    </mat-form-field>
+                    <button mat-raised-button (click)="resetOptions()">Reset</button>
+                </div>
+                <div class="help-btn-div">
+                    <div class="total-so-color-table" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                        <table mat-table [dataSource]="dataSourceColor">
+                            <ng-container matColumnDef="name_StrInitia">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition">Name</th>
+                                <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                    <a class="link" routerLink="/apps/strategic-obj/strategic"
+                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">{{element.name_StrInitia}}</a>
+                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data"
+                                        *ngIf="element.name_StrInitia == 'Initiatives'">{{element.name_StrInitia}}</a>
+                                    <a class="link" routerLink="/apps/strategic-obj/action-plan"
+                                        *ngIf="element.name_StrInitia == 'Action Plan'">{{element.name_StrInitia}}</a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="total">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-total">Total</th>
+                                <td mat-cell *matCellDef="let element">{{element.total}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="green">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                    <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <a class="link" routerLink="/apps/strategic-obj/strategic/3"
+                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                        <span class="set-color-circle status-green-color">{{element.green}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/3"
+                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                        <span class="set-color-circle status-green-color">{{element.green}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/3"
+                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                        <span class="set-color-circle status-green-color">{{element.green}}</span>
+                                    </a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="yellow">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                    <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <!--  <span  class="set-color-circle status-yellow-color">{{element.yellow}}</span> -->
+                                    <a class="link" routerLink="/apps/strategic-obj/strategic/4"
+                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                        <span class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/4"
+                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                        <span class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/4"
+                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                        <span class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                    </a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="red">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                    <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <!-- <span class="set-color-circle status-red-color">{{element.red}}</span> -->
+                                    <a class="link" routerLink="/apps/strategic-obj/strategic/5"
+                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                        <span class="set-color-circle status-red-color">{{element.red}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/5"
+                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                        <span class="set-color-circle status-red-color">{{element.red}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/5"
+                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                        <span class="set-color-circle status-red-color">{{element.red}}</span>
+                                    </a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="gray">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                    <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <!--  <span class="set-color-circle status-gray-color">{{element.gray}}</span> -->
+                                    <a class="link" routerLink="/apps/strategic-obj/strategic/1"
+                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                        <span class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/1"
+                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                        <span class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/1"
+                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                        <span class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                    </a>
+                                </td>
+                            </ng-container>
+                            <ng-container matColumnDef="blue">
+                                <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                    <img class="status-blue-icon-white" src="assets/icons/status-blue-icon-white.png">
+                                </th>
+                                <td mat-cell *matCellDef="let element">
+                                    <!-- <span class="set-color-circle status-blue-color">{{element.blue}}</span> -->
+                                    <a class="link" routerLink="/apps/strategic-obj/strategic/2"
+                                        *ngIf="element.name_StrInitia == 'Strategic Objectives'">
+                                        <span class="set-color-circle status-blue-color">{{element.blue}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/initiative-data/2"
+                                        *ngIf="element.name_StrInitia == 'Initiatives'">
+                                        <span class="set-color-circle status-blue-color">{{element.blue}}</span>
+                                    </a>
+                                    <a class="link" routerLink="/apps/strategic-obj/action-plan/2"
+                                        *ngIf="element.name_StrInitia == 'Action Plan'">
+                                        <span class="set-color-circle status-blue-color">{{element.blue}}</span>
+                                    </a>
+                                </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumnsColor"></tr>
+                            <tr mat-row *matRowDef="let row; columns: displayedColumnsColor;"></tr>
+                        </table>
+                    </div>
+                    <!-- <div class="" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" style="    text-align: end;
+                    margin-top: 10px;">
+                        <button mat-raised-button [routerLink]="['/apps/strategic-initiative-help']">
+                            <span>Help?</span>
+                        </button>
+                    
+                    </div> -->
+                </div>
+                <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                    <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                        <ng-container matColumnDef="sr_no" sticky>
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">S. No.</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element"
+                                class="mat-cell-sr-no">{{element.sr_no}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="definition">
+                            <th mat-header-cell *matHeaderCellDef>Initiative</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element"
+                                class="mat-cell-definition">{{element.definition}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="strategic_objectives_description">
+                            <th mat-header-cell *matHeaderCellDef>Related Strategic Objectives</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element"
+                                class="mat-cell-definition">
+                                {{element.strategic_objectives_description}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="start_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element">
+                                {{element.start_date | date:'dd-MM-yyyy'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="end_date">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element">
+                                {{element.end_date | date:'dd-MM-yyyy'}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="dept_name">
+                            <th mat-header-cell *matHeaderCellDef>Department</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element">
+                                {{element.dept_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="section_name">
+                            <th mat-header-cell *matHeaderCellDef>Section</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element">
+                                {{element.section_name}}</td>
+                        </ng-container>
+                        <ng-container matColumnDef="percentage">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-percentage">Percentage</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element">
+                                {{element.percentage}}%</td>
+                        </ng-container>
+                        <ng-container matColumnDef="status_name">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-status">Status</th>
+                            <td mat-cell (click)="openUserComment(element)" *matCellDef="let element">
+                                <img *ngIf="element.status_name == 'Red'" class="status-red-icon"
+                                    src="assets/icons/status-red-icon.png">
+                                <img *ngIf="element.status_name == 'Yellow'" class="status-yellow-icon"
+                                    src="assets/icons/status-yellow-icon.png">
+                                <img *ngIf="element.status_name == 'Green'" class="status-green-icon"
+                                    src="assets/icons/status-green-icon.png">
+                                <img *ngIf="element.status_name == 'Gray (Started)'" class="status-gray-icon"
+                                    src="assets/icons/status-gray-icon.png">
+                                <img *ngIf="element.status_name == 'Blue (Hold)'" class="status-blue-icon"
+                                    src="assets/icons/status-blue-icon.png">
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="comment">
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-comment">Comment</th>
+                            <td mat-cell *matCellDef="let element">
+                                <!-- {{element.comment}} -->
+                                <a href="javascript:void(0)" (click)="openUserComment(element)" matTooltip="Comment"
+                                    aria-label="Comment">
+                                    <img class="comment-icon" src="assets/icons/comment-24px.svg">
+                                </a>
+                            </td>
+                        </ng-container>
+                        <ng-container matColumnDef="action" sticky>
+                            <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                            <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                <button class="btn__review" [matMenuTriggerFor]="menu"
+                                    [disabled]="deptAccorPermission.indexOf(element.dept_id) == -1">
+                                    <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                                </button>
+                                <mat-menu #menu="matMenu">
+                                    <button mat-menu-item (click)="addActionPlanOpen(element)"  *ngIf="actionPlanPermission.acc_create == 1">
+                                        <mat-icon>add</mat-icon>
+                                        <span>New Action Plan</span>
+                                    </button>
+                                    <button mat-menu-item (click)="editInitiativeOpen(element)"
+                                        *ngIf="initiativesPermission.acc_edit == 1">
+                                        <mat-icon>edit</mat-icon>
+                                        <span>Edit</span>
+                                    </button>
+                                    <button mat-menu-item
+                                        (click)="deleteInitiative(element.initiatives_id,element.user_id)"
+                                        *ngIf="initiativesPermission.acc_delete == 1">
+                                        <mat-icon>delete</mat-icon>
+                                        <span>Remove</span>
+                                    </button>
+                                </mat-menu>
+                            </td>
+                        </ng-container>
+                        <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                    </table>
+                    <mat-paginator [pageSizeOptions]="[15, 25, 30]" showFirstLastButtons></mat-paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,404 @@
+@import "src/@fuse/scss/fuse";
+
+body.theme-default .mat-raised-button:not([class*="mat-elevation-z"]) {
+    box-shadow: none !important;
+}
+
+// .textarea.mat-input-element.cdk-textarea-autosize {
+//     resize: auto !important;
+// }
+
+.example-container2 {
+    // min-height                : 243px !important;
+    max-height                : 243px;
+    overflow                  : auto;
+    border-bottom-left-radius : 5px;
+    border-bottom-right-radius: 5px;
+    margin                    : 20px 5px 0 5px;
+}
+
+.mat-icon-edit {
+    font-size          : 18px;
+    min-height         : 25px;
+    height             : 25px;
+    border-radius      : 4px;
+    // background-color: #3972b9e8;
+    color              : white;
+    margin-left        : 4px;
+}
+
+.mat-icon-clear {
+    font-size       : 18px;
+    min-height      : 25px;
+    height          : 25px;
+    border-radius   : 4px;
+    background-color: #f44336;
+    color           : white;
+    margin-left     : 4px;
+}
+
+.mat-input-element {
+    font-size: 12px;
+    height   : 35px !important;
+    resize   : none;
+}
+
+.mat-icon {
+    font-size: 20px !important;
+}
+
+.popup-header1 {
+    min-height   : 33px !important;
+    margin-bottom: 14px !important;
+    background   : #B0AEB2 !important;
+    border-radius: 4px !important;
+}
+
+body.theme-default .mat-grid-tile.mat-tile.mat-grid-tile figure {
+    border         : 1px solid #a79a9a;
+    justify-content: end;
+    align-items    : end;
+
+    .swot-tile {
+        font-size  : 16px;
+        font-family: Muli, Helvetica Neue, Arial, sans-serif;
+    }
+
+    .swot-tile.vision h2 {
+        border-width: 1px 1px 2px;
+        box-shadow  : 0 2px 6px rgba(0, 0, 0, 0.5);
+        margin      : 0;
+        padding     : 4px 40px;
+        position    : absolute;
+        right       : 2px;
+        top         : 2px;
+        overflow    : visible;
+        z-index     : 1;
+        background  : #1c5e97;
+        color       : #f0f1ef;
+        font-weight : 900;
+    }
+
+    .swot-tile.vision h2:after {
+        border-width: 7px;
+        border-style: solid;
+        border-color: #134 transparent transparent #134;
+        bottom      : -15px;
+        content     : "";
+        position    : absolute;
+        right       : 1px;
+        overflow    : visible;
+    }
+
+    .swot-tile.vision {
+        /* background: #fff; */
+        box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+        /* float  : left; */
+        /* height : 220px; */
+        /* margin : 50px 0 0 45px; */
+        position  : relative;
+        text-align: center;
+        /* width  : 210px; */
+        right     : -7%;
+        overflow  : visible;
+        z-index   : 26;
+    }
+
+    .swot-content {
+        padding   : 6px 0px 0px 6px;
+        margin-top: 12px;
+    }
+}
+
+body.theme-default .mat-grid-tile .mat-figure {
+    top            : 0;
+    left           : 0;
+    right          : 0;
+    bottom         : 0;
+    position       : absolute;
+    display        : block;
+    align-items    : center;
+    justify-content: center;
+    height         : 100%;
+    padding        : 0;
+    margin         : auto;
+}
+
+.swot_report {
+    font-weight          : 700;
+    margin-top           : 6px;
+    padding              : 3px 0;
+    display              : flex;
+    align-items          : center;
+    justify-content      : center;
+    text-align           : center;
+    background           : #ffffff;
+    -webkit-border-radius: 10px;
+    -moz-border-radius   : 10px;
+    border-radius        : 10px;
+    box-shadow           : 0 0 2px #e5e9ec;
+    border-bottom        : 1px solid #eeeeee;
+}
+
+.strength {
+    color: #90ee90;
+}
+
+.vision2 {
+    background-color: #90ee90;
+}
+
+.swot-tile.vision h2 {
+    border-width: 1px 1px 2px;
+    box-shadow  : 0 2px 6px rgba(0, 0, 0, 0.5);
+    margin      : 0;
+    padding     : 4px 40px;
+    position    : absolute;
+    right       : 2px;
+    top         : 2px;
+    overflow    : visible;
+    z-index     : 1;
+    background  : #1c5e97;
+    color       : #f0f1ef;
+    font-weight : 900;
+}
+
+.swot-tile.vision h2:after {
+    border-width: 7px;
+    border-style: solid;
+    border-color: #1c5e97 transparent transparent #1c5e97;
+    bottom      : -14px;
+    content     : "";
+    position    : absolute;
+    right       : 1px;
+    overflow    : visible;
+}
+
+.swot-tile.vision {
+    /* background: #fff; */
+    box-shadow: 0 0 3px rgba(0, 0, 0, 0.25);
+    /* float  : left; */
+    /* height : 220px; */
+    /* margin : 50px 0 0 45px; */
+    position  : relative;
+    text-align: center;
+    /* width  : 210px; */
+    right     : -14%;
+    overflow  : visible;
+    z-index   : 26;
+}
+
+@media only screen and (min-width: 1200px) {
+    .mat-dialog-container {
+        min-width    : 148rem;
+        // min-height: 572px!important;
+        // height: 600px;
+    }
+}
+
+.mission {
+    background-color: #90ee90;
+}
+
+.emerging {
+    color: #09ea09;
+}
+
+.weaknes {
+    color: orange;
+}
+
+.opportunity {
+    color: #189cc7;
+}
+
+.priority {
+    color: orange;
+}
+
+.threats {
+    color: #e84747;
+}
+
+.test {
+    color: #1d2c98;
+}
+
+.test2 {
+    background-color: #e84747;
+}
+
+.stra-form {
+    .fromStrategic {
+        padding: 8px;
+    }
+}
+
+.fromStrategic {
+    padding: 8px;
+    height : 100%;
+}
+
+/* .Red{
+      background:  url("assets/icons/status-red-icon.png")  center / contain no-repeat;
+      white-space: nowrap
+    }
+    .Green{
+      background:  url("assets/icons/status-green-icon.png")  left / contain no-repeat;
+      white-space: nowrap
+    }
+    .Yellow{
+      background:  url("assets/icons/status-yellow-icon.png")  left / contain no-repeat;
+      white-space: nowrap
+    } */
+#strategic-object {
+    .mat-dialog-container {
+        display      : block;
+        padding      : 0px !important;
+        border-radius: 4px;
+        box-sizing   : border-box;
+        overflow     : auto;
+        outline      : 0;
+        width        : 100%;
+        height       : 100%;
+        min-height   : inherit;
+        max-height   : inherit;
+    }
+
+    .mat-header-definition {
+        padding-right: 0px;
+        width        : 450px;
+    }
+
+    .mat-cell-definition {
+        text-align  : left;
+        padding-left: 3px;
+    }
+
+    .mat-header-uom {
+        padding-right: 0px;
+        width        : 70px;
+    }
+
+    .mat-header-frequency {
+        padding-right: 0px;
+        width        : 60px;
+    }
+
+    .mat-header-percentage {
+        padding-right: 0px;
+        width        : 61px;
+    }
+
+    .mat-header-createplan {
+        padding-right: 0px;
+        width        : 75px;
+    }
+
+    .mat-elevation-z8 {
+        box-shadow: none !important;
+    }
+
+    table.mat-table {
+        border: 1px solid #b2b3b6;
+    }
+
+    .createplan-button {
+        text-decoration   : none !important;
+        background-color  : #1c5e97;
+        color             : #fff;
+        font-weight       : 700;
+        font-size         : 12px;
+        -webkit-box-align : center;
+        align-items       : center;
+        min-width         : 70px;
+        max-width         : 70px;
+        height            : 21px;
+        // padding: 0 2px;
+        font-size         : 11px;
+        border-radius     : 5px;
+        -webkit-transition: opacity 0.2s ease-in-out 0.1s;
+        transition        : opacity 0.2s ease-in-out 0.1s;
+        display           : -webkit-box;
+        display           : flex;
+        text-align        : center;
+        -webkit-box-pack  : center;
+        justify-content   : center;
+        //margin: 0 auto;
+        margin            : 4px;
+    }
+}
+
+@media only screen and (max-width: 767px) {
+    .help-btn-div {
+        display: block !important;
+    }
+}
+
+
+//  responsive start
+
+@media (min-width: 320px) and (max-width: 517px) {
+    .topp-ing {
+        top: 3px;
+    }
+
+    .srch-down {
+        padding-top: 7px;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
+    //     // .topp-ing {
+    //     //     bottom: 7px;
+    //     // }
+
+    .printtt {
+        bottom: 80px;
+    }
+
+    //     // .dinggg {
+    //     //     padding-top: 10px;
+    //     // }
+}
+
+@media only screen and (min-width: 1200px) {
+    .strtgic-dial {
+        .mat-dialog-container {
+            position: relative;
+            right    : 49px;
+            // max-height: inherit !important;
+            min-width: 1058px !important;
+        }
+    }
+}
+
+.departmentstrategic {
+    margin  : -10px 0px 0px 0px;
+    position: relative;
+    top     : 6px;
+}
+
+.status-date {
+    .mat-form-field-outline {
+        top   : 7px !important;
+        bottom: 4px !important;
+    }
+}
+
+.dating {
+    .mat-select {
+        height: 20px !important;
+    }
+}
+
+.more-action {
+    position  : absolute;
+    border    : none;
+    right     : 27%;
+    top       : 25%;
+    background: transparent;
+}
+
+
+// responsive end

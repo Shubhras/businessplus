@@ -1,0 +1,33 @@
+<div class="hv-item">
+    <div class="hv-item-parent">
+        <div [ngClass]="{'test2':node.type == 's' , 'test3':node.type == 'k', 'test4':node.type == 'i', 'test5':node.type == 'a' }"
+            class="simple-card-highlighted">
+
+            <button id="addbutton" [ngClass]="node.type == 'k' ? 'test': 'add-button '"
+                (click)="addInitiativeOpen(node)"></button>
+            <mat-icon [ngClass]="node.type == 'k' ? 'test1': 'edit-button '" (click)="editInitiativeOpen(node)">edit
+            </mat-icon>
+            
+            <!-- <button id="editbutton" ></button> -->
+            <div (click)="openDialog(node)" style="padding: 9px;">
+                <span style="margin-right: 11px;">{{node.sr_no}}</span>{{node.definition}}
+            </div>
+        </div>
+    </div>
+
+    <div class="hv-item-children">
+        <div class="hv-item-child onlyfirst" *ngFor="let child of node.children">
+            <app-node *ngIf="child.children.length > -1" [node]="child"></app-node>
+            <div [ngClass]="child.children.length == 0 ? 'divdsply': 'hv-item'" *ngIf="child.children.length ==0">
+                <div [ngClass]="child.children.length == 0 ? 'divdsply': 'simple-card-highlighted'">
+                    <!-- <div class="popoverbox" (mouseleave)="mouseLeave(child.id, $event)" >
+    <div [ngClass]="shouldShowPopup(child.id) ? 'popupdescription':'invispopupdescription'">{{child.description}}</div>
+    </div> -->
+                    <button id="addbutton" [ngClass]="child.type == k ? 'test': 'test'"
+                        (click)="node.type == 'a' ? 'addInitiativeOpen(node)': 'addInitiativeOpen(node)'"></button>
+                    <div (click)="openDialog(node)">{{child.definition}}</div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

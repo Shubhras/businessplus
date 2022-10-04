@@ -1,0 +1,464 @@
+<div class="left" id="project-dashboard">
+    <div class="main-widget">
+        <div class="widget-group p-0 project-header dept-header-color" fxFlex="100" [@animateStagger]="{value:'50'}">
+            <div fxFlex="15" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="start center">
+                <button class="mat-icon-button mat-icon-button-aroow" [routerLink]="['/apps/dashboards/project']">
+                    <span class="mat-button-wrapper">
+                        <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                    </span>
+                </button>
+            </div>
+            <div fxFlex="80" fxFlex.gt-xs="80" fxFlex.gt-md="80" fxLayoutAlign="center center">
+                <div class="project-tittle">Project Dashboard: &nbsp;{{project_name}}</div>
+            </div>
+            <!--  <div fxFlex="100" fxFlex.gt-xs="30" fxFlex.gt-md="30" fxLayoutAlign="start center">
+                <div class="project-tittle">Project Dashboard</div>
+            </div> -->
+            <div fxFlex="20" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="flex-end center">
+                <button mat-raised-button class="mat-raised-button-print" (click)="projectDashboardPDF()">Print</button>
+            </div>
+        </div>
+        <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="row wrap" fxLayoutAlign="center">
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="16" fxFlex.gt-md="16">
+                    <div class="box-details" style="min-height: 201px;">
+                        <!-- <div class="box-tittle" fxLayoutAlign="center center">Logo</div> -->
+                        <div fxLayout="row" fxLayoutAlign="center center" *ngIf="proAllDetails">
+                            <img style="margin: 40px 0px 0 0;" class="project-image avatar huge"
+                                src="{{proAllDetails.file_name ? proAllDetails.file_name: dummyPicture}}"
+                                [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="42" fxFlex.gt-md="42">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">Project Details</div>
+                        <div fxLayout="row" style="margin: 4px;" *ngIf="proAllDetails">
+                            <div fxLayout="column" fxFlex="100" fxLayoutAlign="start" fxFlex.gt-xs="30"
+                                fxFlex.gt-md="30">
+                                <div class="meeting-tittle">Project Leader :</div>
+                                <div class="meeting-tittle">Co-Leader :</div>
+                                <div class="meeting-tittle">Start Date :</div>
+                                <div class="meeting-tittle">Finish Date :</div>
+                                <div class="meeting-tittle">Duration :</div>
+                                <div class="meeting-tittle">Time left :</div>
+                            </div>
+                            <div fxLayout="column" fxFlex="100" fxLayoutAlign="start" fxFlex.gt-xs="70"
+                                fxFlex.gt-md="70">
+                                <div class="m-4">{{nameOfLeader ? nameOfLeader: "-"}}</div>
+                                <div class="m-4">{{nameOfCoLeader ? nameOfCoLeader : "-"}}</div>
+                                <div class="m-4">{{proAllDetails.start_date}}</div>
+                                <div class="m-4">{{proAllDetails.end_date}}</div>
+                                <div class="m-4">{{proAllDetails.project_duration}}</div>
+                                <div class="m-4">{{projectDuration}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="42" fxFlex.gt-md="42">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">Status</div>
+                        <div fxLayout="row" style="margin: 4px;" *ngIf="proAllDetails">
+                            <div fxLayout="column" fxFlex="100" fxLayoutAlign="start" fxFlex.gt-xs="40"
+                                fxFlex.gt-md="40">
+                                <div class="meeting-tittle">Report Date :</div>
+                                <div class="meeting-tittle">Current Mile Stone :</div>
+                                <div class="meeting-tittle">Next Mile Stone :</div>
+                                <div class="meeting-tittle">Time Line :</div>
+                                <div class="meeting-tittle">Deliverable Status :</div>
+                                <div class="meeting-tittle">Budget :</div>
+                            </div>
+                            <div fxLayout="column" fxFlex="100" fxLayoutAlign="start" fxFlex.gt-xs="60"
+                                fxFlex.gt-md="60">
+                                <div class="m-4">{{currentDate}}</div>
+                                <div class="m-4">Project Initiation Gate -PIG - Gate</div>
+                                <div class="m-4">Project Initiation Gate -PIG - Gate</div>
+                                <div class="m-4"><img class="status-green-icon"
+                                        src="assets/icons/status-green-icon.png"></div>
+                                <div class="m-4"><img class="status-yellow-icon"
+                                        src="assets/icons/status-yellow-icon.png"></div>
+                                <div class="m-4">{{proAllDetails.project_cost}}</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--         <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="row wrap" fxLayoutAlign="center">
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">Overall Status</div>
+                        <div fxLayout="row" style="margin: 10px;" *ngIf="proAllDetails">
+                            <div fxLayout="column" fxFlex="50" fxLayoutAlign="start">
+                                <div>
+                                    <span class="meeting-tittle">Time Line:-</span>
+                                    Status type
+                                </div>
+                                <div>
+                                    <span class="meeting-tittle">Deliverable:-</span>
+                                    Status type
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="row wrap" fxLayoutAlign="center">
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">MileStone Status</div>
+                        <div class="all-table" fxLayoutAlign="center center">
+                            <table mat-table class="kpi-milestone" [dataSource]="dataSourceMileStone">
+                                <ng-container matColumnDef="sr_no">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                    <td mat-cell *matCellDef="let element" class="mat-cell-sr-no"
+                                        (click)="mainDashToMile()">{{element.sr_no}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="milestone_name">
+                                    <th mat-header-cell *matHeaderCellDef>Milestone Name</th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToMile()">
+                                        {{element.milestone_name}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="mile_stone_date">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Target Date</th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToMile()">
+                                        {{element.mile_stone_date}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="actual_date">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Actual Date</th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToMile()">
+                                        {{element.actual_date}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="symbol">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Symbol</th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToMile()">
+                                        <mat-icon style="font-size: 20px;">{{element.symbol}}</mat-icon>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="milestone_status">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-status">Status</th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToMile()">
+                                        <!-- <span class="tag--{{element.status}}">{{element.cmnt}}</span> -->
+                                        <img *ngIf="element.milestone_status == 'Red'" class="status-yellow-icon"
+                                            src="assets/icons/status-yellow-icon.png">
+                                        <img *ngIf="element.milestone_status == 'Yellow'" class="status-red-icon"
+                                            src="assets/icons/status-red-icon.png">
+                                        <img *ngIf="element.milestone_status == 'Green'" class="status-green-icon"
+                                            src="assets/icons/status-green-icon.png">
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="comments">
+                                    <th mat-header-cell *matHeaderCellDef style="min-width: 200px;">Comments</th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToMile()">
+                                        {{element.comment}}
+                                    </td>
+                                    <!-- comments change to comment* -->
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumsMilestone; sticky: true"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumsMilestone;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="80" fxFlex.gt-md="80">
+                <div class="box-details">
+                    <div class="box-tittle" fxLayoutAlign="center center">Master Time Line chart </div>
+                    <div fxLayout="row" fxLayoutAlign="start">
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--  <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                <div class="box-details">
+                    <div class="box-tittle" fxLayoutAlign="center center">Project Deliverable Status</div>
+                    <div fxLayout="row wrap" fxLayoutAlign="start">
+                        <div fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="30" fxFlex.gt-md="30">
+                            <div class="charts-def-title" fxLayoutAlign="center">Project Deliverable</div>
+                            <div id="pieChartObj" fxLayoutAlign="center" #pieChartObj></div>
+                        </div>
+                        <div fxLayout="column" fxLayoutAlign="center" fxFlex.gt-xs="30" fxFlex.gt-md="30">
+                             <div class="charts-def-title" fxLayoutAlign="center">Project Deliverable</div>
+                            <div id="pieChartAction" fxLayoutAlign="center" #pieChartAction></div>
+                        </div>
+                        <div fxLayout="column" class="pieChart-table" fxLayoutAlign="center" fxFlex.gt-xs="40"
+                            fxFlex.gt-md="40">
+                            <table mat-table [dataSource]="dataSourceDeliverable">
+                                <ng-container matColumnDef="position">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                    <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="dept_name">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition">
+                                        Department
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                        {{element.dept_name}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="total">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-total" style="width: 90px;">
+                                        Total Deliverable
+                                    </th>
+                                    <td mat-cell *matCellDef="let element">{{element.total}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="green">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"><span
+                                            class="set-color-circle status-green-color">{{element.Green}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="yellow">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"><span
+                                            class="set-color-circle status-yellow-color">{{element.Yellow}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="red">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element"><span
+                                            class="set-color-circle status-red-color">{{element.Red}}</span></td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsDeliverable"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsDeliverable;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> -->
+        <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="row wrap" fxLayoutAlign="center">
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">Project deliverable</div>
+                        <div fxLayout="column">
+                            <div fxLayout="row" fxLayoutAlign="center">
+                                <div id="pieChartObj" #pieChartObj></div>
+                            </div>
+                            <div fxLayout="row" class="pieChart-table pro-deliverable-table" fxLayoutAlign="center">
+                                <table mat-table [dataSource]="dataSourceDeliverable">
+                                    <ng-container matColumnDef="position">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no"
+                                            (click)="mainDashToDeviations()">{{element.sr_no}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="dept_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition">
+                                            Department
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-definition"
+                                            (click)="mainDashToDeviations()">
+                                            {{element.dept_name}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="total">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-total"
+                                            style="width: 90px;">
+                                            Total Deliverable
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" (click)="mainDashToDeviations()">
+                                            {{element.total}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="green">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                            <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" (click)="mainDashToDeviations()"><span
+                                                class="set-color-circle status-green-color">{{element.Green}}</span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="yellow">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                            <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" (click)="mainDashToDeviations()"><span
+                                                class="set-color-circle status-yellow-color">{{element.Yellow}}</span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="red">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                            <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" (click)="mainDashToDeviations()"><span
+                                                class="set-color-circle status-red-color">{{element.Red}}</span></td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDeliverable"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDeliverable;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <!-- <div fxLayout="row" fxLayoutAlign="center"> -->
+                        <!-- <div id="pieChartObj" #pieChartObj></div>
+                            <div>
+                                <table mat-table [dataSource]="dataSourceDeliverable">
+                                    <ng-container matColumnDef="position">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="dept_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition">
+                                            Department
+                                        </th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-definition">
+                                            {{element.dept_name}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="total">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-total"
+                                            style="width: 90px;">
+                                            Total Deliverable
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">{{element.total}}</td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="green">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                            <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"><span
+                                                class="set-color-circle status-green-color">{{element.Green}}</span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="yellow">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                            <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"><span
+                                                class="set-color-circle status-yellow-color">{{element.Yellow}}</span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="red">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                            <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"><span
+                                                class="set-color-circle status-red-color">{{element.Red}}</span></td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsDeliverable"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsDeliverable;"></tr>
+                                </table>
+                            </div> -->
+                        <!--  </div> -->
+                    </div>
+                </div>
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">Project Issues</div>
+                        <div fxLayout="row" fxLayoutAlign="center">
+                            <div id="pieChartIssueStatus" #pieChartIssueStatus (click)="mainDashToIssues()"></div>
+                        </div>
+                        <div fxLayout="row" class="pieChart-table pro-deliverable-table" fxLayoutAlign="center">
+                            <table mat-table [dataSource]="dataSourceIssuePriority">
+                                <ng-container matColumnDef="name_priority">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell-definition">
+                                        Priority</th>
+                                    <td mat-cell *matCellDef="let element" class="mat-cell-definition"
+                                        (click)="mainDashToIssues()">
+                                        {{element.name_priority}}
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="total">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-total">Total</th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToIssues()">
+                                        {{element.total}}</td>
+                                </ng-container>
+                                <ng-container matColumnDef="green">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToIssues()">
+                                        <span class="set-color-circle status-green-color">{{element.green}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="yellow">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToIssues()">
+                                        <span class="set-color-circle status-yellow-color">{{element.yellow}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="red">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToIssues()">
+                                        <span class="set-color-circle status-red-color">{{element.red}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="gray">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToIssues()">
+                                        <span class="set-color-circle status-gray-color">{{element.gray}}</span>
+                                    </td>
+                                </ng-container>
+                                <ng-container matColumnDef="blue">
+                                    <th mat-header-cell *matHeaderCellDef class="mat-header-color">
+                                        <img class="status-blue-icon-white"
+                                            src="assets/icons/status-blue-icon-white.png">
+                                    </th>
+                                    <td mat-cell *matCellDef="let element" (click)="mainDashToIssues()">
+                                        <span class="set-color-circle status-blue-color">{{element.blue}}</span>
+                                    </td>
+                                </ng-container>
+                                <tr mat-header-row *matHeaderRowDef="displayedColumnsIssuePriority"></tr>
+                                <tr mat-row *matRowDef="let row; columns: displayedColumnsIssuePriority;"></tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="row wrap" fxLayoutAlign="center">
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">Project Deviations</div>
+                        <div fxLayout="row" fxLayoutAlign="center">
+                            <!-- <div>Project Deviations</div> -->
+                        </div>
+                    </div>
+                </div>
+                <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                    <div class="box-details">
+                        <div class="box-tittle" fxLayoutAlign="center center">Project Risk</div>
+                        <div fxLayout="row" fxLayoutAlign="center">
+                            <!-- <div>Project Risk</div> -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                <div class="box-details">
+                    <div class="box-tittle" fxLayoutAlign="center center">Overall Final Comment</div>
+                </div>
+            </div>
+        </div>
+        <div class="widget-group" fxLayout="column" fxFlex="100" *fuseIfOnDom [@animateStagger]="{value:'50'}">
+            <div fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                <div class="box-details">
+                    <div class="box-tittle" fxLayoutAlign="center center">Project Charter</div>
+                    <div style="margin: 20px">
+                        <daypilot-gantt #gantt [config]="config"></daypilot-gantt>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

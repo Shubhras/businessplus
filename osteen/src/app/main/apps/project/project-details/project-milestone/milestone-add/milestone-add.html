@@ -1,0 +1,73 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="mileStoneFormGroup"
+            [formGroup]="mileStoneFormGroup" (ngSubmit)="addMileStone()" novalidate>
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add Milestone</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Milestone</mat-label>
+                    <textarea matInput formControlName="milestone_name" required></textarea>
+                    <mat-error>Milestone is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                    <mat-label>Date</mat-label>
+                    <input matInput formControlName="mile_stone_date" [matDatepicker]="mileStoneDate"
+                        [min]="mileStoneFormGroup.get('start_date').value"
+                        [max]="mileStoneFormGroup.get('end_date').value" readonly>
+                    <mat-error>Date is required!</mat-error>
+                    <mat-datepicker-toggle matSuffix [for]="mileStoneDate"></mat-datepicker-toggle>
+                    <mat-datepicker #mileStoneDate></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                    <mat-label>Symbol</mat-label>
+                    <mat-select matNativeControl formControlName="symbol">
+                        <mat-select-trigger>
+                            <mat-icon>{{mileStoneFormGroup.get('symbol').value}}</mat-icon>
+                        </mat-select-trigger>
+                        <mat-option value="change_history">
+                            <mat-icon>change_history</mat-icon>
+                        </mat-option>
+                        <mat-option value="details">
+                            <mat-icon>details</mat-icon>
+                        </mat-option>
+                        <mat-option value="crop_square">
+                            <mat-icon>crop_square</mat-icon>
+                        </mat-option>
+                        <mat-option value="lens">
+                            <mat-icon>lens</mat-icon>
+                        </mat-option>
+                        <mat-option value="control_point">
+                            <mat-icon>control_point</mat-icon>
+                        </mat-option>
+                        <mat-option value="check_circle">
+                            <mat-icon>check_circle</mat-icon>
+                        </mat-option>
+                        <mat-option value="star">
+                            <mat-icon>star</mat-icon>
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Symbol is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100">
+                    <mat-label>Description</mat-label>
+                    <input matInput formControlName="description">
+                    <mat-error>Description is required!</mat-error>
+                </mat-form-field>
+            </div>
+            <div fxLayout="row" fxFlex="1 0 auto" class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="PopupClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

@@ -1,0 +1,77 @@
+<mat-toolbar>
+    <div fxLayout="row" fxLayoutAlign="center center" fxLayoutAlign.gt-xs="space-between center" fxFlex>
+        <a href="javascript:void(0)" mat-button fxFlex="0 0 auto" fxLayout="row"
+            fxLayoutAlign="start center" fxHide fxShow.gt-xs>
+            <!-- <mat-icon class="s-16 mr-sm-4">shopping_cart</mat-icon> -->
+            <span>2018 - 2019 © Prima Plus - primaplus.com</span>
+        </a>
+        <!-- <div class="content-container">
+            <div class="content-area">
+                <clr-dropdown [clrCloseMenuOnItemClick]="false">
+                    <button type="button" class="btn btn-outline-primary" clrDropdownTrigger>
+                        Dropdown
+                        <clr-icon shape="caret down"></clr-icon>
+                    </button>
+                    <ng-template [(clrIfOpen)]="open">
+                        <clr-dropdown-menu>
+                            <button type="button" clrDropdownItem>Does not close</button>
+                            <button type="button" clrDropdownItem (click)="close()">Closes the dropdown</button>
+                            <button type="button" clrDropdownItem>Does not close either</button>
+                        </clr-dropdown-menu>
+                    </ng-template>
+                </clr-dropdown>
+            </div>
+        </div> -->
+        <!-- <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu" class="pink2">
+            <mat-icon>input</mat-icon> New user checklist
+        </button> -->
+
+        <!-- <mat-menu #menu="matMenu" class="menutwo">
+            <button mat-menu-item class="progress">
+                <div class="progress-bar">{{barwidth}}%</div>
+            </button>
+            <button mat-menu-item>
+                <mat-icon click="next()">dialpad</mat-icon>
+                <span>Redial</span>
+            </button>
+            <button mat-menu-item disabled>
+                <mat-icon>voicemail</mat-icon>
+                <span>Check voice mail</span>
+            </button>
+            <button mat-menu-item>
+                <mat-icon>notifications_off</mat-icon>
+                <span>Disable alerts</span>
+            </button>
+        </mat-menu> -->
+
+
+        <!-- <button mat-raised-button (click)="openDialog()">Pick one</button> -->
+
+
+        <div class="pr-32" fxLayout="row" fxLayoutAlign="start center">
+            <a mat-button  fxFlex="0 0 auto" fxLayout="row" [routerLink]="'/apps/prima-navigation'">Prima
+                Plus Navigation</a>
+            <!-- <a mat-button routerLink="/documentation/getting-started/introduction">Features</a>
+            <span>&bull;</span>
+            <a mat-button routerLink="/documentation/changelog">Write Us</a>
+            <span>&bull;</span>
+            <a mat-button routerLink="/documentation/getting-started/introduction">Chat</a> -->
+        </div>
+        <div class="pr-32" fxLayout="row" fxLayoutAlign="start center">
+            <!-- <a mat-button class="pink" fxFlex="0 0 auto" fxLayout="row" [routerLink]="'/apps/welcome-screen'">Prima
+                Plus welcome</a> -->
+                <button class="mine stick" color="primary" (click)="openDialog()">
+                    <mat-icon style="vertical-align: middle;
+              margin-right: 6px; border: 2px solid #fff;
+      border-radius: 50%;
+      line-height: 19px;
+      font-size: 16px;">check</mat-icon>New User Checklist
+                </button>
+            <!-- <a mat-button routerLink="/documentation/getting-started/introduction">Features</a>
+            <span>&bull;</span>
+            <a mat-button routerLink="/documentation/changelog">Write Us</a>
+            <span>&bull;</span>
+            <a mat-button routerLink="/documentation/getting-started/introduction">Chat</a> -->
+        </div>
+    </div>
+</mat-toolbar>

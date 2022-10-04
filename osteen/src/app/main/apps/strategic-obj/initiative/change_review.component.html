@@ -1,0 +1,69 @@
+ <div class="content popup-content">
+     <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+         <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="changeReviewForm"
+             [formGroup]="changeReviewForm" (ngSubmit)="changeReviewSubmit()" novalidate>
+             <!-- <div class="h3 mb-8" fxLayoutAlign="center center">Check Point</div> -->
+             <div class="popup-header">
+                 <mat-toolbar style="margin-bottom: 8px !important;" matDialogTitle class="m-0">
+                     <mat-toolbar-row fxLayoutAlign="center center">
+                         <span class="title dialog-title">Check Point</span>
+                     </mat-toolbar-row>
+                 </mat-toolbar>
+             </div>
+             <div class="mb-8" fxLayout="row" fxLayoutAlign="center center" fxFlex="1 0 auto">
+                 Review completed successfully !
+             </div>
+             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                     <mat-label>Current Status</mat-label>
+                     <mat-select matNativeControl formControlName="status"
+                         (selectionChange)="changeStatus($event.value)">
+                         <mat-option [value]="status.status_id" *ngFor="let status of straObjStatus">
+                             {{status.status_name}}</mat-option>
+                     </mat-select>
+                     <mat-error>Current Status is required!</mat-error>
+                 </mat-form-field>
+                 <mat-form-field *ngIf="commentStatus == true" appearance="outline" fxFlex="50" class="pl-4">
+                     <mat-label>Respons For Delay</mat-label>
+                     <input matInput formControlName="comment" required>
+                     <mat-error>Respons For Delay is required!</mat-error>
+                 </mat-form-field>
+                 <mat-form-field *ngIf="commentStatus == false" appearance="outline" fxFlex="50" class="pl-4">
+                     <mat-label>Comment</mat-label>
+                     <input matInput formControlName="comment" required autocomplete="off">
+                     <mat-error>Comment is required!</mat-error>
+                 </mat-form-field>
+             </div>
+             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                     <mat-label>Recovery plan</mat-label>
+                     <input matInput formControlName="recovery_plan" autocomplete="off" [required]="commentStatus">
+                     <!-- <textarea matInput  formControlName="recovery_plan" required></textarea> -->
+                     <mat-error>Recovery plan is required!</mat-error>
+                 </mat-form-field>
+                 <mat-form-field appearance="outline" fxFlex="50" class="pl-4">
+                     <mat-label>Target Date</mat-label>
+                     <input matInput [min]="minMaxDate" [matDatepicker]="picker" formControlName="implement_data"
+                         autocomplete="off" [(ngModel)]="implement_data" [required]="commentStatus">
+                     <mat-error>Target Date is required!</mat-error>
+                     <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                     <mat-datepicker #picker></mat-datepicker>
+                 </mat-form-field>
+             </div>
+             <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                 <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+                     <mat-label>Responsibility</mat-label>
+                     <mat-select matNativeControl formControlName="responsibility" [required]="commentStatus">
+                         <mat-option [value]="user.user_id" *ngFor="let user of  (dataActionOwner | orderBy:'name')">
+                             {{user.name}}</mat-option>
+                     </mat-select>
+                     <mat-error>Responsibility is required!</mat-error>
+                 </mat-form-field>
+             </div>
+             <div class="example-button-row mr-6" fxLayoutAlign="end">
+                 <button mat-raised-button color="accent" class="mr-12 submit-button">Ok</button>
+                 <a mat-raised-button color="accent" (click)="changeReviewClose()">Cancel</a>
+             </div>
+         </form>
+     </div>
+ </div>

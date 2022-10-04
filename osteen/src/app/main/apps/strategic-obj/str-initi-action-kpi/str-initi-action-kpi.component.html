@@ -1,0 +1,143 @@
+<div id="str-initi-action-kp" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-pages-content" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Strategic Objective
+                </span>
+            </div>
+        </div>
+    </div>
+    <!--  HEADER -->
+    <div class="content all-pages-content">
+        <!--  <div class="main-widget pr-8">
+      <div class="widget-group search-filter-select" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}"
+        fxLayoutAlign="start">
+        <div fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+          <button class="mr-16" mat-raised-button (click)="AddStrategicPopupOpen()"
+            *ngIf="strObjPermission.acc_create == 1" [disabled]="buttonDisabled">Add Strategic
+            Objectives</button>
+          <mat-form-field appearance="outline">
+            <mat-label>Department</mat-label>
+            <mat-select (selectionChange)="filterRenderedData($event.value)" [formControl]="dept_nameFilter">
+              <mat-option value="" class="dept-mat-option">All</mat-option>
+              <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">{{department.dept_name}}
+              </mat-option>
+            </mat-select>
+          </mat-form-field>
+          <button class="ml-16" mat-raised-button (click)="resetOptions()">Reset</button>
+        </div>
+      </div>
+    </div> -->
+        <div class="left">
+            <!-- <div *ngFor="let department of renderStrategicData" class=""> -->
+            <!-- Strategic Objectives -->
+            <div class="main-widget" style="margin-right: 10px;">
+                <div class="widget-group p-0 action-comment-header dept-header-color" fxFlex="100" fxLayout="column"
+                    [@animateStagger]="{value:'50'}" style="border-radius: 4px 4px 0 0;">
+                    <div fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100" fxLayoutAlign="start center">
+                        <button class="mat-icon-button mat-icon-button-aroow"
+                            [routerLink]="['/apps/strategic-obj/strategic']">
+                            <span class="mat-button-wrapper">
+                                <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                            </span>
+                        </button>
+                    </div>
+                </div>
+            </div>
+          
+            <div *ngFor="let renderData of renderStrategicData;let i = index">
+                <div class="main-widget strategic-data">
+                    <div class="widget-group p-0 mb-16 d-flex" [@animateStagger]="{value:'50'}"
+                        fxLayoutAlign="space-between" [fxLayout]="direction" fxLayout.xs="column">
+                        <div>
+                            <div class="hadding">Strategic Objectives :</div>
+                        </div>
+                        <div class="render_descrip">
+                            {{renderData.description}}</div>
+                        <div>
+                            <div class="hadding heading_date">Start<br><span
+                                    style="font-weight: 300;font-size:12px;">{{renderData.start_date}}</span></div>
+                        </div>
+                        <div>
+                            <div class="hadding heading_date">Finish<br><span
+                                    style="font-weight: 300;font-size:12px;">{{renderData.end_date}}</span></div>
+                        </div>
+                        <div>
+                            <div class="hadding heading_date" style="    text-align: center;">Target <br><span
+                                    style="font-weight: 300;font-size:small;">{{renderData.target}}</span></div>
+                        </div>
+                        <div>
+                            <a class="link mat-raised-button" (click)="addInitiativeOpen(renderData)"
+                                *ngIf="initiativesPermission.acc_create == 1 && buttonDisabled == false">Add
+                                Initiative</a>
+                        </div>
+                    </div>
+                    <div class="widget-group p-0" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}"
+                        fxLayoutAlign="start">
+                        <div>
+                            <div fxLayoutAlign="start" class="hadding">Initiative :</div>
+                        </div>
+                        <div class="initiative-data" fxLayout="column" fxFlex="100"
+                            *ngFor="let initiative of renderData.initiatives;">
+                            <div class="mb-8" fxLayout="row" fxFlex="100">
+                                <div fxFlex="50" fxFlex.gt-xs="91" fxFlex.gt-md="91">
+                                    {{initiative.definition}}</div>
+                                <div fxLayout="column" fxFlex="25" fxFlex.gt-xs="91" fxFlex.gt-md="91"
+                                    fxLayoutAlign=" center center">
+                                    <p style="margin: 0;">Start</p>
+                                    {{initiative.start_date}}
+                                </div>
+                                <div fxLayout="column" fxFlex="25" fxFlex.gt-xs="91" fxFlex.gt-md="91"
+                                    fxLayoutAlign="center center">
+                                    <p style="margin: 0;">Finish</p>
+                                    {{initiative.end_date}}
+                                </div>
+                                <div fxFlex="100" fxFlex.gt-xs="11" fxFlex.gt-md="11"> <a class="link mat-raised-button"
+                                        (click)="addActionPlanOpen(initiative)"
+                                        *ngIf="actionPlanPermission.acc_create == 1 && buttonDisabled == false">Add
+                                        Action Plan</a></div>
+                            </div>
+                            <div class="mb-4" fxLayout="row" fxFlex="100">
+                                <div fxLayoutAlign="start" class="hadding">Action Plan :</div>
+                            </div>
+                            <div class="actionplan-data" fxLayout="row" fxFlex="100"
+                                *ngFor="let action of initiative.action_plans;">
+                                <div fxFlex="100" fxLayout="row wrap">
+                                    <div class="mb-8" fxLayout="row" fxFlex="100">
+                                        <div fxFlex="50" fxFlex.gt-xs="93" fxFlex.gt-md="93">
+                                            {{action.definition}}</div>
+                                        <div fxLayout="column" fxFlex="25" fFlex.gt-xs="93" fxFlex.gt-md="93"
+                                            fxLayoutAlign="center center">
+                                            <p style="margin: 0;">Start</p>
+                                            {{action.start_date}}
+                                        </div>
+                                        <div fxLayout="column" fxFlex="25" fxFlex.gt-xs="93" fxFlex.gt-md="93"
+                                            fxLayoutAlign="center center">
+                                            <p style="margin: 0;">Finish</p>
+                                            {{action.end_date}}
+                                        </div>
+                                        <div fxFlex.gt-xs="7" fxFlex.gt-md="7"> <a class="link mat-raised-button"
+                                                (click)="AddKpiPopupOpen(initiative.dept_id,initiative.section_id,initiative.s_o_id,action.initiatives_id,action.action_plans_id)"
+                                                *ngIf="kpiPermission.acc_create == 1 && buttonDisabled == false">Add
+                                                KPI</a></div>
+                                    </div>
+                                    <div class="mb-4" fxLayout="row" fxFlex="100">
+                                        <div fxLayoutAlign="start" class="hadding">KPI :</div>
+                                    </div>
+                                    <div class="kpidata-data" fxLayout="row" fxFlex="100"
+                                        *ngFor="let kpi of action.kpis ;">
+                                        <div>{{kpi.kpi_name}}</div>
+                                    </div>
+                                    <div class="kpidata-data" fxLayout="row" fxFlex="100" *ngIf="test == true">
+                                        <div>No Kpi</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>

@@ -1,0 +1,80 @@
+<div id="module-roles" class="page-layout blank">
+  <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+      <!-- APP TITLE -->
+      <div fxLayout="row">
+        <div class="logo" fxLayout="row">
+          <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+           Modules Roles
+          </span>
+        </div>
+      </div>
+    </div>
+     <!-- HEADER -->
+  <div class="content all-pages-content">
+    <div class="left main-fiels">
+      <div class="main-widget">
+        <div class="widget-group p-0 accent fiels-task" fxLayout="row" [@animateStagger]="{value:'50'}">
+          <fuse-widget  class="widget p-0" fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40">
+            <div fxLayoutAlign="start">
+              <div class="pr-16">
+                <div fxLayoutAlign="center">
+                  <button class="mat-icon-button" [routerLink]="['/apps/modules']">
+                    <span class="mat-button-wrapper">
+                      <!-- <mat-icon>arrow_back</mat-icon> -->
+                      <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="pr-16">
+                <div fxLayoutAlign="center" style="padding-top: 10px;">Module Access for Roles</div>
+              </div>
+            </div>
+          </fuse-widget>
+          <div fxLayoutAlign="start" style="margin-top: 10px;">{{moduleName}}</div>
+        </div>
+      </div>
+      <div class="main-widget">
+        <form fxLayout="column" fxLayoutAlign="center" fxFlex="1 0 auto" (ngSubmit)="roleDataPermissions()" novalidate>
+          <div class="roles-hadding" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+            <div fxFlex="20" class="pl-4">
+              <div class="roles-define">Roles</div>
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <div class="roles-define">View</div>
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <div class="roles-define" >Create</div>
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <div class="roles-define">Edit</div>
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <div class="roles-define">Delete</div>
+            </div>
+          </div>
+          <div class="roles-view" fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto" *ngFor="let roles of moduleDataRoles; let i = index">
+            <div fxFlex="20" class="pl-4">
+              <div class="roles-data">{{roles.display_name}}</div>
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <input class="mat-checkbox-inner-container" type="checkbox" [attr.checked]="roles.acc_view == 1 ? 1 : null" (change)="roles.acc_view = roles.acc_view == 1 ? 0 : 1">
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <input class="mat-checkbox-inner-container" type="checkbox" [attr.checked]="roles.acc_create == 1 ? 1 : null" (change)="roles.acc_create = roles.acc_create == 1 ? 0 : 1">
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <input class="mat-checkbox-inner-container" type="checkbox" [attr.checked]="roles.acc_edit == 1 ? 1 : null" (change)="roles.acc_edit = roles.acc_edit == 1 ? 0 : 1">
+            </div>
+            <div fxFlex="20" class="pl-4">
+              <input class="mat-checkbox-inner-container" type="checkbox" [attr.checked]="roles.acc_delete == 1 ? 1 : null" (change)="roles.acc_delete = roles.acc_delete == 1 ? 0 : 1">
+            </div>
+          </div>
+          <div class="example-button-row" fxLayoutAlign="start">
+            <button mat-raised-button color="accent" class="ml-12 mt-24 submit-button">Submit</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

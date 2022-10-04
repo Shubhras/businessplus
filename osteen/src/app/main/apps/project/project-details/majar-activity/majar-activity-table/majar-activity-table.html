@@ -1,0 +1,117 @@
+<div class="page-layout blank">
+  <div class="content all-pages-content">
+    <div style="width: 100%;">
+      <div class="left">
+        <div class="main-widget  mb-4">
+          <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+            <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+              <div fxLayout="column" fxLayoutAlign="start">
+                <div class="example-button-row">
+                  <button mat-raised-button class="button-filter" (click)="openDialog()">Add Activity</button>
+                </div>
+              </div>
+            </fuse-widget>
+          </div>
+        </div>
+        <div class="main-widget">
+          <div class="example-container">
+            <table mat-table [dataSource]="dataSourceProActivity">
+              <ng-container matColumnDef="sr_no" sticky>
+                <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">
+                  <span>
+                    {{element.project_activity_id}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="activity_name">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Activity</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.activity_name}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="milestone_name">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Linked milestone</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.milestone_name}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actvity_start_date">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Start</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.activity_start_date}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="actvity_end_date">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Finish</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.activity_end_date}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="preceeding_activity_name">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Preceeding activity</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.preceeding_activity_name}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="next_activity_name">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Next activity</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.next_activity_name}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="responsibility_person">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Responsibility</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.responsibility_person}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="other_responsibility">
+                <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Other Responsibility</th>
+                <td mat-cell *matCellDef="let element">
+                  <span>
+                    {{element.ex_membar_name}}
+                  </span>
+                </td>
+              </ng-container>
+              <ng-container matColumnDef="action" stickyEnd>
+                <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                  <a href="javascript:void(0)" [matMenuTriggerFor]="menu">
+                    <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg">
+                  </a>
+                  <mat-menu #menu="matMenu">
+                    <button mat-menu-item (click)="editProSingle(element)">
+                      <mat-icon>edit</mat-icon>
+                      <span>Edit</span>
+                    </button>
+                    <button mat-menu-item (click)="deleteMajrActivity(element)">
+                      <mat-icon>delete</mat-icon>
+                      <span>Delete</span>
+                    </button>
+                  </mat-menu>
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumnsProActivity; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumnsProActivity;"></tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

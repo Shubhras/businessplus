@@ -1,0 +1,69 @@
+<div id="business-objective" class="page-layout blank">
+  <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+      <!-- APP TITLE -->
+      <div fxLayout="row">
+        <div class="logo" fxLayout="row">
+          <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          Emerging Trend
+          </span>
+        </div>
+      </div>
+    </div>
+     <!-- HEADER -->
+  <div class="content all-pages-content">
+      <div class="left">
+            <div class="main-widget main-widget-filter">
+              <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                <fuse-widget  class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" >
+                    <div fxLayout="column" fxLayoutAlign="start">
+                      <div class="example-button-row search-filter-input">
+                          <button mat-raised-button class="button-filter" (click)="addObjOpen()" *ngIf="emergingPermission.acc_create == 1" [disabled]="(buttonDisabled == false)">Add Emerging Trend</button>
+                          <mat-form-field appearance="outline">
+                               <mat-label>Search</mat-label>
+                            <input matInput (keyup)="applyFilter($event.target.value)">
+                          </mat-form-field>
+                      </div>
+                    </div>
+                </fuse-widget>
+              </div>
+               <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                  <fuse-widget  class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                      <div fxLayout="column" fxLayoutAlign="start">
+                          <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                            <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                            <ng-container matColumnDef="sr_no" sticky>
+                              <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                              <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="business_objective">
+                              <th mat-header-cell *matHeaderCellDef class="mat-header-name">Emerging Trend</th>
+                              <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.business_objective}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="keywords">
+                              <th mat-header-cell *matHeaderCellDef class="mat-header-name">Keywords</th>
+                              <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.keywords}}</td>
+                            </ng-container>
+                            <ng-container matColumnDef="action" sticky>
+                              <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                              <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                <a href="javascript:void(0)" (click)="editObjOpen(element)" *ngIf="emergingPermission.acc_edit == 1">
+                                  <mat-icon class="mat-icon-edit">edit</mat-icon>
+                                </a>
+                                <a href="javascript:void(0)" (click)="deleteObj(element.business_objective_id)" *ngIf="emergingPermission.acc_delete == 1">
+                                  <mat-icon class="mat-icon-clear">clear</mat-icon>
+                                </a>
+                              </td>
+                            </ng-container>
+                            <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                             <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                          </table>
+                          <mat-paginator  [pageSizeOptions]="[15, 20, 25]" showFirstLastButtons></mat-paginator>
+                        </div>
+                      </div>
+                  </fuse-widget>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

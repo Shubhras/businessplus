@@ -1,0 +1,160 @@
+<div id="user-list" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Users
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="content all-pages-content">
+        <div class="left">
+            <div class="main-widget main-widget-filter">
+                <div class="widget-group p-0" fxLayout="row" fxLayout.xs="column" [@animateStagger]="{value:'50'}">
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="60" fxFlex.gt-sm="65" fxFlex.gt-md="50">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-button-row search-filter-input">
+                                <button mat-raised-button class="button-filter" (click)="AddUserOpen()">Add
+                                    User</button>
+                                <mat-form-field appearance="outline" class="srch-anyy srchinput search-hght">
+                                    <mat-label>Search</mat-label>
+                                    <input matInput (keyup)="applyFilter($event.target.value)">
+                                </mat-form-field>
+                                <!-- <input #myInput class="custom-file-input select-file-btn rmve-pad-select" type="file"
+                                    accept="application/csv,application/vnd.ms-excel" id="customFile"
+                                    (change)="signupByFile($event)">
+                                <input type="file" (change)="signupByFile($event)" multiple="false" /> -->
+
+                            </div>
+                        </div>
+                    </fuse-widget>
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-sm="35" fxFlex.gt-md="50">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-button-row button-excel-pdf" fxLayoutAlign="end">
+                                <!-- <button mat-raised-button class="button-excel">Download File Formet</button> -->
+                                <button class="mat-raised-button button-excel download-print"
+                                    (click)="KpiTOExcel()">Download Example</button>
+                                <button mat-raised-button class="button-pdf download-print"
+                                    (click)="userListPDF()">Print</button>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                </div>
+                <div class="widget-group p-0" fxLayout="row" [@animateStagger]="{value:'50'}">
+                    <fuse-widget class="widget p-0" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                        <div fxLayout="column" fxLayoutAlign="start">
+                            <div class="example-container mat-elevation-z8" id="content" #content #TABLE>
+                                <table mat-table [dataSource]="dataSource" id="contentToConvert">
+                                    <ng-container matColumnDef="sr_no" sticky>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Sr.No.</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Name</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.name}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="gender">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Gender</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.gender}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="email">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Email</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.email}}
+                                        </td>
+                                    </ng-container>
+                                    <!-- <ng-container matColumnDef="date_birth">
+                    <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Date Of Birth</th>
+                    <td mat-cell *matCellDef="let element">{{element.date_birth | date:'dd-MM-yyyy'}}</td>
+                  </ng-container> -->
+                                    <ng-container matColumnDef="mobile">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Mobile</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.mobile}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="city">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">City</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.city}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="address">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Address</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">{{element.address}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="multi_unit_ids">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Unit</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            <span *ngFor="let unit of element.multi_unit_ids">{{unit.unit_name}},
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="role_name">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Role</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            {{element.display_name}}
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="multi_dept_ids">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Department</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            <span *ngFor="let dept of element.multi_dept_ids" [ngStyle]="{'color':dept.dept_id == '0' ? '#fffff' : ' '}">{{dept.dept_name}} 
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="multi_section_ids">
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-name">Section</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-name">
+                                            <span
+                                                *ngFor="let section of element.multi_section_ids">{{section.section_name}}  
+                                            </span>
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="action" sticky>
+                                        <th mat-header-cell *matHeaderCellDef class="mat-header-action">Action</th>
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                                            <button class="btn__review startegic-dots more-action"
+                                                [matMenuTriggerFor]="userlist">
+                                                <img class="more-horiz-icon" src="assets/icons/more_horiz-24px.svg"
+                                                    style="transform: rotate(90deg);">
+                                            </button>
+                                            <mat-menu #userlist="matMenu" xPosition="before">
+                                                <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                    <a href="javascript:void(0)" (click)="editUserOpen(element)">
+                                                        <mat-icon class="mat-icon-clear"
+                                                            style="height: 25px; width: 15px;font-size: 19px;margin-right: 12px;margin-top  : 4px;">
+                                                            edit
+                                                        </mat-icon>
+                                                        <span style="color: darkslategray;">Edit</span>
+                                                    </a>
+                                                </button>
+                                                <button mat-menu-item style="line-height: 21px;height: 25px;">
+                                                    <a href="javascript:void(0)" (click)="userDelete(element.user_id)">
+                                                        <mat-icon class="mat-icon-clear"
+                                                            style="height: 25px; width: 15px;font-size: 19px;margin-right: 12px;margin-top  : 4px;">
+                                                            clear
+                                                        </mat-icon>
+                                                        <span style="color: darkslategray;">Clear</span>
+                                                    </a>
+                                                </button>
+                                            </mat-menu>
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                                </table>
+                                <mat-paginator [pageSizeOptions]="[25, 50, 100]" showFirstLastButtons></mat-paginator>
+                            </div>
+                        </div>
+                    </fuse-widget>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

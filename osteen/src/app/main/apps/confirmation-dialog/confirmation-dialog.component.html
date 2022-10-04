@@ -1,0 +1,13 @@
+ <div class="content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row" class="h-150">
+        <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+            <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                 <div>Are you sure you want to remove this {{title}}</div>
+            </div>
+            <div class="example-button-row mt-8" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button" (click)="accept()">Ok</button>
+                <button mat-raised-button color="accent" (click)="decline()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>

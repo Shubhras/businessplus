@@ -1,0 +1,139 @@
+@import "src/@fuse/scss/fuse";
+
+@media only screen and (min-width: 1200px) {
+    .mat-dialog-container {
+        min-width: 500px;
+    }
+}
+
+.left {
+    background-color: #2e7c1400 !important;
+}
+
+.content.all-pages-content .example-container {
+    margin: 20px 0px 0 0px !important;
+    min-height: fit-content !important;
+}
+
+button {
+    //   color: #fff!important;
+    font-size: 16.5px !important;
+}
+
+#swot-analysis {
+
+
+    .articles-list {
+        width        : 99%;
+        margin       : 8px;
+        border-radius: 4px;
+        box-shadow   : none !important;
+        //box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+        flex         : 1 1 100%;
+        max-width    : calc(100% - 16px);
+        @include mat-elevation(1);
+
+        @include media-breakpoint('xs') {
+            min-width: 300px;
+            margin   : 16px 0;
+        }
+
+    }
+
+    @media (min-width: 768px) {
+        .articles-list {
+            // max-width: calc(50% - 16px);
+        }
+    }
+
+    .main-widget-filter {
+        padding-left: 0px;
+    }
+
+    .example-container {
+        // min-width                 : 204%;
+    }
+
+    .strength-table {
+        tr.mat-header-row {
+            background-color: #f9f9f9;
+            color           : #90ee90 !important;
+        }
+    }
+
+    .weaknesses-table {
+        tr.mat-header-row {
+            background-color: #f9f9f9;
+            color           : orange !important;
+        }
+    }
+
+    .opportunities-table {
+        tr.mat-header-row {
+            background-color: #f9f9f9;
+            color           : #189cc7 !important;
+        }
+    }
+
+    .threats-table {
+        tr.mat-header-row {
+            background-color: #f9f9f9;
+            color           : #e84747 !important;
+        }
+    }
+
+    .mat-header-name {
+        text-align  : left;
+        padding-left: 3px;
+    }
+
+    .mat-header-keywords {
+        text-align  : left;
+        padding-left: 3px;
+        width       : 155px;
+    }
+
+    .mat-cell-name {
+        text-align  : left;
+        padding-left: 3px;
+    }
+
+    .mat-header-action {
+        padding-right: 0px;
+        width        : 70px;
+    }
+
+    .mat-cell-action {
+        padding-right: 2px;
+    }
+
+    .mat-icon-edit {
+        font-size       : 18px;
+        min-height      : 25px;
+        height          : 25px;
+        border-radius   : 4px;
+        background-color: #3972b9e8;
+        color           : white;
+        margin-left     : 4px;
+    }
+
+    .mat-icon-clear {
+        font-size       : 18px;
+        min-height      : 25px;
+        height          : 25px;
+        border-radius   : 4px;
+        background-color: #f44336;
+        color           : white;
+        margin-left     : 4px;
+    }
+
+    .mat-list,
+    .mat-nav-list,
+    .mat-selection-list {
+        padding-top                : 0px;
+        display                    : block;
+        -webkit-tap-highlight-color: transparent;
+        // background-color: #f7f7f7;
+
+    }
+}

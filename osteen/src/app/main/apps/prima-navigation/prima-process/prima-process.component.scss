@@ -1,0 +1,52 @@
+@import "src/@fuse/scss/fuse";
+
+prima-process {
+   min-height: 100%;
+   /* .fuse-navy{
+    background-color: #2e3340!important;
+    color: white !important;
+   } */
+   /* .home-event{
+    background-image: url("assets/images/map1.png");
+   } */
+    #prima-process {
+        width: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        .header {
+            h1 {
+                font-size: 40px;
+                font-weight: 300;
+            }
+        }
+        .primaprocess-list {
+            padding: 8px 0px;
+            max-height: none !important;
+          /*   .primaprocess-list-item {
+                min-width: 210px;
+                min-height: 210px;
+                width: 210px;
+                height: 210px;
+                padding: 24px 0;
+                margin: 16px;
+                border-radius: 8px;
+                background: #000000e0;
+                transition: box-shadow 150ms ease-in;
+                cursor: pointer;
+                &:hover:not(.add-new-primaprocess) {
+                    @include mat-elevation(8);
+                }
+                .primaprocess-name {
+                    padding: 16px 32px 0 32px;
+                    font-weight: 300;
+                    font-size: 16px;
+                    text-align: center;
+                }
+                &.add-new-primaprocess {
+                    background: rgba(0, 0, 0, 0.06);
+                    border: 2px dashed rgba(255, 255, 255, 0.37);
+                }
+            } */
+        }
+    }
+}

@@ -1,0 +1,340 @@
+<div id="company-performances" class="page-layout blank">
+  <!-- HEADER -->
+  <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+    <!-- APP TITLE -->
+    <div fxLayout="row">
+      <div class="logo" fxLayout="row">
+        <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          Company Performance
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- HEADER -->
+  <div class="content all-pages-content">
+    <div class="left">
+      <div fxLayout="column" fxLayoutAlign="center">
+        <!--  vision start -->
+        <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+          <div class="course" fxFlex="100" fxFlex.gt-xs="25" fxFlex.gt-sm="25"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+              <div class="header small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                <div class="category" fxFlex fxLayoutAlign="center center">Vision</div>
+              </div>
+              <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+                <div class="vission-content">
+                  <span [innerHtml]="viewVision"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="course" fxFlex="100" fxFlex.gt-xs="25" fxFlex.gt-sm="25"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+              <div class="header small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                <div class="category" fxFlex fxLayoutAlign="center center">Mission</div>
+              </div>
+              <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+                <div class="vission-content">
+                  <span [innerHtml]="viewMission"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="course" fxFlex="100" fxFlex.gt-xs="25" fxFlex.gt-sm="25"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+              <div class="header small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                <div class="category" fxFlex fxLayoutAlign="center center">Values</div>
+              </div>
+              <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+                <div class="vission-content">
+                  <span [innerHtml]="viewValues"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="course" fxFlex="100" fxFlex.gt-xs="25" fxFlex.gt-sm="25"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+              <div class="header small-header-color" fxLayout="row" fxLayoutAlign="center center">
+                <div class="category" fxFlex fxLayoutAlign="center center">
+                  <!-- Priority- -->CEO`S msg
+                </div>
+              </div>
+              <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+                <div class="vission-content">
+                  <!-- <div *ngFor="let priority of priorityAllData; let i = index">{{i+1}} {{priority.business_priority}}
+                  </div> -->
+                  <span [innerHtml]="viewCEO_msg"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <!--  Vision end -->
+        <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+          <!--  Highlights start -->
+          <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+              <div class="header-kpigraph dept-header-color" fxLayout="row" fxLayoutAlign="center center">
+                <div class="category" fxFlex fxLayoutAlign="center center">Highlights</div>
+              </div>
+              <div class="content" fxLayout="row wrap" fxLayoutAlign="center center" fxFlex="100" [@animateStagger]="{value:'50'}">
+                <div class="highlight-content">
+                  <!-- {{highlights}} -->
+                  <span [innerHtml]="highlights"></span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--  Highlights start -->
+          <!--  Table start -->
+          <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+              <div class="header-kpigraph dept-header-color" fxLayout="row" fxLayoutAlign="center center">
+                <div class="category" fxFlex fxLayoutAlign="center center">Lead KPIs</div>
+              </div>
+              <div class="content" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-md="100">
+                  <div class="company-performances-table">
+                    <table mat-table [dataSource]="dataSource">
+                      <ng-container matColumnDef="sr_no" sticky>
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">S. No.</th>
+                        <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="kpi_name">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-cell-kpi-name">Lead KPI</th>
+                        <td mat-cell *matCellDef="let element" class="mat-cell-kpi-name">{{element.kpi_name}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="year_for">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-target">Year</th>
+                        <td mat-cell *matCellDef="let element">{{element.year_for}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="four_year">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-year">
+                          {{userSelectedYearFull -4}}<span
+                            *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -3}}</span></th>
+                        <td mat-cell *matCellDef="let element">{{element.four_year}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="three_year">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-year">
+                          {{userSelectedYearFull -3}}<span
+                            *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -2}}</span></th>
+                        <td mat-cell *matCellDef="let element">{{element.three_year}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="two_year">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-year">
+                          {{userSelectedYearFull -2}}<span
+                            *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf -1}}</span></th>
+                        <td mat-cell *matCellDef="let element">{{element.two_year}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="one_year">
+                        <th mat-header-cell *matHeaderCellDef>{{userSelectedYearFull -1}}<span
+                            *ngIf="companyFinancialYear =='april-march'">-{{userSelectedYearHalf}}</span>
+                        </th>
+                        <td mat-cell *matCellDef="let element">{{element.one_year}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="ytd_target_actual">
+                        <th mat-header-cell *matHeaderCellDef>Current Year {{userSelectedYearFull}}<span
+                            *ngIf="companyFinancialYear =='april-march'">-{{currentYearPlusOne}}</span> YTD</th>
+                        <td mat-cell *matCellDef="let element"
+                          [ngStyle]="getColor(element.year_for, element.ytd_color)">{{element.ytd_target_actual}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="current_year_month">
+                        <th mat-header-cell *matHeaderCellDef>Target YTD</th>
+                        <td mat-cell *matCellDef="let element">{{element.current_year_month}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="last_year_month">
+                        <th mat-header-cell *matHeaderCellDef>Last Year YTD</th>
+                        <td mat-cell *matCellDef="let element">{{element.last_year_month}}</td>
+                      </ng-container>
+                      <ng-container matColumnDef="diff_last_year_month">
+                        <th mat-header-cell *matHeaderCellDef>% Change</th>
+                        <td mat-cell *matCellDef="let element">{{element.diff_last_year_month}}%</td>
+                      </ng-container>
+                      <ng-container matColumnDef="cagr">
+                        <th mat-header-cell *matHeaderCellDef class="mat-header-kpi-ytd">CAGR %</th>
+                        <td mat-cell *matCellDef="let element">{{element.cagr}}</td>
+                      </ng-container>
+                      <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                      <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+                      </tr>
+                    </table>
+                  </div>
+                </fuse-widget>
+                <!-- <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="25" fxFlex.gt-md="25">
+                  <div class="content" fxLayout="column" fxLayoutAlign="center center" fxFlex="1 1 auto">
+                    <div id="pieChartPerformKPI" fxLayoutAlign="center" #pieChartPerformKPI></div>
+                  </div>
+                </fuse-widget> -->
+              </div>
+            </div>
+          </div>
+          <!--  Table end -->
+          <!--  Customer start -->
+          <!-- <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+            [@animate]="{value:'*',params:{y:'100%'}}">
+            <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+              <div class="header-kpigraph dept-header-color" fxLayout="row" fxLayoutAlign="center center">
+                <div class="category" fxFlex fxLayoutAlign="center center">Customer Centric KPIs</div>
+              </div>
+              <div class="content" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                <fuse-widget class="widget" [className]="kpi.slug != 'Customer' ? 'fuse-widget-hide' : ' '"
+                  fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" *ngFor="let kpi of kpisData;">
+                  <div class="mat-elevation-z8" *ngIf="kpi.slug == 'Customer'">
+                    <div fxLayout="row" class="kpi-graph">
+                      <div fxFlex.gt-xs="63" fxFlex.gt-md="63">{{kpi.kpi_name}}</div>
+                      <div fxFlex.gt-xs="27" fxFlex.gt-md="27">{{kpi.u_o_m_name}}</div>
+                      <div fxLayoutAlign="center" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                        <a href="javascript:void(0)" (click)="kpiDefinitionOpen(kpi.kpi_definition)"
+                          matTooltip="Definition" aria-label="Definition">
+                          <img class="kpi-defination-icon" src="assets/icons/kpi-defination-info.png">
+                        </a>
+                      </div>
+                      <div fxLayoutAlign="flex-end" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                        <a href="javascript:void(0)" (click)="kpiCommentOpen(kpi.kpi_id)" matTooltip="Comment" aria-label="Comment">
+                          <img class="kpi-comment-icon" src="assets/icons/kpi-comment.png">
+                        </a>
+                      </div>
+                    </div>
+                    <div class="kpi-line-chart">
+                      <div fxLayoutAlign="flex-end" class="ideal-trend">
+                        <a href="javascript:void(0)" matTooltip="positive (good if number goes up)"
+                          aria-label="positive (good if number goes up)">
+                          <img *ngIf="kpi.ideal_trend == 'positive'" class="kpi-trend-upward-icon"
+                            src="assets/icons/arrow-up-kpi.png">
+                        </a>
+                        <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                          aria-label="negative (good if number goes down)">
+                          <img *ngIf="kpi.ideal_trend == 'negative'" class="kpi-trend-downward-icon"
+                            src="assets/icons/arrow-kpi-down.png">
+                        </a>
+                      </div>
+                      <line-chart [data]="kpi.chartData" [config]="config1" [elementId]="kpi.elementID"
+                        [elementTrend]="kpi.IdealTrend" [elementCompare]="kpi.elementCompare">
+                      </line-chart>
+                    </div>
+                  </div>
+                </fuse-widget>
+              </div>
+            </div>
+          </div> -->
+          <!--  Customer end -->
+          <!--  Company start -->
+          <!-- <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+            <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+              [@animate]="{value:'*',params:{y:'100%'}}">
+              <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                <div class="header-kpigraph dept-header-color" fxLayout="row" fxLayoutAlign="center center">
+                  <div class="category" fxFlex fxLayoutAlign="center center">Company Centric KPIs</div>
+                </div>
+                <div class="content" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                  <fuse-widget class="widget" [className]="kpi.slug != 'Company' ? 'fuse-widget-hide' : ' '"
+                    fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" *ngFor="let kpi of kpisData;">
+                    <div class="mat-elevation-z8" *ngIf="kpi.slug == 'Company'">
+                      <div fxLayout="row" class="kpi-graph">
+                        <div fxFlex.gt-xs="63" fxFlex.gt-md="63">{{kpi.kpi_name}}</div>
+                        <div fxFlex.gt-xs="27" fxFlex.gt-md="27">{{kpi.u_o_m_name}}</div>
+                        <div fxLayoutAlign="center" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                          <a href="javascript:void(0)" (click)="kpiDefinitionOpen(kpi.kpi_definition)"
+                            matTooltip="Definition" aria-label="Definition">
+                            <img class="kpi-defination-icon" src="assets/icons/kpi-defination-info.png">
+                          </a>
+                        </div>
+                        <div fxLayoutAlign="flex-end" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                          <a href="javascript:void(0)" (click)="kpiCommentOpen(kpi.kpi_id)" matTooltip="Comment" aria-label="Comment">
+                            <img class="kpi-comment-icon" src="assets/icons/kpi-comment.png">
+                          </a>
+                        </div>
+                      </div>
+                      <div class="kpi-line-chart">
+                        <div fxLayoutAlign="flex-end" class="ideal-trend">
+                          <a href="javascript:void(0)" matTooltip="positive (good if number goes up)"
+                            aria-label="positive (good if number goes up)">
+                            <img *ngIf="kpi.ideal_trend == 'positive'" class="kpi-trend-upward-icon"
+                              src="assets/icons/arrow-up-kpi.png">
+                          </a>
+                          <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                            aria-label="negative (good if number goes down)">
+                            <img *ngIf="kpi.ideal_trend == 'negative'" class="kpi-trend-downward-icon"
+                              src="assets/icons/arrow-kpi-down.png">
+                          </a>
+                        </div>
+                        <line-chart [data]="kpi.chartData" [config]="config1" [elementId]="kpi.elementID"
+                          [elementTrend]="kpi.IdealTrend" [elementCompare]="kpi.elementCompare">
+                        </line-chart>
+                      </div>
+                    </div>
+                  </fuse-widget>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!--  Company end -->
+          <!--  Employee start -->
+          <!-- <div class="courses" fxLayout="row wrap" fxLayoutAlign="center" [@animateStagger]="{value:'50'}">
+            <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+              [@animate]="{value:'*',params:{y:'100%'}}">
+              <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                <div class="header-kpigraph dept-header-color" fxLayout="row" fxLayoutAlign="center center">
+                  <div class="category" fxFlex fxLayoutAlign="center center">Employee Centric KPIs</div>
+                </div>
+                <div class="content" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                  <fuse-widget class="widget" [className]="kpi.slug != 'Employee' ? 'fuse-widget-hide' : ' '"
+                    fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50" *ngFor="let kpi of kpisData;">
+                    <div class="mat-elevation-z8" *ngIf="kpi.slug == 'Employee'">
+                      <div fxLayout="row" class="kpi-graph">
+                        <div fxFlex.gt-xs="63" fxFlex.gt-md="63">{{kpi.kpi_name}}</div>
+                        <div fxFlex.gt-xs="27" fxFlex.gt-md="27">{{kpi.u_o_m_name}}</div>
+                        <div fxLayoutAlign="center" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                          <a href="javascript:void(0)" (click)="kpiDefinitionOpen(kpi.kpi_definition)"
+                            matTooltip="Definition" aria-label="Definition">
+                            <img class="kpi-defination-icon" src="assets/icons/kpi-defination-info.png">
+                          </a>
+                        </div>
+                        <div fxLayoutAlign="flex-end" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                          <a href="javascript:void(0)" (click)="kpiCommentOpen(kpi.kpi_id)" matTooltip="Comment" aria-label="Comment">
+                            <img class="kpi-comment-icon" src="assets/icons/kpi-comment.png">
+                          </a>
+                        </div>
+                      </div>
+                      <div class="kpi-line-chart">
+                        <div fxLayoutAlign="flex-end" class="ideal-trend">
+                          <a href="javascript:void(0)" matTooltip="positive (good if number goes up)"
+                            aria-label="positive (good if number goes up)">
+                            <img *ngIf="kpi.ideal_trend == 'positive'" class="kpi-trend-upward-icon"
+                              src="assets/icons/arrow-up-kpi.png">
+                          </a>
+                          <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                            aria-label="negative (good if number goes down)">
+                            <img *ngIf="kpi.ideal_trend == 'negative'" class="kpi-trend-downward-icon"
+                              src="assets/icons/arrow-kpi-down.png">
+                          </a>
+                        </div>
+                        <line-chart [data]="kpi.chartData" [config]="config1" [elementId]="kpi.elementID"
+                          [elementTrend]="kpi.IdealTrend" [elementCompare]="kpi.elementCompare">
+                        </line-chart>
+                      </div>
+                    </div>
+                  </fuse-widget>
+                  <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50">
+                    <div class="mat-elevation-z8">
+                      <div class="kpi-line-chart">
+                        <div id="containerPROJECT" style="max-width: 530px; height: 350px; margin: 0 auto "></div>
+                      </div>
+                    </div>
+                  </fuse-widget>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <!--  Employee end -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

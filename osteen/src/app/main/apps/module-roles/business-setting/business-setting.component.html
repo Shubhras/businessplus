@@ -1,0 +1,343 @@
+<div id="business-setting" class="page-layout simple left-sidebar inner-sidebar inner-scroll">
+  <!-- HEADER -->
+  <div class="header-content-dashboard" fxLayout="column" fxLayoutAlign="center start" fxLayout.gt-xs="row">
+    <!-- APP TITLE -->
+    <div fxLayout="row">
+      <div class="logo" fxLayout="row">
+        <button mat-icon-button class="sidebar-toggle mr-12" fxHide.gt-sm
+          (click)="toggleSidebar('contacts-main-sidebar')">
+          <mat-icon>menu</mat-icon>
+        </button>
+        <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          Business Setting
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- HEADER -->
+  <div class="content all-pages-content">
+    <fuse-sidebar class="sidebar" name="contacts-main-sidebar" position="left" lockedOpen="gt-sm">
+      <div class="content" fusePerfectScrollbar>
+        <div class="sidebar-content">
+          <div class="card">
+            <div class="header p-16" fxLayout="row" fxLayoutAlign="start center">
+              <!--  <img [src]="user.avatar" class="avatar mr-16" [alt]="user.name" />-->
+              <mat-icon class="settings-icon">settings</mat-icon>
+              <span class="h4">Settings</span>
+              <button mat-icon-button class="sidebar-arrow-back" (click)="toggleSidebarHide('contacts-main-sidebar')" fxHide.gt-md>
+                <mat-icon class="secondary-text">arrow_back</mat-icon>
+              </button>
+            </div>
+            <div class="py-16" fusePerfectScrollbar>
+              <div class="nav material2">
+                <div class="nav-item" aria-label="inbox">
+                  <a class="nav-link" matRipple (click)="changeTab('all')"
+                    [ngClass]="{'active accent':tabByVlue ==='all'}">
+                    <span class="title">Company</span>
+                  </a>
+                </div>
+                <div class="nav-item" aria-label="strategic" (click)="changeTab('strategic')">
+                  <a class="nav-link" matRipple [ngClass]="{'active accent':tabByVlue ==='strategic'}">
+                    <div class="title">Strategic Objective</div>
+                  </a>
+                </div>
+                <div class="nav-item" aria-label="kpidata" (click)="changeTab('kpidata')">
+                  <a class="nav-link" matRipple [ngClass]="{'active accent':tabByVlue ==='kpidata'}">
+                    <div class="title">KPI</div>
+                  </a>
+                </div>
+                <div class="nav-item" aria-label="task" (click)="changeTab('task')">
+                  <a class="nav-link" matRipple [ngClass]="{'active accent':tabByVlue ==='task'}">
+                    <div class="title">Task</div>
+                  </a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </fuse-sidebar>
+    <div class="center p-16 pb-24" fusePerfectScrollbar>
+      <div class="content">
+        <div *ngIf="tabByVlue ==='all'">
+          <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+            <div class="category">Company</div>
+          </div>
+          <div class="p-16" fxLayout="row">
+            <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+              <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="companyForm"
+                [formGroup]="companyForm" (ngSubmit)="companySubmit()" novalidate>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                    <mat-form-field appearance="outline" fxFlex="50">
+                        <mat-label>Company financial year cycle</mat-label>
+                        <input formControlName="financial_year" matInput readonly>
+                        <mat-error>Year is required!</mat-error>
+                      </mat-form-field>
+                  </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label><!-- Reminder Dates -->
+                      Monthly data updation date</mat-label>
+                    <!-- <input matInput formControlName="reminder_date" [(ngModel)]="companyData.reminder_date"> -->
+                    <mat-select formControlName="reminder_date">
+                      <mat-option [value]="01">1</mat-option>
+                      <mat-option [value]="02">2</mat-option>
+                      <mat-option [value]="03">3</mat-option>
+                      <mat-option [value]="04">4</mat-option>
+                      <mat-option [value]="05">5</mat-option>
+                      <mat-option [value]="06">6</mat-option>
+                      <mat-option [value]="07">7</mat-option>
+                      <mat-option [value]="08">8</mat-option>
+                      <mat-option [value]="09">9</mat-option>
+                      <mat-option [value]="10">10</mat-option>
+                      <mat-option [value]="11">11</mat-option>
+                      <mat-option [value]="12">12</mat-option>
+                      <mat-option [value]="13">13</mat-option>
+                      <mat-option [value]="14">14</mat-option>
+                      <mat-option [value]="15">15</mat-option>
+                    </mat-select>
+                    <mat-error>Date is required!</mat-error>
+                  </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label><!-- Reminder Frequency -->
+                      Advance reminder alert
+                    </mat-label>
+                    <!-- <input matInput type="number" min="1" max="3" formControlName="reminder_frequency" [(ngModel)]="companyData.reminder_frequency"> -->
+                    <mat-select formControlName="reminder_frequency">
+                        <mat-option [value]="1">1 day</mat-option>
+                        <mat-option [value]="2">2 days</mat-option>
+                        <mat-option [value]="3">3 days</mat-option>
+                        <mat-option [value]="4">4 days</mat-option>
+                        <mat-option [value]="7">1 week</mat-option>
+                        <mat-option [value]="14">2 week</mat-option>
+                    </mat-select>
+                    <mat-error>Day is required!</mat-error>
+                  </mat-form-field>
+                </div>
+                <div fxLayout="column" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <div fxLayout="row">Company logo </div>
+                  <div fxLayout="row" class="logo-company company-image">
+                    <label class="company__company-pic" for="company_logo">
+                        <img class="profile-image avatar huge"
+                        src="{{companyForm.get('company_logo').value ? companyForm.get('company_logo').value : companyPicture}}"
+                            [@animate]="{value:'*',params:{delay:'50ms',scale:'0.2'}}">
+                        <mat-icon class="upload-button">camera_alt</mat-icon>
+                        <input type='file' id="company_logo" accept=".png, .jpg, .jpeg" #fileInput
+                            (change)="comLogoSelected($event)" />
+                    </label>
+                  </div>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Company email</mat-label>
+                    <input formControlName="email" matInput>
+                    <mat-error>Company email is required!</mat-error>
+                  </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="50">
+                    <mat-label>Company address</mat-label>
+                    <textarea  formControlName="company_address" matInput></textarea>
+                    <mat-error>Company address is required!</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="example-button-row" fxLayoutAlign="start">
+                  <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="tabByVlue ==='strategic'">
+          <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+            <div class="category">Strategic Objective</div>
+          </div>
+          <div class="p-16" fxLayout="row">
+            <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+              <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="strObjForm" [formGroup]="strObjForm"
+                (ngSubmit)="strObjSubmit()" novalidate>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+                  *ngFor="let strObj of strObjData">
+                  <mat-form-field appearance="outline" fxFlex="20" class="pr-8">
+                    <mat-label>{{strObj.status_name}}</mat-label>
+                    <input matInput formControlName="color" value="{{strObj.status_name}}" readonly>
+                    <!--  <mat-error>Color is required!</mat-error> -->
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-8 pr-8">
+                    <mat-label>Color code</mat-label>
+                    <input matInput class="color-input" [(colorPicker)]="strObj.color_code"
+                      [style.background]="strObj.color_code" [cpPresetColors]="presetColors"
+                      value="{{strObj.color_code}}">
+                    <mat-error>Color code is required!</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-8 pr-8">
+                    <mat-label>Min</mat-label>
+                    <input matInput value="{{strObj.min}}">
+                    <mat-error>Min is required!</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-8 pr-8">
+                    <mat-label>Max</mat-label>
+                    <input matInput value="{{strObj.max}}">
+                    <mat-error>Max is required!</mat-error>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-8">
+                    <mat-label>Accuracy Percentage</mat-label>
+                    <input matInput value="{{strObj.accuracy_percentage}}">
+                    <mat-error>Accuracy Percentage is required!</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="example-button-row" fxLayoutAlign="start">
+                  <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="tabByVlue ==='kpidata'">
+          <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+            <div class="category">KPI</div>
+          </div>
+          <div fxLayout="row">
+            <div class="m-16" fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100">
+              <div class="company-performances-table">
+                <table mat-table [dataSource]="dataSource">
+                  <ng-container matColumnDef="sr_no" sticky>
+                    <th mat-header-cell *matHeaderCellDef>Sr.No.</th>
+                    <td mat-cell *matCellDef="let element">{{element.sr_no}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="kpi_name">
+                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell-kpi-name">Performance KPI</th>
+                    <td mat-cell *matCellDef="let element" class="mat-cell-kpi-name">{{element.kpi_name}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="performance_dash_name">
+                    <th mat-header-cell *matHeaderCellDef>Performance Type</th>
+                    <td mat-cell *matCellDef="let element">{{element.performance_dash_name}}</td>
+                  </ng-container>
+                  <ng-container matColumnDef="action">
+                    <th mat-header-cell *matHeaderCellDef class="mat-header-cell">Action</th>
+                    <td mat-cell *matCellDef="let element" class="mat-cell-action">
+                      <a href="javascript:void(0)" (click)="performanceKpiOpen(element)"><img class="add-edit-icon"
+                          src="assets/icons/edit-08-512.jpg"></a>
+                    </td>
+                  </ng-container>
+                  <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+                  <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+                </table>
+              </div>
+            </div>
+          </div>
+          <div fxLayout="row">
+            <div class="m-16" fxLayout="column" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100">
+              <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                <div [fxLayout]="direction" class="mb-8" fxLayout.xs="column" fxFlex="1 0 auto">
+                  <div fxFlex="25" class="ml-8">Color</div>
+                  <div fxFlex="25" class="ml-8">Color code</div>
+                  <div fxFlex="25" class="ml-8">Positive Trend <a href="javascript:void(0)"
+                      matTooltip="positive (good if number goes up)" aria-label="positive (good if number goes up)">
+                      <img class="kpi-trend-upward-icon" src="assets/icons/arrow-up-kpi.png">
+                    </a>
+                  </div>
+                  <div fxFlex="25" class="ml-8">Negative Trend
+                    <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                      aria-label="negative (good if number goes down)">
+                      <img class="kpi-trend-downward-icon" src="assets/icons/arrow-kpi-down.png">
+                    </a>
+                  </div>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label>Green</mat-label>
+                    <input matInput readonly>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label>Color code</mat-label>
+                    <input matInput class="color-input" [(colorPicker)]="kpiGreen" [style.background]="kpiGreen"
+                      [cpPresetColors]="presetColors" value="{{kpiGreen}}">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label></mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label></mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label>Yellow</mat-label>
+                    <input matInput readonly>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label>Color code</mat-label>
+                    <input matInput class="color-input" [(colorPicker)]="kpiYellow" [style.background]="kpiYellow"
+                      [cpPresetColors]="presetColors" value="{{kpiYellow}}">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label></mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label></mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                </div>
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label>Red</mat-label>
+                    <input matInput readonly>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label>Color code</mat-label>
+                    <input matInput class="color-input" [(colorPicker)]="kpiRed" [style.background]="kpiRed"
+                      [cpPresetColors]="presetColors" value="{{kpiRed}}">
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label></mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="25" class="pl-8 pr-8">
+                    <mat-label></mat-label>
+                    <input matInput>
+                  </mat-form-field>
+                </div>
+                <div class="example-button-row" fxLayoutAlign="start">
+                  <button mat-raised-button color="accent" class="mr-12 submit-button submitt">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+        <div *ngIf="tabByVlue ==='task'">
+          <div class="hading small-header-color" fxLayout="row" fxLayoutAlign="center center">
+            <div class="category">Task</div>
+          </div>
+          <div class="p-16" fxLayout="row">
+            <div fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+              <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto">
+                <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start" fxFlex="1 0 auto"
+                  *ngFor="let task of tasksData">
+                  <mat-form-field appearance="outline" fxFlex="20" class="pr-8">
+                    <mat-label>{{task.status_name}}</mat-label>
+                    <input matInput value="{{task.status_name}}" readonly>
+                  </mat-form-field>
+                  <mat-form-field appearance="outline" fxFlex="20" class="pl-8 pr-8">
+                    <mat-label>Color code</mat-label>
+                    <input matInput class="color-input" [(colorPicker)]="task.color_code"
+                      [style.background]="task.color_code" [cpPresetColors]="presetColors" value="{{task.color_code}}">
+                    <mat-error>Color code is required!</mat-error>
+                  </mat-form-field>
+                </div>
+                <div class="example-button-row" fxLayoutAlign="start">
+                  <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

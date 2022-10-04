@@ -1,0 +1,112 @@
+<div class="content popup-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="addQtlySummaryForm" [formGroup]="addQtlySummaryForm" (ngSubmit)="addQtlySummary()" novalidate>
+            <!-- <div class="h3 mb-12">Add New Quarterly Summary</div> -->
+            <div class="popup-header">
+                <mat-toolbar matDialogTitle class="m-0">
+                    <mat-toolbar-row>
+                        <span class="title dialog-title">Add New Monthly Summary</span>
+                    </mat-toolbar-row>
+                </mat-toolbar>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="25" class="hght-dial-fields">
+                    <mat-label>Financial Year</mat-label>
+                    <mat-select matNativeControl formControlName="year" class="department-stratgeix">
+                        <mat-option [value]="year.year_key" *ngFor=" let year of showCompanyYearList">
+                            {{year.year_value}}</mat-option>
+                        <!-- <mat-option value="2019">2019</mat-option>
+            <mat-option value="2020">2020</mat-option>
+            <mat-option value="2021">2021</mat-option>
+            <mat-option value="2022">2022</mat-option> -->
+                    </mat-select>
+                    <mat-error>Financial Year is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="25" class="pl-4 remove-left hght-dial-fields">
+                    <mat-label>Monthly</mat-label>
+                    <mat-select matNativeControl formControlName="quarterly" class="department-stratgeix">
+                        <mat-option value="January">January</mat-option>
+                        <mat-option value="February">February</mat-option>
+                        <mat-option value="March">March</mat-option>
+                        <mat-option value="April">April</mat-option>
+                        <mat-option value="May">May</mat-option>
+                        <mat-option value="June">June</mat-option>
+                        <mat-option value="July">July</mat-option>
+                        <mat-option value="August">August</mat-option>
+                        <mat-option value="September">September</mat-option>
+                        <mat-option value="October">October</mat-option>
+                        <mat-option value="November">November</mat-option>
+                        <mat-option value="December">December</mat-option>
+                        
+                    </mat-select>
+                    <mat-error>Monthly is required</mat-error>
+                </mat-form-field>
+                <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left hght-dial-fields">
+                    <mat-label>Department</mat-label>
+                    <mat-select matNativeControl formControlName="dept_id" required class="department-stratgeix"> 
+                        <mat-option *ngFor="let department of dataDepartment" [value]="department.id">{{department.dept_name}}
+                        </mat-option>
+                    </mat-select>
+                    <mat-error>Department is required</mat-error>
+                </mat-form-field>
+            </div>
+            <div class="pb-8" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto" fxFlex="100">
+                <div style="max-width: fit-content;margin-right: auto;margin-left: auto;">
+                    <div>Highlights</div>
+                    <angular-editor id="editor1" formControlName="highlight" [config]="editorConfig"></angular-editor>
+                </div>
+            </div>
+            <div class="pb-8" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div style="max-width: fit-content;margin-right: auto;margin-left: auto;">
+                    <div>Improvement Opportunities</div>
+                    <angular-editor id="editor2" formControlName="majorgaps" [config]="editorConfig"></angular-editor>
+                </div>
+            </div>
+            <div class="pb-8" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div style="max-width: fit-content;margin-right: auto;margin-left: auto;">
+                    <div>Challenges</div>
+                    <angular-editor id="editor1" formControlName="challenges" [config]="editorConfig"></angular-editor>
+                </div>
+            </div>
+            <div class="pb-8" [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <div style="max-width: fit-content;margin-right: auto;margin-left: auto;">
+                    <div>Priorities - Next Monthly</div>
+                    <angular-editor id="editor2" formControlName="priorities" [config]="editorConfig"></angular-editor>
+                </div>
+            </div>
+            <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                <mat-form-field appearance="outline" fxFlex="100" class="dialog-field">
+                    <mat-label>Remark</mat-label>
+                    <textarea matInput formControlName="remark"></textarea>
+                    <mat-error>Remark is required</mat-error>
+                </mat-form-field>
+            </div>
+            <!-- <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+          <input   multiple="true" type="file" accept="application/pdf,application/vnd.ms-excel,image/x-png,image/gif,image/jpeg,image/jpg" id="customFile" (change)="onFileSelected($event)">
+      </div> -->
+            <div formArrayName="itemRows">
+                <div style="margin: 8px 0px 8px 0px;" *ngFor="let itemrow of formArr.controls; let i=index" [formGroupName]="i">
+                    <div fxLayout.xs="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div fxFlex="80">
+                            <input class="qtly-file renodee" formControlName="itemname" type="file" accept="application/pdf,application/vnd.ms-excel,image/x-png,image/gif,image/jpeg,image/jpg">
+                        </div>
+                        <div fxFlex="20" fxLayoutAlign="end" *ngIf="i==0">
+                            <a href="javascript:void(0)" matTooltip="Add new file" aria-label="Add new file" class="add-circle-color" (click)="addNewRow()">
+                                <mat-icon>add_circle</mat-icon>
+                            </a>
+                        </div>
+                        <div fxFlex="20" fxLayoutAlign="end" *ngIf="i>0">
+                            <a href="javascript:void(0)" matTooltip="Delete this file" aria-label="Delete this file" (click)="deleteRow(i)">
+                                <mat-icon>delete</mat-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+                <a mat-raised-button color="accent" (click)="addActionPlanClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>

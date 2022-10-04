@@ -1,0 +1,184 @@
+@import "src/@fuse/scss/fuse";
+
+@media only screen and (min-width: 1200px) {
+    .mat-dialog-container {
+        min-width: 998px;
+    }
+}
+
+#task-analytics {
+    .header-menu {
+        background-color: #cbcdd1;
+
+        .menu {
+            padding: 4px;
+            color  : rgb(0, 0, 0);
+        }
+    }
+
+    .decoration {
+        text-decoration: none !important;
+        cursor         : pointer;
+    }
+
+    .content.all-pages-content .header-first {
+        height       : 32px;
+        padding      : 12px;
+        font-size    : 18px;
+        color        : #050505;
+        font-family  : Muli, Helvetica Neue, Arial, sans-serif;
+        border-radius: 4px 4px 0px 0px;
+        font-weight  : 600;
+    }
+
+    .example-container {
+        min-height: auto; //changed from 200
+        padding   : 0 0 25px 0;
+    }
+
+    .fuse-card {
+        border       : none !important;
+        border-radius: 1 !important;
+    }
+
+    .mat-header-completion {
+        padding-right: 0px;
+        width        : 90px;
+    }
+
+    table.mat-table {
+        border: 1px solid #b2b3b6;
+
+    }
+
+    .mat-elevation-z8 {
+        box-shadow: none;
+    }
+
+    tr.mat-header-row {
+        height          : 25px;
+        background-color: #b0aeb2;
+    }
+
+    th.mat-header-cell {
+        color     : #040404de !important;
+        text-align: center;
+    }
+
+    .totaltask {
+        min-width      : 0px;
+        max-width      : 290px;
+        min-height     : 56px;
+        display        : flex;
+        justify-content: center;
+        align-items    : center;
+
+        .secondary-text {
+            font-size  : 11px;
+            color      : white;
+            font-weight: 700;
+        }
+
+        .total-task-text {
+            font-size  : 16px;
+            font-weight: 700;
+            color      : white;
+        }
+
+        .secondary-open {
+            font-size  : 11px;
+            color      : #333333;
+            font-weight: 600;
+        }
+
+        .total-task-open {
+            font-size  : 16px;
+            font-weight: 700;
+            color      : #333333;
+        }
+    }
+
+    div.task_assigns:last-child {
+        border-bottom: 0px;
+    }
+
+    div.task_assigns {
+        border-bottom: 1px solid #ddd;
+        padding      : 5px 0px;
+    }
+}
+
+/* Responsive start */
+.excel-print-btn {
+    bottom: 2px;
+}
+
+@media only screen and (max-width: 599px) {
+    #task-analytics {
+        .totaltask {
+            max-width: 100%;
+        }
+    }
+
+    .filter-field {
+        .mat-form-field-wrapper {
+            width: 168px !important;
+        }
+    }
+}
+
+@media (min-width: 600px) and (max-width: 959px) {
+    #task-analytics {
+        .totaltask {
+            max-width: 100%;
+        }
+    }
+
+    .filter-field {
+        .mat-form-field-wrapper {
+            width: 162px !important;
+        }
+    }
+
+    .button-reset {
+        bottom: 2px;
+    }
+}
+
+// @media (min-width: 960px) and (max-width: 1279) {
+//     .button-reset {
+//         bottom: 2px;
+//     }
+// }
+
+// @media only screen and (min-width: 1280px) {
+//     .button-reset {
+//         bottom: 2px;
+//     }
+// }
+
+// @media (min-width: 331px) and (max-width: 369px) {
+//     .addtask-dial {
+//         .mat-dialog-container {
+//             max-height: 400px !important;
+//         }
+//     }
+// }
+
+// @media (min-width: 601px) and (max-width: 767px) {
+//     .addtask-dial {
+//         .mat-dialog-container {
+//             max-height: 500px !important;
+//         }
+//     }
+// }
+
+// @media (min-width: 1101px) and (max-width: 1439px) {
+//     .addtask-dial {
+//         .mat-dialog-container {
+//             max-height: 640px !important;
+//         }
+//     }
+// }
+
+/* Responsive end */

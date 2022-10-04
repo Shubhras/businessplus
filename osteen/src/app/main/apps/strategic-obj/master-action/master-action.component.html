@@ -1,0 +1,422 @@
+<div id="initiative-data" class="page-layout blank">
+    <!-- HEADER -->
+    <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+        <!-- APP TITLE -->
+        <div fxLayout="row">
+            <div class="logo" fxLayout="row">
+                <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+                    Master Plan Status
+                </span>
+            </div>
+        </div>
+    </div>
+    <!-- HEADER -->
+    <div class="main-widget ml-8 mr-8 mt-8 mb-4">
+        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+            <div fxFlex="100" fxFlex.gt-xs="70" fxFlex.gt-md="70" class="search-filter-select">
+                <mat-form-field class="pr-8" appearance="outline">
+                    <mat-label>Department</mat-label>
+                    <mat-select (selectionChange)="filterRenderedData('department_id', $event.value)" [formControl]="dept_nameFilter">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="{{department.id}}" *ngFor="let department of dataDepartment">
+                            {{department.dept_name}}
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <!-- <mat-form-field class="pr-8" appearance="outline">
+            <mat-label>Start Date</mat-label>
+            <input matInput [matDatepicker]="picker" [(ngModel)]="start_taerget_date" (dateInput)="filterRenderedData('start_date', $event.value)" [formControl]="start_dateFilter" readonly>
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+          </mat-form-field> -->
+                <mat-form-field class="pr-8" appearance="outline">
+                    <mat-label>Target Date</mat-label>
+                    <input matInput [matDatepicker]="pickertarget" [(ngModel)]="end_taerget_date" (dateInput)="filterRenderedData('end_date', $event.value)" [formControl]="end_dateFilter" readonly>
+                    <mat-datepicker-toggle matSuffix [for]="pickertarget"></mat-datepicker-toggle>
+                    <mat-datepicker #pickertarget></mat-datepicker>
+                </mat-form-field>
+                <mat-form-field class="pr-8" appearance="outline">
+                    <mat-label>Status</mat-label>
+                    <mat-select (selectionChange)="filterRenderedData('status_name', $event.value)" [formControl]="status_nameFilter">
+                        <mat-option value="">All</mat-option>
+                        <mat-option value="{{status.status_name}}" *ngFor="let status of straObjStatus" [disabled]="status.status_name =='Open(Un Hold)'">
+                            <span *ngIf="status.status_name == 'Red'">
+                                <img class="status-red-icon" src="assets/icons/status-red-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Yellow'">
+                                <img class="status-yellow-icon" src="assets/icons/status-yellow-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Green'">
+                                <img class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Gray (Started)'">
+                                <img class="status-gray-icon" src="assets/icons/status-gray-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Blue (Hold)'">
+                                <img class="status-blue-icon" src="assets/icons/status-blue-icon.png">
+                                {{status.status_name}}
+                            </span>
+                            <span *ngIf="status.status_name == 'Open(Un Hold)'"><img class="status-open-unhold"
+                                    src="assets/icons/status-open-unhold.png"> {{status.status_name}}</span>
+                        </mat-option>
+                    </mat-select>
+                </mat-form-field>
+                <button mat-raised-button (click)="resetOptions()">Reset</button>
+            </div>
+            <!-- <div fxFlex="100" fxFlex.gt-xs="40" fxFlex.gt-md="40" fxLayoutAlign="start center">
+          <div fxLayout="column" fxLayoutAlign="start" class="strObjLesent">
+              <div fxLayout="row">
+                <span class="status-green lesent-color"></span><div>- 100%</div>
+                <span class="status-yellow lesent-color"></span><div>- 80-100%</div>
+                <span class="status-red lesent-color"></span><div>> 80%</div>
+                <span class="status-gray lesent-color"></span><div>- On track</div>
+                <span class="status-blue lesent-color"></span><div>- Hold</div>
+              </div>
+          </div>
+        </div> -->
+            <div fxFlex="100" fxFlex.gt-xs="30" fxFlex.gt-md="30" fxLayoutAlign="flex-end center">
+                <div class="open-close-button">
+                    <button mat-raised-button class="open-all-button mr-8" (click)="allExpandState = true">Open
+                        All</button>
+                    <button mat-raised-button class="close-all-button mr-8" (click)="allExpandState = false">Close
+                        All</button>
+                    <button mat-raised-button (click)="initiativeDataPDF()">Print</button>
+                    <button mat-raised-button [routerLink]="['/apps/action-plan-help']" style="        margin-left: 5px;
+                    background: #1c5e97;
+                    color: #fff;">
+                        <!-- <mat-icon>visibility</mat-icon> -->
+                        <span>Help?</span>
+                    </button>
+                </div>
+            </div>
+            <!-- <div class="course" fxFlex="100" fxFlex.gt-xs="100" fxFlex.gt-sm="100"
+                [@animate]="{value:'*',params:{y:'100%'}}">
+                <div class="course-content" fxLayout="column" fxFlex="1 1 auto">
+                    <div class="content" fxLayout="column" fxLayoutAlign="start" fxFlex="1 1 auto">
+                        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                            <div></div>
+                            <div fxLayout="row" class="" fxFlex="100" fxLayoutAlign="">
+                                <table mat-table class="mat-table-lesent" [dataSource]="dataSourceLesent">
+                                    <ng-container matColumnDef="lesent_name">
+                                        <td mat-cell *matCellDef="let element" class="mat-cell-lesentName">
+                                            <img *ngIf="element.lesent_name == 'Red'" class="status-red-icon"
+                                                src="assets/icons/status-red-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Yellow'" class="status-yellow-icon"
+                                                src="assets/icons/status-yellow-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Green'" class="status-green-icon"
+                                                src="assets/icons/status-green-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Gray'" class="status-gray-icon"
+                                                src="assets/icons/status-gray-icon.png" style="width:80%;">
+                                            <img *ngIf="element.lesent_name == 'Blue'" class="status-blue-icon"
+                                                src="assets/icons/status-blue-icon.png" >
+                                        </td>
+                                    </ng-container>
+                                    <ng-container matColumnDef="lesent_description">
+                                        <td mat-cell *matCellDef="let element">{{element.lesent_description}}
+                                        </td>
+                                    </ng-container>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsLesent;"></tr>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="" fxLayout="column " fxFlex="100">
+                <h1>hello</h1>
+            </div> -->
+        </div>
+
+    </div>
+
+
+    <div class="main-widget str_obj_hading">
+        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+            <div fxFlex="100" fxFlex.gt-xs="4" fxFlex.gt-md="4">
+                <div class="str-obj-tittel">S. No.</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="6" style="text-align: center;">
+                <div class="str-obj-tittel">Type</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="34" fxFlex.gt-md="37" style="text-align: center;">
+                <div class="str-obj-tittel">Description</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="14" fxFlex.gt-md="9" style="text-align: center;">
+                <div class="str-obj-tittel">Department</div>
+
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="8" fxFlex.gt-md="8" style="text-align: center;">
+                <div class="str-obj-tittel">Responsibility</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="8" style="text-align: center;">
+                <div class="str-obj-tittel">Start</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="8" style="text-align: center;">
+                <div class="str-obj-tittel">End</div>
+            </div>
+
+            <div fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="6" style="text-align: center;">
+                <div class="str-obj-tittel">Status</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="6" fxFlex.gt-md="6" style="text-align: center;">
+                <div class="str-obj-tittel">%</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="7" fxFlex.gt-md="5">
+                <div class="str-obj-tittel" style="padding-left: 7px;" >View</div>
+            </div>
+            <div fxFlex="100" fxFlex.gt-xs="2" fxFlex.gt-md="2">
+                <div class="str-obj-tittel" style="padding-left: 7px;">edit</div>
+            </div>
+        </div>
+    </div>
+    <!-- Deptartments -->
+    <div *ngFor="let department of renderStrategicData">
+        <!-- Strategic Objectives -->
+        <div *ngFor="let renderData of department.strategic_objectives; let i = index">
+            <div class="content all-pages-content">
+                <!-- *ngIf="renderData.initiatives != ''" -->
+                <div class="left">
+                    <mat-expansion-panel [expanded]="allExpandState">
+                        <mat-expansion-panel-header style="height: auto; border-radius: 0%;">
+                            <div class="main-widget" fxLayout="row wrap" fxFlex="100">
+                                <div class="widget-group stra-dept" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3" fxFlex.gt-md="3" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.srno}}</div>
+                                            <!-- {{renderData.strategic_objectives_id}} -->
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="8" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction2">Strategic Objective</div>
+                                            <!-- {{renderData.strategic_objectives_id}} -->
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="31" fxFlex.gt-md="37">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction des_padding">{{renderData.description}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="15" fxFlex.gt-md="8" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.dept_name}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="8" fxFlex.gt-md="11" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">-</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="7" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.start_date | date:'dd-MM-yyyy'}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="7" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="kpifunction">{{renderData.end_date | date:'dd-MM-yyyy'}}</div>
+                                        </div>
+                                    </fuse-widget>
+
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3" fxFlex.gt-md="8" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center center">
+                                            <div class="kpifunction" style="margin-right: 11px;">
+                                                <img class="status-red-icon" *ngIf="renderData.status_name == 'Red'" src="assets/icons/status-red-icon.png">
+                                                <img class="status-yellow-icon" *ngIf="renderData.status_name == 'Yellow'" src="assets/icons/status-yellow-icon.png">
+                                                <img class="status-green-icon" *ngIf="renderData.status_name == 'Green'" src="assets/icons/status-green-icon.png">
+                                                <img class="status-gray-icon" *ngIf="renderData.status_name == 'Gray (Started)'" src="assets/icons/status-gray-icon.png">
+                                                <img class="status-blue-icon" *ngIf="renderData.status_name == 'Blue (Hold)'" src="assets/icons/status-blue-icon-blueee.png">
+                                            </div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="6" fxFlex.gt-md="4">
+                                        <div fxLayout="row" fxLayoutAlign="center">
+                                            <div class="kpifunction des_padding">{{renderData.percentage}}%</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="8" fxFlex.gt-md="4">
+                                        <div fxLayout="row" fxLayoutAlign="flex-end" class="strategicdate_margin">
+                                            <div class="kpifunction" [routerLink]="['/apps/business-plan-view/', renderData.strategic_objectives_id]">view</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="3" style="text-align: right;">
+                                        <div fxLayout="row" fxLayoutAlign="flex-end">
+                                            <div class="initiative_data" style="margin-left: -21px; cursor: pointer;" [routerLink]="['/apps/strategic-obj/str-initi-action-kpi/', renderData.strategic_objectives_id]">edit
+                                            </div>
+                                            <!--  [routerLink]="['/apps/strategic-obj/action-plan-comment', actionPlans.action_plans_id]" -->
+                                        </div>
+                                    </fuse-widget>
+
+                                    <!-- <div class="kpifunction">{{renderData.end_date | date:'dd-MM-yyyy'}}</div>* -->
+
+                                </div>
+                            </div>
+                        </mat-expansion-panel-header>
+                        <!-- initiatives start-->
+                        <div *ngFor="let initiative of renderData.initiatives;">
+                            <div class="main-widget initiative">
+                                <div class="widget-group" fxLayout="row" fxFlex="100" [@animateStagger]="{value:'50'}">
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3" fxFlex.gt-md="3" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="sr_no initiative_data">{{initiative.sr_no}}</div>
+                                            <!-- {{initiative.sr_no}} -->
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3" fxFlex.gt-md="8" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="sr_no initiative_data  " style="margin-right: 14px;">Strategic Initiative</div>
+                                            <!-- {{initiative.sr_no}} -->
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="39">
+                                        <div fxLayout="column" fxLayoutAlign="start">
+                                            <div class="initiative_data des_padding">{{initiative.definition}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="7" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="initiative_data">{{initiative.dept_name}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="9" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="initiative_data">-</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="9" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="initiative_data margin_init">{{initiative.start_date | date:'dd-MM-yyyy'}}</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="10" style="text-align: center;">
+                                        <div fxLayout="column" fxLayoutAlign="center">
+                                            <div class="initiative_data margin_init">{{initiative.end_date | date:'dd-MM-yyyy'}}</div>
+                                        </div>
+                                    </fuse-widget>
+
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="3" style="text-align: center;">
+                                        <div fxLayout="row" fxLayoutAlign="center">
+                                            <div class="initiative_data" style="margin-right: 3px;">
+                                                <img class="status-red-icon" *ngIf="initiative.status_name == 'Red'" src="assets/icons/status-red-icon.png">
+                                                <img class="status-yellow-icon" *ngIf="initiative.status_name == 'Yellow'" src="assets/icons/status-yellow-icon.png">
+                                                <img class="status-green-icon" *ngIf="initiative.status_name == 'Green'" src="assets/icons/status-green-icon.png">
+                                                <img class="status-gray-icon" *ngIf="initiative.status_name == 'Gray (Started)'" src="assets/icons/status-gray-icon.png">
+                                                <img class="status-blue-icon-white" *ngIf="initiative.status_name == 'Blue (Hold)'" src="assets/icons/status-blue-icon-blueee.png">
+                                            </div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="9" style="text-align: center;">
+                                        <div fxLayout="row" fxLayoutAlign="center">
+                                            <div class="initiative_data">{{initiative.percentage}}%</div>
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="2" style="text-align: center;">
+                                        <div fxLayout="row" fxLayoutAlign="center">
+                                            <div class="initiative_data" style="margin-left: -21px; cursor: pointer;" [routerLink]="['/apps/strategic-obj/str-initi-action-kpi/', renderData.strategic_objectives_id]">view
+                                            </div>
+                                            <!--  [routerLink]="['/apps/strategic-obj/action-plan-comment', actionPlans.action_plans_id]" -->
+                                        </div>
+                                    </fuse-widget>
+                                    <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="2" style="text-align: center;">
+                                        <div fxLayout="row" fxLayoutAlign="center">
+                                            <div class="initiative_data" style="margin-left: -21px; cursor: pointer;" [routerLink]="['/apps/strategic-obj/str-initi-action-kpi/', renderData.strategic_objectives_id]">edit
+                                            </div>
+                                            <!--  [routerLink]="['/apps/strategic-obj/action-plan-comment', actionPlans.action_plans_id]" -->
+                                        </div>
+                                    </fuse-widget>
+                                </div>
+                            </div>
+                            <!-- action plan start -->
+                            <div *ngFor="let actionPlan of initiative.action_plans;">
+                                <div class="main-widget initiative">
+                                    <div class="widget-group2" fxLayout="row" fxFlex="100" [@animateStagger]="{value:'50'}">
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3" fxFlex.gt-md="3" style="text-align: center;">
+                                            <div fxLayout="column" fxLayoutAlign="center">
+                                                <div class="sr_no initiative_data">{{actionPlan.sr_no}}</div>
+                                                <!-- {{initiative.sr_no}} -->
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="3" fxFlex.gt-md="8" style="text-align: center;">
+                                            <div fxLayout="column" fxLayoutAlign="center">
+                                                <div class="sr_no initiative_data">actionplan</div>
+                                                <!-- {{initiative.sr_no}} -->
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="39">
+                                            <div fxLayout="column" fxLayoutAlign="start">
+                                                <div class="initiative_data des_padding">{{actionPlan.definition}}</div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="7" style="text-align: center;">
+                                            <div fxLayout="column" fxLayoutAlign="center">
+                                                <div class="initiative_data">{{initiative.dept_name}}</div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="9" style="text-align: center;">
+                                            <div fxLayout="column" fxLayoutAlign="center">
+                                                <div class="initiative_data">-</div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="9" style="text-align: center;">
+                                            <div fxLayout="column" fxLayoutAlign="center">
+                                                <div class="initiative_data actionplandate_margin">{{actionPlan.start_date | date:'dd-MM-yyyy'}}</div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="36" fxFlex.gt-md="10" style="text-align: center;">
+                                            <div fxLayout="column" fxLayoutAlign="center">
+                                                <div class="initiative_data actionplandate_margin">{{actionPlan.end_date | date:'dd-MM-yyyy'}}</div>
+                                            </div>
+                                        </fuse-widget>
+
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="4" style="text-align: center;">
+                                            <div fxLayout="row" fxLayoutAlign="center">
+                                                <div class="kpifunction" style="margin-right: 11px;">
+                                                    <img class="status-red-icon" *ngIf="actionPlan.status_name == 'Red'" src="assets/icons/status-red-icon.png">
+                                                    <img class="status-yellow-icon" *ngIf="actionPlan.status_name == 'Yellow'" src="assets/icons/status-yellow-icon.png">
+                                                    <img class="status-green-icon" *ngIf="actionPlan.status_name == 'Green'" src="assets/icons/status-green-icon.png">
+                                                    <img class="status-gray-icon" *ngIf="actionPlan.status_name == 'Gray (Started)'" src="assets/icons/status-gray-icon.png">
+                                                    <img class="status-blue-icon-white" *ngIf="actionPlan.status_name == 'Blue (Hold)'" src="assets/icons/status-blue-icon-blueee.png">
+                                                </div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="5" fxFlex.gt-md="7" style="text-align: center;">
+                                            <div fxLayout="row" fxLayoutAlign="center">
+                                                <div class="initiative_data">{{actionPlan.percentage}}%</div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="2" style="text-align: center;">
+                                            <div fxLayout="row" fxLayoutAlign="center">
+                                                <div class="initiative_data" [routerLink]="['/apps/strategic-obj/action-plan-comment', actionPlan.action_plans_id]" style="cursor: pointer;">view
+                                                </div>
+                                            </div>
+                                        </fuse-widget>
+                                        <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="2" style="text-align: center;">
+                                            <div fxLayout="row" fxLayoutAlign="center">
+                                                <div class="initiative_data" style="margin-left: -21px; cursor: pointer;" [routerLink]="['/apps/strategic-obj/str-initi-action-kpi/', renderData.strategic_objectives_id]">edit
+                                                </div>
+                                                <!--  [routerLink]="['/apps/strategic-obj/action-plan-comment', actionPlans.action_plans_id]" -->
+                                            </div>
+                                        </fuse-widget>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+
+                        </div>
+                        <!-- action plan end -->
+                    </mat-expansion-panel>
+                </div>
+            </div>
+            <!-- initiatives  end-->
+        </div>
+        <!-- ./ Strategic Objectives -->
+    </div>
+    <!-- ./ Deptartments -->
+</div>

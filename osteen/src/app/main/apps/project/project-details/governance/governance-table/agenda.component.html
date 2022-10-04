@@ -1,0 +1,231 @@
+<div class="content popup-content">
+    <div class="popup-header">
+        <mat-toolbar matDialogTitle class="m-0">
+            <mat-toolbar-row>
+                <div fxFlex="100" fxFlex.gt-xs="80" fxFlex.gt-md="80" fxLayoutAlign="start">
+                    <span class="title dialog-title">Governance Structure</span>
+                </div>
+                <div fxFlex="100" fxFlex.gt-xs="20" fxFlex.gt-md="20" fxLayoutAlign="end">
+                    <a mat-raised-button style="line-height: 28px;
+                background: #fff !important;color: #000000de; margin: inherit;margin-top: 1px;" (click)="AgendaClose()">Close</a>
+                </div>
+            </mat-toolbar-row>
+        </mat-toolbar>
+    </div>
+    <!-- <mat-grid-list cols="4" rowHeight="2:1" style="width: 1000px;">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Name</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{meetingName}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Chair Person</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        {{chairPersonName}}
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Co Chair Person</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        {{coChairPersonName}}
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="2" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Members</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto"
+                        *ngFor="let user of govMembers; let e = index">
+                        <div>{{e+1}} {{user.member_name}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Frequency</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{govFrequency}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="3" class="agenda-form">
+            <div class="tile-agenda"fxLayoutAlign="center center">Agenda</div>
+            <div class="content-agenda" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <span [innerHtml]="AgendaDef"></span>
+                    </div>
+                </div>
+            </div>
+            <div class="example-button-row" fxLayoutAlign="end" style="margin-top: 290px;">
+                <a mat-raised-button color="accent" (click)="AgendaClose()">Cancel</a>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Days</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{meetingDay}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Venue</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{govVenue}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Shedule</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{meetingShedule}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Duration</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div *ngIf="govDuration == 'half_hour'">30 minute</div>
+                        <div *ngIf="govDuration == 'one_hour'">1 hour</div>
+                        <div *ngIf="govDuration == 'two_hour'">2 hour</div>
+                        <div *ngIf="govDuration == 'half_day'">Half day</div>
+                        <div *ngIf="govDuration == 'full_Day'">Full day</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list> -->
+    <mat-grid-list cols="4" rowHeight="3:1" style="width: 920px;">
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Chair Person</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxFlex="80" fxLayoutAlign="center center">
+                    {{chairPersonName}}
+                </div>
+                <div fxLayout="column" fxFlex="20" fxLayoutAlign="center center">
+                    <img class="agenda-member-image" src="{{chairPersonImg ? chairPersonImg: dummyPicture}}">
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Name</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="center center" fxFlex="1 0 auto">{{meetingName}}
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="7" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Members</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row"
+                *ngFor="let user of govMembers; let e = index">
+                <div fxFlex="100" fxFlex.gt-xs="80" fxFlex.gt-md="80" fxLayoutAlign="start center">{{e+1}}
+                    {{user.member_name}}</div>
+                <div fxFlex="100" fxFlex.gt-xs="20" fxFlex.gt-md="20" fxLayoutAlign="center center">
+                    <img class="agenda-member-image" src="{{coChairPersonImg ? coChairPersonImg: dummyPicture}}">
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Co Chair Person</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxFlex="80" fxLayoutAlign="center center">
+                    {{coChairPersonName}}
+                </div>
+                <div fxLayout="column" fxFlex="20" fxLayoutAlign="center center">
+                    <img class="agenda-member-image" src="{{coChairPersonImg ? coChairPersonImg: dummyPicture}}">
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="2" [rowspan]="6" class="agenda-form">
+            <div class="tile-agenda" fxLayoutAlign="center center">Agenda</div>
+            <div class="content-agenda" fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <span [innerHtml]="AgendaDef"></span>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Frequency</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{govFrequency}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Shedule</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{meetingShedule}} <span *ngIf="meetingShedule!=''">Week</span></div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting days</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div><span *ngIf="meetingDay!=''">Every</span> {{meetingDay}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Meeting Duration</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div *ngIf="govDuration == 'half_hour'">30 Minute</div>
+                        <div *ngIf="govDuration == 'one_hour'">1 Hour</div>
+                        <div *ngIf="govDuration == 'two_hour'">2 Hour</div>
+                        <div *ngIf="govDuration == 'half_day'">Half day</div>
+                        <div *ngIf="govDuration == 'full_Day'">Full day</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="1" class="mat-tile">
+            <div class="agenda-tile" fxLayoutAlign="center center">Venue</div>
+            <div class="agenda-content" fxLayout="column" fxLayoutAlign="center" fxLayout.gt-md="row">
+                <div fxLayout="column" fxLayoutAlign="start">
+                    <div fxLayout="row" fxLayoutAlign="start center" fxFlex="1 0 auto">
+                        <div>{{govVenue}}</div>
+                    </div>
+                </div>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
+</div>

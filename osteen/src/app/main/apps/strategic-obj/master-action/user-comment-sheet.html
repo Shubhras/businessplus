@@ -1,0 +1,52 @@
+
+<div class="comment-page">
+	<div class="header-comment" fxLayout="row" fxLayoutAlign="center center">
+       <div class="header-tittle" fxFlex fxLayoutAlign="center center">
+             {{co_owner_name}}
+       </div>
+    </div>
+	<div  class="comment-table">
+	<table mat-table [dataSource]="dataSource">
+	    <ng-container matColumnDef="sr_no">
+	      <th mat-header-cell *matHeaderCellDef class="mat-header-sr-no">Action Plan No.</th>
+	      <td mat-cell *matCellDef="let element" class="mat-cell-sr-no">{{element.sr_no}}</td>
+	    </ng-container>
+	    <ng-container matColumnDef="month_date">
+	      <th mat-header-cell *matHeaderCellDef class="mat-header-startDate">Month Date</th>
+	      <td mat-cell *matCellDef="let element">{{element.month_date | date:'dd-MM-yyyy'}}</td>
+	    </ng-container>
+	    <ng-container matColumnDef="definition">
+	      <th mat-header-cell *matHeaderCellDef class="mat-header-actionplan">Action Plan</th>
+	      <td mat-cell *matCellDef="let element">{{element.definition}}</td>
+	    </ng-container>
+	    <ng-container matColumnDef="comment">
+	      <th mat-header-cell *matHeaderCellDef class="mat-header-comment">Comment</th>
+	      <td mat-cell *matCellDef="let element">{{element.comment}}</td>
+	    </ng-container>
+	     <ng-container matColumnDef="recovery_plan">
+	      <th mat-header-cell *matHeaderCellDef class="mat-header-recovery">Recovery Plan</th>
+	      <td mat-cell *matCellDef="let element">{{element.recovery_plan}}</td>
+	    </ng-container>
+	    <ng-container matColumnDef="implement_data">
+	      <th mat-header-cell *matHeaderCellDef class="mat-header-Target">Target Date</th>
+	      <td mat-cell *matCellDef="let element">{{element.implement_data | date:'dd-MM-yyyy'}}</td>
+	    </ng-container>
+	     <ng-container matColumnDef="responsibility_name">
+	      <th mat-header-cell *matHeaderCellDef class="mat-header-respons">Responsibility</th>
+	      <td mat-cell *matCellDef="let element">{{element.responsibility_name}}</td>
+	    </ng-container>
+	    <ng-container matColumnDef="status_name" class="mat-header-status">
+	      <th mat-header-cell *matHeaderCellDef>Status</th>
+	      <td mat-cell *matCellDef="let element">
+	        <i class="material-icons" *ngIf="element.status_name == 'Green'" style="font-size: 14px; border-radius: 9px; color: #4caf50; background-color: #4caf50;">radio_button_unchecked</i>
+            <i class="material-icons" *ngIf="element.status_name == 'Yellow'" style="font-size: 14px; border-radius: 9px; color: #FFD933; background-color: #FFD933;">radio_button_unchecked</i>
+            <i class="material-icons" *ngIf="element.status_name == 'Red'" style="font-size: 14px; border-radius: 9px; color: red; background-color: red;">radio_button_unchecked</i>
+            <i class="material-icons" *ngIf="element.status_name == 'Blue (Hold)'" style="font-size: 14px; border-radius: 9px; color: #7dabf5; background-color: #7dabf5;">radio_button_unchecked</i>
+            <i class="material-icons" *ngIf="element.status_name == 'Gray (Started)'" style="font-size: 14px; border-radius: 9px; color: #948e8e; background-color: #948e8e;">radio_button_unchecked</i>
+	    </td>
+	    </ng-container>
+	    <tr mat-header-row *matHeaderRowDef="displayedColumnsComment; sticky: true"></tr>
+	    <tr mat-row *matRowDef="let row; columns: displayedColumnsComment;"></tr>
+	</table>
+	</div>
+</div>

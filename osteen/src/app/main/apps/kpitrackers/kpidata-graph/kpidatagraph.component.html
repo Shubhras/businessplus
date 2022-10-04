@@ -1,0 +1,114 @@
+<div id="kpidata-graph" class="page-layout blank">
+  <!-- HEADER -->
+  <div class="header header-content-dashboard" fxLayout="column" fxLayoutAlign="center center" fxLayout.gt-xs="row">
+    <!-- APP TITLE -->
+    <div fxLayout="row">
+      <div class="logo" fxLayout="row">
+        <span class="logo-text header-tittle" [@animate]="{value:'*',params:{delay:'100ms',x:'-25px'}}">
+          KPI Data Graph
+        </span>
+      </div>
+    </div>
+  </div>
+  <!-- HEADER -->
+  <div class="content all-pages-content">
+    <div class="left mr-lg-16">
+      <div class="main-widget">
+        <div class="widget-group p-0 accent department" fxLayout="row" [@animateStagger]="{value:'50'}">
+          <div class="widget p-0" fxFlex="100" fxFlex.gt-xs="90" fxFlex.gt-md="90">
+            <div fxLayoutAlign="start">
+              <div class="pr-16">
+                <div fxLayoutAlign="center">
+                  <button class="mat-icon-button" *ngIf="comparekpi != 1"
+                    [routerLink]="['/apps/kpitrackers/addkpidata']">
+                    <span class="mat-button-wrapper">
+                        <!-- <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon> -->
+                <mat-icon class="secondary-text" style="transform: scale(1.3);">first_page</mat-icon>
+
+                    </span>
+                  </button>
+                  <button class="mat-icon-button" *ngIf="comparekpi == 1"
+                    [routerLink]="['/apps/kpitrackers/addkpidata']">
+                    <span class="mat-button-wrapper">
+                        <mat-icon class="secondary-text" style="color: #fff;">arrow_back</mat-icon>
+                    </span>
+                  </button>
+                </div>
+              </div>
+              <div class="pr-16">
+                <div fxLayoutAlign="center" style="padding-top: 10px;">Department : {{dept_name}}</div>
+              </div>
+            </div>
+          </div>
+          <!--<div class="widget p-0" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="40" fxLayoutAlign="flex-end center">
+              <mat-button-toggle-group [value]="selectedYear" #group="matButtonToggleGroup">
+                  <mat-button-toggle (click)="targetActualByYear(currentYearFull)" value="{{currentYearFull}}">{{currentYearFull}}</mat-button-toggle>
+                  <mat-button-toggle (click)="targetActualByYear(currentYearFull-1)" value="{{currentYearFull-1}}">{{currentYearFull-1}}</mat-button-toggle>
+                  <mat-button-toggle (click)="targetActualByYear(currentYearFull-2)" value="{{currentYearFull-2}}">{{currentYearFull-2}}</mat-button-toggle>
+                  <mat-button-toggle (click)="targetActualByYear(currentYearFull-3)" value="{{currentYearFull-3}}">{{currentYearFull-3}}</mat-button-toggle>
+                </mat-button-toggle-group>
+          </div> -->
+          <div class="widget p-0" fxFlex="100" fxFlex.gt-xs="10" fxFlex.gt-md="10" fxLayoutAlign="flex-end center">
+            <button mat-raised-button class="button-pdf" (click)="KpiGraphPDF()">Print</button>
+          </div>
+        </div>
+        <div class="widget-group" fxLayout="row wrap" fxFlex="100" [@animateStagger]="{value:'50'}">
+          <fuse-widget class="widget" fxLayout="column" fxFlex="100" fxFlex.gt-xs="50" fxFlex.gt-md="50"
+            *ngFor="let kpi of kpisData;">
+            <div class="mat-elevation-z8">
+              <div fxLayout="row" class="kpi-graph" *ngIf="comparekpi != 1">
+                <div fxFlex.gt-xs="63" fxFlex.gt-md="63">{{kpi.kpi_name}}</div>
+                <div fxFlex.gt-xs="27" fxFlex.gt-md="27">{{kpi.unit_of_measurement}}</div>
+                <!--  <div fxLayoutAlign="center" fxFlex.gt-xs="8" fxFlex.gt-md="8">
+                  <a href="javascript:void(0)" matTooltip="positive (good if number goes up)"
+                    aria-label="positive (good if number goes up)">
+                    <img *ngIf="kpi.ideal_trend == 'positive'" class="kpi-trend-upward-icon"
+                      src="assets/icons/arrow-up-kpi.png">
+                  </a>
+                  <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                    aria-label="negative (good if number goes down)">
+                    <img *ngIf="kpi.ideal_trend == 'negative'" class="kpi-trend-downward-icon"
+                      src="assets/icons/arrow-kpi-down.png">
+                  </a>
+                </div> -->
+                <div fxLayoutAlign="center" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                  <a href="javascript:void(0)" (click)="kpiDefinitionOpen(kpi.kpi_definition)" matTooltip="Definition"
+                    aria-label="Definition">
+                    <img class="kpi-defination-icon" src="assets/icons/kpi-defination-info.png">
+                    <!-- <mat-icon style="font-size: 15px; min-height: 20px; height: 20px;">receipt</mat-icon> -->
+                  </a>
+                </div>
+                <div fxLayoutAlign="flex-end" fxFlex.gt-xs="5" fxFlex.gt-md="5">
+                  <a href="javascript:void(0)" (click)="kpiCommentOpen(kpi.kpi_id)" matTooltip="Comment"
+                    aria-label="Comment">
+                    <img class="kpi-comment-icon" src="assets/icons/kpi-comment.png">
+                  </a>
+                </div>
+              </div>
+              <div fxLayout="row" class="kpi-graph" *ngIf="comparekpi == 1">
+                <div fxFlex.gt-xs="100" fxFlex.gt-md="100">Compare KPI</div>
+              </div>
+              <div class="kpi-line-chart">
+                <div fxLayoutAlign="flex-end" class="ideal-trend" *ngIf="comparekpi != 1">
+                  <a href="javascript:void(0)" matTooltip="positive (good if number goes up)"
+                    aria-label="positive (good if number goes up)">
+                    <img *ngIf="kpi.ideal_trend == 'positive'" class="kpi-trend-upward-icon"
+                      src="assets/icons/arrow-up-kpi.png">
+                  </a>
+                  <a href="javascript:void(0)" matTooltip="negative (good if number goes down)"
+                    aria-label="negative (good if number goes down)">
+                    <img *ngIf="kpi.ideal_trend == 'negative'" class="kpi-trend-downward-icon"
+                      src="assets/icons/arrow-kpi-down.png">
+                  </a>
+                </div>
+                <line-chart [data]="kpi.chartData" [config]="config1" [elementId]="kpi.elementID"
+                  [elementTrend]="kpi.IdealTrend" [elementCompare]="kpi.elementCompare"
+                  [compareKpiStore]=kpi.compareKpiStore></line-chart>
+              </div>
+            </div>
+          </fuse-widget>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

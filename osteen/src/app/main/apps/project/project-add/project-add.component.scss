@@ -1,0 +1,204 @@
+@import "src/@fuse/scss/fuse";
+
+body.theme-default .mat-card:not([class*="mat-elevation-z"]) {
+    box-shadow: 0px 1px 1px -1px rgba(0, 0, 0, 0.2), 0px 1px 1px 0px rgba(0, 0, 0, 0.14),
+        0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+}
+
+body.theme-default .mat-card {
+    transition: box-shadow 280ms cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    position: relative;
+    border-radius: 4px;
+    margin-bottom: 14px;
+    padding: 8px 0px 8px 8px;
+}
+
+#project-add {
+
+    // date datepicker icone
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-prefix .mat-icon-button,
+    .mat-form-field:not(.mat-form-field-appearance-legacy) .mat-form-field-suffix .mat-icon-button {
+        display: block;
+        font-size: inherit;
+        width: 1.2em;
+        height: 1.2em;
+    }
+
+    mat-vertical-stepper {
+        padding: 0px 0;
+    }
+
+    .mat-vertical-stepper-header {
+        display: flex;
+        align-items: center;
+        padding: 16px 0px 16px 0px;
+        height: 24px;
+        border-radius: 4px;
+    }
+
+    .mat-vertical-stepper-header .mat-step-icon {
+        margin-right: 4px;
+    }
+
+    .mat-vertical-content-container {
+        margin-left: 12px;
+        border: 0;
+        position: relative;
+    }
+
+    .mat-vertical-content {
+        padding: 2px 24px 4px 24px;
+    }
+
+    .form_field {
+        .mat-form-field {
+            margin-left: 4px;
+            margin-right: 4px;
+        }
+    }
+
+    /* iamge and camra  start*/
+    .pro-image {
+        color: #049be5;
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+        .company__user-pic {
+            width: 90px;
+            height: 90px;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        .company__user-pic>input[type="file"] {
+            visibility: hidden;
+            width: 1px;
+            height: 1px;
+        }
+
+        .company__user-pic>.upload-button {
+            position: absolute;
+            bottom: 0px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 11;
+        }
+
+        .project-image {
+            width: 90px;
+            min-width: 90px;
+            height: 90px;
+            line-height: 90px;
+            margin: 0px;
+
+            @include media-breakpoint("sm") {
+                margin: 0 0 16px 0;
+            }
+        }
+    }
+
+    .pro-image:hover {
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    }
+
+    /* .upload-button {
+    font-size: 1.7em;
+  } */
+
+    .upload-button:hover {
+        transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        color: #999;
+    }
+
+    /* iamge and camra end */
+    .mat-radio-button {
+        margin-right: 10px;
+    }
+
+    .mat-form-field {
+        width: 100%;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-infix {
+        padding: 13px 0px 13px 0px;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-flex {
+        padding: 0 0.75em 14 0.75em;
+        margin-top: -0.75em;
+        position: relative;
+    }
+
+    .mat-form-field-wrapper {
+        padding-bottom: 1.33em;
+    }
+
+    .mat-form-field-subscript-wrapper {
+        //font-size: 78%;
+        font-size: 13px;
+        margin-top: 0.27em;
+        line-height: initial;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-outline {
+        display: flex;
+        position: absolute;
+        top: 0.9em;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        pointer-events: none;
+    }
+
+    .mat-input-element {
+        font-size: 13px;
+        // height: 17px;
+        resize: none;
+    }
+
+    .mat-select-value {
+        color: rgba(0, 0, 0, 0.87);
+        font-size: 13px !important;
+    }
+
+    .mat-select-value-text {
+        min-height: 15px;
+        line-height: 15px;
+    }
+
+    .mat-select-trigger {
+        height: 0px !important;
+    }
+
+    .mat-form-field-appearance-outline .mat-form-field-label {
+        top: 2.3em;
+        margin-top: -0.1em;
+        font-size: 13px;
+        height: 15px;
+        line-height: 15px;
+    }
+
+    .other-member {
+        // border: 1px solid #e4dfdf;
+        border-radius: 4px;
+        // margin-top: 8px !important;
+        margin-right: 8px;
+        margin-bottom: 8px;
+        padding: 4px 0px 0px 4px;
+        background: #f5f5f5;
+    }
+
+    .form-hadding {
+        height: 30px;
+        font-size: 15px;
+        background: #1c5e97;
+        border-radius: 4px;
+        font-weight: 600;
+        color: #fff;
+        padding-left: 10px;
+    }
+.angular-editor{
+    width: auto!important;
+}
+}

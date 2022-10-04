@@ -1,0 +1,148 @@
+<div class="content popup-content">
+  <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+    <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="EditKpiForm" [formGroup]="EditKpiForm"
+      (ngSubmit)="editKpiSubmit()" novalidate>
+      <!-- <div class="h3 mb-12">Edit KPI</div> -->
+      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="end center" fxFlex="1 0 auto"
+        style="margin-bottom: 1px;">
+        <button mat-icon-button class="close-button" [mat-dialog-close]="true">
+          <mat-icon class="close-icon" color="#225E97">close</mat-icon>
+        </button>
+      </div>
+      <div class="popup-header">
+        <mat-toolbar matDialogTitle class="m-0">
+          <mat-toolbar-row>
+            <span class="title dialog-title">Edit KPI</span>
+          </mat-toolbar-row>
+        </mat-toolbar>
+      </div>
+      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4 rewrk-fileds">
+          <mat-label>Department</mat-label>
+          <mat-select matNativeControl formControlName="department_id"
+            (selectionChange)="sectionGet($event.value);strategicObjGet($event.value)"
+            class="department-stratgeix rewrap-text">
+            <mat-option [value]="department.id" *ngFor="let department of dataEditDepartment">{{department.dept_name}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Department is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left add-right rewrk-fileds">
+          <mat-label>Section</mat-label>
+          <mat-select matNativeControl formControlName="section_id" class="department-stratgeix rewrap-text">
+            <mat-option [value]="section.id" *ngFor="let section of dataEditSection">{{section.section_name}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Section is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4 rewrk-fileds">
+          <mat-label>Strategic</mat-label>
+          <mat-select matNativeControl formControlName="s_o_id" (selectionChange)="initiativesGet($event.value)"
+            class="department-stratgeix rewrap-text">
+            <mat-option value="{{strategic.id}}" *ngFor="let strategic of dataStraObj">{{strategic.description}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Strategic is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left add-right rewrk-fileds">
+          <mat-label>Initiative</mat-label>
+          <mat-select formControlName="initiatives_id" (selectionChange)="actionPlansGet($event.value)"
+            class="department-stratgeix rewrap-text">
+            <mat-option value="{{initiatives.id}}" *ngFor="let initiatives of  initiativesData">
+              {{initiatives.definition}}</mat-option>
+          </mat-select>
+          <mat-error>Initiative is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4 rewrk-fileds">
+          <mat-label>Action Plan</mat-label>
+          <mat-select formControlName="action_plan_id" [compareWith]="compareActionFn" multiple
+            class="department-stratgeix rewrap-text">
+            <mat-option [value]="action.action_plan_id" *ngFor="let action of  actionPlansData">{{action.definition}}
+            </mat-option>
+          </mat-select>
+          <mat-error>Action Plan is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4 edit-dials-ad">
+          <mat-label>KPI Name</mat-label>
+          <input matInput formControlName="kpi_name" required style="height: 30px !important;">
+          <mat-error>KPI Name is required!</mat-error>
+        </mat-form-field>
+      </div>
+      <div fxLayout="row" class="field-textarea" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="100" class="pr-4">
+          <mat-label>KPI Definition</mat-label>
+          <textarea matInput formControlName="kpi_definition" required></textarea>
+          <mat-error>KPI Definition is required!</mat-error>
+        </mat-form-field>
+      </div>
+      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <mat-form-field appearance="outline" fxFlex="50" class="pr-4 rewrk-fileds">
+          <mat-label>Ideal Trend</mat-label>
+          <mat-select matNativeControl formControlName="ideal_trend" class="department-stratgeix">
+            <mat-option value="positive">positive (good if number goes up)</mat-option>
+            <mat-option value="negative">negative (good if number goes down)</mat-option>
+          </mat-select>
+          <mat-error>Ideal Trend is required</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left add-right rewrk-fileds">
+          <mat-label>Unit Of Measurement</mat-label>
+          <mat-select matNativeControl formControlName="unit_of_measurement" class="department-stratgeix">
+            <mat-option *ngFor="let uom of dataunitOfMeasur" [value]="uom.uom_id">{{uom.uom_name}}</mat-option>
+          </mat-select>
+          <mat-error>Unit Of Measurement is required!</mat-error>
+        </mat-form-field>
+      </div>
+      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4">
+              <mat-label>Year End Target</mat-label>
+              <input matInput formControlName="target_range_min" readonly>
+              <mat-error>Year End Target is required!</mat-error>
+            </mat-form-field> -->
+        <mat-form-field appearance="outline" fxFlex="50" class="remove-left add-right rewrk-fileds">
+          <mat-label>Year End Target</mat-label>
+          <mat-select matNativeControl formControlName="target_condition" class="department-stratgeix">
+            <mat-option value="sum_up_all">Sum Up-All</mat-option>
+            <mat-option value="average">Average</mat-option>
+            <mat-option value="terminal_value">Terminal (YE) Value</mat-option>
+          </mat-select>
+          <mat-error>Year End Target is required!</mat-error>
+        </mat-form-field>
+        <mat-form-field appearance="outline" fxFlex="50" class="pl-4 remove-left add-right rewrk-fileds">
+          <mat-label>Lead KPI</mat-label>
+          <mat-select matNativeControl formControlName="lead_kpi" class="department-stratgeix">
+            <mat-option [value]="1">Yes</mat-option>
+            <mat-option [value]="0">No</mat-option>
+          </mat-select>
+          <mat-error>Lead KPI is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div [fxLayout]="direction" fxLayout.xs="column" fxLayoutAlign="start center" fxFlex="1 0 auto">
+        <!-- <mat-form-field appearance="outline" fxFlex="50" class="pr-4 rewrk-fileds">
+            <mat-label>Performance KPI</mat-label>
+              <mat-select matNativeControl placeholder="Performance KPI" formControlName="kpi_performance" class="department-stratgeix">
+                <mat-option value="1" >Yes</mat-option>
+                <mat-option value="0" >No</mat-option>
+              </mat-select>
+              <mat-error>Performance KPI is required</mat-error>
+          </mat-form-field> -->
+        <mat-form-field appearance="outline" fxFlex="100" class="remove-left add-right rewrk-fileds">
+          <mat-label>Review Frequency</mat-label>
+          <mat-select matNativeControl formControlName="frequency" class="department-stratgeix">
+            <mat-option value="Weekly">Weekly</mat-option>
+            <mat-option value="Monthly">Monthly</mat-option>
+            <mat-option value="Quarterly">Quarterly</mat-option>
+          </mat-select>
+          <mat-error>Review Frequency is required</mat-error>
+        </mat-form-field>
+      </div>
+      <div class="example-button-row" fxLayoutAlign="end">
+        <button mat-raised-button color="accent" class="mr-12 submit-button">Submit</button>
+        <a mat-raised-button color="accent" (click)="EditKpiPopupClose()">Cancel</a>
+      </div>
+    </form>
+  </div>
+</div>

@@ -1,0 +1,48 @@
+@import "src/@fuse/scss/fuse";
+
+#initiativedata {
+  .mat-header-percentage {
+    padding-right: 0px;
+    width        : 61px;
+  }
+}
+
+
+
+/* responsive start */
+
+@media (min-width: 320px) and (max-width: 517px) {
+  .topg {
+    top: 3px;
+  }
+
+  .srch-down {
+    padding-top: 7px;
+  }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 1279px) {
+  .printing {
+    bottom: 80px;
+  }
+}
+
+.dating {
+  .mat-input-element {
+      height: 0px !important;
+  }
+}
+.departmentinitiative {
+  margin  : -10px 0px 0px 0px;
+  position: relative;
+  top     : 6px;
+}
+
+.status-date {
+  .mat-form-field-outline {
+      top   : 7px !important;
+      bottom: 4px !important;
+  }
+}
+
+/* rsponsive end */

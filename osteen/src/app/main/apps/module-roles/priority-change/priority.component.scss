@@ -1,0 +1,65 @@
+@import "src/@fuse/scss/fuse";
+
+#priority-change{
+  .mat-header-name{
+        text-align: left;
+        padding-left: 3px;
+    }
+    .mat-cell-name{
+        text-align: left;
+        padding-left: 3px;
+    }
+    .mat-header-action{
+        padding-right: 0px;
+        width: 70px;
+
+      }
+      .mat-cell-action{
+        padding-right: 2px;
+      }
+       .mat-icon-edit{
+        	font-size: 18px;
+        	min-height: 25px;
+        	height: 25px;
+        	border-radius: 4px;
+        	background-color: #3972b9e8;
+        	color: white; margin-left: 4px;
+        }
+        .mat-icon-clear{
+        	font-size: 18px;
+        	min-height: 25px;
+        	height: 25px;
+        	border-radius: 4px;
+        	background-color: #f44336;
+        	color: white; margin-left: 4px;
+        }
+}
+
+
+// Responsive start
+
+@media (min-width: 331px) and (max-width: 369px) {
+  .addpriority-dial {
+    .mat-dialog-container {
+      min-width: 265px !important;
+    }
+  }
+}
+
+@media (min-width: 601px) and (max-width: 767px) {
+  .addpriority-dial {
+    .mat-dialog-container {
+      min-width: 309px !important;
+    }
+  }
+}
+
+@media only screen and (min-width: 1101px) {
+  .addpriority-dial {
+    .mat-dialog-container {
+      min-width: 665px !important;
+    }
+  }
+}
+// Responsive end
+

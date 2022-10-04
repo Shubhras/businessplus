@@ -1,0 +1,114 @@
+<div class="content popup-content kpi-actual-content">
+    <div fxLayout="column" fxLayoutAlign="start" fxLayout.gt-md="row">
+        <form fxLayout="column" fxLayoutAlign="start" fxFlex="1 0 auto" name="AddActualForm" [formGroup]="AddActualForm"
+            (ngSubmit)="AddActualSubmit()" novalidate>
+            <div fxLayout="row" class="h3 mb-12" fxFlex="100" [@animateStagger]="{value:'50'}">
+                <div fxLayout="column" fxFlex.gt-xs="50" fxFlex.gt-md="50" fxLayoutAlign="start">{{kpiData[0].kpi_name}}
+                </div>
+                <div fxLayout="column" fxFlex.gt-xs="50" fxFlex.gt-md="30" fxLayoutAlign="start">KPI Data
+                    {{kpiData[0].year}}
+                </div>
+                <div fxLayout="column" fxFlex.gt-xs="50" fxFlex.gt-md="20" fxLayoutAlign="center center">
+                    <img style="height: 20px; width:20px" *ngIf="kpiData[0].ideal_trend == 'negative'"
+                        class="kpi-trend-downward-icon" src="assets/icons/arrow-kpi-down.png">
+                    <img style="height: 20px; width:20px" *ngIf="kpiData[0].ideal_trend == 'positive'"
+                        class="kpi-trend-upward-icon" src="assets/icons/arrow-up-kpi.png">
+                </div>
+            </div>
+            <div formArrayName="targetActualFrom">
+                <table class="actual-target-table" style="border:1px solid #e0e0e0;
+                 border-collapse:collapse; text-align: center;">
+                    <thead>
+                        <th class="target-actual-header">Month</th>
+                        <th class="target-actual-header">Target</th>
+                        <th class="target-actual-header">Actual</th>
+                        <th class="">Comment</th>
+                        <th class="">Recovery Plan</th>
+                        <th class="responsibily-header">Responsibility</th>
+                        <th class="date-header">Target Date</th>
+                        <th class="status-header">Status</th>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of targetActualFrom.controls; let i = index;" [formGroupName]="i">
+                            <td>
+                                <input matInput formControlName="month" style="text-transform: capitalize;" readonly>
+                            </td>
+                            <td [ngStyle]="{'background-color':(kpiAction == 'Actual') ? '#8080804f' : '#fffff' }">
+                                <input matInput formControlName="target" #targetid
+                                    [readonly]="(kpiTargetsPermission.acc_edit != 1) || (kpiData[1].year != currentYearFull) || (kpiAction == 'Actual')"
+                                    appTwoDigitDecimaNumber >
+                            </td>
+                            <td
+                                [ngStyle]="{'background-color':(kpiAction == 'Target') ? '#8080804f' : '#fffff', 'border':(bordershow == true) ? '2px solid red' : 'none'}">
+                                <input matInput formControlName="actual" #actualid type="number"
+                                    (keyup)="onKeyUp(kpiData[0].ideal_trend,i, item.value.month, $event, comid, recoveryid, responsibilityid, target_dateid)"
+                                    [readonly]="(kpiActualsPermission.acc_edit != 1) || (kpiData[1].year != currentYearFull) || (item.get('readableMonth').value) || (kpiAction == 'Target')"
+                                    appTwoDigitDecimaNumber (click)="alert_month(kpiAction, item.get('readableMonth').value )"> 
+                            </td>
+                            <td>
+                                <textarea matInput formControlName="comment" placeholder="Comment..."
+                                    [readonly]="kpiData[1].year != currentYearFull || (item.get('readableMonth').value)"
+                                    [ngStyle]="{'cursor':(item.get('readableMonth').value) ? 'not-allowed' : 'pointer'}"
+                                    (keyup)="commenterrorfalse ? Oncmntkeyup(kpiData[0].ideal_trend, $event,i,actualid,targetid):null" #comid></textarea>
+                                <mat-error *ngIf="commenterror[i]">Comment is required</mat-error>
+                                <!-- , 'background-color':(item.get('readableMonth').value) ? '#8080804f' : '#fffff'  -->
+                            </td>
+                            <td>
+                                <textarea matInput formControlName="recovery_plan" placeholder="Recovery plan..."
+                                    [readonly]="kpiData[1].year != currentYearFull || (item.get('readableMonth').value)"
+                                    [ngStyle]="{'cursor':(item.get('readableMonth').value) ? 'not-allowed' : 'pointer' }"
+                                    (keyup)="commenterrorfalse ? Onrecvrykeyup(kpiData[0].ideal_trend, $event,i,actualid,targetid):null" #recoveryid></textarea>
+                                <mat-error *ngIf="recovery_planerror[i]">Recovery Plan is required</mat-error>
+                                <!-- , 'background-color':(item.get('readableMonth').value) ? '#8080804f' : '#fffff' -->
+                            </td>
+                            <td [ngStyle]="{'cursor':(item.get('readableMonth').value) ? 'not-allowed' : 'pointer'}">
+                                <!-- [ngStyle]="{'background-color':(item.get('readableMonth').value) ? '#8080804f' : '#fffff' }" -->
+                                <mat-select matNativeControl formControlName="responsibility"
+                                    [disabled]="kpiData[1].year != currentYearFull || (item.get('readableMonth').value)"
+                                    [ngStyle]="{'cursor':(item.get('readableMonth').value) ? 'not-allowed' : 'pointer' }"
+                                    (selectionChange)="commenterrorfalse ? Onrespkeyup(responsibilityid,i):null"
+                                    #responsibilityid>
+                                    <mat-option value="{{user.user_id}}" *ngFor="let user of userListAllData">
+                                        {{user.name}}
+                                    </mat-option>
+                                </mat-select>
+                                <mat-error *ngIf="responsibilityerror[i]">Responsibility is required</mat-error>
+                            </td>
+                            <td class="picker-container">
+                                <!-- [ngStyle]="{'background-color':(item.get('readableMonth').value) ? '#8080804f' : '#fffff'}" -->
+                                <input matInput [matDatepicker]="picker" formControlName="target_date" readonly
+                                    [disabled]="kpiData[1].year != currentYearFull || (item.get('readableMonth').value)"
+                                    [ngStyle]="{'cursor':(item.get('readableMonth').value) ? 'not-allowed' : 'pointer' }"
+                                    (dateChange)="commenterrorfalse ? Ontrdatekeyup($event,i):null" #target_dateid>
+                                <mat-datepicker-toggle class="picker-icon" matSuffix [for]="picker">
+                                </mat-datepicker-toggle>
+                                <mat-datepicker #picker></mat-datepicker>
+                                <mat-error *ngIf="targetedateerror[i]">Target Date is required</mat-error>
+                            </td>
+                            <td [ngStyle]="{'cursor':(item.get('readableMonth').value) ? 'not-allowed' : 'pointer' }">
+                                <!-- , 'background-color':(item.get('readableMonth').value) ? '#8080804f' : '#fffff' -->
+                                <img *ngIf="item.get('status').value == 1"
+                                    [ngStyle]="{'display':(item.get('readableMonth').value) ? 'none' : 'block' }"
+                                    class="status-green-icon" src="assets/icons/status-green-icon.png">
+                                <img *ngIf="item.get('status').value == 2" class="status-yellow-icon"
+                                    src="assets/icons/status-yellow-icon.png"
+                                    [ngStyle]="{'display':(item.get('readableMonth').value) ? 'none' : 'block' }">
+                                <img *ngIf="item.get('status').value == 3" class="status-red-icon"
+                                    src="assets/icons/status-red-icon.png"
+                                    [ngStyle]="{'display':(item.get('readableMonth').value) ? 'none' : 'block' }">
+                                <img *ngIf="item.get('status').value == 4" class="status-red-icon"
+                                    src="assets/icons/status-gray-icon.png"
+                                    [ngStyle]="{'display':(item.get('readableMonth').value) ? 'none' : 'block' }">
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="example-button-row mt-4" fxLayoutAlign="end">
+                <button mat-raised-button color="accent" class="mr-12 submit-button"
+                    [disabled]="((commenterror.includes(true)) || (recovery_planerror.includes(true)) ||(responsibilityerror.includes(true)) ||(targetedateerror.includes(true)))">Submit</button>
+                <a mat-raised-button color="accent" (click)="AddActualClose()">Cancel</a>
+            </div>
+        </form>
+    </div>
+</div>
